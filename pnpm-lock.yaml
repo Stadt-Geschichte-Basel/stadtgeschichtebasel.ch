@@ -5,12 +5,14 @@ specifiers:
   cz-conventional-changelog: ^3.3.0
   husky: ^8.0.3
   prettier: ^2.8.4
+  prettier-plugin-svelte: ^2.9.0
 
 devDependencies:
   commitizen: 4.3.0
   cz-conventional-changelog: 3.3.0
   husky: 8.0.3
   prettier: 2.8.4
+  prettier-plugin-svelte: 2.9.0_prettier@2.8.4
 
 packages:
   /@babel/code-frame/7.18.6:
@@ -1259,6 +1261,18 @@ packages:
         integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
       }
     engines: { node: '>=8.6' }
+    dev: true
+
+  /prettier-plugin-svelte/2.9.0_prettier@2.8.4:
+    resolution:
+      {
+        integrity: sha512-3doBi5NO4IVgaNPtwewvrgPpqAcvNv0NwJNflr76PIGgi9nf1oguQV1Hpdm9TI2ALIQVn/9iIwLpBO5UcD2Jiw==
+      }
+    peerDependencies:
+      prettier: ^1.16.4 || ^2.0.0
+      svelte: ^3.2.0
+    dependencies:
+      prettier: 2.8.4
     dev: true
 
   /prettier/2.8.4:
