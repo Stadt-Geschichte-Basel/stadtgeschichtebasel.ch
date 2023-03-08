@@ -1,9 +1,9 @@
 {
-	"name": "REPO_NAME",
-	"description": "SHORT_DESCRIPTION",
-	"author": "FULLNAME <[INSERT CONTACT METHOD]>",
+	"name": "stadtgeschichtebasel.ch",
+	"description": "The open source code of the digital portal of Stadt.Geschichte.Basel.",
+	"author": "Moritz Mähr <moritz.maehr@gmail.com>",
 	"version": "0.0.1",
-	"url": "https://github.com/USERNAME/REPO_NAME/issues",
+	"url": "https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues",
 	"license": "AGPL-3.0",
 	"scripts": {
 		"check": "prettier --ignore-path .gitignore  --check . '!{CODE_OF_CONDUCT.md,LICENSE.md,_layouts/default.html}'",
