@@ -1,8 +1,7 @@
 <script>
 </script>
 
-<h1 class="text-3xl font-bold underline">Hello world!</h1>
-<article class="prose lg:prose-xl">
+<article class="prose">
 	<h1>Garlic bread with cheese: What the science tells us</h1>
 	<p>
 		For years parents have espoused the health benefits of eating garlic bread with cheese to their
@@ -15,9 +14,3 @@
 	</p>
 	<!-- ... -->
 </article>
-
-<style lang="postcss">
-	:global(html) {
-		background-color: theme(colors.gray.100);
-	}
-</style>
