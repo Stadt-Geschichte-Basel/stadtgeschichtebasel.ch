@@ -1,4 +1,4 @@
-/src/data/
+/src/lib/data/
 
 .DS_Store
 node_modules

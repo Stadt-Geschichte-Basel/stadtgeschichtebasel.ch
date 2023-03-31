@@ -48,6 +48,36 @@ async function downloadAssets(mdFilePath) {
 	await fs.promises.writeFile(mdFilePath, markdown);
 }
 
+async function replaceUrlsWithRelativePaths(mdFilePath, baseUrl) {
+	let markdown = await fs.promises.readFile(mdFilePath, 'utf-8');
+	const outputDirPath = path.dirname(mdFilePath);
+
+	// Match URLs that are not in YAML front matter
+	const regex = /(^---[\s\S]*?---)|(?:!\[(.*?)\]\((.*?)\))|(?:<([^>]+)>)/g;
+	const matches = markdown.matchAll(regex);
+
+	for (const match of matches) {
+		if (!match[1]) {
+			// skip URLs inside YAML front matter
+			const url = match[3] || match[4];
+			if (url) {
+				const relativePath = new URL(url, baseUrl).pathname;
+				const localPath = path.join('.', relativePath);
+				markdown = markdown.replace(url, localPath);
+			}
+		}
+	}
+
+	await fs.promises.writeFile(mdFilePath, markdown);
+	// const regex = /(?<=\()${baseUrl}([^)]+)(?=\))/g;
+	// const replaced = markdown.replace(regex, (match, url) => {
+	// 	const relativePath = path.relative(outputDirPath, url);
+	// 	return `(${relativePath})`;
+	// });
+
+	// await fs.writeFile(mdFilePath, replaced);
+}
+
 function formatPost(post, type) {
 	const turndownService = new TurndownService({ headingStyle: 'atx' });
 	const frontMatter = [
@@ -85,21 +115,51 @@ function formatPost(post, type) {
 async function downloadPostsOrPages(downloadPath, url, type) {
 	const postsOrPages = await fetchPosts(url);
 
-	const subFolderPath = path.join(downloadPath, type);
+	const subFolderPath = path.join(downloadPath, type + 's');
 	await fs.promises.mkdir(subFolderPath, { recursive: true });
 
 	for (const postOrPage of postsOrPages) {
+		const slug = postOrPage.slug;
+		const parent = postOrPage.parent;
 		const filename = `index.md`;
-		const fileFolder = path.join(subFolderPath, postOrPage.slug);
+		let fileFolder;
+		if (parent !== 0 && type === 'page') {
+			const parentPost = postsOrPages.find((post) => post.id === parent);
+			fileFolder = path.join(subFolderPath, parentPost.slug, slug);
+		} else {
+			fileFolder = path.join(subFolderPath, slug);
+		}
+
 		await fs.promises.mkdir(fileFolder, { recursive: true });
 		const filePath = path.join(fileFolder, filename);
 		const content = formatPost(postOrPage, type);
 		await fs.promises.writeFile(filePath, content);
 		console.log(`Saved ${type} to ${filePath}`);
 		await downloadAssets(filePath);
+		await replaceUrlsWithRelativePaths(filePath, 'https://sgb.hypotheses.org/');
 	}
+
+	// for (const postOrPage of postsOrPages) {
+	// 	const filename = `index.md`;
+	// 	const fileFolder = path.join(subFolderPath, postOrPage.slug);
+	// 	await fs.promises.mkdir(fileFolder, { recursive: true });
+	// 	const filePath = path.join(fileFolder, filename);
+	// 	const content = formatPost(postOrPage, type);
+	// 	await fs.promises.writeFile(filePath, content);
+	// 	console.log(`Saved ${type} to ${filePath}`);
+	// 	await downloadAssets(filePath);
+	// 	await replaceUrlsWithRelativePaths(filePath, 'https://sgb.hypotheses.org/');
+	// }
 }
 
 // Example usage:
-downloadPostsOrPages('./src/data', 'https://sgb.hypotheses.org/wp-json/wp/v2/posts?_embed', 'post');
-downloadPostsOrPages('./src/data', 'https://sgb.hypotheses.org/wp-json/wp/v2/pages?_embed', 'page');
+downloadPostsOrPages(
+	'./src/lib/data',
+	'https://sgb.hypotheses.org/wp-json/wp/v2/posts?_embed',
+	'post'
+);
+downloadPostsOrPages(
+	'./src/lib/data',
+	'https://sgb.hypotheses.org/wp-json/wp/v2/pages?_embed',
+	'page'
+);

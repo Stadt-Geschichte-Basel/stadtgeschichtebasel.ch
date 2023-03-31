@@ -1,5 +1,5 @@
 <script>
-	import Index from '$lib/data/pages/geschichte/index.md';
+	import Index from '$lib/data/pages/geschichte/zeitgeschichte/index.md';
 </script>
 
 <article class="prose lg:prose-xl">

@@ -1,222 +1,110 @@
 <script>
 	import '../app.css';
-	const htmlURL = 'https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch';
-	const lastCommitDate = new Date().toLocaleDateString();
-	import { page } from '$app/stores';
+	import MenuItems from '../components/MenuItems.svelte';
 </script>
 
-<div class="relative">
-	<div class="drawer-mobile drawer h-screen">
-		<input id="sgb-drawer" type="checkbox" class="drawer-toggle" />
-		<div class="drawer-content flex flex-col">
-			<!-- navbar -->
-			<div class="navbar w-full justify-between p-0 md:p-8">
-				<div class="flex-none lg:hidden">
-					<label for="sgb-drawer" class="btn-ghost btn-circle btn ">
-						<svg
+<div class="drawer">
+	<input id="sgb-drawer" type="checkbox" class="drawer-toggle" />
+	<div class="drawer-content flex flex-col">
+		<!-- Navbar -->
+		<div class="navbar w-full bg-base-300">
+			<div class="flex-none lg:hidden">
+				<label for="sgb-drawer" class="btn-ghost btn-square btn">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						class="inline-block h-6 w-6 stroke-current"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M4 6h16M4 12h16M4 18h16"
+						/></svg
+					>
+				</label>
+			</div>
+			<div class="mx-2 flex-1 px-2">
+				<a href="/" class="cursor-pointer"> <img src="images/logo.svg" alt="" class="h-8" /></a>
+			</div>
+			<div class="mx-2 flex-1 px-2">Suchfeld</div>
+			<div class="hidden flex-none lg:block">
+				<ul class="menu menu-horizontal">
+					<MenuItems />
+				</ul>
+			</div>
+		</div>
+		<main class="md:container md:mx-auto">
+			<slot />
+		</main>
+		<footer class="footer bg-base-300 p-10 text-base-content">
+			<div>
+				<span class="footer-title">Services</span>
+				<a class="link-hover link">Branding</a>
+				<a class="link-hover link">Design</a>
+				<a class="link-hover link">Marketing</a>
+				<a class="link-hover link">Advertisement</a>
+			</div>
+			<div>
+				<span class="footer-title">Über uns</span>
+				<a class="link-hover link">About us</a>
+				<a class="link-hover link">Contact</a>
+				<a class="link-hover link">Jobs</a>
+				<a class="link-hover link">Press kit</a>
+			</div>
+			<div>
+				<span class="footer-title">Social</span>
+				<div class="grid grid-flow-col gap-4">
+					<a
+						><svg
 							xmlns="http://www.w3.org/2000/svg"
-							class="h-6 w-6"
-							fill="none"
+							width="24"
+							height="24"
 							viewBox="0 0 24 24"
-							stroke="currentColor"
+							class="fill-current"
 							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M4 6h16M4 12h16M4 18h7"
+								d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
 							/></svg
-						>
-					</label>
-					<!-- <label for="sgb-drawer" class="btn-square">
-						<svg
+						></a
+					>
+					<a
+						><svg
 							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
+							width="24"
+							height="24"
 							viewBox="0 0 24 24"
-							class="inline-block w-6 h-6 stroke-current"
+							class="fill-current"
 							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M4 6h16M4 12h16M4 18h16"
+								d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"
 							/></svg
-						>
-					</label> -->
-				</div>
-
-				<div class="flex-none lg:block">
-					<nav id="main-nav" aria-label="Hauptmenü">
-						<ul class="menu menu-compact menu-horizontal md:menu-normal md:gap-2">
-							<li class="lg:hidden" aria-current={$page.url.pathname === '' ? 'page' : undefined}>
-								<a class="cursor-pointer" href="/"><img class="h-6" src="./logo.svg" alt="" /></a>
-							</li>
-							<li aria-current={$page.url.pathname === '/geschichte' ? 'page' : undefined}>
-								<a
-									class="cursor-pointer {$page.url.pathname === '/geschichte'
-										? 'font-bold'
-										: 'font-normal'}"
-									href="/geschichte">Geschichte</a
-								>
-							</li>
-							<li aria-current={$page.url.pathname === '/blog' ? 'page' : undefined}>
-								<a
-									class="cursor-pointer {$page.url.pathname === '/blog'
-										? 'font-bold'
-										: 'font-normal'}"
-									href="/blog">Blog</a
-								>
-							</li>
-							<li aria-current={$page.url.pathname === '/forschung' ? 'page' : undefined}>
-								<a
-									class="cursor-pointer {$page.url.pathname === '/forschung'
-										? 'font-bold'
-										: 'font-normal'}"
-									href="/forschung">Forschung</a
-								>
-							</li>
-							<li aria-current={$page.url.pathname === '/agenda' ? 'page' : undefined}>
-								<a
-									class="cursor-pointer {$page.url.pathname === '/agenda'
-										? 'font-bold'
-										: 'font-normal'}"
-									href="/agenda">Agenda</a
-								>
-							</li>
-							<li aria-current={$page.url.pathname === '/karte' ? 'page' : undefined}>
-								<a
-									class="cursor-pointer {$page.url.pathname === '/karte'
-										? 'font-bold'
-										: 'font-normal'}"
-									href="/karte">Karte</a
-								>
-							</li>
-							<li aria-current={$page.url.pathname === '/ueber-uns' ? 'page' : undefined}>
-								<a
-									class="cursor-pointer {$page.url.pathname === '/ueber-uns'
-										? 'font-bold'
-										: 'font-normal'}"
-									href="/ueber-uns">Über uns</a
-								>
-							</li>
-						</ul>
-					</nav>
-				</div>
-				<div>
-					<div class="form-control cursor-text">
-						<input type="text" placeholder="Suche" class="input" />
-					</div>
-					<button class="btn-ghost btn-circle btn cursor-pointer">
-						<svg
+						></a
+					>
+					<a
+						><svg
 							xmlns="http://www.w3.org/2000/svg"
-							class="h-5 w-5"
-							fill="none"
+							width="24"
+							height="24"
 							viewBox="0 0 24 24"
-							stroke="currentColor"
+							class="fill-current"
 							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+								d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
 							/></svg
-						>
-					</button>
+						></a
+					>
 				</div>
 			</div>
-			<main class="md:container md:mx-auto">
-				<slot />
-			</main>
-		</div>
-
-		<nav id="toc-nav" aria-label="Inhaltsverzeichnis" class="drawer-side">
-			<label for="sgb-drawer" class="drawer-overlay" />
-
-			<ul class="menu w-80 overflow-y-auto bg-base-200 p-4">
-				<li class="" aria-current={$page.url.pathname === '' ? 'page' : undefined}>
-					<a href="/">
-						<svg
-							class="hidden md:block md:w-48"
-							viewBox="0 0 512 223.96"
-							xmlns="http://www.w3.org/2000/svg"
-							><path
-								d="m0 49.6c4.52 6.39 12.22 10.05 21.17 10.05 12.54 0 21.69-7.43 21.77-17.67.07-8.06-4.53-13.82-13.67-17.11l-4.71-1.47c-6.31-2.27-9.87-3.72-9.87-7.05 0-3.12 3.96-4.76 7.88-4.76 4.11 0 8.33 1.83 10.85 4.68l8.09-8.55c-4.89-5.12-11.27-7.72-18.99-7.72-12.21 0-20.42 7.1-20.42 17.66 0 7.6 5.01 13.32 14.49 16.54l4.23 1.39c6.59 2.23 9.4 4.41 9.4 7.29s-3.7 5.17-8.43 5.17-9.54-2.65-12.27-6.5z"
-							/><path d="m61.37 58.66h12.5v-45.83h15.03v-11.84h-42.4v11.84h14.87z" /><path
-								d="m216.97 58.66h12.5v-45.83h15.03v-11.84h-42.4v11.84h14.87z"
-							/><path
-								d="m67.99 140.81h37.54v-11.83h-25.13v-11.08h20.2v-11.84h-20.2v-11.08h25.13v-11.83h-37.54z"
-							/><path
-								d="m259.25 140.81h12.41v-57.66h-12.41v22.83h-24.14v-22.83h-12.41v57.66h12.41v-23.08h24.14z"
-							/><path d="m285.45 83.15h12.41v57.67h-12.41z" /><path
-								d="m406.51 140.81h12.41v-57.66h-12.41v22.83h-24.14v-22.83h-12.41v57.66h12.41v-23.08h24.14z"
-							/><path d="m440.37 140.81h12.49v-45.83h15.03v-11.83h-42.39v11.83h14.87z" /><path
-								d="m474.46 140.81h37.54v-11.83h-25.13v-11.08h20.2v-11.84h-20.2v-11.08h25.13v-11.83h-37.54z"
-							/><path
-								d="m164.35 222.97h37.54v-11.83h-25.13v-11.09h20.2v-11.84h-20.2v-11.07h25.13v-11.84h-37.54z"
-							/><path d="m214.13 222.97h36.56v-11.83h-24.15v-45.84h-12.41z" /><path
-								d="m190.31 82.16c-16.45 0-29.82 13.38-29.82 29.82s13.38 29.82 29.82 29.82c9.29 0 17.83-3.83 23.47-10.53l-9.3-8.36c-3.55 4.57-8.32 6.89-14.17 6.89-9.56 0-17.33-8-17.33-17.82s7.78-17.82 17.33-17.82c5.98 0 10.82 2.41 14.38 7.15l9.3-8.36c-5.64-6.86-14.26-10.79-23.68-10.79"
-							/><path
-								d="m336.98 82.16c-16.45 0-29.82 13.38-29.82 29.82s13.38 29.82 29.82 29.82c9.29 0 17.83-3.83 23.48-10.53l-9.31-8.36c-3.55 4.57-8.32 6.89-14.17 6.89-9.56 0-17.32-8-17.32-17.82s7.77-17.82 17.32-17.82c5.98 0 10.82 2.41 14.38 7.15l9.3-8.36c-5.65-6.86-14.26-10.79-23.69-10.79"
-							/><path
-								d="m31.27 82.16c-17.33 0-30.4 12.82-30.4 29.82s13.49 29.82 31.38 29.82c10.02 0 18.82-3.14 23.58-8.42v-26.01h-23.5v11.59h11.42v7.88l-.12.09c-2.31 1.85-6.41 2.87-11.54 2.87-11.2 0-18.72-7.16-18.72-17.82s7.7-17.82 17.9-17.82c5.46 0 10.15 1.8 13.92 5.35l9.09-8.17c-5.87-6.09-13.61-9.17-23.02-9.17"
-							/><path
-								d="m112.64 131.82c4.52 6.39 12.22 10.05 21.17 10.05 12.54 0 21.69-7.43 21.77-17.67.07-8.06-4.53-13.82-13.67-17.11l-4.71-1.47c-6.31-2.27-9.87-3.72-9.87-7.05 0-3.12 3.96-4.76 7.88-4.76 4.11 0 8.33 1.83 10.85 4.68l8.09-8.55c-4.88-5.12-11.26-7.73-18.98-7.73-12.21 0-20.42 7.1-20.42 17.66 0 7.6 5.01 13.32 14.49 16.54l4.23 1.39c6.59 2.23 9.4 4.41 9.4 7.29s-3.7 5.17-8.43 5.17-9.54-2.65-12.27-6.5l-9.52 8.04z"
-							/><path
-								d="m111.33 213.91c4.52 6.39 12.22 10.05 21.17 10.05 12.54 0 21.69-7.43 21.77-17.67.07-8.06-4.53-13.82-13.67-17.11l-4.71-1.47c-6.31-2.27-9.87-3.72-9.87-7.05 0-3.12 3.96-4.76 7.88-4.76 4.11 0 8.33 1.83 10.85 4.68l8.09-8.55c-4.88-5.12-11.26-7.73-18.98-7.73-12.21 0-20.42 7.1-20.42 17.66 0 7.6 5.01 13.32 14.49 16.54l4.23 1.39c6.59 2.23 9.4 4.41 9.4 7.29s-3.7 5.17-8.43 5.17-9.54-2.65-12.27-6.5l-9.52 8.04z"
-							/><path
-								d="m120.24.99h-11.77l-24.69 57.67h12.93l5.17-12.32h24.95l.08.2 5.1 12.12h12.93zm-14.2 34.88 8.32-19.5 8.31 19.5z"
-							/><path
-								d="m39.29 192.61-.4-.21.32-.31c2.64-2.55 4.09-6.03 4.09-9.79 0-9.38-7.62-17.01-17.01-17.01h-21.72v57.67h25.42c9.77 0 17.42-7.39 17.42-16.84 0-5.84-3.03-10.88-8.12-13.51m-22.16-16.27h7.69c3.71 0 6.62 2.83 6.62 6.46s-2.9 6.29-6.62 6.29h-7.69zm11.8 35.5h-11.8v-12.75h11.72c3.75 0 6.69 2.8 6.69 6.38s-2.9 6.37-6.62 6.37"
-							/><path
-								d="m85.61 165.3h-11.77l-24.7 57.67h12.94l5.17-12.32h24.95l.08.2 5.1 12.12h12.93zm-14.2 34.88 8.32-19.5 8.31 19.5z"
-							/><path
-								d="m169.57.99h-19.55v57.67h19.55c16.21 0 29.41-12.94 29.41-28.84s-13.19-28.83-29.41-28.83m0 46.33h-7.14v-34.99h7.14c9.6 0 16.83 7.52 16.83 17.49s-7.24 17.5-16.83 17.5"
-							/></svg
-						>
-						<!-- <img class="hidden md:block md:w-48" src="./logo.svg" alt="" /> -->
-						<span class="block md:hidden ">Home</span></a
-					>
-				</li>
-				<li aria-current={$page.url.pathname === '/geschichte/zeitgeschichte' ? 'page' : undefined}>
-					<a
-						class="cursor-pointer {$page.url.pathname === '/geschichte/zeitgeschichte'
-							? 'font-bold'
-							: 'font-normal'}"
-						href="/geschichte/zeitgeschichte">Zeitgeschichte</a
-					>
-				</li>
-				<li aria-current={$page.url.pathname === '/geschichte/neuzeig' ? 'page' : undefined}>
-					<a
-						class="cursor-pointer {$page.url.pathname === '/geschichte/neuzeit'
-							? 'font-bold'
-							: 'font-normal'}"
-						href="/geschichte/neuzeit">Neuzeit</a
-					>
-				</li>
-				<li aria-current={$page.url.pathname === '/geschichte/mittelalter' ? 'page' : undefined}>
-					<a
-						class="cursor-pointer {$page.url.pathname === '/geschichte/mittelalter'
-							? 'font-bold'
-							: 'font-normal'}"
-						href="/geschichte/mittelalter">Mittelalter</a
-					>
-				</li>
-				<li aria-current={$page.url.pathname === '/geschichte/antike' ? 'page' : undefined}>
-					<a
-						class="cursor-pointer {$page.url.pathname === '/geschichte/antike'
-							? 'font-bold'
-							: 'font-normal'}"
-						href="/geschichte/antike">Antike</a
-					>
-				</li>
-				<li
-					aria-current={$page.url.pathname === '/geschichte/fruehgeschichte' ? 'page' : undefined}
-				>
-					<a
-						class="cursor-pointer {$page.url.pathname === '/geschichte/fruehgeschichte'
-							? 'font-bold'
-							: 'font-normal'}"
-						href="/geschichte/fruehgeschichte">Frühgeschichte</a
-					>
-				</li>
-			</ul>
-		</nav>
+		</footer>
+		<!-- <footer>
+				<p>Newsletter anmelden</p>
+				<p>Impressum,Presse alles aus über uns</p>
+				<p>© 2023 Stiftung Stadt.Geschichte.Basel</p>
+				<p>WCAG 2.1 compliant</p>
+			</footer> -->
+	</div>
+	<div class="drawer-side">
+		<label for="sgb-drawer" class="drawer-overlay" />
+		<ul class="menu w-80 bg-base-100 p-4">
+			<MenuItems />
+		</ul>
 	</div>
 </div>
