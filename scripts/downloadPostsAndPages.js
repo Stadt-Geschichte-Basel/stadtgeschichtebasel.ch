@@ -49,48 +49,26 @@ async function downloadAssets(mdFilePath) {
 }
 
 async function replaceUrlsWithRelativePaths(mdFilePath, baseUrl) {
-    let markdown = await fs.promises.readFile(mdFilePath, 'utf-8');
+	let markdown = await fs.promises.readFile(mdFilePath, 'utf-8');
 
-    // Match URLs that are not in YAML front matter
-    const regex = /(^---[\s\S]*?---)|(?:!\[(.*?)\]\((.*?)\))|(?:<(.*?)>)|(\bhttps?:\/\/[^\s]+?\.[^\s]+[^\s\.\?\&])|(\bwww\.[^\s]+\.[^\s\.\?\&])/gi;
-    const matches = markdown.matchAll(regex);
+	// Match URLs that are not in YAML front matter
+	const regex = /(^---[\s\S]*?---)|(?<!\S)https:\/\/sgb\.hypotheses\.org\/(?!\S)/g;
+	const matches = markdown.matchAll(regex);
 
-    for (const match of matches) {
-        if (!match[1]) {
-            // skip URLs inside YAML front matter
-            const url = match[3] || match[4] || match[5] || match[6];
-            if (url) {
-                const relativePath = new URL(url, baseUrl).pathname;
-                const localPath = path.join('.', relativePath);
-                markdown = markdown.replace(url, localPath);
-            }
-        }
-    }
+	for (const match of matches) {
+		if (!match[1]) {
+			// skip URLs inside YAML front matter
+			const url = match[0];
+			if (url) {
+				const relativePath = new URL(url, baseUrl).pathname;
+				const localPath = path.join('.', relativePath);
+				markdown = markdown.replace(url, localPath);
+			}
+		}
+	}
 
-    await fs.promises.writeFile(mdFilePath, markdown);
+	await fs.promises.writeFile(mdFilePath, markdown);
 }
-
-// async function replaceUrlsWithRelativePaths(mdFilePath, baseUrl) {
-// 	let markdown = await fs.promises.readFile(mdFilePath, 'utf-8');
-  
-// 	// Match URLs that are not in YAML front matter
-// 	const regex = /(^---[\s\S]*?---)|(?:!\[(.*?)\]\((.*?)\))|(?:<([^>]+)>)/g;
-// 	const matches = markdown.matchAll(regex);
-  
-// 	for (const match of matches) {
-// 	  if (!match[1]) {
-// 		// skip URLs inside YAML front matter
-// 		const url = match[3] || match[4];
-// 		if (url) {
-// 		  const relativePath = new URL(url, baseUrl).pathname;
-// 		  const localPath = path.join('.', relativePath);
-// 		  markdown = markdown.replace(new RegExp(url, 'g'), localPath);
-// 		}
-// 	  }
-// 	}
-  
-// 	await fs.promises.writeFile(mdFilePath, markdown);
-//   }
 
 function formatPost(post, type) {
 	const turndownService = new TurndownService({ headingStyle: 'atx' });
@@ -129,19 +107,18 @@ function formatPost(post, type) {
 async function downloadPostsOrPages(downloadPath, url, type) {
 	const postsOrPages = await fetchPosts(url);
 
-	const subFolderPath = path.join(downloadPath, type + 's');
-	await fs.promises.mkdir(subFolderPath, { recursive: true });
+	await fs.promises.mkdir(downloadPath, { recursive: true });
 
 	for (const postOrPage of postsOrPages) {
 		const slug = postOrPage.slug;
 		const parent = postOrPage.parent;
-		const filename = `index.md`;
+		const filename = `+page.md`;
 		let fileFolder;
 		if (parent !== 0 && type === 'page') {
 			const parentPost = postsOrPages.find((post) => post.id === parent);
-			fileFolder = path.join(subFolderPath, parentPost.slug, slug);
+			fileFolder = path.join(downloadPath, parentPost.slug, slug);
 		} else {
-			fileFolder = path.join(subFolderPath, slug);
+			fileFolder = path.join(downloadPath, slug);
 		}
 
 		await fs.promises.mkdir(fileFolder, { recursive: true });
@@ -156,12 +133,12 @@ async function downloadPostsOrPages(downloadPath, url, type) {
 
 // Example usage:
 downloadPostsOrPages(
-	'./src/lib/data',
+	'./src/routes/blog',
 	'https://sgb.hypotheses.org/wp-json/wp/v2/posts?_embed',
 	'post'
 );
 downloadPostsOrPages(
-	'./src/lib/data',
+	'./src/routes',
 	'https://sgb.hypotheses.org/wp-json/wp/v2/pages?_embed',
 	'page'
 );

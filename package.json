@@ -17,7 +17,7 @@
 		"format": "prettier --plugin-search-dir . --write . --check . '!{CODE_OF_CONDUCT.md,LICENSE.md,_layouts/default.html}'",
 		"commit": "cz",
 		"prepare": "husky install",
-		"download": "rm -Rf src/lib/data && node scripts/downloadPostsAndPages.js"
+		"download": "node scripts/downloadPostsAndPages.js && pnpm format"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.32.1",
