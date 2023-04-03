@@ -1,6 +1,7 @@
 <script>
 	import '../app.css';
 	import MenuItems from '../components/MenuItems.svelte';
+	import Logo from '$lib/images/logo.svg';
 </script>
 
 <div class="drawer">
@@ -25,7 +26,7 @@
 				</label>
 			</div>
 			<div class="mx-2 flex-1 px-2">
-				<a href="/" class="cursor-pointer"> <img src="images/logo.svg" alt="" class="h-8" /></a>
+				<a href="/" class="cursor-pointer"> <img src={Logo} alt="" class="h-8" /></a>
 			</div>
 			<div class="mx-2 flex-1 px-2">Suchfeld</div>
 			<div class="hidden flex-none lg:block">
@@ -34,7 +35,7 @@
 				</ul>
 			</div>
 		</div>
-		<main class="md:container md:mx-auto">
+		<main class="prose md:container xl:prose-xl md:mx-auto">
 			<slot />
 		</main>
 		<footer class="footer bg-base-300 p-10 text-base-content">
