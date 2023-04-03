@@ -72,4 +72,25 @@
 		class="cursor-pointer {$page.url.pathname === '/ueber-uns' ? 'font-bold' : 'font-normal'}"
 		href="/ueber-uns">Über uns</a
 	>
+	<!-- <ul class="bg-base-300 p-2">
+		<li aria-current={$page.url.pathname === '/ueber-uns#social-media' ? 'page' : undefined}>
+			<a href="/ueber-uns#social-media">Social Media</a>
+		</li>
+		<li aria-current={$page.url.pathname === '/ueber-uns#medien' ? 'page' : undefined}>
+			<a href="/ueber-uns#medien">Medien</a>
+		</li>
+		<li aria-current={$page.url.pathname === '/ueber-uns#lehrmittel' ? 'page' : undefined}>
+			<a href="/ueber-uns#lehrmittel">Lehrmittel</a>
+		</li>
+		<li aria-current={$page.url.pathname === '/ueber-uns#impressum' ? 'page' : undefined}>
+			<a href="/ueber-uns#impressum">Impressum</a>
+		</li>
+		<li
+			aria-current={$page.url.pathname === '/datenschutzerklaerung-der-stadt-geschichte-basel'
+				? 'page'
+				: undefined}
+		>
+			<a href="/datenschutzerklaerung-der-stadt-geschichte-basel">Datenschutz</a>
+		</li>
+	</ul> -->
 </li>

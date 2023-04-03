@@ -34,18 +34,27 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 
 ## Roadmap
 
-- [x] Basic layout
+- [x] Basic layout (inspired by <https://sveltekit-mdsvex-starter-blog.vercel.app/posts>)
 - [x] Download all posts and pages from sgb.hypotheses.org
 - [x] Download all assets from sgb.hypotheses.org
 - [x] Implement blog functionality
 - [x] Implement page functionality
-- [x] Add a robots.txt
+- [x] Add robots.txt
 - [ ] Add search functionality via lunr or elasticlunr (or similar)
-- [ ] Add a sitemap
-- [ ] Add a agenda page
-- [ ] Add a map page
+- [ ] Read params from url
+- [ ] Add newsletter functionality
+- [ ] Add wcag accessibility functionality and logo
+- [ ] Add copyright info
+- [ ] Add sitemap
+- [ ] Add agenda page <https://github.com/vkurko/calendar>
+- [ ] Add map page
+- [ ] Add dark mode
+- [ ] Add breadcrumb
 - [ ] Remove mdsvex dependency if no longer needed
 - [ ] Remove turndown dependency if no longer needed
+- [ ] <https://toc.janosh.dev/?ref=madewithsvelte.com>
+- [ ] <https://a11y.digitaldialog.swiss/checklist>
+- [ ] <https://www.neurodiversity.design/>
 
 ## Contributing
 
