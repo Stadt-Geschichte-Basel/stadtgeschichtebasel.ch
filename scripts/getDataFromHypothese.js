@@ -1,14 +1,9 @@
 // scripts/script.js
-import { fileURLToPath } from 'url';
 import axios from 'axios';
 import fs from 'fs/promises';
 import path from 'path';
-import TurndownService from 'turndown';
 
-// const baseUrl = 'https://sgb.hypotheses.org/wp-json/wp/v2/posts?_embed';
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(path.dirname(__filename));
-const ASSETS_URL = 'https://sgb.hypotheses.org/';
+const URL = 'https://sgb.hypotheses.org/';
 
 // 1. Get all posts including paginated pages
 async function getAllPosts(baseUrl) {
@@ -28,7 +23,7 @@ function extractAssets(posts) {
 		const content = post.content.rendered;
 		let match;
 		while ((match = regex.exec(content))) {
-			if (match[1].startsWith(ASSETS_URL)) {
+			if (match[1].startsWith(URL)) {
 				acc.push(match[1]);
 			}
 		}
@@ -37,13 +32,13 @@ function extractAssets(posts) {
 	return assets;
 }
 
-// 3. Save all assets to ./src/static/assets while retaining the folder structure and the original file names
-async function saveAssets(assets, root) {
+// 3. Save all assets to ./src/static/ while retaining the folder structure and the original file names
+async function saveAssets(assets, folder) {
 	await Promise.all(
 		assets.map(async (url) => {
 			const filename = path.basename(url);
-			const directory = path.dirname(url).replace(ASSETS_URL, '');
-			const destination = path.join(root, directory, filename);
+			const directory = path.dirname(url).replace(URL, '');
+			const destination = path.join(folder, directory, filename);
 			const { data } = await axios.get(url, { responseType: 'arraybuffer' });
 			await fs.mkdir(path.dirname(destination), { recursive: true });
 			await fs.writeFile(destination, data);
@@ -51,51 +46,46 @@ async function saveAssets(assets, root) {
 	);
 }
 
-// 4. Replace all references in the posts with the local files saved in ./src/static/assets
+// 4. Replace all references of https://sgb.hypotheses.org/ with an empty string
 function replaceAssetReferences(posts) {
-	const regex = /src="(https:\/\/sgb\.hypotheses\.org\/wp-content\/uploads.*?)"/g;
-	posts.forEach((post) => {
+	const replacedPosts = posts.map((post) => {
 		const content = post.content.rendered;
-		const newContent = content.replace(regex, (match, url) => {
-			const filename = path.basename(url);
-			const directory = path
-				.dirname(url)
-				.replace(/^https:\/\/sgb\.hypotheses\.org\/wp-content\/uploads/, '');
-			return `src="/assets${directory}/${filename}"`;
-		});
-		post.content.rendered = newContent;
+		const replacedContent = content.replace(new RegExp('https://sgb.hypotheses.org', 'g'), '');
+		const excerpt = post.excerpt.rendered;
+		const replacedExcerpt = excerpt.replace(new RegExp('https://sgb.hypotheses.org', 'g'), '');
+		post.excerpt.rendered = replacedExcerpt;
+		return {
+			...post,
+			content: {
+				...post.content,
+				rendered: replacedContent
+			},
+			excerpt: {
+				...post.excerpt,
+				rendered: replacedExcerpt
+			}
+		};
 	});
+	return replacedPosts;
 }
 
-// 5. Convert the field excerpt of the posts from HTML to Markdown with Turndown as excerpt_md and content of the posts from HTML to Markdown with Turndown as content_md Set atx headings.
-function convertHtmlToMarkdown(posts) {
-	const turndownService = new TurndownService({ headingStyle: 'atx' });
-	posts.forEach((post) => {
-		post.excerpt_md = turndownService.turndown(post.excerpt.rendered);
-		post.content_md = turndownService.turndown(post.content.rendered);
-	});
-}
-
-// 6. Save the posts to ./src/lib/data/posts.json (create the file if it does not exist)
+// 5. Save the posts to ./src/lib/data/posts.json (create the file if it does not exist)
 async function savePosts(posts, filePath) {
-	// const filePath = path.join(__dirname, 'src', 'lib', 'data', 'posts.json');
 	const json = JSON.stringify(posts);
 	await fs.mkdir(path.dirname(filePath), { recursive: true });
 	await fs.writeFile(filePath, json, { flag: 'w' });
 }
 
 (async () => {
-	const allPosts = await getAllPosts('https://sgb.hypotheses.org/wp-json/wp/v2/posts?_embed');
+	let allPosts = await getAllPosts(URL + 'wp-json/wp/v2/posts?_embed');
 	const allPostsAssets = extractAssets(allPosts);
-	await saveAssets(allPostsAssets, 'src/static/assets/');
-	replaceAssetReferences(allPosts);
-	convertHtmlToMarkdown(allPosts);
+	await saveAssets(allPostsAssets, 'static/');
+	allPosts = replaceAssetReferences(allPosts);
 	await savePosts(allPosts, 'src/lib/data/posts.json');
 
-	const allPages = await getAllPosts('https://sgb.hypotheses.org/wp-json/wp/v2/pages?_embed');
+	let allPages = await getAllPosts(URL + 'wp-json/wp/v2/pages?_embed');
 	const allPagesAssets = extractAssets(allPages);
-	await saveAssets(allPagesAssets, 'src/static/assets/');
-	replaceAssetReferences(allPages);
-	convertHtmlToMarkdown(allPages);
+	await saveAssets(allPagesAssets, 'static/');
+	allPages = replaceAssetReferences(allPages);
 	await savePosts(allPages, 'src/lib/data/pages.json');
 })();

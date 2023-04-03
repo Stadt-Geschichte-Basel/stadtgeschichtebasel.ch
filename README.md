@@ -34,7 +34,18 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 
 ## Roadmap
 
-No changes are currently planned.
+- [x] Basic layout
+- [x] Download all posts and pages from sgb.hypotheses.org
+- [x] Download all assets from sgb.hypotheses.org
+- [x] Implement blog functionality
+- [x] Implement page functionality
+- [x] Add a robots.txt
+- [ ] Add search functionality via lunr or elasticlunr (or similar)
+- [ ] Add a sitemap
+- [ ] Add a agenda page
+- [ ] Add a map page
+- [ ] Remove mdsvex dependency if no longer needed
+- [ ] Remove turndown dependency if no longer needed
 
 ## Contributing
 

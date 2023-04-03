@@ -23,25 +23,19 @@
 		</li>
 		<li aria-current={$page.url.pathname === '/neuzeig' ? 'page' : undefined}>
 			<a
-				class="cursor-pointer {$page.url.pathname === '/neuzeit'
-					? 'font-bold'
-					: 'font-normal'}"
+				class="cursor-pointer {$page.url.pathname === '/neuzeit' ? 'font-bold' : 'font-normal'}"
 				href="/neuzeit">Neuzeit</a
 			>
 		</li>
 		<li aria-current={$page.url.pathname === '/mittelalter' ? 'page' : undefined}>
 			<a
-				class="cursor-pointer {$page.url.pathname === '/mittelalter'
-					? 'font-bold'
-					: 'font-normal'}"
+				class="cursor-pointer {$page.url.pathname === '/mittelalter' ? 'font-bold' : 'font-normal'}"
 				href="/mittelalter">Mittelalter</a
 			>
 		</li>
 		<li aria-current={$page.url.pathname === '/antike' ? 'page' : undefined}>
 			<a
-				class="cursor-pointer {$page.url.pathname === '/antike'
-					? 'font-bold'
-					: 'font-normal'}"
+				class="cursor-pointer {$page.url.pathname === '/antike' ? 'font-bold' : 'font-normal'}"
 				href="/antike">Antike</a
 			>
 		</li>

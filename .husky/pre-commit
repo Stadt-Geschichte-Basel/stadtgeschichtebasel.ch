@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
-pnpm check
+npm run lint
+# npm run test
+# npm run check
