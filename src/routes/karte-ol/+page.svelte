@@ -34,7 +34,8 @@
 		view.setZoom(zoom + 1);
 	}
 </script>
+
 <h1>Karte</h1>
-<div id="map" class="w-100 h-[80vh]"/>
+<div id="map" class="w-100 h-[80vh]" />
 <button on:click={zoomOut}>Zoom Out</button>
 <button on:click={zoomIn}>Zoom In</button>

@@ -50,6 +50,7 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] Add map page
 - [ ] Add dark mode
 - [ ] Add breadcrumb
+- [ ] Add confirmation page for newsletter subscription
 - [ ] Remove mdsvex dependency if no longer needed
 - [ ] Remove turndown dependency if no longer needed
 - [ ] <https://toc.janosh.dev/?ref=madewithsvelte.com>

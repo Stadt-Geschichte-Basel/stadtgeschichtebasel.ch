@@ -36,6 +36,7 @@
 		"leaflet": "^1.9.3",
 		"lunr": "^2.3.9",
 		"lunr-languages": "^1.10.0",
+		"maplibre-gl": "^2.4.0",
 		"mdsvex": "^0.10.6",
 		"ol": "^7.3.0",
 		"postcss": "^8.4.21",

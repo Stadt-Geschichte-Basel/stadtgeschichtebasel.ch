@@ -3,8 +3,12 @@
 </script>
 
 <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-	<a class="cursor-pointer {$page.url.pathname === '/' ? 'font-bold' : 'font-normal'}" href="/"
-		>Blog</a
+	<a
+		class="cursor-pointer {$page.url.pathname === '/' ||
+		new String($page.url.pathname).startsWith('/blog/')
+			? 'font-bold'
+			: 'font-normal'}"
+		href="/">Blog</a
 	>
 </li>
 <li aria-current={$page.url.pathname === '/geschichte' ? 'page' : undefined}>

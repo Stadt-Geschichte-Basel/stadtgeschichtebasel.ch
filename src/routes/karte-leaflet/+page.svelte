@@ -33,11 +33,13 @@
 		}
 	});
 </script>
-<article>
-<h1>Karte</h1>
 
-<div bind:this={mapElement} class="w-100 h-[80vh]"/>
+<article>
+	<h1>Karte</h1>
+
+	<div bind:this={mapElement} class="w-100 h-[80vh]" />
 </article>
+
 <style>
 	@import 'leaflet/dist/leaflet.css';
 </style>
