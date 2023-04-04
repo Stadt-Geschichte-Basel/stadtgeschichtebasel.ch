@@ -1,9 +1,7 @@
 // scripts/script.js
 import axios from 'axios';
-import fs from 'fs/promises';
+import { promises as fs } from 'fs';
 import path from 'path';
-
-const URL = 'https://sgb.hypotheses.org/';
 
 // 1. Get all posts including paginated pages
 async function getAllPosts(baseUrl) {
@@ -23,7 +21,7 @@ function extractAssets(posts) {
 		const content = post.content.rendered;
 		let match;
 		while ((match = regex.exec(content))) {
-			if (match[1].startsWith(URL)) {
+			if (match[1].startsWith('https://sgb.hypotheses.org/')) {
 				acc.push(match[1]);
 			}
 		}
@@ -37,7 +35,7 @@ async function saveAssets(assets, folder) {
 	await Promise.all(
 		assets.map(async (url) => {
 			const filename = path.basename(url);
-			const directory = path.dirname(url).replace(URL, '');
+			const directory = path.dirname(url).replace('https://sgb.hypotheses.org/', '');
 			const destination = path.join(folder, directory, filename);
 			const { data } = await axios.get(url, { responseType: 'arraybuffer' });
 			await fs.mkdir(path.dirname(destination), { recursive: true });
@@ -77,13 +75,13 @@ async function savePosts(posts, filePath) {
 }
 
 (async () => {
-	let allPosts = await getAllPosts(URL + 'wp-json/wp/v2/posts?_embed');
+	let allPosts = await getAllPosts(`https://sgb.hypotheses.org/wp-json/wp/v2/posts?_embed`);
 	const allPostsAssets = extractAssets(allPosts);
 	await saveAssets(allPostsAssets, 'static/');
 	allPosts = replaceAssetReferences(allPosts);
 	await savePosts(allPosts, 'src/lib/data/posts.json');
 
-	let allPages = await getAllPosts(URL + 'wp-json/wp/v2/pages?_embed');
+	let allPages = await getAllPosts(`https://sgb.hypotheses.org/wp-json/wp/v2/pages?_embed`);
 	const allPagesAssets = extractAssets(allPages);
 	await saveAssets(allPagesAssets, 'static/');
 	allPages = replaceAssetReferences(allPages);
