@@ -8,7 +8,7 @@
 	<input id="sgb-drawer" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content flex flex-col">
 		<!-- Navbar -->
-		<div class="navbar w-full bg-base-300">
+		<div class="navbar sticky top-0 w-full bg-base-300">
 			<div class="flex-none lg:hidden">
 				<label for="sgb-drawer" class="btn-ghost btn-square btn">
 					<svg
@@ -28,8 +28,28 @@
 			<div class="mx-2 flex-1 px-2">
 				<a href="/" class="cursor-pointer"> <img src={Logo} alt="" class="h-8" /></a>
 			</div>
-			<div class="form-control mx-2 flex-1 px-2">
+			<!-- <div class="form-control mx-2 flex-1 px-2">
 				<input type="text" placeholder="Suche" class="input-bordered input" />
+			</div> -->
+			<div class="form-control mx-2 flex-1 px-2">
+				<div class="input-group">
+					<input type="text" placeholder="Suche…" class="input-bordered input" />
+					<button class="btn-info btn-square btn">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							class="h-6 w-6"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+							/></svg
+						>
+					</button>
+				</div>
 			</div>
 			<!-- TODO implement search with lunrjs as in src/lib/search-index.js -->
 			<div class="hidden flex-none lg:block">
@@ -38,7 +58,7 @@
 				</ul>
 			</div>
 		</div>
-		<main class="prose md:container xl:prose-xl md:mx-auto">
+		<main class="container prose mx-auto p-2 xl:prose-xl lg:p-4">
 			<slot />
 		</main>
 		<footer class="footer bg-base-300 p-10 text-base-content">
@@ -46,10 +66,10 @@
 				<span class="footer-title">Über uns</span>
 				<ul>
 					<li>
-						<a href="/ueber-uns#social-media">Social Media und Newsletter</a>
+						<a href="/ueber-uns#social-media">Social Media</a>
 					</li>
 					<li>
-						<a href="/ueber-uns#medien">Medien und Pressekit</a>
+						<a href="/ueber-uns#medien">Presse</a>
 					</li>
 					<li>
 						<a href="/ueber-uns#lehrmittel">Lehrmittel</a>
@@ -58,9 +78,27 @@
 						<a href="/ueber-uns#impressum">Impressum</a>
 					</li>
 					<li>
-						<a href="/datenschutzerklaerung-der-stadt-geschichte-basel">Datenschutzerklärung</a>
+						<a href="/datenschutzerklaerung-der-stadt-geschichte-basel">Datenschutz</a>
 					</li>
 				</ul>
+			</div>
+			<div>
+				<span class="footer-title">Newsletter</span>
+				<form class="form-control" aria-label="Abonnieren Sie unseren Newsletter">
+					<label class="label hidden" for="email-input">
+						<span class="label-text">Ihre Email</span>
+					</label>
+					<div class="input-group">
+						<input
+							id="email-input"
+							type="email"
+							placeholder="name@domain.ch"
+							class="input-bordered input"
+							required
+						/>
+						<button type="submit" class="btn-primary btn">Abonnieren</button>
+					</div>
+				</form>
 			</div>
 			<div>
 				<span class="footer-title">Social Media</span>
