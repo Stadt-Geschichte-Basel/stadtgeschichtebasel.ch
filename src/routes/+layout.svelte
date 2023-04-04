@@ -1,6 +1,7 @@
 <script>
 	import '../app.css';
 	import MenuItems from '../components/MenuItems.svelte';
+	import Newsletter from '../components/Newsletter.svelte';
 	import Logo from '$lib/images/logo.svg';
 </script>
 
@@ -10,7 +11,7 @@
 		<!-- Navbar -->
 		<div class="navbar sticky top-0 w-full bg-base-300">
 			<div class="flex-none lg:hidden">
-				<label for="sgb-drawer" class="btn-ghost btn-square btn">
+				<label for="sgb-drawer" class="btn-primary btn-square btn">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -34,7 +35,7 @@
 			<div class="form-control mx-2 flex-1 px-2">
 				<div class="input-group">
 					<input type="text" placeholder="Suche…" class="input-bordered input" />
-					<button class="btn-info btn-square btn">
+					<button class="btn-primary btn-square btn">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-6 w-6"
@@ -84,21 +85,15 @@
 			</div>
 			<div>
 				<span class="footer-title">Newsletter</span>
-				<form class="form-control" aria-label="Abonnieren Sie unseren Newsletter">
-					<label class="label hidden" for="email-input">
-						<span class="label-text">Ihre Email</span>
-					</label>
-					<div class="input-group">
-						<input
-							id="email-input"
-							type="email"
-							placeholder="name@domain.ch"
-							class="input-bordered input"
-							required
-						/>
-						<button type="submit" class="btn-primary btn">Abonnieren</button>
-					</div>
-				</form>
+				<div class="group">
+					<div
+						class="tooltip-open tooltip tooltip-top hidden group-hover:block"
+						data-tip="Ihre E-Mail-Adresse wird nur dazu genutzt, Ihnen unseren Newsletter und Informationen über
+				unsere Tätigkeiten zu senden. Ihnen steht jederzeit der Abmeldelink zur Verfügung, den wir
+				in jede gesendete E-Mail einfügen."
+					/>
+					<Newsletter />
+				</div>
 			</div>
 			<div>
 				<span class="footer-title">Social Media</span>
