@@ -8,9 +8,9 @@ module.exports = {
 	theme: {
 		fontFamily: {
 			sans: ['Euclid Circular B', 'sans-serif']
-		},
-		container: {
-			padding: '2rem'
 		}
+		// container: {
+		// 	padding: '2rem'
+		// }
 	}
 };

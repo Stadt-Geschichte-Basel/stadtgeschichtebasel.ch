@@ -6,6 +6,8 @@
 	import { onMount } from 'svelte';
 
 	let map;
+	// TODO https://api3.geo.admin.ch/api/examples.html
+	// https://codesandbox.io/s/geoadmin-with-vanilla-openlayers-z3dij
 
 	onMount(() => {
 		map = new Map({

@@ -9,22 +9,31 @@ import autoprefixer from 'autoprefixer';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	extensions: ['.svelte', ...mdsvexConfig.extensions],
-
-	kit: {
-		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
-		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
-		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
-		adapter: adapter()
-	},
 	preprocess: [
+		mdsvex(mdsvexConfig),
 		// vitePreprocess(),
 		preprocess({
 			postcss: {
 				plugins: [tailwind, autoprefixer]
 			}
-		}),
-		mdsvex(mdsvexConfig)
-	]
+		})
+	],
+	kit: {
+		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
+		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
+		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
+		adapter: adapter({
+			// csp: {
+			// 	directives: {
+			// 		'script-src': ['self']
+			// 	},
+			// 	reportOnly: {
+			// 		'script-src': ['self']
+			// 	}
+			// },
+			// precompress: true
+		})
+	}
 };
 
 export default config;

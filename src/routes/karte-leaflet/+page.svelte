@@ -10,12 +10,16 @@
 			const leaflet = await import('leaflet');
 
 			map = leaflet.map(mapElement).setView([47.55073, 7.59282], 18);
-
+			// TODO https://leaflet-tilelayer-swiss.karavia.ch/
 			leaflet
-				.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-					attribution:
-						'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-				})
+				.tileLayer(
+					'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/{z}/{x}/{y}.jpeg',
+					{
+						// .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						attribution:
+							'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+					}
+				)
 				.addTo(map);
 
 			leaflet

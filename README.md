@@ -40,9 +40,10 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [x] Implement blog functionality
 - [x] Implement page functionality
 - [x] Add robots.txt
-- [ ] Add fonts
+- [x] Add fonts
 - [ ] Add Meta-Tag, Twitter Card and OpenGraph Generator
 - [ ] Add search functionality via lunr or elasticlunr (or similar)
+- [ ] Collapse search on mobile
 - [ ] Read params from url
 - [ ] Add newsletter functionality
 - [ ] Add wcag accessibility functionality and logo
@@ -58,6 +59,8 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] <https://toc.janosh.dev/?ref=madewithsvelte.com>
 - [ ] <https://a11y.digitaldialog.swiss/checklist>
 - [ ] <https://www.neurodiversity.design/>
+- [ ] Add metadata to svg <https://www.w3.org/TR/SVGTiny12/metadata.html>
+- [ ] Add "@vite-pwa/sveltekit": "^0.2.1",
 
 ## Contributing
 

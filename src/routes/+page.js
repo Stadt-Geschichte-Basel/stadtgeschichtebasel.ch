@@ -1,3 +1,6 @@
+// uncomment for PWA
+// export const csr = false;
+
 import posts from '$lib/data/posts.json';
 
 export function load() {
