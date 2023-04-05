@@ -40,6 +40,8 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [x] Implement blog functionality
 - [x] Implement page functionality
 - [x] Add robots.txt
+- [ ] Add fonts
+- [ ] Add Meta-Tag, Twitter Card and OpenGraph Generator
 - [ ] Add search functionality via lunr or elasticlunr (or similar)
 - [ ] Read params from url
 - [ ] Add newsletter functionality
