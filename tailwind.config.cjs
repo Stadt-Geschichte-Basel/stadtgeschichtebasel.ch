@@ -5,15 +5,15 @@ module.exports = {
 		themes: [
 			{
 				'stadt-geschichte-basel': {
-					primary: '#004488',
-					secondary: '#EECC66',
-					accent: '#EE99AA',
-					neutral: '#000000',
-					'base-100': '#F0F0F0',
-					info: '#6699CC',
-					success: '#EE99AA',
-					warning: '#997700',
-					error: '#994455'
+					primary: '#0077BB',
+					secondary: '#EE7733',
+					accent: '#CCBB44',
+					neutral: '#333333',
+					'base-100': '#FFFFFF',
+					info: '#009988',
+					success: '#0077BB',
+					warning: '#EE7733',
+					error: '#CC3311'
 				}
 			}
 		]
