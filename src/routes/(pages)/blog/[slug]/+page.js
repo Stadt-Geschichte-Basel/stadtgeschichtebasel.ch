@@ -1,8 +1,7 @@
 import { error } from '@sveltejs/kit';
-import posts from '$lib/data/posts.json';
 
-export function load({ params }) {
-	const post = posts.find((post) => post.slug === params.slug);
+export async function load({ fetch, params }) {
+	const post = await fetch(`/blog/post-${params.slug}.json`).then((res) => res.json());
 
 	if (!post) throw error(404);
 	return post;

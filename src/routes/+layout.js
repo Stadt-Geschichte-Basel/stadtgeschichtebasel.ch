@@ -1,4 +1,4 @@
-// export const prerender = true;
+export const prerender = true;
 
 // PWA
 // export const csr = false;

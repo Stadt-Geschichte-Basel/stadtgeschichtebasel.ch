@@ -74,11 +74,11 @@ async function savePosts(posts, filePath) {
 }
 
 (async () => {
-	let allPosts = await getAllPosts(`https://sgb.hypotheses.org/wp-json/wp/v2/posts?_embed`);
+	/*let allPosts = await getAllPosts(`https://sgb.hypotheses.org/wp-json/wp/v2/posts?_embed`);
 	const allPostsAssets = extractAssets(allPosts);
 	await saveAssets(allPostsAssets, 'static/');
 	allPosts = replaceURL(allPosts);
-	await savePosts(allPosts, 'src/lib/data/posts.json');
+	await savePosts(allPosts, 'src/lib/data/posts.json');*/
 
 	let allPages = await getAllPosts(`https://sgb.hypotheses.org/wp-json/wp/v2/pages?_embed`);
 	const allPagesAssets = extractAssets(allPages);

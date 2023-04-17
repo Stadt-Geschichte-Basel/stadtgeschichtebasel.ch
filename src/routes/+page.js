@@ -1,10 +1,9 @@
 // uncomment for PWA
 // export const csr = false;
 
-import posts from '$lib/data/posts.json';
-
-export function load() {
+/** @type {import('./$types').PageLoad} */
+export async function load(event) {
 	// Filter out posts with category 14 (Forschung)
-	const filteredPosts = posts.filter((post) => !post.categories.includes(14));
+	const filteredPosts = await event.fetch('/blog/posts-14.json').then((res) => res.json());
 	return { posts: filteredPosts };
 }
