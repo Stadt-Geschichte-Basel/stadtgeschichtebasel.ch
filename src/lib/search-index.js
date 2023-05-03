@@ -1,12 +1,13 @@
 import lunr from 'lunr/lunr.js';
 import lunrDe from 'lunr-languages/lunr.de.js';
 import lunrStemmerSupport from 'lunr-languages/lunr.stemmer.support.js';
-import posts from '$lib/data/posts.json';
-import pages from '$lib/data/pages.json';
 
 // Register the languages and the stemmer support
 lunrStemmerSupport(lunr);
 lunrDe(lunr);
+
+const posts = await fetch('/blog/posts-14.json').then((res) => res.json());
+const pages = await fetch('/pages.json').then((res) => res.json());
 
 // Define the fields to be indexed
 const index = lunr(function () {

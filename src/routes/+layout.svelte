@@ -94,21 +94,21 @@
 		<footer class="footer bg-base-300 p-10 text-base-content">
 			<div>
 				<span class="footer-title">Über uns</span>
-				<ul>
-					<li>
+				<ul class="leading-relaxed">
+					<li class="link-hover link">
 						<a href="/ueber-uns#social-media">Social Media</a>
 					</li>
-					<li>
+					<li class="link-hover link">
 						<a href="/ueber-uns#medien">Presse</a>
 					</li>
-					<li>
+					<li class="link-hover link">
 						<a href="/ueber-uns#lehrmittel">Lehrmittel</a>
 					</li>
-					<li>
+					<li class="link-hover link">
 						<a href="/ueber-uns#impressum">Impressum</a>
 					</li>
-					<li>
-						<a href="/datenschutzerklaerung-der-stadt-geschichte-basel">Datenschutz</a>
+					<li class="link-hover link">
+						<a href="/ueber-uns#datenschutz">Datenschutz</a>
 					</li>
 				</ul>
 			</div>

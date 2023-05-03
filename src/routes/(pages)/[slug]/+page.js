@@ -1,7 +1,8 @@
 import { error, redirect } from '@sveltejs/kit';
-import pages from '$lib/data/pages.json';
+// import pages from '$lib/data/pages.json';
 
-export async function load({ params }) {
+/** @type {import('./$types').PageLoad} */
+export async function load({ fetch, params }) {
 	// if params can be converted to a number, it's an id of a post
 	if (Number.isInteger(parseInt(params.slug))) {
 		const post = await fetch(
@@ -12,7 +13,7 @@ export async function load({ params }) {
 	}
 
 	// else it's a slug of a page
-	const page = pages.find((page) => page.slug === params.slug);
+	const page = await fetch(`/page-${params.slug}.json`).then((res) => res.json());
 
 	if (!page) throw error(404);
 	return page;
