@@ -22,7 +22,7 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"commit": "cz",
 		"prepare": "husky install",
-		"postbuild": "npx svelte-sitemap --domain https://beta.stadtgeschichtebasel.ch"
+		"postbuild": "npx svelte-sitemap --out-dir .svelte-kit/cloudflare --domain https://beta.stadtgeschichtebasel.ch"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.33.0",
