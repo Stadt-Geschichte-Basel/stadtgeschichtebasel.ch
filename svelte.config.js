@@ -31,8 +31,7 @@ const config = {
 			// 		'script-src': ['self']
 			// 	}
 			// },
-			precompress: true,
-			strict: false
+			precompress: true
 		})
 	}
 };

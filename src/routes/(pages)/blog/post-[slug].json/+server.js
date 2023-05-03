@@ -1,3 +1,5 @@
+export const prerender = true;
+
 import { json } from '@sveltejs/kit';
 import fs from 'fs/promises';
 import path from 'path';
