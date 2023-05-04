@@ -28,13 +28,14 @@ export async function getAllPosts(baseUrl) {
  * @returns {Promise<void>} A promise that resolves when all assets have been saved.
  */
 async function saveAssets(assets, folder) {
-	for await (const url of assets) {
+	const downloads = assets.map(async (url) => {
 		const { dir, name, ext } = path.parse(url.replace('https://sgb.hypotheses.org/', ''));
 		const destination = path.join(folder, dir, `${name}${ext}`);
 		const data = await (await fetch(url)).arrayBuffer();
 		await fs.mkdir(path.dirname(destination), { recursive: true });
 		await fs.writeFile(destination, Buffer.from(data));
-	}
+	});
+	await Promise.all(downloads);
 }
 
 /**
@@ -44,11 +45,11 @@ async function saveAssets(assets, folder) {
  */
 export function extractAssets(content) {
 	const regex = /<img.*?src="(https:\/\/sgb\.hypotheses\.org\/)(.*?)"/g;
-	const originalURLs = [];
-	const replacedPost = content.replace(regex, (match, url, path) => {
-		originalURLs.push(url + path);
+	const urls = [];
+	const modifiedContent = content.replace(regex, (match, url, path) => {
+		urls.push(url + path);
 		return match.replace(url, '').replace(path, `${assets}/${path}`);
 	});
-	saveAssets(originalURLs, 'static/');
-	return replacedPost;
+	saveAssets(urls, 'static/');
+	return modifiedContent;
 }
