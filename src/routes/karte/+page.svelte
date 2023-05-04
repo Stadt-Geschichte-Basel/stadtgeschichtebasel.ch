@@ -2,8 +2,10 @@
 	import maplibregl from 'maplibre-gl';
 	import { onMount, onDestroy } from 'svelte';
 
+	let map;
+
 	onMount(() => {
-		let map = new maplibregl.Map({
+		map = new maplibregl.Map({
 			container: 'map',
 			maxBounds: [5.94, 45.81, 10.51, 47.81],
 			style:
