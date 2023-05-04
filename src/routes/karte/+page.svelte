@@ -2,31 +2,37 @@
 	import maplibregl from 'maplibre-gl';
 	import { onMount, onDestroy } from 'svelte';
 
-	let map;
-
 	onMount(() => {
-		map = new maplibregl.Map({
+		let map = new maplibregl.Map({
 			container: 'map',
 			maxBounds: [5.94, 45.81, 10.51, 47.81],
 			style:
 				'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
-				// 'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte-imagery.vt/style.json',
-			// 'https://api.maptiler.com/maps/streets/style.json?key=yaXJCgx2SbG9gkZmAXQ2', // stylesheet location
-			// https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte-imagery.vt/style.json
-			// https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json
-			// TODO https://observablehq.com/@rkaravia/swisstopo-light-base-map-mapbox-terrain
-			center: [47.55073, 7.59282], // starting position [lng, lat]
-			zoom: 8 // starting zoom
+			center: [7.59274, 47.55094],
+			zoom: 12
 		});
-		new maplibregl.Marker().setLngLat([47.55073, 7.59282]).addTo(map);
 		map.addControl(new maplibregl.NavigationControl());
 		map.addControl(new maplibregl.FullscreenControl());
-		map.addControl(new maplibregl.ScaleControl(
-			{
-				unit: 'metric'
-			}
-		));
+		map.addControl(new maplibregl.ScaleControl());
 
+		map.addControl(
+			new maplibregl.AttributionControl({
+				compact: true
+			})
+		);
+
+		new maplibregl.Marker({
+			color: '#000'
+		})
+			.setLngLat([7.59274, 47.55094])
+			.setPopup(
+				new maplibregl.Popup({
+					offset: 25
+				}).setHTML(
+					'<h1 class="text-xl">Stadt.Geschichte.Basel</h1><p>Wir schreiben Basler Geschichten.</p>'
+				)
+			)
+			.addTo(map);
 	});
 
 	onDestroy(() => {
