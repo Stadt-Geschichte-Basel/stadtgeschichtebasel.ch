@@ -88,7 +88,8 @@
 				</ul>
 			</div>
 		</div>
-		<main class="container prose mx-auto p-2 xl:prose-xl lg:p-4">
+		<!-- <main class="container prose mx-auto p-2 xl:prose-xl lg:p-4"> -->
+		<main>
 			<slot />
 		</main>
 		<footer class="footer bg-base-300 p-10 text-base-content">
