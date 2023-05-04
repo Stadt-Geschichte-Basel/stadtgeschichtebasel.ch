@@ -1,20 +1,7 @@
 export const prerender = true;
 
 import { json } from '@sveltejs/kit';
-
-async function getAllPosts(baseUrl) {
-	const response = await fetch(baseUrl);
-	const data = await response.json();
-	const totalPages = parseInt(response?.headers.get('x-wp-totalpages') ?? '1', 10);
-	const promises = Array.from({ length: totalPages - 1 }, (_, i) =>
-		fetch(`${baseUrl}&page=${i + 2}`).then((res) => res.json())
-	);
-	const allPosts = await Promise.allSettled([data, ...promises]);
-	return allPosts
-		.filter(({ status }) => status === 'fulfilled')
-		.map(({ value }) => value)
-		.flat();
-}
+import { getAllPosts } from '$lib/utils';
 
 /** Create a new route handler that fetches all posts with given categories from the Hypotheses API and returns it as JSON.
  * the slug is passed as a parameter to the route handler.
