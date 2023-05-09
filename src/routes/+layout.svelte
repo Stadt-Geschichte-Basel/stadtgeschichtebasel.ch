@@ -1,37 +1,19 @@
 <script>
-	import '../app.css';
-	import MenuItems from '../components/MenuItems.svelte';
-	import Newsletter from '../components/Newsletter.svelte';
+	import Navigation from '$lib/Navigation.svelte';
+	import Newsletter from '$lib/Newsletter.svelte';
 	import Logo from '$lib/images/logo.svg';
-	// uncomment for PWA
-	// import { onMount } from 'svelte';
-	// import { pwaInfo } from 'virtual:pwa-info';
+	import { AppBar, AppShell, Drawer, drawerStore } from '@skeletonlabs/skeleton';
+	import '@skeletonlabs/skeleton/styles/all.css';
+	// import '@skeletonlabs/skeleton/styles/skeleton.css';
+	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
+	import '../app.postcss';
 
-	// onMount(async () => {
-	// 	if (pwaInfo) {
-	// 		const { registerSW } = await import('virtual:pwa-register');
-	// 		registerSW({
-	// 			immediate: true,
-	// 			onRegistered(r) {
-	// 				// uncomment following code if you want check for updates
-	// 				// r && setInterval(() => {
-	// 				//    console.log('Checking for sw update')
-	// 				//    r.update()
-	// 				// }, 20000 /* 20s for testing purposes */)
-	// 				console.log(`SW Registered: ${r}`);
-	// 			},
-	// 			onRegisterError(error) {
-	// 				console.log('SW registration error', error);
-	// 			}
-	// 		});
-	// 	}
-	// });
-
-	// $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : '';
+	function drawerOpen() {
+		drawerStore.open({});
+	}
 </script>
 
 <svelte:head>
-	<!-- {@html webManifest} -->
 	<title>Stadt.Geschichte.Basel</title>
 	<meta name="keywords" content="Basel, Geschichte, Stadtgeschichte, Kultur" />
 	<meta
@@ -72,99 +54,41 @@
 	<meta property="og:image:height" content="512" />
 </svelte:head>
 
-<div class="drawer">
-	<input id="sgb-drawer" type="checkbox" class="drawer-toggle" />
-	<div class="drawer-content flex flex-col">
-		<!-- Navbar -->
-		<div class="navbar sticky top-0 w-full bg-base-300">
-			<div class="flex-none lg:hidden">
-				<label for="sgb-drawer" class="btn-primary btn-square btn">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						class="inline-block h-6 w-6 stroke-current"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M4 6h16M4 12h16M4 18h16"
-						/></svg
-					>
-				</label>
-			</div>
-			<div class="mx-2 flex-1 px-2">
-				<a href="/" class="cursor-pointer"> <img src={Logo} alt="" class="h-8" /></a>
-			</div>
-			<!-- <div class="form-control mx-2 flex-1 px-2">
-				<input type="text" placeholder="Suche" class="input-bordered input" />
-			</div> -->
-			<div class="form-control mx-2 flex-1 px-2">
-				<div class="input-group">
-					<input type="text" placeholder="Suche…" class="input-bordered input" />
-					<button class="btn-primary btn-square btn">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-							/></svg
-						>
+<Drawer>
+	<Navigation />
+</Drawer>
+
+<!-- App Shell -->
+<AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-64">
+	<svelte:fragment slot="header">
+		<AppBar>
+			<svelte:fragment slot="lead">
+				<div class="flex items-center">
+					<button class="btn btn-sm mr-4 lg:hidden" on:click={drawerOpen}>
+						<span>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								class="inline-block h-6 w-6 stroke-current"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4 6h16M4 12h16M4 18h16"
+								/></svg
+							>
+							<!-- <svg viewBox="0 0 100 80" class="h-4 w-4 fill-token">
+								<rect width="100" height="20" />
+								<rect y="30" width="100" height="20" />
+								<rect y="60" width="100" height="20" />
+							</svg> -->
+						</span>
 					</button>
+					<a href="/" class="cursor-pointer"> <img src={Logo} alt="" class="h-12" /></a>
 				</div>
-			</div>
-			<!-- TODO implement search with lunrjs as in src/lib/search-index.js -->
-			<div class="hidden flex-none lg:block">
-				<ul class="menu menu-horizontal">
-					<MenuItems />
-				</ul>
-			</div>
-		</div>
-		<!-- <main class="container prose mx-auto p-2 xl:prose-xl lg:p-4"> -->
-		<main>
-			<slot />
-		</main>
-		<footer class="footer bg-base-300 p-10 text-base-content">
-			<div>
-				<span class="footer-title">Über uns</span>
-				<ul class="leading-relaxed">
-					<li class="link-hover link">
-						<a href="/ueber-uns#social-media">Social Media</a>
-					</li>
-					<li class="link-hover link">
-						<a href="/ueber-uns#medien">Presse</a>
-					</li>
-					<li class="link-hover link">
-						<a href="/ueber-uns#lehrmittel">Lehrmittel</a>
-					</li>
-					<li class="link-hover link">
-						<a href="/ueber-uns#impressum">Impressum</a>
-					</li>
-					<li class="link-hover link">
-						<a href="/ueber-uns#datenschutz">Datenschutz</a>
-					</li>
-				</ul>
-			</div>
-			<div>
-				<span class="footer-title">Newsletter</span>
-				<div class="group">
-					<div
-						class="tooltip-open tooltip tooltip-top hidden group-hover:block"
-						data-tip="Ihre E-Mail-Adresse wird nur dazu genutzt, Ihnen unseren Newsletter und Informationen über
-				unsere Tätigkeiten zu senden. Ihnen steht jederzeit der Abmeldelink zur Verfügung, den wir
-				in jede gesendete E-Mail einfügen."
-					/>
-					<Newsletter />
-				</div>
-			</div>
-			<div>
-				<span class="footer-title">Social Media</span>
+			</svelte:fragment>
+			<svelte:fragment slot="trail">
 				<ul class="grid grid-flow-col gap-4">
 					<li>
 						<a href="https://www.instagram.com/sta.ge.ba/"
@@ -247,13 +171,70 @@
 						</a>
 					</li>
 				</ul>
+				<!-- <a
+					class="btn btn-sm variant-ghost-surface"
+					href="https://discord.gg/EXqV7W8MtY"
+					target="_blank"
+					rel="noreferrer"
+				>
+					Discord
+				</a>
+				<a
+					class="btn btn-sm variant-ghost-surface"
+					href="https://twitter.com/SkeletonUI"
+					target="_blank"
+					rel="noreferrer"
+				>
+					Twitter
+				</a>
+				<a
+					class="btn btn-sm variant-ghost-surface"
+					href="https://github.com/skeletonlabs/skeleton"
+					target="_blank"
+					rel="noreferrer"
+				>
+					GitHub
+				</a> -->
+			</svelte:fragment>
+		</AppBar>
+	</svelte:fragment>
+
+	<svelte:fragment slot="sidebarLeft">
+		<Navigation />
+	</svelte:fragment>
+	<slot />
+	<svelte:fragment slot="pageFooter">
+		<div>
+			<span class="footer-title">Über uns</span>
+			<ul class="leading-relaxed">
+				<li class="link-hover link">
+					<a href="/ueber-uns#social-media">Social Media</a>
+				</li>
+				<li class="link-hover link">
+					<a href="/ueber-uns#medien">Presse</a>
+				</li>
+				<li class="link-hover link">
+					<a href="/ueber-uns#lehrmittel">Lehrmittel</a>
+				</li>
+				<li class="link-hover link">
+					<a href="/ueber-uns#impressum">Impressum</a>
+				</li>
+				<li class="link-hover link">
+					<a href="/ueber-uns#datenschutz">Datenschutz</a>
+				</li>
+			</ul>
+		</div>
+		<div>
+			<span class="footer-title">Newsletter</span>
+			<div class="group">
+				<div
+					class="tooltip-open tooltip tooltip-top hidden group-hover:block"
+					data-tip="Ihre E-Mail-Adresse wird nur dazu genutzt, Ihnen unseren Newsletter und Informationen über
+			unsere Tätigkeiten zu senden. Ihnen steht jederzeit der Abmeldelink zur Verfügung, den wir
+			in jede gesendete E-Mail einfügen."
+				/>
+				<Newsletter />
 			</div>
-		</footer>
-	</div>
-	<div class="drawer-side">
-		<label for="sgb-drawer" class="drawer-overlay" />
-		<ul class="menu w-40 bg-base-100 p-4">
-			<MenuItems />
-		</ul>
-	</div>
-</div>
+		</div>
+	</svelte:fragment>
+</AppShell>

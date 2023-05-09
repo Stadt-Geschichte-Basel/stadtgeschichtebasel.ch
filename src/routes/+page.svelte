@@ -2,7 +2,8 @@
 	export let data;
 </script>
 
-<div class="container prose mx-auto p-2 xl:prose-xl lg:p-4">
+<div class="container space-y-4 p-10">
+	<!-- <div class="container prose mx-auto p-2 xl:prose-xl lg:p-4"> -->
 	<h1>Blog</h1>
 
 	{#each data.posts as post}

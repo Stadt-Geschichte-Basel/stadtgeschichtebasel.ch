@@ -1,11 +1,11 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
-import { imagetools } from 'vite-imagetools';
+// import { imagetools } from 'vite-imagetools';
 // import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 
 export default defineConfig({
 	plugins: [
-		imagetools(),
+		//imagetools(),
 		sveltekit()
 		// SvelteKitPWA({
 		// 	registerType: 'autoUpdate',

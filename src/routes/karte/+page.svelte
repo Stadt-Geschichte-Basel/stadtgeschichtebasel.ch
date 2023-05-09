@@ -1,53 +1,55 @@
-<script>
-	import maplibregl from 'maplibre-gl';
-	import { onMount, onDestroy } from 'svelte';
+<script lang="ts">
+	import { MapLibre, Marker, Popup } from 'svelte-maplibre';
 
-	let map;
+	let clickedName = '';
 
-	onMount(() => {
-		map = new maplibregl.Map({
-			container: 'map',
-			maxBounds: [5.94, 45.81, 10.51, 47.81],
-			style:
-				'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
-			center: [7.59274, 47.55094],
-			zoom: 12
-		});
-		map.addControl(new maplibregl.NavigationControl());
-		map.addControl(new maplibregl.FullscreenControl());
-		map.addControl(new maplibregl.ScaleControl());
-
-		map.addControl(
-			new maplibregl.AttributionControl({
-				compact: true
-			})
-		);
-
-		new maplibregl.Marker({
-			color: '#000'
-		})
-			.setLngLat([7.59274, 47.55094])
-			.setPopup(
-				new maplibregl.Popup({
-					offset: 25
-				}).setHTML(
-					'<h1 class="text-xl">Stadt.Geschichte.Basel</h1><p>Wir schreiben Basler Geschichten.</p>'
-				)
-			)
-			.addTo(map);
-	});
-
-	onDestroy(() => {
-		if (map) {
-			map.remove();
+	const markers = [
+		{
+			lngLat: [7.59274, 47.55094],
+			label: 'SGB',
+			name: 'Stadt.Geschichte.Basel',
+			description: 'Wir schreiben Basler Geschichten.'
+		},
+		{
+			label: 'HMB',
+			lngLat: [7.590339127047049, 47.55468576396681],
+			name: 'Historisches Museum Basel',
+			description: 'TBD'
+		},
+		{
+			label: 'Kunstmuseum',
+			lngLat: [7.593909367834212, 47.5542525919389],
+			name: 'Kunstmuseum Basel',
+			description: 'TBD'
 		}
-	});
+	];
 </script>
 
-<section>
-	<div id="map" class="w-100 h-[75vh]" />
-</section>
+<MapLibre
+	style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
+	class="relative aspect-[9/16] h-[90vh] max-h-[90vh] w-full sm:aspect-video sm:max-h-full"
+	standardControls
+	zoom={14}
+	center={[7.59274, 47.55094]}
+	maxBounds={[
+		[5.94, 45.81],
+		[10.51, 47.81]
+	]}
+>
+	{#each markers as { lngLat, label, name, description } (label)}
+		<Marker
+			{lngLat}
+			on:click={() => (clickedName = name)}
+			class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black shadow-2xl focus:outline-2 focus:outline-black"
+		>
+			<span>
+				{label}
+			</span>
 
-<style>
-	@import 'maplibre-gl/dist/maplibre-gl.css';
-</style>
+			<Popup openOn="click" offset={[0, -10]} maxWidth={'30%'}>
+				<h3 class="text-lg font-bold">{name}</h3>
+				<p class="text-sm">{description}</p>
+			</Popup>
+		</Marker>
+	{/each}
+</MapLibre>
