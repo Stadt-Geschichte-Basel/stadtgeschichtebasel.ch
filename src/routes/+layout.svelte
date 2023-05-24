@@ -1,12 +1,16 @@
 <script>
+	import { page } from '$app/stores';
 	import Navigation from '$lib/Navigation.svelte';
 	import Newsletter from '$lib/Newsletter.svelte';
 	import Logo from '$lib/images/logo.svg';
+
 	import { AppBar, AppShell, Drawer, drawerStore } from '@skeletonlabs/skeleton';
-	import '@skeletonlabs/skeleton/styles/all.css';
-	// import '@skeletonlabs/skeleton/styles/skeleton.css';
-	import { page } from '$app/stores';
+	// The ordering of these imports is critical to your app working properly
 	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
+	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
+	// import '@skeletonlabs/skeleton/styles/skeleton.css';
+	import '@skeletonlabs/skeleton/styles/all.css';
+	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 
 	$: classesPageFooter = $page.url.pathname === '/karte' ? 'hidden' : '';
