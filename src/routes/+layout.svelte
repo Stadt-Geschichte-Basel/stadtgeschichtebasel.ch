@@ -5,8 +5,18 @@
 	import { AppBar, AppShell, Drawer, drawerStore } from '@skeletonlabs/skeleton';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	// import '@skeletonlabs/skeleton/styles/skeleton.css';
+	import { page } from '$app/stores';
 	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
 	import '../app.postcss';
+
+	$: classesPageFooter = $page.url.pathname === '/karte' ? 'hidden' : '';
+
+	// Base Classes
+	const cBase = 'border-t border-surface-500/10 text-xs md:text-base';
+	const cRowOne =
+		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-5 md:space-y-0';
+	const cRowTwo =
+		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0';
 
 	function drawerOpen() {
 		drawerStore.open({});
@@ -59,7 +69,11 @@
 </Drawer>
 
 <!-- App Shell -->
-<AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-64">
+<AppShell
+	slotSidebarLeft="bg-surface-50 dark:bg-surface-900 border-t border-surface-500/10 w-0 lg:w-64"
+	slotPageFooter="bg-white {classesPageFooter}"
+	slotPageContent="bg-white dark:bg-surface-900 border-t border-surface-500/10"
+>
 	<svelte:fragment slot="header">
 		<AppBar>
 			<svelte:fragment slot="lead">
@@ -204,7 +218,7 @@
 	</svelte:fragment>
 	<slot />
 	<svelte:fragment slot="pageFooter">
-		<div>
+		<!-- <div>
 			<span class="footer-title">Über uns</span>
 			<ul class="leading-relaxed">
 				<li class="link-hover link">
@@ -234,6 +248,126 @@
 			in jede gesendete E-Mail einfügen."
 				/>
 				<Newsletter />
+			</div>
+		</div> -->
+
+		<div class="page-footer {cBase}">
+			<div class="mx-auto w-full max-w-7xl space-y-10 p-4 py-16 md:py-24">
+				<!-- Row 1 -->
+				<section class={cRowOne}>
+					<div
+						class="grid grid-cols-1 place-content-center place-items-center gap-2 md:place-items-start"
+					>
+						<p class="!text-sm opacity-80">UI Toolkit for Svelte + Tailwind.</p>
+						<!-- Current Version -->
+						<span class="badge variant-soft" />
+					</div>
+					<div class="hidden grid-cols-3 gap-8 md:grid">
+						<div class="space-y-6">
+							<h6 class="h6">Explore</h6>
+							<ul class="space-y-3">
+								<li><a class="anchor" href="/docs/introduction">Introduction</a></li>
+								<li><a class="anchor" href="/docs/get-started">Get Started</a></li>
+								<li><a class="anchor" href="/blog">Blog</a></li>
+							</ul>
+						</div>
+						<div class="space-y-6">
+							<h6 class="h6">Features</h6>
+							<ul class="space-y-3">
+								<li><a class="anchor" href="/elements/core">Tailwind</a></li>
+								<li><a class="anchor" href="/actions/clipboard">Svelte</a></li>
+								<li><a class="anchor" href="/utilities/codeblocks">Utilities</a></li>
+							</ul>
+						</div>
+						<div class="space-y-6">
+							<h6 class="h6">Project</h6>
+							<ul class="space-y-3">
+								<li>
+									<a
+										class="anchor"
+										href="https://github.com/skeletonlabs"
+										target="_blank"
+										rel="noreferrer">Github Organization</a
+									>
+								</li>
+								<li>
+									<a
+										class="anchor"
+										href="https://www.npmjs.com/org/skeletonlabs"
+										target="_blank"
+										rel="noreferrer">NPM Organization</a
+									>
+								</li>
+								<li>
+									<a
+										class="anchor"
+										href="https://www.npmjs.com/package/@skeletonlabs/skeleton"
+										target="_blank"
+										rel="noreferrer">NPM Package</a
+									>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<hr class="opacity-20" />
+
+				<!-- Row 2 -->
+				<section class={cRowTwo}>
+					<p>
+						<a
+							class="anchor"
+							href="https://github.com/skeletonlabs/skeleton/blob/master/LICENSE"
+							target="_blank"
+							rel="noreferrer"
+						>
+							MIT License
+						</a>
+						<span class="mx-2 opacity-10">|</span>
+						<a class="anchor" href="https://skeletonlabs.co/" target="_blank" rel="noreferrer"
+							>Skeleton Labs
+						</a>
+					</p>
+					<div class="flex space-x-4">
+						<a
+							class="btn variant-soft"
+							href="https://github.com/skeletonlabs/skeleton"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<i class="fa-brands fa-github" />
+							<span class="ml-2 hidden md:inline-block">Github</span>
+						</a>
+						<a
+							class="btn variant-soft"
+							href="https://discord.gg/EXqV7W8MtY"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<i class="fa-brands fa-discord" />
+							<span class="ml-2 hidden md:inline-block">Discord</span>
+						</a>
+						<a
+							class="btn variant-soft"
+							href="https://twitter.com/SkeletonUI"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<i class="fa-brands fa-twitter" />
+							<span class="ml-2 hidden md:inline-block">Twitter</span>
+						</a>
+						<a
+							class="btn variant-soft"
+							href="https://www.youtube.com/@skeletonlabs"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<i class="fa-brands fa-youtube" />
+							<span class="ml-2 hidden md:inline-block">YouTube</span>
+						</a>
+					</div>
+				</section>
 			</div>
 		</div>
 	</svelte:fragment>
