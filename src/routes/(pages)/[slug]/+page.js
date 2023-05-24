@@ -3,6 +3,7 @@ import { error, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, params }) {
+	// FIXME this is never used
 	// if params can be converted to a number, it's an id of a post
 	if (Number.isInteger(parseInt(params.slug))) {
 		const post = await fetch(
