@@ -11,7 +11,7 @@
 			<h2>
 				<a href={`/blog/${post.slug}`}>{post.title.rendered}</a>
 			</h2>
-			{@html post.excerpt.rendered.replace('https://sgb.hypotheses.org/', '/')}
+			{@html post.excerpt.rendered.replace('https://sgb.hypotheses.org/', '/blog/')}
 		</article>
 	{/each}
 </div>
