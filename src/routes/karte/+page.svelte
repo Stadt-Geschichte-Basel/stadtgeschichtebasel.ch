@@ -46,8 +46,9 @@
 				{label}
 			</span>
 
-			<Popup openOn="click" offset={[0, -10]} maxWidth={'30%'}>
-				<h3 class="text-lg font-bold">{name}</h3>
+			<!-- <Popup openOn="click" offset={[0, -10]} maxWidth={'30%'}> -->
+			<Popup openOn="click" offset={[0, -10]}>
+				<h3 class="font-bold md:text-lg">{name}</h3>
 				<p class="text-sm">{description}</p>
 			</Popup>
 		</Marker>

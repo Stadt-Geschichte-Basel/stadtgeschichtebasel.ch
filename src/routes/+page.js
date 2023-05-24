@@ -3,7 +3,7 @@
 
 /** @type {import('./$types').PageLoad} */
 export async function load(event) {
-	// Filter out posts with category 14 (Forschung)
-	const filteredPosts = await event.fetch('/blog/posts-14.json').then((res) => res.json());
+	// Filter out posts with category 1 (Allgemein)
+	const filteredPosts = await event.fetch('/blog/posts-1.json').then((res) => res.json());
 	return { posts: filteredPosts };
 }
