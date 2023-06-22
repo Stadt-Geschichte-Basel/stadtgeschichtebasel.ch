@@ -1,6 +1,6 @@
+import { assets } from '$app/paths';
 import fs from 'fs/promises';
 import path from 'path';
-import { assets } from '$app/paths';
 
 /**
  * Retrieves all posts from a WordPress REST API endpoint.
