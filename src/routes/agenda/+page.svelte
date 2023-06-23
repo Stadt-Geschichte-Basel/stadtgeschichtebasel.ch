@@ -1,6 +1,7 @@
 <script>
 	export let data;
-	// console.log(data);
+	const activities = data.filteredActivities;
+	// console.log(activities);
 </script>
 
 <article class="container space-y-4 p-10">
@@ -36,5 +37,13 @@
 			<p>Beschreibung: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 		</li>
 		<!-- Fügen Sie weitere Veranstaltungen nach Bedarf hinzu -->
+	</ul>
+	<h2>Activities</h2>
+	<ul>
+		{#each activities as { owner, dauerausstellung, title, shortDescription, originUrl, dates }}
+			<li>
+				<a href={originUrl}><b>{title}</b> {shortDescription}</a>
+			</li>
+		{/each}
 	</ul>
 </article>
