@@ -1,6 +1,8 @@
 import { assets } from '$app/paths';
 import fs from 'fs/promises';
+import { JSDOM } from 'jsdom';
 import path from 'path';
+import { parseSrcset, stringifySrcset } from 'srcset';
 
 /**
  * Retrieves all posts from a WordPress REST API endpoint.
@@ -23,9 +25,9 @@ export async function getAllPosts(baseUrl) {
 
 /**
  * Saves all assets from an array of URLs to a specified folder.
- * @param {Array<string>} assets - An array of asset URLs to save.
+ * @param {Array<String>} assets - An array of asset URLs to save.
  * @param {string} folder - The folder to save the assets to.
- * @returns {Promise<void>} A promise that resolves when all assets have been saved.
+ * @returns {Promise<void[]>} A promise that resolves when all assets have been saved.
  */
 async function saveAssets(assets, folder) {
 	const downloads = assets.map(async (url) => {
@@ -33,23 +35,46 @@ async function saveAssets(assets, folder) {
 		const destination = path.join(folder, dir, `${name}${ext}`);
 		const data = await (await fetch(url)).arrayBuffer();
 		await fs.mkdir(path.dirname(destination), { recursive: true });
-		await fs.writeFile(destination, Buffer.from(data));
+		return fs.writeFile(destination, Buffer.from(data));
 	});
-	await Promise.all(downloads);
+	return Promise.all(downloads);
 }
 
 /**
  * Replaces all asset URLs in a given content string with their corresponding paths relative to the 'assets' folder.
  * @param {string} content - The content string to extract assets from and replace URLs in.
- * @returns {string} The modified content string with URLs replaced.
+ * @returns {Promise<string>} The modified content string with URLs replaced.
  */
-export function extractAssets(content) {
-	const regex = /<img.*?src="(https:\/\/sgb\.hypotheses\.org\/)(.*?)"/g;
-	const urls = [];
-	const modifiedContent = content.replace(regex, (match, url, path) => {
-		urls.push(url + path);
-		return match.replace(url, '').replace(path, `${assets}/${path}`);
+export async function extractAssets(content) {
+	const doc = new JSDOM(content, { contentType: 'text/html' }).window.document;
+	const images = Array.from(doc.querySelectorAll('img[src^="https://sgb.hypotheses.org/"]'));
+	const srcsets = images.map((img) => {
+		const argument = img.getAttribute('srcset');
+		const oldSrcset = argument ? parseSrcset(argument) : [];
+		img.setAttribute(
+			'srcset',
+			stringifySrcset(
+				oldSrcset.map((src) => {
+					return {
+						...src,
+						url: `${assets}/${src.url.replace(/^https:\/\/sgb\.hypotheses\.org\//, '')}`
+					};
+				})
+			)
+		);
+		return oldSrcset.map((src) => src.url);
 	});
-	saveAssets(urls, 'static/');
-	return modifiedContent;
+	const srcs = images
+		.map((img) => {
+			const oldurl = new URL(img.getAttribute('src') || '') || null;
+			img.setAttribute('src', `${assets}/${oldurl.pathname}` || '');
+			return oldurl.toString();
+		})
+		.filter(Boolean);
+	/** @type {Array<String>} */
+	const urls = [...new Set([...srcs, ...srcsets.flat()])];
+	if (urls.length) {
+		await saveAssets(urls, 'static/');
+	}
+	return doc.body.innerHTML;
 }

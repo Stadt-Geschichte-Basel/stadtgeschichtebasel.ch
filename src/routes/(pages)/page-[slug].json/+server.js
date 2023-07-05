@@ -13,7 +13,7 @@ export async function GET({ params }) {
 			`https://sgb.hypotheses.org/wp-json/wp/v2/pages?_fields=title,content&slug=${params.slug}`
 		).then((res) => res.json())
 	)[0];
-	post.content.rendered = extractAssets(post.content.rendered);
+	post.content.rendered = await extractAssets(post.content.rendered);
 
 	return json(post);
 }

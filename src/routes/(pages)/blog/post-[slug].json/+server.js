@@ -1,7 +1,7 @@
 export const prerender = true;
 
-import { json } from '@sveltejs/kit';
 import { extractAssets } from '$lib/utils';
+import { json } from '@sveltejs/kit';
 
 /** Create a new route handler that fetches the post from the Hypotheses API and returns it as JSON.
  * the slug is passed as a parameter to the route handler.
@@ -13,7 +13,7 @@ export async function GET({ params }) {
 			`https://sgb.hypotheses.org/wp-json/wp/v2/posts?_fields=title,content&slug=${params.slug}`
 		).then((res) => res.json())
 	)[0];
-	post.content.rendered = extractAssets(post.content.rendered);
+	post.content.rendered = await extractAssets(post.content.rendered);
 
 	return json(post);
 }
