@@ -68,12 +68,12 @@
 				</li>
 			</ul> -->
 		</li>
-		<li aria-current={$page.url.pathname === '/forschung' ? 'page' : undefined}>
+		<!-- <li aria-current={$page.url.pathname === '/forschung' ? 'page' : undefined}>
 			<a
 				class="cursor-pointer {$page.url.pathname === '/forschung' ? 'font-bold' : 'font-normal'}"
 				href="https://forschung.stadtgeschichtebasel.ch/">Forschung</a
 			>
-		</li>
+		</li> -->
 		<li aria-current={$page.url.pathname === '/agenda' ? 'page' : undefined}>
 			<a
 				class="cursor-pointer {$page.url.pathname === '/agenda' ? 'font-bold' : 'font-normal'}"
