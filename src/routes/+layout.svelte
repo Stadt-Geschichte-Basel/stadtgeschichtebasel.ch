@@ -1,7 +1,6 @@
 <script>
 	import { page } from '$app/stores';
 	import Navigation from '$lib/Navigation.svelte';
-	import Newsletter from '$lib/Newsletter.svelte';
 	import Logo from '$lib/images/logo.svg';
 
 	import { AppBar, AppShell, Drawer, drawerStore } from '@skeletonlabs/skeleton';
