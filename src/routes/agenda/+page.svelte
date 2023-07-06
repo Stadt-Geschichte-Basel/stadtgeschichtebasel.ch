@@ -35,10 +35,38 @@
 			<p>Beschreibung: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 		</li>
 	</ul> -->
-	<ul>
+	<!-- <ul>
 		{#each activities as { owner, dauerausstellung, title, shortDescription, originUrl, dates }}
 			<li>
 				<a href={originUrl}><b>{title}</b> {shortDescription}</a>
+			</li>
+		{/each}
+	</ul> -->
+	<ul>
+		{#each activities as activity (activity.title)}
+			<li class="">
+				<p>
+					{activity.title}@{activity.owner}: {activity.shortDescription}
+					<a href={activity.originUrl}>Mehr Infos</a>
+					<br />
+					{#each activity.dates as date (date.startDate)}
+						{#if date.endDate}
+							{date.startDate} - {date.endDate}
+						{:else}
+							{date.startDate}
+						{/if}
+						{#if date.startTime}
+							{#if date.endTime}
+								{date.startTime} - {date.endTime}
+							{:else}
+								{date.startTime}
+							{/if}
+						{/if}
+						{#if date.endTime}
+							{date.endTime}
+						{/if}
+					{/each}
+				</p>
 			</li>
 		{/each}
 	</ul>
