@@ -1,12 +1,11 @@
 <script>
 	export let data;
-	const activities = data.filteredActivities;
-	// console.log(activities);
+	const activities = data.parsedActivities;
 </script>
 
 <article class="container space-y-4 p-10">
 	<h1>Agenda</h1>
-	<h2>Ausstellungen</h2>
+	<!-- <h2>Ausstellungen</h2>
 	<ul>
 		<li>
 			<h3>Veranstaltung 1: Ausstellung</h3>
@@ -20,7 +19,6 @@
 			<p>Ort: Historisches Museum</p>
 			<p>Beschreibung: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 		</li>
-		<!-- Fügen Sie weitere Veranstaltungen nach Bedarf hinzu -->
 	</ul>
 	<h2>Veranstaltungen</h2>
 	<ul>
@@ -36,9 +34,7 @@
 			<p>Ort: Konzerthalle</p>
 			<p>Beschreibung: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 		</li>
-		<!-- Fügen Sie weitere Veranstaltungen nach Bedarf hinzu -->
-	</ul>
-	<h2>Activities</h2>
+	</ul> -->
 	<ul>
 		{#each activities as { owner, dauerausstellung, title, shortDescription, originUrl, dates }}
 			<li>

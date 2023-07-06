@@ -1,4 +1,19 @@
+import { promises as fs } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 import { parseStringPromise } from 'xml2js';
+
+async function saveToFile(data, path) {
+	await fs.writeFile(path, JSON.stringify(data));
+	console.log(`Data saved to: ${path}`);
+}
+
+function getUniqueOwners(activities) {
+	const allOwners = activities.map((item) => item.owner);
+	const uniqueOwners = [...new Set(allOwners)];
+	console.log(uniqueOwners);
+	return uniqueOwners;
+}
 
 // /** @type {import('./$types').PageLoad} */
 /** @type {import('./$types').PageServerLoad} */
@@ -7,15 +22,34 @@ export async function load() {
 	const xml = await response.text();
 	const data = await parseStringPromise(xml);
 	const activities = data['kdz:exportActivities']['Activities'][0]['Activity'];
-	const parsedActivities = activities.map((activity) => {
+
+	// await saveToFile(activities, join(tmpdir(), 'activities.json'));
+	// getUniqueOwners(activities);
+
+	const partners = [
+		'Kunstmuseum Basel',
+		'Museum der Kulturen Basel',
+		'Pharmaziemuseum der Universität Basel',
+		'Historisches Museum',
+		'Basler Papiermühle',
+		'Jüdisches Museum der Schweiz',
+		'S AM Schweizerisches Architekturmuseum',
+		'Verein Frauenstadtrundgang Basel',
+		'Antikenmuseum Basel und Sammlung Ludwig'
+	];
+	const filteredActivities = activities.filter((item) => {
+		return partners.includes(item['$'].owner);
+	});
+
+	const parsedActivities = filteredActivities.map((activity) => {
 		const dates =
 			activity.ActivityDates?.[0]?.ActivityDate?.map((date) => ({
 				startDate: date.$.startDate,
 				endDate: date.$.endDate,
 				startTime: date.$.startTime,
-				endTime: date.$.endTime
+				endTime: date.$.endTime,
+				TicketURL: date.TicketURL[0]
 			})) ?? [];
-
 		return {
 			owner: activity['$'].owner,
 			dauerausstellung: activity['$'].dauerausstellung,
@@ -25,19 +59,6 @@ export async function load() {
 			dates
 		};
 	});
-	const allOwners = parsedActivities.map((item) => item.owner);
-	const uniqueOwners = [...new Set(allOwners)];
-	// console.log(uniqueOwners);
-	const filteredActivities = parsedActivities.filter((item) => {
-		return (
-			item.owner === 'Kunstmuseum Basel' ||
-			item.owner === 'Museum der Kulturen Basel' ||
-			item.owner === 'Antikenmuseum Basel und Sammlung Ludwig'
-		);
-	});
-	// console.log(filteredActivities);
-	// TODO make one entry per date and time
-	return {
-		filteredActivities
-	};
+
+	return { parsedActivities };
 }
