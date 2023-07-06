@@ -183,39 +183,6 @@
 	</svelte:fragment>
 	<slot />
 	<svelte:fragment slot="pageFooter">
-		<!-- <div>
-			<span class="footer-title">Über uns</span>
-			<ul class="leading-relaxed">
-				<li class="link-hover link">
-					<a href="/ueber-uns#social-media">Social Media</a>
-				</li>
-				<li class="link-hover link">
-					<a href="/ueber-uns#medien">Presse</a>
-				</li>
-				<li class="link-hover link">
-					<a href="/ueber-uns#lehrmittel">Lehrmittel</a>
-				</li>
-				<li class="link-hover link">
-					<a href="/ueber-uns#impressum">Impressum</a>
-				</li>
-				<li class="link-hover link">
-					<a href="/ueber-uns#datenschutz">Datenschutz</a>
-				</li>
-			</ul>
-		</div>
-		<div>
-			<span class="footer-title">Newsletter</span>
-			<div class="group">
-				<div
-					class="tooltip-open tooltip tooltip-top hidden group-hover:block"
-					data-tip="Ihre E-Mail-Adresse wird nur dazu genutzt, Ihnen unseren Newsletter und Informationen über
-			unsere Tätigkeiten zu senden. Ihnen steht jederzeit der Abmeldelink zur Verfügung, den wir
-			in jede gesendete E-Mail einfügen."
-				/>
-				<Newsletter />
-			</div>
-		</div> -->
-
 		<div class="page-footer {cBase}">
 			<div class="mx-auto w-full max-w-7xl space-y-10 p-4 py-16 md:py-24">
 				<!-- Row 1 -->
@@ -223,30 +190,35 @@
 					<div
 						class="grid grid-cols-1 place-content-center place-items-center gap-2 md:place-items-start"
 					>
-						<p class="!text-sm opacity-80">UI Toolkit for Svelte + Tailwind.</p>
+						<p class="!text-sm opacity-80">Wir schreiben Basler Geschichten.</p>
 						<!-- Current Version -->
-						<span class="badge variant-soft" />
+						<!-- <span class="badge variant-soft" /> -->
 					</div>
 					<div class="hidden grid-cols-3 gap-8 md:grid">
 						<div class="space-y-6">
-							<h6 class="h6">Explore</h6>
+							<h6 class="h6">Mehr</h6>
 							<ul class="space-y-3">
-								<li><a class="anchor" href="/blog">Introduction</a></li>
-								<li><a class="anchor" href="/blog">Get Started</a></li>
-								<li><a class="anchor" href="/blog">Blog</a></li>
+								<li><a class="anchor" href="/ueber-uns#medien">Presse</a></li>
+								<li><a class="anchor" href="/ueber-uns#lehrmittel">Lehrmittel</a></li>
+								<!-- <li>
+									<a
+										class="anchor"
+										href="https://forschung.stadtgeschichtebasel.ch"
+										target="_blank"
+										rel="noreferrer"
+									>
+										Forschung
+									</a>
+								</li> -->
 							</ul>
 						</div>
 						<div class="space-y-6">
-							<h6 class="h6">Features</h6>
-							<ul class="space-y-3">
-								<li><a class="anchor" href="/blog">Tailwind</a></li>
-								<li><a class="anchor" href="/blog">Svelte</a></li>
-								<li><a class="anchor" href="/blog">Utilities</a></li>
-							</ul>
-						</div>
-						<div class="space-y-6">
-							<h6 class="h6">Project</h6>
-							<ul class="space-y-3">
+							<h6 class="h6">Impressum</h6>
+							<p class="text-sm">
+								Stiftung Stadt.Geschichte.Basel<br />Hirschgässlein 21<br />4051 Basel<br />
+								<a href="mailto:info@stadtgeschichtebasel.ch">info@stadtgeschichtebasel.ch</a>
+							</p>
+							<!-- <ul class="space-y-3">
 								<li>
 									<a
 										class="anchor"
@@ -271,7 +243,7 @@
 										rel="noreferrer">NPM Package</a
 									>
 								</li>
-							</ul>
+							</ul> -->
 						</div>
 					</div>
 				</section>
@@ -281,57 +253,19 @@
 				<!-- Row 2 -->
 				<section class={cRowTwo}>
 					<p>
-						<a
+						<!-- <a
 							class="anchor"
-							href="https://github.com/skeletonlabs/skeleton/blob/master/LICENSE"
+							href="https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/blob/main/LICENSE.md"
 							target="_blank"
 							rel="noreferrer"
-						>
-							MIT License
-						</a>
+						> -->
+						© 2023 Stadt.Geschichte.Basel
+						<!-- </a> -->
 						<span class="mx-2 opacity-10">|</span>
-						<a class="anchor" href="https://skeletonlabs.co/" target="_blank" rel="noreferrer"
-							>Skeleton Labs
+						<a class="anchor" href="/datenschutzerklaerung-der-stadt-geschichte-basel"
+							>Datenschutz
 						</a>
 					</p>
-					<div class="flex space-x-4">
-						<a
-							class="btn variant-soft"
-							href="https://github.com/skeletonlabs/skeleton"
-							target="_blank"
-							rel="noreferrer"
-						>
-							<i class="fa-brands fa-github" />
-							<span class="ml-2 hidden md:inline-block">Github</span>
-						</a>
-						<a
-							class="btn variant-soft"
-							href="https://discord.gg/EXqV7W8MtY"
-							target="_blank"
-							rel="noreferrer"
-						>
-							<i class="fa-brands fa-discord" />
-							<span class="ml-2 hidden md:inline-block">Discord</span>
-						</a>
-						<a
-							class="btn variant-soft"
-							href="https://twitter.com/SkeletonUI"
-							target="_blank"
-							rel="noreferrer"
-						>
-							<i class="fa-brands fa-twitter" />
-							<span class="ml-2 hidden md:inline-block">Twitter</span>
-						</a>
-						<a
-							class="btn variant-soft"
-							href="https://www.youtube.com/@skeletonlabs"
-							target="_blank"
-							rel="noreferrer"
-						>
-							<i class="fa-brands fa-youtube" />
-							<span class="ml-2 hidden md:inline-block">YouTube</span>
-						</a>
-					</div>
 				</section>
 			</div>
 		</div>
