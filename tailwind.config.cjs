@@ -1,7 +1,7 @@
-import { join } from 'path';
+import skeleton from '@skeletonlabs/skeleton/tailwind/skeleton.cjs';
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
-import skeleton from '@skeletonlabs/skeleton/tailwind/skeleton.cjs';
+import { join } from 'path';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
