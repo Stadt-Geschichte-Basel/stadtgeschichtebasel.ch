@@ -18,17 +18,6 @@
 				on:click={drawerClose}>Blog</a
 			>
 		</li>
-		<!-- <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-			<a
-            class="cursor-pointer {$page.url.pathname === '/geschichte' ? 'font-bold' : 'font-normal'}"
-				class="cursor-pointer {$page.url.pathname === '/' ||
-				new String($page.url.pathname).startsWith('/blog/')
-					? 'font-bold'
-					: 'font-normal'}"
-				href="/"
-				on:click={drawerClose}>Blog</a
-			>
-		</li> -->
 		<li aria-current={$page.url.pathname === '/geschichte' ? 'page' : undefined}>
 			<a
 				class="cursor-pointer {$page.url.pathname === '/geschichte' ? 'font-bold' : 'font-normal'}"
