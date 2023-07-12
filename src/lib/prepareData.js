@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import fs from 'fs';
 import yaml from 'js-yaml';
 import path from 'path';
@@ -21,44 +21,68 @@ if (!fs.existsSync(assetsDir)) {
 	fs.mkdirSync(assetsDir, { recursive: true });
 }
 
-const downloadAsset = async (url) => {
-	const response = await fetch(url);
-	const urlPath = new URL(url).pathname;
-	const filePath = path.join(assetsDir, urlPath);
-	const dirPath = path.dirname(filePath);
-	if (!fs.existsSync(dirPath)) {
-		fs.mkdirSync(dirPath, { recursive: true });
+const downloadAsset = async (elem, $) => {
+	let url = $(elem).attr('href') || $(elem).attr('src');
+	if ($(elem).is('img') && $(elem).attr('src')) {
+		const src = $(elem).attr('src');
+		const highResSrc = src.replace(/-\d+x\d+\./, '.');
+		url = highResSrc;
 	}
-	const writer = fs.createWriteStream(filePath);
-	const arrayBuffer = await response.arrayBuffer();
-	const buffer = Buffer.from(arrayBuffer);
-	writer.write(buffer);
-	writer.end();
-	return new Promise((resolve, reject) => {
-		writer.on('finish', resolve);
-		writer.on('error', reject);
-	});
+	if (url && url.startsWith(baseURL)) {
+		const urlPath = new URL(url).pathname;
+		const extension = path.extname(urlPath);
+		const allowedExtensions = [
+			'.avif',
+			'.doc',
+			'.docx',
+			'.gif',
+			'.jpeg',
+			'.jpg',
+			'.pdf',
+			'.png',
+			'.ppt',
+			'.pptx',
+			'.svg',
+			'.txt',
+			'.webp',
+			'.xls',
+			'.xlsx',
+			'.zip'
+		]; // Add more extensions if needed
+
+		if (!allowedExtensions.includes(extension.toLowerCase())) {
+			return;
+		}
+
+		const response = await fetch(url);
+		const filePath = path.join(assetsDir, urlPath);
+		const dirPath = path.dirname(filePath);
+		if (!fs.existsSync(dirPath)) {
+			fs.mkdirSync(dirPath, { recursive: true });
+		}
+		const writer = fs.createWriteStream(filePath);
+		const arrayBuffer = await response.arrayBuffer();
+		const buffer = Buffer.from(arrayBuffer);
+		writer.write(buffer);
+		writer.end();
+		await new Promise((resolve, reject) => {
+			writer.on('finish', resolve);
+			writer.on('error', reject);
+		});
+
+		const relativeUrl = path.join('.', url.replace(baseURL, ''));
+		if ($(elem).attr('href')) $(elem).attr('href', relativeUrl);
+		if ($(elem).attr('src')) $(elem).attr('src', relativeUrl);
+	}
 };
 
 const processContent = async (html) => {
 	const $ = cheerio.load(html);
-	const assetUrls = [];
+	const assetPromises = [];
 	$('img, a').each((i, elem) => {
-		const $elem = $(elem);
-		let url = $elem.attr('href') || $elem.attr('src');
-		if ($elem.is('img') && $elem.attr('src')) {
-			const src = $elem.attr('src');
-			const highResSrc = src.replace(/-\d+x\d+\./, '.');
-			url = highResSrc;
-		}
-		if (url && url.startsWith(baseURL)) {
-			assetUrls.push(url);
-			const relativeUrl = path.join('.', url.replace(baseURL, ''));
-			if ($elem.attr('href')) $elem.attr('href', relativeUrl);
-			if ($elem.attr('src')) $elem.attr('src', relativeUrl);
-		}
+		assetPromises.push(downloadAsset(elem, $));
 	});
-	await Promise.all(assetUrls.map(downloadAsset));
+	await Promise.all(assetPromises);
 	return turndownService.turndown($.html());
 };
 
