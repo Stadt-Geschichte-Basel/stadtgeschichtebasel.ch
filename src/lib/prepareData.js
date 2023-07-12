@@ -80,6 +80,12 @@ const processContent = async (html, outputDir) => {
 	return turndownService.turndown($.html());
 };
 
+const fetchFeaturedImage = async (mediaId) => {
+	const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
+	const data = await response.json();
+	return data.source_url;
+};
+
 const fetchAndProcessType = async (type) => {
 	const outputDir = path.join(process.cwd(), 'src', 'lib', 'data', type); // Output directory for markdown files
 
@@ -92,17 +98,30 @@ const fetchAndProcessType = async (type) => {
 	let fetched;
 	do {
 		const response = await fetch(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''}&_fields=content.rendered,title.rendered,date,modified,slug,author`
+			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
+				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+			}&_fields=content.rendered,title.rendered,date,modified,slug,author,excerpt.rendered,featured_media`
 		);
 		const data = await response.json();
 		fetched = data.length;
 		for (const item of data) {
 			const content = await processContent(item.content.rendered, outputDir);
+			const featuredImageUrl = item.featured_media
+				? await fetchFeaturedImage(item.featured_media)
+				: null;
+			if (featuredImageUrl) {
+				const relativeUrl = path.join('.', featuredImageUrl.replace(baseURL, ''));
+				await downloadAsset(featuredImageUrl, outputDir);
+			}
 			const frontMatter = {
 				title: item.title.rendered,
 				date: item.date,
 				lastUpdate: item.modified,
-				slug: item.slug
+				slug: item.slug,
+				excerpt: turndownService.turndown(item.excerpt.rendered),
+				featuredImage: featuredImageUrl
+					? path.join('.', featuredImageUrl.replace(baseURL, ''))
+					: null
 			};
 			const yamlFrontMatter = yaml.dump(frontMatter);
 			const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
