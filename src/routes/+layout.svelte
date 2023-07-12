@@ -61,11 +61,6 @@
 									d="M4 6h16M4 12h16M4 18h16"
 								/></svg
 							>
-							<!-- <svg viewBox="0 0 100 80" class="h-4 w-4 fill-token">
-								<rect width="100" height="20" />
-								<rect y="30" width="100" height="20" />
-								<rect y="60" width="100" height="20" />
-							</svg> -->
 						</span>
 					</button>
 					<a href="/" class="cursor-pointer" aria-label="Home"
@@ -156,30 +151,6 @@
 						</a>
 					</li>
 				</ul>
-				<!-- <a
-					class="btn btn-sm variant-ghost-surface"
-					href="https://discord.gg/EXqV7W8MtY"
-					target="_blank"
-					rel="noreferrer"
-				>
-					Discord
-				</a>
-				<a
-					class="btn btn-sm variant-ghost-surface"
-					href="https://twitter.com/SkeletonUI"
-					target="_blank"
-					rel="noreferrer"
-				>
-					Twitter
-				</a>
-				<a
-					class="btn btn-sm variant-ghost-surface"
-					href="https://github.com/skeletonlabs/skeleton"
-					target="_blank"
-					rel="noreferrer"
-				>
-					GitHub
-				</a> -->
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
@@ -202,7 +173,7 @@
 					</div>
 					<div class="hidden grid-cols-3 gap-8 md:grid">
 						<div class="space-y-6">
-							<h6 class="h6">Mehr</h6>
+							<h4 class="h4">Mehr</h4>
 							<ul class="space-y-3">
 								<li><a class="anchor" href="/ueber-uns#medien">Presse</a></li>
 								<li><a class="anchor" href="/ueber-uns#lehrmittel">Lehrmittel</a></li>
@@ -219,37 +190,11 @@
 							</ul>
 						</div>
 						<div class="space-y-6">
-							<h6 class="h6">Impressum</h6>
+							<h4 class="h4">Impressum</h4>
 							<p class="text-sm">
 								Stiftung Stadt.Geschichte.Basel<br />Hirschgässlein 21<br />4051 Basel<br />
 								<a href="mailto:info@stadtgeschichtebasel.ch">info@stadtgeschichtebasel.ch</a>
 							</p>
-							<!-- <ul class="space-y-3">
-								<li>
-									<a
-										class="anchor"
-										href="https://github.com/skeletonlabs"
-										target="_blank"
-										rel="noreferrer">Github Organization</a
-									>
-								</li>
-								<li>
-									<a
-										class="anchor"
-										href="https://www.npmjs.com/org/skeletonlabs"
-										target="_blank"
-										rel="noreferrer">NPM Organization</a
-									>
-								</li>
-								<li>
-									<a
-										class="anchor"
-										href="https://www.npmjs.com/package/@skeletonlabs/skeleton"
-										target="_blank"
-										rel="noreferrer">NPM Package</a
-									>
-								</li>
-							</ul> -->
 						</div>
 					</div>
 				</section>
