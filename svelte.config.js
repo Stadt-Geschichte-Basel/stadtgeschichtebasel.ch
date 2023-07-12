@@ -19,7 +19,7 @@ const config = {
 			handleHttpError: 'warn'
 		},
 		serviceWorker: {
-			register: true
+			register: false
 		}
 	}
 };
