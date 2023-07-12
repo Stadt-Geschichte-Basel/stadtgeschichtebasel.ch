@@ -100,12 +100,13 @@ const fetchAndProcessType = async (type) => {
 		const response = await fetch(
 			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
 				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
-			}&_fields=content.rendered,title.rendered,date,modified,slug,author,excerpt.rendered,featured_media`
+			}&_fields=id,content.rendered,title.rendered,date,modified,slug,author,excerpt.rendered,featured_media`
 		);
 		const data = await response.json();
 		fetched = data.length;
 		for (const item of data) {
 			const content = await processContent(item.content.rendered, outputDir);
+			const excerpt = await processContent(item.excerpt.rendered, outputDir);
 			const featuredImageUrl = item.featured_media
 				? await fetchFeaturedImage(item.featured_media)
 				: null;
@@ -114,11 +115,12 @@ const fetchAndProcessType = async (type) => {
 				await downloadAsset(featuredImageUrl, outputDir);
 			}
 			const frontMatter = {
+				id: item.id,
 				title: item.title.rendered,
 				date: item.date,
 				lastUpdate: item.modified,
 				slug: item.slug,
-				excerpt: turndownService.turndown(item.excerpt.rendered),
+				excerpt: excerpt,
 				featuredImage: featuredImageUrl
 					? path.join('.', featuredImageUrl.replace(baseURL, ''))
 					: null
