@@ -12,6 +12,9 @@ vite.config.ts.timestamp-*
 # Exclude example.env
 !example.env
 
+# Exclude downloaded data
+/src/lib/data/
+
 ## Created by https://www.toptal.com/developers/gitignore/api/git,node,linux,macos,windows,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,node,linux,macos,windows,visualstudiocode
 
@@ -264,5 +267,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/git,node,linux,macos,windows,visualstudiocode
-
-/static/files/
