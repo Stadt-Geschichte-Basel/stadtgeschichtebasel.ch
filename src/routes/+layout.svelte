@@ -173,7 +173,7 @@
 					</div>
 					<div class="hidden grid-cols-3 gap-8 md:grid">
 						<div class="space-y-6">
-							<h4 class="h4">Mehr</h4>
+							<div class="h6">Mehr</div>
 							<ul class="space-y-3">
 								<li><a class="anchor" href="/ueber-uns#medien">Presse</a></li>
 								<li><a class="anchor" href="/ueber-uns#lehrmittel">Lehrmittel</a></li>
@@ -190,7 +190,7 @@
 							</ul>
 						</div>
 						<div class="space-y-6">
-							<h4 class="h4">Impressum</h4>
+							<div class="h6">Impressum</div>
 							<p class="text-sm">
 								Stiftung Stadt.Geschichte.Basel<br />Hirschgässlein 21<br />4051 Basel<br />
 								<a href="mailto:info@stadtgeschichtebasel.ch">info@stadtgeschichtebasel.ch</a>
