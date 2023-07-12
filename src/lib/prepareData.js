@@ -9,17 +9,7 @@ const turndownService = new TurndownService();
 const baseURL = 'https://sgb.hypotheses.org/';
 const apiEndpoint = '/wp-json/wp/v2'; // Wordpress JSON API endpoint
 const types = ['posts', 'pages']; // Types of content to fetch
-const outputDir = path.join(process.cwd(), 'src', 'lib', 'data'); // Output directory for markdown files
-const assetsDir = path.join(process.cwd(), 'src', 'lib', 'data'); // Output directory for assets
-const perPage = 10; // Number of items to fetch per page
-
-// Make sure output and assets directories exist
-if (!fs.existsSync(outputDir)) {
-	fs.mkdirSync(outputDir, { recursive: true });
-}
-if (!fs.existsSync(assetsDir)) {
-	fs.mkdirSync(assetsDir, { recursive: true });
-}
+const perPage = 100; // Number of items to fetch per page
 
 const getAssetUrl = (elem, $) => {
 	let url = $(elem).attr('href') || $(elem).attr('src');
@@ -31,7 +21,7 @@ const getAssetUrl = (elem, $) => {
 	return url;
 };
 
-const downloadAsset = async (url) => {
+const downloadAsset = async (url, assetsDir) => {
 	const urlPath = new URL(url).pathname;
 	const extension = path.extname(urlPath);
 	const allowedExtensions = [
@@ -74,7 +64,7 @@ const downloadAsset = async (url) => {
 	});
 };
 
-const processContent = async (html) => {
+const processContent = async (html, assetsDir) => {
 	const $ = cheerio.load(html);
 	const assetPromises = [];
 	$('img, a').each((i, elem) => {
@@ -83,7 +73,7 @@ const processContent = async (html) => {
 			const relativeUrl = path.join('.', url.replace(baseURL, ''));
 			if ($(elem).attr('href')) $(elem).attr('href', relativeUrl);
 			if ($(elem).attr('src')) $(elem).attr('src', relativeUrl);
-			assetPromises.push(downloadAsset(url));
+			assetPromises.push(downloadAsset(url, assetsDir));
 		}
 	});
 	await Promise.all(assetPromises);
@@ -97,6 +87,17 @@ const fetchAuthorName = async (authorId) => {
 };
 
 const fetchAndProcessType = async (type) => {
+	const outputDir = path.join(process.cwd(), 'src', 'lib', 'data', type); // Output directory for markdown files
+	const assetsDir = path.join(process.cwd(), 'src', 'lib', 'data', type, 'assets'); // Output directory for assets
+
+	// Make sure output and assets directories exist
+	if (!fs.existsSync(outputDir)) {
+		fs.mkdirSync(outputDir, { recursive: true });
+	}
+	if (!fs.existsSync(assetsDir)) {
+		fs.mkdirSync(assetsDir, { recursive: true });
+	}
+
 	let page = 1;
 	let fetched;
 	do {
@@ -106,7 +107,7 @@ const fetchAndProcessType = async (type) => {
 		const data = await response.json();
 		fetched = data.length;
 		for (const item of data) {
-			const content = await processContent(item.content.rendered);
+			const content = await processContent(item.content.rendered, assetsDir);
 			const authorName = await fetchAuthorName(item.author);
 			const frontMatter = {
 				title: item.title.rendered,
