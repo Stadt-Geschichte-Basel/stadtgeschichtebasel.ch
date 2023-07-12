@@ -43,7 +43,11 @@
 		<AppBar>
 			<svelte:fragment slot="lead">
 				<div class="flex items-center">
-					<button class="btn btn-sm mr-4 lg:hidden" on:click={drawerOpen}>
+					<button
+						class="btn btn-sm mr-4 lg:hidden"
+						on:click={drawerOpen}
+						aria-label="Open navigation menu"
+					>
 						<span>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +74,7 @@
 			<svelte:fragment slot="trail">
 				<ul class="grid grid-flow-col gap-4">
 					<li>
-						<a href="https://www.instagram.com/sta.ge.ba/"
+						<a href="https://www.instagram.com/sta.ge.ba/" aria-label="Instagram"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -86,7 +90,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://www.facebook.com/Stadt.Geschichte.Basel"
+						<a href="https://www.facebook.com/Stadt.Geschichte.Basel" aria-label="Facebook"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -102,7 +106,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://twitter.com/basel_stadt"
+						<a href="https://twitter.com/basel_stadt" aria-label="Twitter"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -118,7 +122,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://vimeo.com/user31064894"
+						<a href="https://vimeo.com/user31064894" aria-label="Vimeo"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -134,7 +138,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://github.com/stadt-geschichte-basel">
+						<a href="https://github.com/stadt-geschichte-basel" aria-label="Github">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"

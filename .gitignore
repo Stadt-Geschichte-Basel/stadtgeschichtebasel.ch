@@ -14,6 +14,7 @@ vite.config.ts.timestamp-*
 
 # Exclude downloaded data
 /src/lib/data/
+/static/files/
 
 ## Created by https://www.toptal.com/developers/gitignore/api/git,node,linux,macos,windows,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,node,linux,macos,windows,visualstudiocode

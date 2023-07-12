@@ -1,13 +1,12 @@
 import cheerio from 'cheerio';
 import fs from 'fs';
 import yaml from 'js-yaml';
-// import fetch from 'node-fetch';
 import path from 'path';
 import TurndownService from 'turndown';
 
 const turndownService = new TurndownService();
 
-const baseURL = 'https://sgb.hypotheses.org/'; // Replace with your Wordpress site URL
+const baseURL = 'https://sgb.hypotheses.org/';
 const apiEndpoint = '/wp-json/wp/v2'; // Wordpress JSON API endpoint
 const types = ['posts', 'pages']; // Types of content to fetch
 const outputDir = path.join(process.cwd(), 'src', 'lib', 'data'); // Output directory for markdown files
