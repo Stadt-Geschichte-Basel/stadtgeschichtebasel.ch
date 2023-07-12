@@ -10,6 +10,25 @@ const baseURL = 'https://sgb.hypotheses.org/';
 const apiEndpoint = '/wp-json/wp/v2'; // Wordpress JSON API endpoint
 const types = ['posts', 'pages']; // Types of content to fetch
 const perPage = 100; // Number of items to fetch per page
+const categories = [1]; // IDs of categories to fetch
+const allowedExtensions = [
+	'.avif',
+	'.doc',
+	'.docx',
+	'.gif',
+	'.jpeg',
+	'.jpg',
+	'.pdf',
+	'.png',
+	'.ppt',
+	'.pptx',
+	'.svg',
+	'.txt',
+	'.webp',
+	'.xls',
+	'.xlsx',
+	'.zip'
+]; // Add more extensions if needed
 
 const getAssetUrl = (elem, $) => {
 	let url = $(elem).attr('href') || $(elem).attr('src');
@@ -21,34 +40,15 @@ const getAssetUrl = (elem, $) => {
 	return url;
 };
 
-const downloadAsset = async (url, assetsDir) => {
+const downloadAsset = async (url, outputDir) => {
 	const urlPath = new URL(url).pathname;
 	const extension = path.extname(urlPath);
-	const allowedExtensions = [
-		'.avif',
-		'.doc',
-		'.docx',
-		'.gif',
-		'.jpeg',
-		'.jpg',
-		'.pdf',
-		'.png',
-		'.ppt',
-		'.pptx',
-		'.svg',
-		'.txt',
-		'.webp',
-		'.xls',
-		'.xlsx',
-		'.zip'
-	]; // Add more extensions if needed
-
 	if (!allowedExtensions.includes(extension.toLowerCase())) {
 		return;
 	}
 
 	const response = await fetch(url);
-	const filePath = path.join(assetsDir, urlPath);
+	const filePath = path.join(outputDir, urlPath);
 	const dirPath = path.dirname(filePath);
 	if (!fs.existsSync(dirPath)) {
 		fs.mkdirSync(dirPath, { recursive: true });
@@ -80,12 +80,6 @@ const processContent = async (html, outputDir) => {
 	return turndownService.turndown($.html());
 };
 
-const fetchAuthorName = async (authorId) => {
-	const response = await fetch(`${baseURL}${apiEndpoint}/users/${authorId}`);
-	const data = await response.json();
-	return data.name;
-};
-
 const fetchAndProcessType = async (type) => {
 	const outputDir = path.join(process.cwd(), 'src', 'lib', 'data', type); // Output directory for markdown files
 
@@ -98,18 +92,18 @@ const fetchAndProcessType = async (type) => {
 	let fetched;
 	do {
 		const response = await fetch(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}`
+			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
+				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+			}`
 		);
 		const data = await response.json();
 		fetched = data.length;
 		for (const item of data) {
 			const content = await processContent(item.content.rendered, outputDir);
-			const authorName = await fetchAuthorName(item.author);
 			const frontMatter = {
 				title: item.title.rendered,
 				date: item.date,
 				lastUpdate: item.modified,
-				author: authorName,
 				slug: item.slug,
 				type: type
 			};
