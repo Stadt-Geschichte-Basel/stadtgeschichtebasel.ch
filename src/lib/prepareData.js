@@ -64,7 +64,7 @@ const downloadAsset = async (url, assetsDir) => {
 	});
 };
 
-const processContent = async (html, assetsDir) => {
+const processContent = async (html, outputDir) => {
 	const $ = cheerio.load(html);
 	const assetPromises = [];
 	$('img, a').each((i, elem) => {
@@ -73,7 +73,7 @@ const processContent = async (html, assetsDir) => {
 			const relativeUrl = path.join('.', url.replace(baseURL, ''));
 			if ($(elem).attr('href')) $(elem).attr('href', relativeUrl);
 			if ($(elem).attr('src')) $(elem).attr('src', relativeUrl);
-			assetPromises.push(downloadAsset(url, assetsDir));
+			assetPromises.push(downloadAsset(url, outputDir));
 		}
 	});
 	await Promise.all(assetPromises);
@@ -88,14 +88,10 @@ const fetchAuthorName = async (authorId) => {
 
 const fetchAndProcessType = async (type) => {
 	const outputDir = path.join(process.cwd(), 'src', 'lib', 'data', type); // Output directory for markdown files
-	const assetsDir = path.join(process.cwd(), 'src', 'lib', 'data', type, 'assets'); // Output directory for assets
 
-	// Make sure output and assets directories exist
+	// Make sure output directories exist
 	if (!fs.existsSync(outputDir)) {
 		fs.mkdirSync(outputDir, { recursive: true });
-	}
-	if (!fs.existsSync(assetsDir)) {
-		fs.mkdirSync(assetsDir, { recursive: true });
 	}
 
 	let page = 1;
@@ -107,7 +103,7 @@ const fetchAndProcessType = async (type) => {
 		const data = await response.json();
 		fetched = data.length;
 		for (const item of data) {
-			const content = await processContent(item.content.rendered, assetsDir);
+			const content = await processContent(item.content.rendered, outputDir);
 			const authorName = await fetchAuthorName(item.author);
 			const frontMatter = {
 				title: item.title.rendered,
