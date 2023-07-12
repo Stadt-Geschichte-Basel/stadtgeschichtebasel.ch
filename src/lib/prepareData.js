@@ -92,9 +92,7 @@ const fetchAndProcessType = async (type) => {
 	let fetched;
 	do {
 		const response = await fetch(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
-				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
-			}`
+			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''}&_fields=content.rendered,title.rendered,date,modified,slug,author`
 		);
 		const data = await response.json();
 		fetched = data.length;
@@ -104,8 +102,7 @@ const fetchAndProcessType = async (type) => {
 				title: item.title.rendered,
 				date: item.date,
 				lastUpdate: item.modified,
-				slug: item.slug,
-				type: type
+				slug: item.slug
 			};
 			const yamlFrontMatter = yaml.dump(frontMatter);
 			const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
