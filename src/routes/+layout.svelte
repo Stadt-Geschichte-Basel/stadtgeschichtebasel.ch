@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
-	import Head from '$lib/Head.svelte';
-	import Navigation from '$lib/Navigation.svelte';
+	import Head from '$lib/components/Head.svelte';
+	import Navigation from '$lib/components/Navigation.svelte';
 	import Logo from '$lib/images/logo.svg';
 
 	import { AppBar, AppShell, Drawer, drawerStore } from '@skeletonlabs/skeleton';
@@ -11,10 +11,20 @@
 	// import '@skeletonlabs/skeleton/styles/skeleton.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	// Most of your app wide CSS should be put in this file
-	import { pwaInfo } from 'virtual:pwa-info';
+	import { browser, dev } from '$app/environment';
+	import { onMount } from 'svelte';
+	import { registerSW } from 'virtual:pwa-register';
 	import '../app.postcss';
-
-	$: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : '';
+	onMount(
+		() =>
+			!dev &&
+			browser &&
+			registerSW({
+				immediate: true,
+				onRegistered: (r) => r && setInterval(async () => await r.update(), 198964),
+				onRegisterError: (error) => console.error(error)
+			})
+	);
 
 	$: classesPageFooter = $page.url.pathname === '/karte' ? 'hidden' : '';
 
@@ -29,10 +39,6 @@
 		drawerStore.open({});
 	}
 </script>
-
-<svelte:head>
-	{@html webManifest}
-</svelte:head>
 
 <Head />
 

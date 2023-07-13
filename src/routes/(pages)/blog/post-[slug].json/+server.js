@@ -1,6 +1,6 @@
 export const prerender = true;
 
-import { extractAssets } from '$lib/utils';
+import { extractAssets } from '$lib/utils/utils';
 import { json } from '@sveltejs/kit';
 
 /** Create a new route handler that fetches the post from the Hypotheses API and returns it as JSON.

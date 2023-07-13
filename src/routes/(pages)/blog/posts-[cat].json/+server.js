@@ -1,6 +1,6 @@
 export const prerender = true;
 
-import { getAllPosts } from '$lib/utils';
+import { getAllPosts } from '$lib/utils/utils';
 import { json } from '@sveltejs/kit';
 
 /** Create a new route handler that fetches all posts with given categories from the Hypotheses API and returns it as JSON.

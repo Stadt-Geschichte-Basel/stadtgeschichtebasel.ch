@@ -1,7 +1,7 @@
 export const prerender = true;
 
+import { extractAssets } from '$lib/utils/utils';
 import { json } from '@sveltejs/kit';
-import { extractAssets } from '$lib/utils';
 
 /** Create a new route handler that fetches the post from the Hypotheses API and returns it as JSON.
  * the slug is passed as a parameter to the route handler.
