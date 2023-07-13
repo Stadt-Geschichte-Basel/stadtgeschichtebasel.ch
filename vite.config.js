@@ -17,30 +17,38 @@ export default defineConfig({
 		// 	}
 		// }),
 		SvelteKitPWA({
-			strategies: 'generateSW',
 			srcDir: './src',
+			mode: 'development',
+			// you don't need to do this if you're using generateSW strategy in your app
+			// strategies: generateSW ? 'generateSW' : 'injectManifest',
+			strategies: 'generateSW',
+			// you don't need to do this if you're using generateSW strategy in your app
+			// filename: generateSW ? undefined : 'prompt-sw.js',
+			scope: '/',
+			base: '/',
+			selfDestroying: process.env.SELF_DESTROYING_SW === 'true',
 			manifest: {
-				name: 'Stadt.Geschichte.Basel',
 				short_name: 'Stadt.Geschichte.Basel',
+				name: 'Stadt.Geschichte.Basel',
 				description: 'Wir schreiben Basler Geschichten.',
-				theme_color: '#fff',
-				background_color: '#fff',
 				start_url: '/',
 				scope: '/',
-				display: 'fullscreen',
+				display: 'standalone',
+				theme_color: '#ffffff',
+				background_color: '#ffffff',
 				icons: [
 					{
-						src: 'android-chrome-192x192.png',
+						src: '/android-chrome-192x192.png',
 						sizes: '192x192',
 						type: 'image/png'
 					},
 					{
-						src: 'android-chrome-512x512.png',
+						src: '/android-chrome-512x512.png',
 						sizes: '512x512',
 						type: 'image/png'
 					},
 					{
-						src: 'android-chrome-512x512.png',
+						src: '/android-chrome-512x512.png',
 						sizes: '512x512',
 						type: 'image/png',
 						purpose: 'any maskable'
@@ -55,8 +63,12 @@ export default defineConfig({
 			},
 			devOptions: {
 				enabled: true,
-				type: 'module'
-			}
+				suppressWarnings: process.env.SUPPRESS_WARNING === 'true',
+				type: 'module',
+				navigateFallback: '/'
+			},
+			// if you have shared info in svelte config file put in a separate module and use it also here
+			kit: {}
 		})
 	],
 	test: {

@@ -11,7 +11,10 @@
 	// import '@skeletonlabs/skeleton/styles/skeleton.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	// Most of your app wide CSS should be put in this file
+	import { pwaInfo } from 'virtual:pwa-info';
 	import '../app.postcss';
+
+	$: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : '';
 
 	$: classesPageFooter = $page.url.pathname === '/karte' ? 'hidden' : '';
 
@@ -26,6 +29,10 @@
 		drawerStore.open({});
 	}
 </script>
+
+<svelte:head>
+	{@html webManifest}
+</svelte:head>
 
 <Head />
 
