@@ -45,3 +45,14 @@ export const maskableicon = {
 		type: 'image/png'
 	}
 };
+export const partners = [
+	'Kunstmuseum Basel',
+	'Museum der Kulturen Basel',
+	'Pharmaziemuseum der Universität Basel',
+	'Historisches Museum',
+	'Basler Papiermühle',
+	'Jüdisches Museum der Schweiz',
+	'S AM Schweizerisches Architekturmuseum',
+	'Verein Frauenstadtrundgang Basel',
+	'Antikenmuseum Basel und Sammlung Ludwig'
+];

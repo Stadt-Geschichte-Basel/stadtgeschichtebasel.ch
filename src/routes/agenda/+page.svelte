@@ -1,6 +1,6 @@
 <script>
 	export let data;
-	const activities = data.parsedActivities;
+	const activities = data.activities;
 </script>
 
 <article class="container space-y-4 p-10">
