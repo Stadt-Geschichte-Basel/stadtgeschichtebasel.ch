@@ -1,16 +1,21 @@
 <script>
 	import * as config from '$lib/config';
+	import { pwaInfo } from 'virtual:pwa-info';
 </script>
 
 <svelte:head>
+	<!-- General meta tags -->
 	<meta name="generator" content="gh:{config.githubHandle}/{config.githubRepo}" />
-	<link rel="canonical" href={config.url} />
-
-	<title>{config.title} {config.subtitle}</title>
 	<meta name="keywords" content={config.keywords} />
 	<meta name="description" content={config.description} />
 	<meta name="author" content={config.author} />
 	<meta name="theme-color" content={config.themeColor} />
+
+	<!-- Canonical link -->
+	<link rel="canonical" href={config.url} />
+
+	<!-- Manifest link -->
+	<link rel="manifest" crossorigin="use-credentials" href="/manifest.webmanifest" />
 
 	<!-- Twitter tags -->
 	<meta name="twitter:title" content={config.title} />

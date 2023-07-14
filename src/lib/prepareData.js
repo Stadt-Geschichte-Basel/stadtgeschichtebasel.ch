@@ -6,11 +6,40 @@ import TurndownService from 'turndown';
 
 const turndownService = new TurndownService();
 
+/**
+ * The base URL of the website.
+ * @type {string}
+ */
 const baseURL = 'https://sgb.hypotheses.org/';
-const apiEndpoint = '/wp-json/wp/v2'; // Wordpress JSON API endpoint
-const types = ['posts', 'pages']; // Types of content to fetch
-const perPage = 100; // Number of items to fetch per page
-const categories = [1]; // IDs of categories to fetch
+
+/**
+ * The endpoint of the WordPress JSON API.
+ * @type {string}
+ */
+const apiEndpoint = '/wp-json/wp/v2';
+
+/**
+ * The types of content to fetch.
+ * @type {Array<string>}
+ */
+const types = ['posts', 'pages'];
+
+/**
+ * The number of items to fetch per page.
+ * @type {number}
+ */
+const perPage = 100;
+
+/**
+ * The IDs of categories to fetch.
+ * @type {Array<number>}
+ */
+const categories = [1];
+
+/**
+ * The allowed file extensions for asset downloads.
+ * @type {Array<string>}
+ */
 const allowedExtensions = [
 	'.avif',
 	'.doc',
@@ -28,8 +57,14 @@ const allowedExtensions = [
 	'.xls',
 	'.xlsx',
 	'.zip'
-]; // Add more extensions if needed
+];
 
+/**
+ * Get the asset URL from an element.
+ * @param {CheerioElement} elem - The element.
+ * @param {CheerioStatic} $ - The Cheerio instance.
+ * @returns {string} The asset URL.
+ */
 const getAssetUrl = (elem, $) => {
 	let url = $(elem).attr('href') || $(elem).attr('src');
 	if ($(elem).is('img') && $(elem).attr('src')) {
@@ -40,6 +75,12 @@ const getAssetUrl = (elem, $) => {
 	return url;
 };
 
+/**
+ * Download an asset from a URL.
+ * @param {string} url - The URL of the asset.
+ * @param {string} outputDir - The output directory.
+ * @returns {Promise<void>}
+ */
 const downloadAsset = async (url, outputDir) => {
 	const urlPath = new URL(url).pathname;
 	const extension = path.extname(urlPath);
@@ -64,6 +105,12 @@ const downloadAsset = async (url, outputDir) => {
 	});
 };
 
+/**
+ * Process HTML content and download assets.
+ * @param {string} html - The HTML content.
+ * @param {string} outputDir - The output directory.
+ * @returns {Promise<string>} The processed content.
+ */
 const processContent = async (html, outputDir) => {
 	const $ = cheerio.load(html);
 	const assetPromises = [];
@@ -80,12 +127,22 @@ const processContent = async (html, outputDir) => {
 	return turndownService.turndown($.html());
 };
 
+/**
+ * Fetch the featured image from its media ID.
+ * @param {number} mediaId - The media ID.
+ * @returns {Promise<string|null>} The URL of the featured image, or null if not available.
+ */
 const fetchFeaturedImage = async (mediaId) => {
 	const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
 	const data = await response.json();
 	return data.source_url;
 };
 
+/**
+ * Fetch and process content of a specific type.
+ * @param {string} type - The type of content.
+ * @returns {Promise<void>}
+ */
 const fetchAndProcessType = async (type) => {
 	const outputDir = path.join(process.cwd(), 'src', 'lib', 'data', type); // Output directory for markdown files
 

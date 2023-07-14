@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 </script>
 
-<div class="flex justify-center p-4 text-token">
+<div class="text-token flex justify-center p-4">
 	<ol class="breadcrumb">
 		<li class="crumb"><a class="anchor" href="/">Blog</a></li>
 		<li class="crumb-separator" aria-hidden>/</li>
