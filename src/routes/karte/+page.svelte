@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import { MapLibre, Marker, Popup } from 'svelte-maplibre';
 
 	let clickedName = '';

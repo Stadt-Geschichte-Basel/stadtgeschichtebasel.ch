@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import Head from '$lib/components/Head.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
+	import * as config from '$lib/config';
 	import Logo from '$lib/images/logo.svg';
 
 	import { AppBar, AppShell, Drawer, drawerStore } from '@skeletonlabs/skeleton';
@@ -148,7 +149,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://github.com/stadt-geschichte-basel" aria-label="Github">
+						<a href="https://github.com/{config.githubHandle}" aria-label="Github">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -180,7 +181,7 @@
 					<div
 						class="grid grid-cols-1 place-content-center place-items-center gap-2 md:place-items-start"
 					>
-						<p class="!text-sm opacity-80">Wir schreiben Basler Geschichten.</p>
+						<p class="!text-sm opacity-80">{config.subtitle}</p>
 						<!-- Current Version -->
 						<!-- <span class="badge variant-soft" /> -->
 					</div>
@@ -205,7 +206,7 @@
 						<div class="space-y-6">
 							<div class="h6">Impressum</div>
 							<p class="text-sm">
-								Stiftung Stadt.Geschichte.Basel<br />Hirschgässlein 21<br />4051 Basel<br />
+								{config.author}<br />Hirschgässlein 21<br />4051 Basel<br />
 								<a href="mailto:info@stadtgeschichtebasel.ch">info@stadtgeschichtebasel.ch</a>
 							</p>
 						</div>
@@ -223,12 +224,14 @@
 							target="_blank"
 							rel="noreferrer"
 						> -->
-						© 2023 Stadt.Geschichte.Basel
+						© 2023 {config.author}
 						<!-- </a> -->
 						<span class="mx-2 opacity-10">|</span>
 						<a class="anchor" href="/datenschutzerklaerung-der-stadt-geschichte-basel"
 							>Datenschutz
 						</a>
+						<span class="mx-2 opacity-10">|</span>
+						<a class="anchor" href="/credits">Credits</a>
 					</p>
 				</section>
 			</div>

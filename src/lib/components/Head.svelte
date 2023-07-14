@@ -3,16 +3,20 @@
 </script>
 
 <svelte:head>
-	<title>{config.title}</title>
+	<meta name="generator" content="gh:{config.githubHandle}/{config.githubRepo}" />
+	<link rel="canonical" href={config.url} />
+
+	<title>{config.title} {config.subtitle}</title>
 	<meta name="keywords" content={config.keywords} />
 	<meta name="description" content={config.description} />
 	<meta name="author" content={config.author} />
+	<meta name="theme-color" content={config.themeColor} />
 
 	<!-- Twitter tags -->
 	<meta name="twitter:title" content={config.title} />
 	<meta name="twitter:description" content={config.description} />
-	<meta name="twitter:site" content={config.twitter} />
-	<meta name="twitter:creator" content={config.twitter} />
+	<meta name="twitter:site" content={config.twitterHandle} />
+	<meta name="twitter:creator" content={config.twitterHandle} />
 	<meta property="twitter:image" content={config.image512} />
 	<meta property="twitter:image:width" content="512" />
 	<meta property="twitter:image:height" content="512" />
