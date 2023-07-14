@@ -3,6 +3,7 @@
 </script>
 
 <svelte:head>
+	<title>{config.title} {config.subtitle}</title>
 	<!-- General meta tags -->
 	<meta name="generator" content="gh:{config.githubHandle}/{config.githubRepo}" />
 	<meta name="keywords" content={config.keywords} />
