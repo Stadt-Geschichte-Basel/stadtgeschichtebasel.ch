@@ -1,10 +1,40 @@
 import * as config from '$lib/config';
 import { json } from '@sveltejs/kit';
 
+/**
+ * Indicates whether prerendering is enabled.
+ * @type {boolean}
+ */
 export const prerender = true;
 
-/** @type {import('./$types').RequestHandler} */
-export async function GET() {
+/**
+ * Represents an contributor.
+ * @typedef {Object} Contributor
+ * @property {string} login - The login of the contributor.
+ * @property {string} avatar_url - The avatar URL of the contributor.
+ * @property {string} html_url - The HTML URL of the contributor.
+ */
+
+/**
+ * Represents the latest commit.
+ * @typedef {Object} LatestCommit
+ * @property {string} html_url - The HTML URL of the latest commit.
+ * @property {string} date - The date of the latest commit.
+ */
+
+/**
+ * Represents the credits data.
+ * @typedef {Object} Credits
+ * @property {Array<Contributor>} contributors - The contributors.
+ * @property {LatestCommit} latest_commit - The latest commit.
+ */
+
+/**
+ * Fetches credits data from the GitHub API.
+ * @returns {Promise<Credits>} A promise that resolves with the credits data.
+ * @throws {Error} An error is thrown if the request fails.
+ */
+async function getCredits() {
 	const repoOwner = config.githubHandle; // Replace 'owner' with the actual repository owner
 	const repoName = config.githubRepo; // Replace 'repository' with the actual repository name
 
@@ -29,7 +59,7 @@ export async function GET() {
 				}))
 		]);
 
-		return json({ contributors, latest_commit: latestCommit });
+		return { contributors, latest_commit: latestCommit };
 	} catch (error) {
 		console.error('Error:', error);
 
@@ -47,6 +77,15 @@ export async function GET() {
 			}
 		};
 
-		return json(fallbackData);
+		return fallbackData;
 	}
+}
+
+/**
+ * Request handler for the GET method.
+ * @type {import('./$types').RequestHandler}
+ */
+export async function GET() {
+	const credits = await getCredits();
+	return json(credits);
 }

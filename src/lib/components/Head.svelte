@@ -17,7 +17,7 @@
 	<meta name="twitter:description" content={config.description} />
 	<meta name="twitter:site" content={config.twitterHandle} />
 	<meta name="twitter:creator" content={config.twitterHandle} />
-	<meta property="twitter:image" content={config.image512} />
+	<meta property="twitter:image" content="/android-chrome-512x512.png" />
 	<meta property="twitter:image:width" content="512" />
 	<meta property="twitter:image:height" content="512" />
 
@@ -27,7 +27,7 @@
 	<meta property="og:url" content={config.url} />
 	<meta property="og:site_name" content={config.title} />
 	<meta property="og:type" content="website" />
-	<meta property="og:image" content={config.image512} />
+	<meta property="og:image" content="/android-chrome-512x512.png" />
 	<meta property="og:image:width" content="512" />
 	<meta property="og:image:height" content="512" />
 </svelte:head>

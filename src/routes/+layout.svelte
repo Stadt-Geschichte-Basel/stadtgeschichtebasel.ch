@@ -3,7 +3,6 @@
 	import Head from '$lib/components/Head.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import * as config from '$lib/config';
-	import Logo from '$lib/images/logo.svg';
 
 	import { AppBar, AppShell, Drawer, drawerStore } from '@skeletonlabs/skeleton';
 	// The ordering of these imports is critical to your app working properly
@@ -78,7 +77,7 @@
 						</span>
 					</button>
 					<a href="/" class="cursor-pointer" aria-label="Home"
-						><img src={Logo} alt="" class="h-12 w-auto" /></a
+						><img src="/icon.svg" alt="" class="h-12 w-auto" /></a
 					>
 				</div>
 			</svelte:fragment>
