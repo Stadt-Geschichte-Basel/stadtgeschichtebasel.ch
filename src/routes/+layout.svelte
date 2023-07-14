@@ -11,20 +11,7 @@
 	// import '@skeletonlabs/skeleton/styles/skeleton.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	// Most of your app wide CSS should be put in this file
-	import { browser, dev } from '$app/environment';
-	import { onMount } from 'svelte';
-	import { registerSW } from 'virtual:pwa-register';
 	import '../app.postcss';
-	onMount(
-		() =>
-			!dev &&
-			browser &&
-			registerSW({
-				immediate: true,
-				onRegistered: (r) => r && setInterval(async () => await r.update(), 198964),
-				onRegisterError: (error) => console.error(error)
-			})
-	);
 
 	$: classesPageFooter = $page.url.pathname === '/karte' ? 'hidden' : '';
 
@@ -38,6 +25,29 @@
 	function drawerOpen() {
 		drawerStore.open({});
 	}
+
+	import { onMount } from 'svelte';
+	import { pwaInfo } from 'virtual:pwa-info';
+
+	onMount(async () => {
+		if (pwaInfo) {
+			const { registerSW } = await import('virtual:pwa-register');
+			registerSW({
+				immediate: true,
+				onRegistered(r) {
+					// uncomment following code if you want check for updates
+					// r && setInterval(() => {
+					//    console.log('Checking for sw update')
+					//    r.update()
+					// }, 20000 /* 20s for testing purposes */)
+					console.log(`SW Registered: ${r}`);
+				},
+				onRegisterError(error) {
+					console.log('SW registration error', error);
+				}
+			});
+		}
+	});
 </script>
 
 <Head />

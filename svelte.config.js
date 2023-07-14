@@ -34,9 +34,6 @@ const config = {
 		}),
 		prerender: {
 			handleHttpError: 'warn'
-		},
-		serviceWorker: {
-			register: false
 		}
 	}
 };

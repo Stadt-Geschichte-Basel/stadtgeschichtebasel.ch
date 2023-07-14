@@ -18,70 +18,51 @@ export default defineConfig({
 		// 		nesting: true
 		// 	}
 		// }),
-		// SvelteKitPWA({
-		// 	srcDir: './src',
-		// 	mode: 'development',
-		// 	// you don't need to do this if you're using generateSW strategy in your app
-		// 	// strategies: generateSW ? 'generateSW' : 'injectManifest',
-		// 	strategies: 'generateSW',
-		// 	// you don't need to do this if you're using generateSW strategy in your app
-		// 	// filename: generateSW ? undefined : 'prompt-sw.js',
-		// 	scope: '/',
-		// 	base: '/',
-		// 	selfDestroying: process.env.SELF_DESTROYING_SW === 'true',
-		// 	manifest: {
-		// 		short_name: 'Stadt.Geschichte.Basel',
-		// 		name: 'Stadt.Geschichte.Basel',
-		// 		description: 'Wir schreiben Basler Geschichten.',
-		// 		start_url: '/',
-		// 		scope: '/',
-		// 		display: 'standalone',
-		// 		theme_color: '#ffffff',
-		// 		background_color: '#ffffff',
-		// 		icons: [
-		// 			{
-		// 				src: '/android-chrome-192x192.png',
-		// 				sizes: '192x192',
-		// 				type: 'image/png'
-		// 			},
-		// 			{
-		// 				src: '/android-chrome-512x512.png',
-		// 				sizes: '512x512',
-		// 				type: 'image/png'
-		// 			},
-		// 			{
-		// 				src: '/android-chrome-512x512.png',
-		// 				sizes: '512x512',
-		// 				type: 'image/png',
-		// 				purpose: 'any maskable'
-		// 			}
-		// 		]
-		// 	},
-		// 	injectManifest: {
-		// 		globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}']
-		// 	},
-		// 	workbox: {
-		// 		globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}']
-		// 	},
-		// 	devOptions: {
-		// 		enabled: true,
-		// 		suppressWarnings: process.env.SUPPRESS_WARNING === 'true',
-		// 		type: 'module',
-		// 		navigateFallback: '/'
-		// 	},
-		// 	// if you have shared info in svelte config file put in a separate module and use it also here
-		// 	kit: {}
-		// })
-
-
-
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
-			manifest: false,
-			scope: '/',
-			workbox: {
-				globPatterns: ['posts.json', '**/*.{js,css,html,svg,ico,png,webp,avif}'],
-				globIgnores: ['**/sw*', '**/workbox-*']
+			srcDir: 'src',
+			manifest: {
+				name: 'Stadt.Geschicht.Basel',
+				short_name: 'Stadt.Geschicht.Basel',
+				lang: 'de',
+				description:
+					'Entdecken Sie die faszinierende Geschichte Basels. Tauchen Sie ein in die Kultur und Geschichte der Stadt am Rheinknie.',
+				id: 'http://localhost:5173/',
+				start_url: '/',
+				scope: '/',
+				display: 'standalone',
+				orientation: 'portrait',
+				background_color: '#ffffff',
+				theme_color: '#ffffff',
+				icons: [
+					{
+						src: 'http://localhost:5173/android-chrome-192x192.png',
+						sizes: '192x192',
+						type: 'image/png',
+						purpose: 'any'
+					},
+					{
+						src: 'http://localhost:5173/android-chrome-512x512.png',
+						sizes: '512x512',
+						type: 'image/png',
+						purpose: 'any'
+					},
+					{
+						src: 'http://localhost:5173/icon.svg',
+						sizes: '48x48 72x72 96x96 128x128 150x150 256x256 512x512 1024x1024',
+						type: 'image/svg+xml',
+						purpose: 'any'
+					},
+					{
+						src: 'http://localhost:5173/android-chrome-512x512.png',
+						sizes: '512x512',
+						type: 'image/png',
+						purpose: 'maskable'
+					}
+				]
+			},
+			devOptions: {
+				enabled: true
 			}
 		})
 	],

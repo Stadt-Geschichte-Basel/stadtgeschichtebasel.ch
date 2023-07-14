@@ -1,6 +1,5 @@
 <script>
 	import * as config from '$lib/config';
-	import { pwaInfo } from 'virtual:pwa-info';
 </script>
 
 <svelte:head>
