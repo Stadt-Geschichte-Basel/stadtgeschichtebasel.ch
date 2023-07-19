@@ -87,7 +87,7 @@
 						</span>
 					</button>
 					<a href="/" class="cursor-pointer" aria-label="Home"
-						><img src="/icon.svg" alt="" class="h-12 w-auto" /></a
+						><img src="/icon.svg" alt="" class="h-12 w-full" /></a
 					>
 				</div>
 			</svelte:fragment>

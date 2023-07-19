@@ -41,7 +41,7 @@ export const twitterHandle = '@basel_stadt';
  * The GitHub handle or organization associated with the website's repository.
  * @type {string}
  */
-export const githubHandle = 'Stadt-Geschicht-Basel';
+export const githubHandle = 'Stadt-Geschichte-Basel';
 
 /**
  * The name of the GitHub repository for the website.
