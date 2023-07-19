@@ -86,9 +86,11 @@
 							>
 						</span>
 					</button>
-					<a href="/" class="cursor-pointer" aria-label="Home"
-						><img src="/icon.svg" alt="" class="h-12 w-full" /></a
-					>
+					<div class="h-12 w-full">
+						<a href="/" class="cursor-pointer" aria-label="Home"
+							><img src="/icon.svg" alt="" class="h-full w-full" /></a
+						>
+					</div>
 				</div>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
