@@ -9,7 +9,8 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-/dev-dist/
+/dev-dist
+/.jampack
 
 # Exclude example.env
 !example.env

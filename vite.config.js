@@ -1,23 +1,11 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vite';
-import { imagetools } from 'vite-imagetools';
-import lightningcss from 'vite-plugin-lightningcss';
 
+/** @type {import('vite').UserConfig} */
 export default defineConfig({
 	plugins: [
-		imagetools({
-			formats: ['webp', 'avif']
-		}),
 		sveltekit(),
-		// lightningcss({
-		// 	minify: true,
-		// 	browserslist: 'last 2 versions, >= 0.25%, not dead',
-		// 	drafts: {
-		// 		customMedia: true,
-		// 		nesting: true
-		// 	}
-		// }),
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
 			srcDir: 'src',

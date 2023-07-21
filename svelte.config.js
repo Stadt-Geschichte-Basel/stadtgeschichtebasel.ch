@@ -1,6 +1,6 @@
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
-import { defineMDSveXConfig as defineConfig, mdsvex } from 'mdsvex';
+import { mdsvex } from 'mdsvex';
 import { rehypeMdsvexImageAutoimport } from 'rehype-mdsvex-image-autoimport';
 
 /** @type {import('mdsvex').MdsvexOptions} */
@@ -12,7 +12,7 @@ const mdsvexOptions = {
 	},
 
 	remarkPlugins: [],
-	rehypePlugins: [rehypeMdsvexImageAutoimport]
+	rehypePlugins: []
 };
 
 /** @type {import('@sveltejs/kit').Config} */

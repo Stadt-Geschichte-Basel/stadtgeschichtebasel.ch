@@ -1,4 +1,5 @@
 <script>
+	import { assets, base } from '$app/paths';
 	import { page } from '$app/stores';
 	import Head from '$lib/components/Head.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
@@ -88,7 +89,7 @@
 					</button>
 					<div class="h-12 w-full">
 						<a href="/" class="cursor-pointer" aria-label="Home"
-							><img src="/icon.svg" alt="" class="h-full w-full" /></a
+							><img src="{base}/icon.svg" alt="" class="h-full w-full" /></a
 						>
 					</div>
 				</div>

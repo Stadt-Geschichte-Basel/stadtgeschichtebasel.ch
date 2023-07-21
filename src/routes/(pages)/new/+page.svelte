@@ -15,3 +15,7 @@
 		{/each}
 	</ul>
 </section>
+
+<!-- TODO https://joyofcode.xyz/sveltekit-markdown-blog -->
+<!-- TODO https://github.com/JonasKruckenberg/imagetools/blob/main/packages/vite/README.md#defaultdirectives -->
+<!-- TODO https://github.com/n1kk/rehype-mdsvex-image-autoimport -->
