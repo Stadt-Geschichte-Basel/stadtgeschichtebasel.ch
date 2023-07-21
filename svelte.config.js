@@ -1,7 +1,6 @@
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 import { mdsvex } from 'mdsvex';
-import { rehypeMdsvexImageAutoimport } from 'rehype-mdsvex-image-autoimport';
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
