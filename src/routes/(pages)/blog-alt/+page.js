@@ -13,7 +13,7 @@
  * @returns {Promise<Post[]>}
  */
 export async function load({ fetch }) {
-	const response = await fetch('api/posts');
+	const response = await fetch('blog-alt/posts');
 	const posts = await response.json();
 	return { posts: posts };
 }

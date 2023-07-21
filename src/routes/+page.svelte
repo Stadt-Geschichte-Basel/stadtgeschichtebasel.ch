@@ -1,10 +1,10 @@
 <script>
 	export let data;
 	// FIXME hack to replace numbers with slugs
-	const regex = /https:\/\/sgb\.hypotheses\.org\/\d+/g;
-	data.posts.forEach((post) => {
-		post.excerpt.rendered = post.excerpt.rendered.replace(regex, `/blog/${post.slug}`);
-	});
+	// const regex = /https:\/\/sgb\.hypotheses\.org\/\d+/g;
+	// data.posts.forEach((post) => {
+	// 	post.excerpt.rendered = post.excerpt.rendered.replace(regex, `/blog/${post.slug}`);
+	// });
 </script>
 
 <div class="container space-y-4 p-10">
