@@ -9,7 +9,7 @@ export default defineConfig({
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
 			srcDir: 'src',
-			// manifest: false,
+			manifest: false,
 			manifestFile: 'manifest.webmanifest',
 			// manifest: {
 			// 	name: 'Stadt.Geschicht.Basel',

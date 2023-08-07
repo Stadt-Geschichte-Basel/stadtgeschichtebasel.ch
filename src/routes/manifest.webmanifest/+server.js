@@ -1,6 +1,11 @@
 import * as config from '$lib/config';
 
+/**
+ * Indicates whether prerendering is enabled.
+ * @type {boolean}
+ */
 export const prerender = true;
+
 export const trailingSlash = 'never';
 export const GET = () =>
 	new Response(
