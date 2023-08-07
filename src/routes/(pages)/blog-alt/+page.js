@@ -17,8 +17,10 @@
  * Get posts
  * @returns {Promise<Post[]>}
  */
+
+/** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
 	const response = await fetch('blog-alt/posts');
-	const { posts } = await response.json();
-	return posts;
+	const posts = await response.json();
+	return { posts };
 }

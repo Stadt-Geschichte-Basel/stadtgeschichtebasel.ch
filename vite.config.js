@@ -8,7 +8,7 @@ export default defineConfig({
 		sveltekit(),
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
-			srcDir: 'src',
+			// srcDir: 'src',
 			manifest: false,
 			manifestFile: 'manifest.webmanifest',
 			// manifest: {

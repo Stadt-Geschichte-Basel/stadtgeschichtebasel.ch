@@ -38,7 +38,7 @@
 >
 	{#each markers as { lngLat, label, name, description } (label)}
 		<Marker
-			{lngLat}
+			lngLat={[lngLat[0], lngLat[1]]}
 			on:click={() => (clickedName = name)}
 			class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black shadow-2xl focus:outline-2 focus:outline-black"
 		>
