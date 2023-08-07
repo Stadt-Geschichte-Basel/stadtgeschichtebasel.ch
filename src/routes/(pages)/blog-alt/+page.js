@@ -12,8 +12,13 @@
  * Get posts
  * @returns {Promise<Post[]>}
  */
+
+/**
+ * Get posts
+ * @returns {Promise<Post[]>}
+ */
 export async function load({ fetch }) {
 	const response = await fetch('blog-alt/posts');
-	const posts = await response.json();
-	return { posts: posts };
+	const { posts } = await response.json();
+	return posts;
 }
