@@ -24,7 +24,7 @@
 		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0';
 
 	function drawerOpen() {
-		drawerStore.open({});
+		drawerStore.open();
 	}
 
 	import { onMount } from 'svelte';
