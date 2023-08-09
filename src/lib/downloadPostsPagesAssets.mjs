@@ -8,7 +8,8 @@ import TurndownService from 'turndown';
  * Turndown service instance for converting HTML to Markdown.
  * @type {TurndownService}
  */
-const turndownService = new TurndownService();
+let turndownService = new TurndownService();
+turndownService.keep(['iframe', 'audio', 'video'])
 
 /**
  * The base URL of the website.
@@ -99,6 +100,10 @@ async function fetchWithTimeout(url, options = {}) {
  */
 async function fetchWithRetry(url, retries = 3, delay = 5000) {
 	for (let i = 0; i < retries; i++) {
+		if (i === retries - 1) {
+			console.error(`Failed to fetch URL after ${retries} attempts: ${url}`, error);
+			process.exit(1); // Exit the script with a failure status code
+		}
 		try {
 			const response = await fetchWithTimeout(url);
 			if (response.ok) return response;
@@ -149,7 +154,12 @@ const downloadAsset = async (url, outputDir) => {
 		return;
 	}
 
-	const response = await fetch(url);
+	const response = await fetchWithRetry(url);
+	if (!response.ok) {
+		console.error(`Failed to download asset from URL: ${url}`);
+		process.exit(1); // Exit the script with a failure status code
+	}
+
 	const filePath = path.join(outputDir, urlPath);
 	const dirPath = path.dirname(filePath);
 	if (!fs.existsSync(dirPath)) {
@@ -213,8 +223,14 @@ const downloadAssetsConcurrently = async (urls, outputDir, limit = 5) => {
  * @returns {Promise<string>} The processed content in Markdown format.
  */
 const processContent = async (html, outputDir) => {
-	const $ = cheerio.load(html);
+	const $ = cheerio.load(html, { xmlMode: true });
 	const assetUrls = [];
+
+	// Handle <iframe> tags
+	$('figure:has(iframe)').each(function () {
+		const innerContent = $(this).html();
+		$(this).replaceWith(innerContent);
+	});
 
 	// Handle <figure> and <figcaption> tags
 	$('figure').each((i, figureElem) => {
@@ -240,6 +256,7 @@ const processContent = async (html, outputDir) => {
 	});
 
 	await downloadAssetsConcurrently(assetUrls, outputDir);
+
 	return turndownService.turndown($.html());
 };
 
@@ -287,7 +304,6 @@ const fetchAndProcessType = async (type) => {
 					? await fetchFeaturedImage(item.featured_media)
 					: null;
 				if (featuredImageUrl) {
-					const relativeUrl = path.join('.', featuredImageUrl.replace(baseURL, ''));
 					await downloadAsset(featuredImageUrl, outputDir);
 				}
 				const frontMatter = {
@@ -308,15 +324,7 @@ const fetchAndProcessType = async (type) => {
 			fetched = data.length;
 		} catch (error) {
 			console.error(`Error processing page ${page} of type ${type}:`, error.message);
-			// Decide on the action based on the error type
-			if (error.name === 'AbortError') {
-				console.warn(
-					`Request aborted due to timeout for page ${page} of type ${type}. Skipping this page.`
-				);
-			} else {
-				console.warn(`Skipping page ${page} of type ${type} due to an error.`);
-			}
-			fetched = 0; // Stop further fetching for this page
+			process.exit(1); // Exit the script with a failure status code
 		}
 		page++;
 	} while (fetched === perPage);
