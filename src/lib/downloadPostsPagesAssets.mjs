@@ -9,7 +9,7 @@ import TurndownService from 'turndown';
  * @type {TurndownService}
  */
 let turndownService = new TurndownService();
-turndownService.keep(['iframe', 'audio', 'video'])
+turndownService.keep(['iframe', 'audio', 'video']);
 
 /**
  * The base URL of the website.
@@ -223,7 +223,7 @@ const downloadAssetsConcurrently = async (urls, outputDir, limit = 5) => {
  * @returns {Promise<string>} The processed content in Markdown format.
  */
 const processContent = async (html, outputDir) => {
-	const $ = cheerio.load(html, { xmlMode: true });
+	const $ = cheerio.load(html);
 	const assetUrls = [];
 
 	// Handle <iframe> tags
@@ -277,7 +277,7 @@ const fetchFeaturedImage = async (mediaId) => {
  * @returns {Promise<void>}
  */
 const fetchAndProcessType = async (type) => {
-	const outputDir = path.join(process.cwd(), 'src', 'lib', 'data', type);
+	const outputDir = path.join(process.cwd(), 'src', 'lib', type);
 
 	if (!fs.existsSync(outputDir)) {
 		fs.mkdirSync(outputDir, { recursive: true });
@@ -298,6 +298,7 @@ const fetchAndProcessType = async (type) => {
 
 			const data = await response.json();
 			for (const item of data) {
+				const title = turndownService.turndown(item.title.rendered);
 				const content = await processContent(item.content.rendered, outputDir);
 				const excerpt = await processContent(item.excerpt.rendered, outputDir);
 				const featuredImageUrl = item.featured_media
@@ -308,10 +309,11 @@ const fetchAndProcessType = async (type) => {
 				}
 				const frontMatter = {
 					id: item.id,
-					title: item.title.rendered,
+					title: title,
 					date: item.date,
-					lastUpdate: item.modified,
+					modified: item.modified,
 					slug: item.slug,
+					author: item.author,
 					excerpt: excerpt,
 					featuredImage: featuredImageUrl
 						? path.join('.', featuredImageUrl.replace(baseURL, ''))
