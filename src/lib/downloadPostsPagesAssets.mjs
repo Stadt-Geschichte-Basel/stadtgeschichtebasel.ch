@@ -160,7 +160,7 @@ const downloadAsset = async (url, outputDir) => {
 		process.exit(1); // Exit the script with a failure status code
 	}
 
-	const filePath = path.join(outputDir, urlPath);
+	const filePath = path.join('static', urlPath);
 	const dirPath = path.dirname(filePath);
 	if (!fs.existsSync(dirPath)) {
 		fs.mkdirSync(dirPath, { recursive: true });
@@ -277,7 +277,7 @@ const fetchFeaturedImage = async (mediaId) => {
  * @returns {Promise<void>}
  */
 const fetchAndProcessType = async (type) => {
-	const outputDir = path.join(process.cwd(), 'src', 'lib', type);
+	const outputDir = path.join(process.cwd(), 'src', type);
 
 	if (!fs.existsSync(outputDir)) {
 		fs.mkdirSync(outputDir, { recursive: true });
@@ -288,7 +288,8 @@ const fetchAndProcessType = async (type) => {
 	do {
 		try {
 			const response = await fetchWithRetry(
-				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
+					categories.length > 0 ? `&categories=${categories.join(',')}` : ''
 				}&_fields=id,content.rendered,title.rendered,date,modified,slug,author,excerpt.rendered,featured_media`
 			);
 

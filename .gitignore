@@ -12,12 +12,17 @@ vite.config.ts.timestamp-*
 /dev-dist
 /.jampack
 
+
 # Exclude example.env
 !example.env
 
-# Exclude downloaded data
-/src/lib/data/
-/static/files/
+# Exclude downloaded data but keep .gitkeep
+/src/posts/*
+!/src/posts/.gitkeep
+/src/pages/*
+!/src/pages/.gitkeep
+/static/files/*
+!/static/files/.gitkeep
 
 ## Created by https://www.toptal.com/developers/gitignore/api/git,node,linux,macos,windows,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,node,linux,macos,windows,visualstudiocode
