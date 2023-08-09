@@ -13,7 +13,7 @@
 	"packageManager": "pnpm@8.6.6",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && vite build",
+		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",

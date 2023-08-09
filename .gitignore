@@ -11,7 +11,7 @@ vite.config.ts.timestamp-*
 
 /dev-dist
 /.jampack
-
+/_trash/*
 
 # Exclude example.env
 !example.env

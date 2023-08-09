@@ -7,7 +7,7 @@
 		<li class="crumb"><a class="anchor" href="/">Blog</a></li>
 		<li class="crumb-separator" aria-hidden>/</li>
 		<li>
-			<a class="anchor" href={$page.url.pathname}>{$page.data.title.rendered}</a>
+			<a class="anchor" href={$page.url.pathname}>{$page.data.meta.title}</a>
 		</li>
 	</ol>
 </div>

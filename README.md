@@ -61,6 +61,7 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] <https://www.neurodiversity.design/>
 - [ ] Add metadata to svg <https://www.w3.org/TR/SVGTiny12/metadata.html>
 - [ ] Add "@vite-pwa/sveltekit": "^0.2.1",
+- [ ] <https://github.com/n1kk/rehype-mdsvex-image-autoimport)>
 
 ## Contributing
 
