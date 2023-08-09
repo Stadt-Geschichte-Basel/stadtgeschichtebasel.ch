@@ -215,6 +215,20 @@ const downloadAssetsConcurrently = async (urls, outputDir, limit = 5) => {
 const processContent = async (html, outputDir) => {
 	const $ = cheerio.load(html);
 	const assetUrls = [];
+
+	// Handle <figure> and <figcaption> tags
+	$('figure').each((i, figureElem) => {
+		const imgElem = $(figureElem).find('img').first();
+		const figcaptionElem = $(figureElem).find('figcaption').first();
+		if (imgElem && figcaptionElem) {
+			const imageUrl = imgElem.attr('src');
+			const imageAlt = imgElem.attr('alt');
+			const captionText = figcaptionElem.text();
+			const imgWithAlt = `<img src="${imageUrl}" alt="${imageAlt}" title="${captionText}">`;
+			$(figureElem).replaceWith(imgWithAlt);
+		}
+	});
+
 	$('img, a').each((i, elem) => {
 		const url = getAssetUrl(elem, $);
 		if (url && url.startsWith(baseURL)) {
@@ -224,6 +238,7 @@ const processContent = async (html, outputDir) => {
 			assetUrls.push(url);
 		}
 	});
+
 	await downloadAssetsConcurrently(assetUrls, outputDir);
 	return turndownService.turndown($.html());
 };
@@ -256,8 +271,7 @@ const fetchAndProcessType = async (type) => {
 	do {
 		try {
 			const response = await fetchWithRetry(
-				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
-					categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''
 				}&_fields=id,content.rendered,title.rendered,date,modified,slug,author,excerpt.rendered,featured_media`
 			);
 

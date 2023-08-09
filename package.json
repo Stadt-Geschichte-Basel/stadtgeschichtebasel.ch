@@ -23,7 +23,7 @@
 		"format": "prettier --write .",
 		"commit": "cz",
 		"prepare": "husky install",
-		"prebuild": "node src/lib/prepareData.js",
+		"prebuild": "node src/lib/downloadPostsPagesAssets.mjs",
 		"postbuild": "jampack .svelte-kit/ "
 	},
 	"devDependencies": {
