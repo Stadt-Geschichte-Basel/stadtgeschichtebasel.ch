@@ -248,7 +248,7 @@ const processContent = async (html, outputDir) => {
 	$('img, a').each((i, elem) => {
 		const url = getAssetUrl(elem, $);
 		if (url && url.startsWith(baseURL)) {
-			const relativeUrl = path.join('.', url.replace(baseURL, ''));
+			const relativeUrl = path.join('/', url.replace(baseURL, ''));
 			if ($(elem).attr('href')) $(elem).attr('href', relativeUrl);
 			if ($(elem).attr('src')) $(elem).attr('src', relativeUrl);
 			assetUrls.push(url);
