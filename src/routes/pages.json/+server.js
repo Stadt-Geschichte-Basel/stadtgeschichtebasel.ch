@@ -5,7 +5,7 @@ import { json } from '@sveltejs/kit';
  * @returns {Promise<Array>} An array of pages with metadata.
  */
 async function getPages() {
-	const pages = [];
+	let pages = [];
 
 	// Get all markdown files in the /src/pages directory
 	const paths = import.meta.glob('/src/pages/*.md', { eager: true });
@@ -16,7 +16,7 @@ async function getPages() {
 		const slug = path.split('/').pop()?.replace('.md', '');
 
 		// if (file && typeof file === 'object' && 'metadata' in file && slug) {
-		if (file && typeof file === 'object' && file.hasOwnProperty('metadata') && slug) {
+		if (file && typeof file === 'object' && 'metadata' in file && slug) {
 			const metadata = file.metadata;
 			const page = { ...metadata, slug };
 			pages.push(page);

@@ -9,7 +9,6 @@ node_modules
 .env
 .env.*
 !.env.example
-/dev-dist
 
 # Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml

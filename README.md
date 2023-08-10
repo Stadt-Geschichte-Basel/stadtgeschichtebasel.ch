@@ -26,10 +26,10 @@ pnpm run format
 
 This project is maintained by [@maehr](https://github.com/maehr). Please understand that we won't be able to provide individual support via email. We also believe that help is much more valuable if it's shared publicly, so that more people can benefit from it.
 
-| Type                                  | Platforms                                                                                        |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| 🚨 **Bug Reports**                    | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
-| 🎁 **Feature Requests**               | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
+| Type                                   | Platforms                                                                                        |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 🚨 **Bug Reports**                     | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
+| 🎁 **Feature Requests**                | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
 | 🛡 **Report a security vulnerability** | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
 
 ## Roadmap
@@ -61,7 +61,8 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] <https://www.neurodiversity.design/>
 - [ ] Add metadata to svg <https://www.w3.org/TR/SVGTiny12/metadata.html>
 - [ ] Add "@vite-pwa/sveltekit": "^0.2.1",
-- [ ] <https://github.com/n1kk/rehype-mdsvex-image-autoimport)>
+- [ ] <https://github.com/n1kk/rehype-mdsvex-image-autoimport>
+- [ ] <rehypeAutolinkHeadings>
 
 ## Contributing
 

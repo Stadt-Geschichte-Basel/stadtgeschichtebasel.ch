@@ -8,7 +8,7 @@ import { json } from '@sveltejs/kit';
 export const prerender = true;
 
 /**
- * Represents an contributor.
+ * Represents a contributor.
  * @typedef {Object} Contributor
  * @property {string} login - The login of the contributor.
  * @property {string} avatar_url - The avatar URL of the contributor.
@@ -35,12 +35,24 @@ export const prerender = true;
  * @throws {Error} An error is thrown if the request fails.
  */
 async function getCredits() {
-	const repoOwner = config.githubHandle; // Replace 'owner' with the actual repository owner
-	const repoName = config.githubRepo; // Replace 'repository' with the actual repository name
-
-	const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/commits`;
+	const repoOwner = config.githubHandle;
+	const repoName = config.githubRepo;
+	const fallbackData = {
+		contributors: [
+			{
+				login: config.githubHandle,
+				avatar_url: '/icon.svg',
+				html_url: `https://github.com/${config.githubHandle}`
+			}
+		],
+		latest_commit: {
+			html_url: config.url,
+			date: new Date().toISOString()
+		}
+	};
 
 	try {
+		const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/commits`;
 		const [contributors, latestCommit] = await Promise.all([
 			fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contributors`)
 				.then((res) => res.json())
@@ -53,31 +65,24 @@ async function getCredits() {
 						  }))
 						: []
 				),
-			fetch(`${apiUrl}?per_page=1&status=success`)
+			fetch(`${apiUrl}?per_page=1`)
 				.then((res) => res.json())
-				.then((data) => ({
-					html_url: data[0].html_url,
-					date: data[0].commit.author.date
-				}))
+				.then((data) => {
+					if (data && Array.isArray(data) && data[0]) {
+						return {
+							html_url: data[0].html_url,
+							date: data[0].commit.author.date
+						};
+					} else {
+						console.error('Error:', data);
+						return fallbackData;
+					}
+				})
 		]);
 
 		return { contributors, latest_commit: latestCommit };
 	} catch (error) {
 		console.error('Error:', error);
-
-		const fallbackData = {
-			contributors: [
-				{
-					login: config.githubHandle,
-					avatar_url: '/icon.svg',
-					html_url: `https://github.com/${config.githubHandle}`
-				}
-			],
-			latest_commit: {
-				html_url: config.url,
-				date: new Date().toISOString()
-			}
-		};
 
 		return fallbackData;
 	}

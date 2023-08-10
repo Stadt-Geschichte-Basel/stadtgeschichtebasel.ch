@@ -5,10 +5,11 @@ import { json } from '@sveltejs/kit';
  * @returns {Promise<Array>} An array of posts with metadata.
  */
 async function getPosts() {
-	const posts = [];
+	let posts = [];
 
 	// Get all markdown files in the /src/posts directory
 	const paths = import.meta.glob('/src/posts/*.md', { eager: true });
+	console.log(paths);
 
 	// Loop through each file and extract its metadata
 	for (const path in paths) {
@@ -16,7 +17,7 @@ async function getPosts() {
 		const slug = path.split('/').pop()?.replace('.md', '');
 
 		// if (file && typeof file === 'object' && 'metadata' in file && slug) {
-		if (file && typeof file === 'object' && file.hasOwnProperty('metadata') && slug) {
+		if (file && typeof file === 'object' && 'metadata' in file && slug) {
 			const metadata = file.metadata;
 			const post = { ...metadata, slug };
 			posts.push(post);

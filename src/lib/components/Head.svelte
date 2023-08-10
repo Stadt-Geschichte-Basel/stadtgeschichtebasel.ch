@@ -15,7 +15,8 @@
 	<link rel="canonical" href={config.url} />
 
 	<!-- Manifest link -->
-	<link rel="manifest" crossorigin="use-credentials" href="/manifest.webmanifest" />
+	<!-- FIXME -->
+	<!-- <link rel="manifest" crossorigin="use-credentials" href="/manifest.webmanifest" /> -->
 
 	<!-- Twitter tags -->
 	<meta name="twitter:title" content={config.title} />
