@@ -228,7 +228,10 @@ const downloadAssetsConcurrently = async (urls, outputDir, limit = 5) => {
  * @returns {Promise<string>} The processed content in Markdown format.
  */
 const processContent = async (html, outputDir) => {
-	const sanitizedHtml = DOMPurify.sanitize(html, { ADD_TAGS: ["iframe"], ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'] });
+	const sanitizedHtml = DOMPurify.sanitize(html, {
+		ADD_TAGS: ['iframe'],
+		ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
+	});
 	const $ = cheerio.load(sanitizedHtml);
 	const assetUrls = [];
 
