@@ -3,6 +3,11 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import path from 'path';
 import TurndownService from 'turndown';
+import { JSDOM } from 'jsdom';
+import createDOMPurify from 'dompurify';
+
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
 
 /**
  * Turndown service instance for converting HTML to Markdown.
@@ -223,7 +228,8 @@ const downloadAssetsConcurrently = async (urls, outputDir, limit = 5) => {
  * @returns {Promise<string>} The processed content in Markdown format.
  */
 const processContent = async (html, outputDir) => {
-	const $ = cheerio.load(html);
+	const sanitizedHtml = DOMPurify.sanitize(html, { ADD_TAGS: ["iframe"], ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'] });
+	const $ = cheerio.load(sanitizedHtml);
 	const assetUrls = [];
 
 	// Handle <iframe> tags
