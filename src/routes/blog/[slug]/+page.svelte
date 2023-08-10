@@ -8,8 +8,7 @@
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={data.meta.title} />
 </svelte:head>
-
-<article>
+<article class="container space-y-4 p-10">
 	<!-- Title -->
 	<hgroup>
 		<h1>{data.meta.title}</h1>

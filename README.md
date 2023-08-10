@@ -64,6 +64,7 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] <https://github.com/n1kk/rehype-mdsvex-image-autoimport>
 - [ ] <rehypeAutolinkHeadings>
 - [ ] https://sveltekit-static-blog-template.vercel.app/
+- [ ] https://github.com/matfantinel/image-transmutation
 
 ## Contributing
 

@@ -9,7 +9,6 @@ async function getPosts() {
 
 	// Get all markdown files in the /src/posts directory
 	const paths = import.meta.glob('/src/posts/*.md', { eager: true });
-	console.log(paths);
 
 	// Loop through each file and extract its metadata
 	for (const path in paths) {

@@ -12,6 +12,4 @@
 	</ol>
 </div>
 
-<article class="container space-y-4 p-10">
-	<slot />
-</article>
+<slot />

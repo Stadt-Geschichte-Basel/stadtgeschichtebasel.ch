@@ -228,18 +228,23 @@ const downloadAssetsConcurrently = async (urls, outputDir, limit = 5) => {
  * @returns {Promise<string>} The processed content in Markdown format.
  */
 const processContent = async (html, outputDir) => {
-	const sanitizedHtml = DOMPurify.sanitize(html, {
-		ADD_TAGS: ['iframe'],
-		ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
-	});
-	const $ = cheerio.load(sanitizedHtml);
-	const assetUrls = [];
-
+    const sanitizedHtml = DOMPurify.sanitize(html, {
+        ADD_TAGS: ['iframe'],
+        ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
+    });
+    const $ = cheerio.load(sanitizedHtml);
+    const assetUrls = [];
+	
 	// Handle <iframe> tags
 	$('figure:has(iframe)').each(function () {
 		const innerContent = $(this).html();
 		$(this).replaceWith(innerContent);
 	});
+
+    // Modify <iframe> tags
+    $('iframe').each(function () {
+        $(this).removeAttr('width').removeAttr('height').addClass('w-full aspect-video');
+    });
 
 	// Handle <figure> and <figcaption> tags
 	$('figure').each((i, figureElem) => {
