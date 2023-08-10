@@ -21,8 +21,6 @@ vite.config.ts.timestamp-*
 !/src/posts/.gitkeep
 /src/pages/*
 !/src/pages/.gitkeep
-/static/files/*
-!/static/files/.gitkeep
 
 ## Created by https://www.toptal.com/developers/gitignore/api/git,node,linux,macos,windows,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,node,linux,macos,windows,visualstudiocode

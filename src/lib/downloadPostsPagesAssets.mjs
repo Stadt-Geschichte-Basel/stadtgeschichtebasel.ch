@@ -165,7 +165,7 @@ const downloadAsset = async (url, outputDir) => {
 		process.exit(1); // Exit the script with a failure status code
 	}
 
-	const filePath = path.join('static', urlPath);
+	const filePath = path.join(outputDir, urlPath);
 	const dirPath = path.dirname(filePath);
 	if (!fs.existsSync(dirPath)) {
 		fs.mkdirSync(dirPath, { recursive: true });
@@ -257,7 +257,7 @@ const processContent = async (html, outputDir) => {
 	$('img, a').each((i, elem) => {
 		const url = getAssetUrl(elem, $);
 		if (url && url.startsWith(baseURL)) {
-			const relativeUrl = path.join('/', url.replace(baseURL, ''));
+			const relativeUrl = path.join('.', url.replace(baseURL, ''));
 			if ($(elem).attr('href')) $(elem).attr('href', relativeUrl);
 			if ($(elem).attr('src')) $(elem).attr('src', relativeUrl);
 			assetUrls.push(url);

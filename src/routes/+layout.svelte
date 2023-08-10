@@ -88,8 +88,8 @@
 						</span>
 					</button>
 					<div class="h-12 w-full">
-						<a href="/" class="cursor-pointer" aria-label="Home"
-							><img src="{base}/icon.svg" alt="" class="h-full w-full" /></a
+						<a href="{base}/" class="cursor-pointer" aria-label="Home"
+							><img src="{assets}/icon.svg" alt="" class="h-full w-full" /></a
 						>
 					</div>
 				</div>
@@ -201,8 +201,8 @@
 						<div class="space-y-6">
 							<div class="h6">Mehr</div>
 							<ul class="space-y-3">
-								<li><a class="anchor" href="/ueber-uns#medien-und-pressekit">Presse</a></li>
-								<li><a class="anchor" href="/ueber-uns#lehrmittel">Lehrmittel</a></li>
+								<li><a class="anchor" href="{base}/ueber-uns#medien-und-pressekit">Presse</a></li>
+								<li><a class="anchor" href="{base}/ueber-uns#lehrmittel">Lehrmittel</a></li>
 								<!-- <li>
 									<a
 										class="anchor"
@@ -239,11 +239,11 @@
 						© 2023 {config.author}
 						<!-- </a> -->
 						<span class="mx-2 opacity-10">|</span>
-						<a class="anchor" href="/datenschutzerklaerung-der-stadt-geschichte-basel"
+						<a class="anchor" href="{base}/datenschutzerklaerung-der-stadt-geschichte-basel"
 							>Datenschutz
 						</a>
 						<span class="mx-2 opacity-10">|</span>
-						<a class="anchor" href="/credits">Credits</a>
+						<a class="anchor" href="{base}/credits">Credits</a>
 					</p>
 				</section>
 			</div>
