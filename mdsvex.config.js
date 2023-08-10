@@ -1,7 +1,7 @@
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
-import rehypeMdsvexImageAutoimport from 'rehype-mdsvex-image-autoimport';
+import { rehypeMdsvexImageAutoimport } from 'rehype-mdsvex-image-autoimport';
 import rehypeExternalLinks from 'rehype-external-links';
 
 const config = defineConfig({

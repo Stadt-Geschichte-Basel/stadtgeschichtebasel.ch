@@ -63,6 +63,7 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] Add "@vite-pwa/sveltekit": "^0.2.1",
 - [ ] <https://github.com/n1kk/rehype-mdsvex-image-autoimport>
 - [ ] <rehypeAutolinkHeadings>
+- [ ] https://sveltekit-static-blog-template.vercel.app/
 
 ## Contributing
 

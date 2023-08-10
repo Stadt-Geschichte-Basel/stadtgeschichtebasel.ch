@@ -24,7 +24,7 @@
 		"commit": "cz",
 		"prepare": "husky install",
 		"prebuild": "node src/lib/downloadPostsPagesAssets.mjs",
-		"postbuild": "jampack .svelte-kit/ "
+		"postbuild": "jampack .svelte-kit/output/"
 	},
 	"devDependencies": {
 		"@divriots/jampack": "^0.13.0",
