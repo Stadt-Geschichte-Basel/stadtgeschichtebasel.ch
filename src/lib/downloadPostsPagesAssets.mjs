@@ -227,24 +227,29 @@ const downloadAssetsConcurrently = async (urls, outputDir, limit = 5) => {
  * @param {string} outputDir - The directory to save the downloaded assets.
  * @returns {Promise<string>} The processed content in Markdown format.
  */
-const processContent = async (html, outputDir) => {
-    const sanitizedHtml = DOMPurify.sanitize(html, {
-        ADD_TAGS: ['iframe'],
-        ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
-    });
-    const $ = cheerio.load(sanitizedHtml);
-    const assetUrls = [];
-	
+const processContent = async (html, outputDir, tagsToRemove = []) => {
+	const sanitizedHtml = DOMPurify.sanitize(html, {
+		ADD_TAGS: ['iframe'],
+		ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
+	});
+	const $ = cheerio.load(sanitizedHtml);
+	const assetUrls = [];
+
+	// Remove tags and their contents
+	tagsToRemove.forEach(tag => {
+		$(tag).remove();
+	});
+
 	// Handle <iframe> tags
 	$('figure:has(iframe)').each(function () {
 		const innerContent = $(this).html();
 		$(this).replaceWith(innerContent);
 	});
 
-    // Modify <iframe> tags
-    $('iframe').each(function () {
-        $(this).removeAttr('width').removeAttr('height').addClass('w-full aspect-video');
-    });
+	// Modify <iframe> tags
+	$('iframe').each(function () {
+		$(this).removeAttr('width').removeAttr('height').addClass('w-full aspect-video');
+	});
 
 	// Handle <figure> and <figcaption> tags
 	$('figure').each((i, figureElem) => {
@@ -302,8 +307,7 @@ const fetchAndProcessType = async (type) => {
 	do {
 		try {
 			const response = await fetchWithRetry(
-				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
-					categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''
 				}&_fields=id,content.rendered,title.rendered,date,modified,slug,author,excerpt.rendered,featured_media`
 			);
 
@@ -315,7 +319,8 @@ const fetchAndProcessType = async (type) => {
 			for (const item of data) {
 				const title = turndownService.turndown(item.title.rendered);
 				const content = await processContent(item.content.rendered, outputDir);
-				const excerpt = await processContent(item.excerpt.rendered, outputDir);
+				const tagsToRemove = ['span'];
+				const excerpt = await processContent(item.excerpt.rendered, outputDir, tagsToRemove);
 				const featuredImageUrl = item.featured_media
 					? await fetchFeaturedImage(item.featured_media)
 					: null;
