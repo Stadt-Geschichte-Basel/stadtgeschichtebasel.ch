@@ -19,34 +19,25 @@
 </script>
 
 <svelte:head>
-	<title>{config.title}</title>
+<title>{config.title}</title>
 </svelte:head>
 
 <div class="container space-y-4 p-10">
 	<h1>Blog</h1>
 
-	{#each paginatedPosts as post}
-		<article>
-			<h2>
-				<a href={`/blog/${post.slug}`}>{@html post.title}</a>
-			</h2>
-			<p class="date">{post.date}</p>
-			<p class="description">{@html post.excerpt}</p>
-		</article>
-	{/each}
+    {#each paginatedPosts as post}
+    	<article>
+    		<h2>
+    			<a href={`/blog/${post.slug}`}>{post.title}</a>
+    		</h2>
+    		<p class="date">{post.date}</p>
+    		<p class="description">{post.excerpt} <a href="/blog/{post.slug}" >weiterlesen</a></p>
+			<!-- <div class="prose">
+				<svelte:component this={post.excerpt} />
+			</div> -->
+    	</article>
+    {/each}
 
-	<Paginator bind:settings={page} showNumerals />
+    <Paginator bind:settings={page} showNumerals />
+
 </div>
-
-<!-- Posts -->
-<!-- <section>
-	<ul class="posts">
-		{#each data.posts as post}
-			<li class="post">
-				<a href=/blog/{post.slug} class="title">{@html post.title}</a>
-				<p class="date">{post.date}</p>
-				<p class="description">{@html post.excerpt}</p>
-			</li>
-		{/each}
-	</ul>
-</section> -->

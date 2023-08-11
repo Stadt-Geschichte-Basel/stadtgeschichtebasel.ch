@@ -227,7 +227,7 @@ const downloadAssetsConcurrently = async (urls, outputDir, limit = 5) => {
  * @param {string} outputDir - The directory to save the downloaded assets.
  * @returns {Promise<string>} The processed content in Markdown format.
  */
-const processContent = async (html, outputDir, tagsToRemove = []) => {
+const processContent = async (html, outputDir, link, slug, tagsToRemove = []) => {
 	const sanitizedHtml = DOMPurify.sanitize(html, {
 		ADD_TAGS: ['iframe'],
 		ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
@@ -236,7 +236,7 @@ const processContent = async (html, outputDir, tagsToRemove = []) => {
 	const assetUrls = [];
 
 	// Remove tags and their contents
-	tagsToRemove.forEach(tag => {
+	tagsToRemove.forEach((tag) => {
 		$(tag).remove();
 	});
 
@@ -264,11 +264,24 @@ const processContent = async (html, outputDir, tagsToRemove = []) => {
 		}
 	});
 
-	$('img, a').each((i, elem) => {
+	// Handle <a> tags
+	$('a').each((i, elem) => {
+		const url = $(elem).attr('href');
+		if (url === link) {
+			const relativeUrl = path.join('.', url.replace(baseURL, ''), slug);
+			$(elem).attr('href', relativeUrl);
+		}
+		if (url && url.startsWith(baseURL)) {
+			const relativeUrl = path.join('.', url.replace(baseURL, ''));
+			$(elem).attr('href', relativeUrl);
+		}
+	});
+
+	// Handle <img> tags
+	$('img').each((i, elem) => {
 		const url = getAssetUrl(elem, $);
 		if (url && url.startsWith(baseURL)) {
 			const relativeUrl = path.join('.', url.replace(baseURL, ''));
-			if ($(elem).attr('href')) $(elem).attr('href', relativeUrl);
 			if ($(elem).attr('src')) $(elem).attr('src', relativeUrl);
 			assetUrls.push(url);
 		}
@@ -307,8 +320,9 @@ const fetchAndProcessType = async (type) => {
 	do {
 		try {
 			const response = await fetchWithRetry(
-				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''
-				}&_fields=id,content.rendered,title.rendered,date,modified,slug,author,excerpt.rendered,featured_media`
+				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
+					categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+				}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media`
 			);
 
 			if (!response.ok) {
@@ -318,9 +332,20 @@ const fetchAndProcessType = async (type) => {
 			const data = await response.json();
 			for (const item of data) {
 				const title = turndownService.turndown(item.title.rendered);
-				const content = await processContent(item.content.rendered, outputDir);
-				const tagsToRemove = ['span'];
-				const excerpt = await processContent(item.excerpt.rendered, outputDir, tagsToRemove);
+				const content = await processContent(
+					item.content.rendered,
+					outputDir,
+					item.link,
+					item.slug
+				);
+				const tagsToRemove = ['span', 'a'];
+				const excerpt = await processContent(
+					item.excerpt.rendered,
+					outputDir,
+					item.link,
+					item.slug,
+					tagsToRemove
+				);
 				const featuredImageUrl = item.featured_media
 					? await fetchFeaturedImage(item.featured_media)
 					: null;
