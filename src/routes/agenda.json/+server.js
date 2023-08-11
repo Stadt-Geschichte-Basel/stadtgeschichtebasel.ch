@@ -3,8 +3,9 @@ import * as config from '$lib/config';
 import { json } from '@sveltejs/kit';
 import { promises as fs } from 'fs';
 import { parseStringPromise } from 'xml2js';
-// import { tmpdir } from 'os';
-// import { join } from 'path';
+import { tmpdir } from 'os';
+import { join } from 'path';
+import { dev } from '$app/environment';
 
 /**
  * Indicates whether prerendering is enabled.
@@ -29,9 +30,9 @@ async function saveToFile(data, path) {
  * @returns {Array<string>} An array of unique owners.
  */
 function getUniqueOwners(activities) {
-    const allOwners = activities.map((item) => item['$'].owner);
-    const uniqueOwners = [...new Set(allOwners)];
-    return uniqueOwners;
+	const allOwners = activities.map((item) => item['$'].owner);
+	const uniqueOwners = [...new Set(allOwners)];
+	return uniqueOwners;
 }
 
 /**
@@ -65,9 +66,11 @@ async function getActivities() {
 	const data = await parseStringPromise(xml);
 	const activities = data['kdz:exportActivities']['Activities'][0]['Activity'];
 
-	// await saveToFile(activities, join(tmpdir(), 'activities.json'));
-	const uniqueOwners = getUniqueOwners(activities);
-	console.log(uniqueOwners);
+	if (dev) {
+		await saveToFile(activities, join(tmpdir(), 'activities.json'));
+		const uniqueOwners = getUniqueOwners(activities);
+		console.log(uniqueOwners);
+	}
 
 	const partners = config.partners;
 	const filteredActivities = activities.filter((item) => {
