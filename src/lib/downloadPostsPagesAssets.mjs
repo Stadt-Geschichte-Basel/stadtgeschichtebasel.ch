@@ -357,8 +357,7 @@ const fetchAndProcessType = async (type) => {
 					title: title,
 					date: item.date,
 					modified: item.modified,
-					// FIXME: The slug is limited to 100 characters, but the original slug may be longer.
-					slug: item.slug.substring(0, 99),
+					slug: item.slug,
 					author: item.author,
 					excerpt: excerpt,
 					featuredImage: featuredImageUrl
