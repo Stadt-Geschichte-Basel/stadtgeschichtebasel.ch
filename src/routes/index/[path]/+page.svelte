@@ -10,6 +10,8 @@
 	<!-- <meta property="og:title" content={data.meta.title} /> -->
 </svelte:head>
 
+<!-- TODO if you change [path] to [...path] it cannot be prerendered anymore -->
+
 <article class="container space-y-4 p-10">
 	<h1>Wir sind umgezogen</h1>
 	<p>
