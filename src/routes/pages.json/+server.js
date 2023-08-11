@@ -1,6 +1,12 @@
 import { json } from '@sveltejs/kit';
 
 /**
+ * Indicates whether prerendering is enabled.
+ * @type {boolean}
+ */
+export const prerender = true;
+
+/**
  * Fetches pages and their metadata.
  * @returns {Promise<Array>} An array of pages with metadata.
  */
