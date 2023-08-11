@@ -2,6 +2,7 @@
 	import * as config from '$lib/config';
 	import { Paginator } from '@skeletonlabs/skeleton';
 
+	/** @type {import('./$types').PageData} */
 	export let data;
 
 	// PaginatorSettings

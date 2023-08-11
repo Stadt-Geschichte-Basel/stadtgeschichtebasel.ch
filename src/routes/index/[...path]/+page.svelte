@@ -1,5 +1,6 @@
 <script>
-	import { page } from '$app/stores';
+	/** @type {import('./$types').PageData} */
+	export let data;
 </script>
 
 <!-- SEO -->
@@ -12,16 +13,16 @@
 <article class="container space-y-4 p-10">
 	<h1>Wir sind umgezogen</h1>
 	<p>
-		Falls die Seite archiviert wurde, finden Sie sie <a
-			href="https://web.archive.org/https://www.stadtgeschichtebasel.ch/{$page.url.pathname}"
+		Eine archivierte Version dieser Seite finden Sie <a
+			href="https://web.archive.org/https://www.stadtgeschichtebasel.ch/{data.url}"
 			>hier</a
 		>.
 	</p>
 </article>
 
 <iframe
-	src="https://web.archive.org/https://www.stadtgeschichtebasel.ch/{$page.url.pathname}"
+	src="https://web.archive.org/https://www.stadtgeschichtebasel.ch/{data.url}"
 	class="w-full h-96"
 	frameborder="0"
-    title="Archive.org"
+	title="Archive.org"
 ></iframe>
