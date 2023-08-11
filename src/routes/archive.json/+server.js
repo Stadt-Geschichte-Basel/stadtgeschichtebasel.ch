@@ -1,6 +1,12 @@
 import { json } from '@sveltejs/kit';
 
 /**
+ * Indicates whether prerendering is enabled.
+ * @type {boolean}
+ */
+export const prerender = true;
+
+/**
  * Request handler for the GET method.
  * @type {import('./$types').RequestHandler}
  */

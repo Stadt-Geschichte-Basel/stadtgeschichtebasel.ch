@@ -1,6 +1,12 @@
 import { json } from '@sveltejs/kit';
 
 /**
+ * Indicates whether prerendering is enabled.
+ * @type {boolean}
+ */
+export const prerender = true;
+
+/**
  * Fetches posts and their metadata.
  * @returns {Promise<Array>} An array of posts with metadata.
  */

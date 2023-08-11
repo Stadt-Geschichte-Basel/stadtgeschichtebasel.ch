@@ -65,7 +65,7 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] <rehypeAutolinkHeadings>
 - [ ] https://sveltekit-static-blog-template.vercel.app/
 - [ ] https://github.com/matfantinel/image-transmutation
-- [ ] fix archive
+- [ ] make all page prerenderable
 
 ## Contributing
 
