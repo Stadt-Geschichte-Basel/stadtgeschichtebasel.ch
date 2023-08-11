@@ -8,7 +8,7 @@
 	<ul class="posts">
 		{#each data.urls as url}
 			<li class="post">
-				<a href=".{url}" class="title">{url}</a>
+				<a href="index/{url}" class="title">{url}</a>
 			</li>
 		{/each}
 	</ul>
