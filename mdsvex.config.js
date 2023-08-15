@@ -3,6 +3,7 @@ import rehypeSlug from 'rehype-slug';
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
 import { rehypeMdsvexImageAutoimport } from 'rehype-mdsvex-image-autoimport';
 import rehypeExternalLinks from 'rehype-external-links';
+import remarkCaptions from 'remark-captions';
 
 const config = defineConfig({
 	extensions: ['.svelte.md', '.md', '.svx'],
@@ -11,7 +12,7 @@ const config = defineConfig({
 		dashes: 'oldschool'
 	},
 
-	remarkPlugins: [],
+	remarkPlugins: [remarkCaptions],
 	rehypePlugins: [
 		rehypeExternalLinks, // Adds 'target' and 'rel' to external links
 		rehypeSlug, // Adds 'id' attributes to Headings (h1,h2,etc)

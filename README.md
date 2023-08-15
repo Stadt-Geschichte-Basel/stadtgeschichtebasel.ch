@@ -66,6 +66,7 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] https://sveltekit-static-blog-template.vercel.app/
 - [ ] https://github.com/matfantinel/image-transmutation
 - [ ] make all page prerenderable
+- [ ] Cloudflare rule für weiterleitungen www.stadtgeschichtebasel.ch/index... stadtgeschichtebasel.ch/index (siehe kernreaktor.ch/\* Forwarding URL (Status Code: 301 - Permanent Redirect, Url: https://web.archive.org/web/kernreaktor.ch/$1))
 
 ## Contributing
 

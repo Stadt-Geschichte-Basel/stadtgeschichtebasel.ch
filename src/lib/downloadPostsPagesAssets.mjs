@@ -15,6 +15,24 @@ const DOMPurify = createDOMPurify(window);
  */
 let turndownService = new TurndownService();
 turndownService.keep(['iframe', 'audio', 'video']);
+const figureToMarkdownRule = {
+	filter: function (node) {
+		return (
+			node.nodeName === 'FIGURE' && node.querySelector('img') && node.querySelector('figcaption')
+		);
+	},
+	replacement: function (content, node) {
+		const imgElement = node.querySelector('img');
+		const figcaptionElement = node.querySelector('figcaption');
+
+		const imageUrl = imgElement.getAttribute('src') || '';
+		const altText = imgElement.getAttribute('alt') || '';
+		const captionText = figcaptionElement.textContent || '';
+
+		return `![${altText}](${imageUrl})\nFigure: ${captionText}\n\n`;
+	}
+};
+turndownService.addRule('figureToMarkdown', figureToMarkdownRule);
 
 /**
  * The base URL of the website.
@@ -249,19 +267,6 @@ const processContent = async (html, outputDir, link, slug, tagsToRemove = []) =>
 	// Modify <iframe> tags
 	$('iframe').each(function () {
 		$(this).removeAttr('width').removeAttr('height').addClass('w-full aspect-video');
-	});
-
-	// Handle <figure> and <figcaption> tags
-	$('figure').each((i, figureElem) => {
-		const imgElem = $(figureElem).find('img').first();
-		const figcaptionElem = $(figureElem).find('figcaption').first();
-		if (imgElem && figcaptionElem) {
-			const imageUrl = imgElem.attr('src');
-			const imageAlt = imgElem.attr('alt');
-			const captionText = figcaptionElem.text();
-			const imgWithAlt = `<img src="${imageUrl}" alt="${imageAlt}" title="${captionText}">`;
-			$(figureElem).replaceWith(imgWithAlt);
-		}
 	});
 
 	// Handle <a> tags
