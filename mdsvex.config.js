@@ -13,10 +13,7 @@ const config = defineConfig({
 		dashes: 'oldschool'
 	},
 
-	remarkPlugins: [
-		remarkCaptions,
-		remarkUnwrapImages
-	],
+	remarkPlugins: [remarkCaptions, remarkUnwrapImages],
 	rehypePlugins: [
 		rehypeExternalLinks, // Adds 'target' and 'rel' to external links
 		rehypeSlug, // Adds 'id' attributes to Headings (h1,h2,etc)
