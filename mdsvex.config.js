@@ -4,6 +4,7 @@ import { defineMDSveXConfig as defineConfig } from 'mdsvex';
 import { rehypeMdsvexImageAutoimport } from 'rehype-mdsvex-image-autoimport';
 import rehypeExternalLinks from 'rehype-external-links';
 import remarkCaptions from 'remark-captions';
+import remarkUnwrapImages from 'remark-unwrap-images';
 
 const config = defineConfig({
 	extensions: ['.svelte.md', '.md', '.svx'],
@@ -12,25 +13,14 @@ const config = defineConfig({
 		dashes: 'oldschool'
 	},
 
-	remarkPlugins: [remarkCaptions],
+	remarkPlugins: [
+		remarkCaptions,
+		remarkUnwrapImages
+	],
 	rehypePlugins: [
 		rehypeExternalLinks, // Adds 'target' and 'rel' to external links
 		rehypeSlug, // Adds 'id' attributes to Headings (h1,h2,etc)
 		rehypeAutolinkHeadings,
-		// [
-		// 	rehypeAutolinkHeadings,
-		// 	{
-		// 		// Adds hyperlinks to the headings, requires rehypeSlug
-		// 		behavior: 'prepend',
-		// 		properties: { className: ['heading-link'], title: 'Permalink', ariaHidden: 'true' },
-		// 		content: {
-		// 			type: 'element',
-		// 			tagName: 'span',
-		// 			properties: {},
-		// 			children: [{ type: 'text', value: '#' }]
-		// 		}
-		// 	}
-		// ],
 		rehypeMdsvexImageAutoimport
 	]
 });
