@@ -1,56 +1,269 @@
 <script>
-	import { MapLibre, Marker, Popup } from 'svelte-maplibre';
+	import { onMount } from 'svelte';
+	import {
+		CircleLayer,
+		Control,
+		ControlButton,
+		ControlGroup,
+		GeoJSON,
+		MapLibre,
+		MarkerLayer,
+		Popup,
+		SymbolLayer
+	} from 'svelte-maplibre';
+	import data from './data.json';
 
-	let clickedName = '';
+	let map;
+	let loaded;
+	let featuresWithLabels = []; // Store features with their labels for the legend
 
-	const markers = [
-		{
-			lngLat: [7.59274, 47.55094],
-			label: 'SGB',
-			name: 'Stadt.Geschichte.Basel',
-			description: 'Wir schreiben Basler Geschichten.'
-		},
-		{
-			label: 'HMB',
-			lngLat: [7.590339127047049, 47.55468576396681],
-			name: 'Historisches Museum Basel',
-			description: 'TBD'
-		},
-		{
-			label: 'Kunstmuseum',
-			lngLat: [7.593909367834212, 47.5542525919389],
-			name: 'Kunstmuseum Basel',
-			description: 'TBD'
+	onMount(async () => {
+		// map configuration options
+		const mapOptions = {
+			container: 'map-container',
+			style:
+				'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
+			center: [7.59274, 47.55094],
+			zoom: 14
+		};
+
+		// Extract features with labels for the legend
+		featuresWithLabels = data.features.map((feature) => ({
+			properties: feature.properties,
+			geometry: feature.geometry,
+			label: feature.properties.label
+		}));
+	});
+
+	/*
+	// Function to handle legend item click and zoom to the corresponding feature
+	function zoomToFeature(feature) {
+		const coordinates = feature.coordinates;
+		//map.flyTo({ center: coordinates, zoom: 15 }); // Zoom to the clicked feature
+		alert(feature.coordinates);
+		if (map) {
+			const coordinates = feature.coordinates;
+			//map.flyTo({ center: coordinates, zoom: 16 }); // Zoom to the clicked feature
+			map.flyTo({
+				center: feature.geometry.coordinates,
+				zoom: 18
+			});
+		} else {
+			alert('map nicht definiert');
 		}
-	];
+	}
+	function handleLegendItemKeydown(event, feature) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			// Perform the same action as a click event
+			zoomToFeature(feature);
+		}
+	}*/
 </script>
 
-<MapLibre
-	style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
-	class="relative aspect-[9/16] h-[90vh] max-h-[90vh] w-full sm:aspect-video sm:max-h-full"
-	standardControls
-	zoom={14}
-	center={[7.59274, 47.55094]}
-	maxBounds={[
-		[5.94, 45.81],
-		[10.51, 47.81]
-	]}
->
-	{#each markers as { lngLat, label, name, description } (label)}
-		<Marker
-			lngLat={[lngLat[0], lngLat[1]]}
-			on:click={() => (clickedName = name)}
-			class="grid h-8 w-8 place-items-center rounded-full border border-gray-200 bg-red-300 text-black shadow-2xl focus:outline-2 focus:outline-black"
+<div class="map-and-legend">
+	<div class="map-container-wrapper">
+		<div id="map-container" class="maplibre-map" />
+		<MapLibre
+			style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
+			class="relative aspect-[9/16] h-[90vh] max-h-[80vh] w-full sm:aspect-video sm:max-h-full"
+			standardControls
+			zoom={14}
+			maxZoom={20}
+			center={[7.59274, 47.55094]}
+			maxBounds={[
+				[5.94, 45.81],
+				[10.51, 47.81]
+			]}
+			bind:map
+			bind:loaded
+			on:load={() => {
+				if (map) {
+					//alert('loaded');
+				}
+			}}
 		>
-			<span>
-				{label}
-			</span>
+			<GeoJSON
+				id="data"
+				{data}
+				cluster={{
+					radius: 1000,
+					maxZoom: 15,
+					properties: {
+						// Sum the `mag` property from all the points in each cluster.
+						total_mag: ['+', ['get', 'geometry.coordinates[0]']]
+					}
+				}}
+			>
+				<CircleLayer
+					applyToClusters
+					id="clusters"
+					hoverCursor="pointer"
+					paint={{
+						// Use step expressions (https://maplibre.org/maplibre-gl-js-docs/style-spec/#expressions-step)
+						// with three steps to implement three types of circles:
+						//   * Blue, 20px circles when point count is less than 100
+						//   * Yellow, 30px circles when point count is between 100 and 750
+						//   * Pink, 40px circles when point count is greater than or equal to 750
+						'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 3, '#f1f075', 5, '#f28cb1'],
+						'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
+						'circle-stroke-color': '#f00',
+						'circle-stroke-width': 1
+					}}
+					on:click={(e) => {
+						map.flyTo({
+							center: e.detail.features[0].geometry.coordinates,
+							zoom: map.getZoom() + 2,
+							speed: 0.5
+						});
+					}}
+					><!-- 
+					<Popup openOn="hover" closeOnClickInside let:features>
+						<ClusterPopup feature={features?.[0]} />
+					</Popup>-->
+				</CircleLayer>
 
-			<!-- <Popup openOn="click" offset={[0, -10]} maxWidth={'30%'}> -->
-			<Popup openOn="click" offset={[0, -10]}>
-				<h3 class="font-bold md:text-lg">{name}</h3>
-				<p class="text-sm">{description}</p>
-			</Popup>
-		</Marker>
-	{/each}
-</MapLibre>
+				<!-- TODO: Funktioniert noch nicht. Soll die Anzahl Punkte pro Cluster anzeigen
+				<SymbolLayer
+					applyToClusters
+					paint={{}}
+					layout={{
+						'text-field': [
+							'format',
+							['get', 'point_count_abbreviated'],
+							{},
+							'\n',
+							{},
+							[
+								'number-format',
+								['/', ['get', 'total_mag'], ['get', 'point_count']],
+								{
+									'max-fraction-digits': 2
+								}
+							],
+							{ 'font-scale': 0.8 }
+						],
+						'text-size': 12,
+						'text-offset': [0, -0.1]
+					}}
+				/>-->
+
+				<MarkerLayer applyToClusters={false} interactive let:feature>
+					<div
+						class="rounded-full bg-red-300 p-3 text-sm font-bold shadow-2xl focus:outline-2 focus:outline-black"
+					>
+						{feature.properties.label}
+					</div>
+
+					<Popup openOn="click" offset={[0, -10]} maxWidth={'30%'}>
+						<h3 class="text-lg font-bold">{feature.properties.name}</h3>
+						<p class="text-sm">{feature.properties.address}</p>
+						<p class="text-sm">
+							<a href={feature.properties.website} target="_blank">{feature.properties.website}</a>
+						</p></Popup
+					>
+				</MarkerLayer>
+			</GeoJSON>
+			<!--
+			<Control class="flex flex-col gap-y-2">
+				<ControlGroup>
+					{#each featuresWithLabels as feature}
+						<ControlButton
+							on:click={() => {
+								map.flyTo({
+									center: feature.geometry.coordinates,
+									zoom: 18
+								});
+							}}
+						>
+							{feature.label}
+						</ControlButton>
+					{/each}
+				</ControlGroup>
+
+				<ControlGroup>
+					<ControlButton on:click={() => alert('!')}>!</ControlButton>
+				</ControlGroup>
+			</Control>
+		-->
+		</MapLibre>
+	</div>
+	<div class="legend-outer-wrapper">
+		<div class="legend-wrapper">
+			<div class="legend">
+				{#each featuresWithLabels as feature}
+					<div
+						class="legend-item text-sm hover:bg-red-300"
+						on:click={() => {
+							map.flyTo({
+								center: feature.geometry.coordinates,
+								zoom: 17,
+								speed: 0.5
+							});
+						}}
+						on:keydown={(event) => handleLegendItemKeydown(event, feature)}
+						tabindex="0"
+						role="button"
+					>
+						{feature.label}
+					</div>
+				{/each}
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* Neue Klasse für das Flexbox-Layout */
+	.map-and-legend {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	/* Styling für die Karte */
+	.map-container-wrapper {
+		width: 75%; /* Die Karte nimmt 75% der Breite ein */
+		height: 100%;
+		display: inline-block; /* Karte als inline-Blockelement */
+	}
+
+	/* Styling für die Legende */
+	.legend-outer-wrapper {
+		width: 24%; /* Die Legende nimmt 24% der Breite ein */
+		height: calc(
+			100vh - 2rem
+		); /* Höhe der Legende auf 100% der Viewport-Höhe minus 2rem festlegen */
+		overflow-y: auto; /* Legende wird bei Bedarf scrollbar */
+		display: inline-block; /* Legende als inline-Blockelement */
+		vertical-align: top; /* Legende oben ausrichten */
+		box-sizing: border-box; /* Die Breite der Legende inklusive Padding und Border berechnen */
+	}
+
+	.legend-wrapper {
+		padding: 1rem;
+		background-color: white;
+		z-index: 1; /* Make sure the legend appears above the map */
+	}
+
+	.legend-item {
+		cursor: pointer;
+		padding: 5px;
+		margin-bottom: 5px;
+		border-radius: 3px;
+		background-color: #e5e5e5;
+	}
+
+	.legend-item:hover {
+		background-color: #d5d5d5;
+	}
+
+	/* Responsive layout für die Legende auf kleinen Bildschirmen */
+	@media screen and (max-width: 600px) {
+		.map-and-legend {
+			display: block; /* Legende rutscht unter die Karte */
+		}
+
+		.map-container-wrapper,
+		.legend-outer-wrapper {
+			width: 100%; /* Beide Elemente nehmen die volle Breite */
+		}
+	}
+</style>
