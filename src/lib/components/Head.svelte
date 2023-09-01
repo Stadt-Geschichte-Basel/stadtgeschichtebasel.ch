@@ -1,9 +1,9 @@
 <script>
 	import * as config from '$lib/config';
-	import { pwaInfo } from 'virtual:pwa-info'; 
+	import { pwaInfo } from 'virtual:pwa-info';
 	import { page } from '$app/stores';
 
-  	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : ''
+	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
 </script>
 
 <svelte:head>
@@ -16,7 +16,7 @@
 	<meta name="theme-color" content={config.themeColor} />
 
 	<!-- Canonical link -->
-	<link rel="canonical" href={config.url}{$page.url.pathname} />
+	<link rel="canonical" href="{config.url}{$page.url.pathname}" />
 
 	<!-- Manifest link -->
 	{@html webManifestLink}
@@ -39,4 +39,15 @@
 	<meta property="og:image" content="/android-chrome-512x512.png" />
 	<meta property="og:image:width" content="512" />
 	<meta property="og:image:height" content="512" />
+	
+	<!-- FIXME -->
+	<!-- <link rel="alternate" type="application/feed+json" href="/feed.json" /> -->
+	<!-- <link rel="alternate" type="application/atom+xml" href="/atom.xml" /> -->
+	<!-- <link rel="sitemap" type="application/xml" href="/sitemap.xml" /> -->
+
+	<script
+		defer
+		data-domain={config.domain}
+		src="https://plausible.io/js/script.outbound-links.js"
+	></script>
 </svelte:head>

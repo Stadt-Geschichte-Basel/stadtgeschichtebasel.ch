@@ -1,6 +1,6 @@
 <script>
 	import { CircleLayer, GeoJSON, MapLibre, MarkerLayer, Popup } from 'svelte-maplibre';
-	import data from './data.json';
+	import data from '$lib/data/map.json';
 
 	let map;
 	let featuresWithLabels = data.features.map((feature) => ({
