@@ -94,6 +94,51 @@ const allowedExtensions = [
 const fetchTimeout = 10000; // 10 seconds
 
 /**
+ * Number of retries for asset downloads.
+ * @type {number}
+ */
+const retryDownloads = 3;
+
+/**
+ * Delay between asset downloads in milliseconds.
+ * @type {number}
+ */
+const delayBetweenDownloads = 500;
+
+/**
+ * Concurrency limit for asset downloads.
+ * @type {number}
+ */
+const concurrentDownloads = 3;
+
+class Queue {
+	constructor(concurrency = 1, delay = 0) {
+	  this.queue = [];
+	  this.concurrency = concurrency;
+	  this.delay = delay;
+	  this.active = 0;
+	}
+  
+	async run(task) {
+	  this.active++;
+	  await task();
+	  this.active--;
+	  this.next();
+	}
+  
+	next() {
+	  if (this.queue.length === 0 || this.active >= this.concurrency) return;
+	  const task = this.queue.shift();
+	  setTimeout(() => this.run(task), this.delay);
+	}
+  
+	enqueue(task) {
+	  this.queue.push(task);
+	  this.next();
+	}
+  }
+
+/**
  * Fetches a URL with a timeout.
  * @param {string} url - The URL to fetch.
  * @param {Object} [options={}] - Fetch options.
@@ -116,12 +161,12 @@ async function fetchWithTimeout(url, options = {}) {
 /**
  * Fetches a URL with retries in case of failure.
  * @param {string} url - The URL to fetch.
- * @param {number} [retries=3] - Number of retries.
- * @param {number} [delay=5000] - Delay between retries in milliseconds.
+ * @param {number} - Number of retries.
+ * @param {number} - Delay between retries in milliseconds.
  * @returns {Promise<Response>} The fetch response.
  * @throws {Error} Throws an error after all retries fail.
  */
-async function fetchWithRetry(url, retries = 3, delay = 5000) {
+async function fetchWithRetry(url, retries = retryDownloads, delay = delayBetweenDownloads) {
 	for (let i = 0; i < retries; i++) {
 		if (i === retries - 1) {
 			console.error(`Failed to fetch URL after ${retries} attempts: ${url}`, error);
@@ -206,38 +251,29 @@ const downloadAsset = async (url, outputDir) => {
  * @param {number} [limit=5] - The concurrency limit.
  * @returns {Promise<void>}
  */
-const downloadAssetsConcurrently = async (urls, outputDir, limit = 5) => {
-	const downloadQueue = [...urls];
-	const activeDownloads = new Set();
-
-	const downloadNext = async () => {
-		if (!downloadQueue.length) return;
-		const url = downloadQueue.shift();
-		activeDownloads.add(url);
+const downloadAssetsConcurrently = async (urls, outputDir, limit = concurrentDownloads, delay = delayBetweenDownloads) => {
+	const downloadQueue = new Queue(limit, delayBetweenDownloads);
+  
+	urls.forEach((url) => {
+	  downloadQueue.enqueue(async () => {
 		try {
-			await downloadAsset(url, outputDir);
+		  await downloadAsset(url, outputDir);
 		} catch (error) {
-			console.error(`Failed to download asset from URL: ${url}`, error);
+		  console.error(`Failed to download asset from URL: ${url}`, error);
 		}
-		activeDownloads.delete(url);
-		downloadNext();
-	};
-
-	const initialDownloads = Math.min(limit, downloadQueue.length);
-	for (let i = 0; i < initialDownloads; i++) {
-		downloadNext();
-	}
-
+	  });
+	});
+  
 	// Wait for all downloads to complete
 	await new Promise((resolve) => {
-		const checkDownloads = setInterval(() => {
-			if (!activeDownloads.size) {
-				clearInterval(checkDownloads);
-				resolve();
-			}
-		}, 1000);
+	  const checkDownloads = setInterval(() => {
+		if (downloadQueue.active === 0 && downloadQueue.queue.length === 0) {
+		  clearInterval(checkDownloads);
+		  resolve();
+		}
+	  }, 1000);
 	});
-};
+  };
 
 /**
  * Processes the HTML content, downloads assets, and converts the content to Markdown.
