@@ -35,10 +35,10 @@ export default defineConfig({
 			manifest: false,
 			manifestFile: 'manifest.webmanifest',
 			scope: '/',
-			// workbox: {
-			// 	globPatterns: ['pages.json', 'posts.json', '**/*.{js,css,html,svg,ico,jpg,png,webp,avif}'],
-			// 	globIgnores: ['**/sw*', '**/workbox-*']
-			// }
+			workbox: {
+				globPatterns: ['pages.json', 'posts.json', '**/*.{js,css,html,svg,ico,jpg,png,webp,avif}'],
+				globIgnores: ['**/sw*', '**/workbox-*']
+			}
 		})
 	],
 

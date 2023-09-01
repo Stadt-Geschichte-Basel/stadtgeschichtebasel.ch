@@ -22,7 +22,7 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"commit": "cz",
-		"prepare": "husky install",
+		"prepare": "svelte-kit sync && husky install",
 		"prebuild": "node ./src/lib/downloadPostsPagesAssets.mjs",
 		"postbuild": "jampack ./build"
 	},
