@@ -36,7 +36,7 @@ export default defineConfig({
 			manifestFile: 'manifest.webmanifest',
 			scope: '/',
 			workbox: {
-				globPatterns: ['pages.json', 'posts.json', '**/*.{js,css,html,svg,ico,jpg,png,webp,avif}'],
+				globPatterns: ['pages.json', 'posts.json', '**/*.{js,css,html,svg,ico,png,webp,avif}'],
 				globIgnores: ['**/sw*', '**/workbox-*']
 			}
 		})

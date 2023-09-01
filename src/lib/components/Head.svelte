@@ -1,5 +1,8 @@
 <script>
 	import * as config from '$lib/config';
+	import { pwaInfo } from 'virtual:pwa-info'; 
+
+  	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '' 
 </script>
 
 <svelte:head>
@@ -15,7 +18,7 @@
 	<link rel="canonical" href={config.url} />
 
 	<!-- Manifest link -->
-	<link rel="manifest" crossorigin="use-credentials" href="/manifest.webmanifest" />
+	{@html webManifestLink}
 
 	<!-- Twitter tags -->
 	<meta name="twitter:title" content={config.title} />
