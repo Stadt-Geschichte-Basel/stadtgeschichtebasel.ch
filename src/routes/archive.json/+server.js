@@ -137,7 +137,7 @@ export async function GET() {
 		'geschichten/kategorien.html',
 		'geschichten~Dialog~.html',
 		'geschichten~Ereignisbericht~.html',
-		'geschichten~Fr%C3%BChe-Neuzeit~.html',
+		'geschichten~Frühe-Neuzeit~.html',
 		'geschichten~Gesellschaft~.html',
 		'geschichten~Keltische-Zeit-und-R%C3%B6merzeit~.html',
 		'geschichten~Medienspiegel~.html',
