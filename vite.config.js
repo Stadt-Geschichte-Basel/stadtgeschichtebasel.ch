@@ -2,6 +2,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vitest/config';
 import { imagetools } from 'vite-imagetools';
+import { purgeCss } from 'vite-plugin-tailwind-purgecss';
 
 const supportedExtensions = ['png', 'jpg', 'jpeg'];
 
@@ -30,6 +31,7 @@ export default defineConfig({
 		// 	// }
 		// }),
 		sveltekit(),
+		purgeCss(),
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
 			manifest: false,

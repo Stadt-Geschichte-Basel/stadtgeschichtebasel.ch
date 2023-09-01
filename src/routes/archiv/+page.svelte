@@ -3,7 +3,7 @@
 	export let data;
 </script>
 
-<section class="container space-y-4 p-10">
+<section class="container space-y-4 p-10 prose">
 	<h1>Archiv</h1>
 	<ul class="posts">
 		{#each data.urls as url}

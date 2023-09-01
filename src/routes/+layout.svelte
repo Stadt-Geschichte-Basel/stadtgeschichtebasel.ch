@@ -4,16 +4,20 @@
 	import Head from '$lib/components/Head.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import * as config from '$lib/config';
-
-	import { AppBar, AppShell, Drawer, drawerStore } from '@skeletonlabs/skeleton';
-	// The ordering of these imports is critical to your app working properly
-	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
-	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
-	// import '@skeletonlabs/skeleton/styles/skeleton.css';
-	import '@skeletonlabs/skeleton/styles/all.css';
-	// Most of your app wide CSS should be put in this file
+	import {
+		AppShell,
+		AppBar,
+		Drawer,
+		getDrawerStore,
+		initializeStores
+	} from '@skeletonlabs/skeleton';
 	import '../app.postcss';
-
+	initializeStores();
+	const drawerStore = getDrawerStore();
+	function drawerOpen() {
+		const drawerSettings = { id: 'sidebar' };
+		drawerStore.open(drawerSettings);
+	}
 	$: classesPageFooter = $page.url.pathname === '/karte' ? 'hidden' : '';
 
 	// Base Classes
@@ -23,32 +27,7 @@
 	const cRowTwo =
 		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0';
 
-	function drawerOpen() {
-		drawerStore.open();
-	}
 
-	// import { onMount } from 'svelte';
-	// import { pwaInfo } from 'virtual:pwa-info';
-
-	// onMount(async () => {
-	// 	if (pwaInfo) {
-	// 		const { registerSW } = await import('virtual:pwa-register');
-	// 		registerSW({
-	// 			immediate: true,
-	// 			onRegistered(r) {
-	// 				// uncomment following code if you want check for updates
-	// 				// r && setInterval(() => {
-	// 				//    console.log('Checking for sw update')
-	// 				//    r.update()
-	// 				// }, 20000 /* 20s for testing purposes */)
-	// 				console.log(`SW Registered: ${r}`);
-	// 			},
-	// 			onRegisterError(error) {
-	// 				console.log('SW registration error', error);
-	// 			}
-	// 		});
-	// 	}
-	// });
 </script>
 
 <Head />
@@ -239,9 +218,7 @@
 						© 2023 {config.author}
 						<!-- </a> -->
 						<span class="mx-2 opacity-10">|</span>
-						<a class="anchor" href="{base}/datenschutzerklaerung"
-							>Datenschutz
-						</a>
+						<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz </a>
 						<span class="mx-2 opacity-10">|</span>
 						<a class="anchor" href="{base}/credits">Credits</a>
 					</p>

@@ -4,7 +4,7 @@
 	const activities = data.activities;
 </script>
 
-<article class="container space-y-4 p-10">
+<article class="container space-y-4 p-10 prose">
 	<h1>Agenda</h1>
 	<!-- <h2>Ausstellungen</h2>
 	<ul>

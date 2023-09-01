@@ -6,39 +6,35 @@
 	export let data;
 
 	// PaginatorSettings
-	let page = {
-		offset: 0,
+	let paginationSettings = {
+		page: 0,
 		limit: 10,
 		size: data.posts.length,
-		amounts: [10, 100]
+		amounts: [10, 25, 50, 100]
 	};
 
 	$: paginatedPosts = data.posts.slice(
-		page.offset * page.limit, // start
-		page.offset * page.limit + page.limit // end
+		paginationSettings.page * paginationSettings.limit,
+		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
 	);
 </script>
 
 <svelte:head>
-<title>{config.title}</title>
+	<title>{config.title}</title>
 </svelte:head>
 
-<div class="container space-y-4 p-10">
+<div class="container space-y-4 p-10 prose">
 	<h1>Blog</h1>
 
-    {#each paginatedPosts as post}
-    	<article>
-    		<h2>
-    			<a href={`/blog/${post.slug}`}>{post.title}</a>
-    		</h2>
-    		<p class="date">{post.date}</p>
-    		<p class="description">{post.excerpt} <a href="/blog/{post.slug}" >weiterlesen</a></p>
-			<!-- <div class="prose">
-				<svelte:component this={post.excerpt} />
-			</div> -->
-    	</article>
-    {/each}
+	{#each paginatedPosts as post}
+		<article>
+			<h2>
+				<a href={`/blog/${post.slug}`}>{post.title}</a>
+			</h2>
+			<p class="date">{post.date}</p>
+			<p class="description">{post.excerpt} <a href="/blog/{post.slug}">weiterlesen</a></p>
+		</article>
+	{/each}
 
-    <Paginator bind:settings={page} showNumerals />
-
+	<Paginator bind:settings={paginationSettings} showNumerals />
 </div>

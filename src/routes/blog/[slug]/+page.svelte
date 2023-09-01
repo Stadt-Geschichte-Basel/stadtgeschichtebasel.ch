@@ -9,7 +9,7 @@
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={data.meta.title} />
 </svelte:head>
-<article class="container space-y-4 p-10">
+<article class="container space-y-4 p-10 prose">
 	<!-- Title -->
 	<hgroup>
 		<h1>{data.meta.title}</h1>
@@ -24,7 +24,7 @@
 	</div> -->
 
 	<!-- Post -->
-	<div class="prose">
+	
 		<svelte:component this={data.content} />
-	</div>
+	
 </article>

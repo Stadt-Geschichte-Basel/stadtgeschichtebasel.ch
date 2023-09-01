@@ -10,7 +10,7 @@
 	<!-- <meta property="og:title" content={data.meta.title} /> -->
 </svelte:head>
 
-<article class="container space-y-4 p-10">
+<article class="container space-y-4 p-10 prose">
 	<h1>Wir sind umgezogen</h1>
 	<p>
 		Eine archivierte Version dieser Seite finden Sie <a
