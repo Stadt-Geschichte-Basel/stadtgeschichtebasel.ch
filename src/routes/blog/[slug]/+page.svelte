@@ -1,6 +1,10 @@
 <script>
+	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+	import Container from '$lib/components/Container.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
+	const date = new Date(data.meta.date).toLocaleDateString('de-CH');
+	const modified = new Date(data.meta.modified).toLocaleDateString('de-CH');
 </script>
 
 <!-- SEO -->
@@ -9,11 +13,15 @@
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={data.meta.title} />
 </svelte:head>
-<article class="container space-y-4 p-10 prose">
+
+<Breadcrumbs />
+
+<Container>
+<article>
 	<!-- Title -->
 	<hgroup>
 		<h1>{data.meta.title}</h1>
-		<p>Published at {data.meta.date}</p>
+		<span>Veröffentlicht am {date}{#if data.meta.modified}{#if data.meta.modified !== data.meta.date}, zuletzt geändert am {modified}{/if}{/if}</span>
 	</hgroup>
 
 	<!-- Tags -->
@@ -28,3 +36,4 @@
 		<svelte:component this={data.content} />
 	
 </article>
+</Container>

@@ -1,4 +1,5 @@
 <script>
+	import Container from '$lib/components/Container.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 </script>
@@ -10,7 +11,7 @@
 	<!-- <meta property="og:title" content={data.meta.title} /> -->
 </svelte:head>
 
-<article class="container space-y-4 p-10 prose">
+<Container>
 	<h1>Wir sind umgezogen</h1>
 	<p>
 		Eine archivierte Version dieser Seite finden Sie <a
@@ -18,7 +19,7 @@
 			>hier</a
 		>.
 	</p>
-</article>
+</Container>
 
 <iframe
 	src="https://web.archive.org/https://www.stadtgeschichtebasel.ch/index/{data.url}"

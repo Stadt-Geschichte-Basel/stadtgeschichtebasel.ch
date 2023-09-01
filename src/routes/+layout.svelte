@@ -163,7 +163,7 @@
 	<svelte:fragment slot="sidebarLeft">
 		<Navigation />
 	</svelte:fragment>
-	<slot />
+	<slot />	
 	<svelte:fragment slot="pageFooter">
 		<div class="page-footer {cBase}">
 			<div class="mx-auto w-full max-w-7xl space-y-10 p-4 py-16 md:py-24">

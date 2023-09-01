@@ -1,4 +1,5 @@
 <script>
+	import Container from '$lib/components/Container.svelte';
 	import * as config from '$lib/config';
 	import { Paginator } from '@skeletonlabs/skeleton';
 
@@ -23,7 +24,7 @@
 	<title>{config.title}</title>
 </svelte:head>
 
-<div class="container space-y-4 p-10 prose">
+<Container>
 	<h1>Blog</h1>
 
 	{#each paginatedPosts as post}
@@ -31,10 +32,9 @@
 			<h2>
 				<a href={`/blog/${post.slug}`}>{post.title}</a>
 			</h2>
-			<p class="date">{post.date}</p>
 			<p class="description">{post.excerpt} <a href="/blog/{post.slug}">weiterlesen</a></p>
 		</article>
 	{/each}
 
 	<Paginator bind:settings={paginationSettings} showNumerals />
-</div>
+</Container>

@@ -1,9 +1,12 @@
 <script>
+	import Container from '$lib/components/Container.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 
 	import * as config from '$lib/config';
 </script>
+
+<Container>
 
 <h1>Credits</h1>
 
@@ -42,3 +45,4 @@
 		>AGPL-3.0-Lizenz</a
 	> veröffentlicht.
 </p>
+</Container>

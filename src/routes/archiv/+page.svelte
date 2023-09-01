@@ -1,9 +1,11 @@
 <script>
+	import Container from '$lib/components/Container.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 </script>
 
-<section class="container space-y-4 p-10 prose">
+<Container>
+<section>
 	<h1>Archiv</h1>
 	<ul class="posts">
 		{#each data.urls as url}
@@ -12,4 +14,4 @@
 			</li>
 		{/each}
 	</ul>
-</section>
+</section></Container>

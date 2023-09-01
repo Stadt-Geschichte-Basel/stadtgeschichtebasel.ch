@@ -1,10 +1,11 @@
 <script>
+	import Container from '$lib/components/Container.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const activities = data.activities;
 </script>
 
-<article class="container space-y-4 p-10 prose">
+<Container>
 	<h1>Agenda</h1>
 	<!-- <h2>Ausstellungen</h2>
 	<ul>
@@ -71,4 +72,4 @@
 			</li>
 		{/each}
 	</ul>
-</article>
+</Container>

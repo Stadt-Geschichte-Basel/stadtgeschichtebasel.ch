@@ -1,4 +1,5 @@
 <script>
+	import Container from '$lib/components/Container.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 </script>
@@ -10,8 +11,8 @@
 	<meta property="og:title" content={data.meta.title} />
 </svelte:head>
 
-<article class="container space-y-4 p-10 prose">
+<Container>
 		<h1>{data.meta.title}</h1>
 
 		<svelte:component this={data.content} />
-</article>
+</Container>
