@@ -1,63 +1,27 @@
 <script>
-	import { onMount } from 'svelte';
-	import {
-		CircleLayer,
-		Control,
-		ControlButton,
-		ControlGroup,
-		GeoJSON,
-		MapLibre,
-		MarkerLayer,
-		Popup,
-		SymbolLayer
-	} from 'svelte-maplibre';
+	import { CircleLayer, GeoJSON, MapLibre, MarkerLayer, Popup } from 'svelte-maplibre';
 	import data from './data.json';
 
 	let map;
-	let loaded;
-	let featuresWithLabels = []; // Store features with their labels for the legend
+	let featuresWithLabels = data.features.map((feature) => ({
+		properties: feature.properties,
+		geometry: feature.geometry,
+		label: feature.properties.label
+	}));
 
-	onMount(async () => {
-		// map configuration options
-		const mapOptions = {
-			container: 'map-container',
-			style:
-				'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
-			center: [7.59274, 47.55094],
-			zoom: 14
-		};
-
-		// Extract features with labels for the legend
-		featuresWithLabels = data.features.map((feature) => ({
-			properties: feature.properties,
-			geometry: feature.geometry,
-			label: feature.properties.label
-		}));
-	});
-
-	/*
-	// Function to handle legend item click and zoom to the corresponding feature
-	function zoomToFeature(feature) {
-		const coordinates = feature.coordinates;
-		//map.flyTo({ center: coordinates, zoom: 15 }); // Zoom to the clicked feature
-		alert(feature.coordinates);
-		if (map) {
-			const coordinates = feature.coordinates;
-			//map.flyTo({ center: coordinates, zoom: 16 }); // Zoom to the clicked feature
-			map.flyTo({
+	function flyToFeature(feature, zoomLevel = 18) {
+		map.flyTo({
 				center: feature.geometry.coordinates,
-				zoom: 18
+				zoom: zoomLevel,
+				speed: 0.5
 			});
-		} else {
-			alert('map nicht definiert');
+	}
+
+	function handleLegendItemKeydown(event, feature) {
+		if (['Enter', ' '].includes(event.key)) {
+			flyToFeature(feature);
 		}
 	}
-	function handleLegendItemKeydown(event, feature) {
-		if (event.key === 'Enter' || event.key === ' ') {
-			// Perform the same action as a click event
-			zoomToFeature(feature);
-		}
-	}*/
 </script>
 
 <div class="map-and-legend">
@@ -75,12 +39,7 @@
 				[10.51, 47.81]
 			]}
 			bind:map
-			bind:loaded
-			on:load={() => {
-				if (map) {
-					//alert('loaded');
-				}
-			}}
+			
 		>
 			<GeoJSON
 				id="data"
@@ -193,13 +152,7 @@
 				{#each featuresWithLabels as feature}
 					<div
 						class="legend-item text-sm hover:bg-red-300"
-						on:click={() => {
-							map.flyTo({
-								center: feature.geometry.coordinates,
-								zoom: 17,
-								speed: 0.5
-							});
-						}}
+						on:click={() => flyToFeature(feature, 17)}
 						on:keydown={(event) => handleLegendItemKeydown(event, feature)}
 						tabindex="0"
 						role="button"
@@ -209,7 +162,7 @@
 				{/each}
 			</div>
 		</div>
-	</div>
+	</div>	
 </div>
 
 <style>

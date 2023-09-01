@@ -5,6 +5,7 @@ import path from 'path';
 import TurndownService from 'turndown';
 import { JSDOM } from 'jsdom';
 import createDOMPurify from 'dompurify';
+import { exit } from 'process';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
@@ -86,7 +87,6 @@ const allowedExtensions = [
 	'.xlsx',
 	'.zip'
 ];
-
 /**
  * Timeout duration for fetch operations.
  * @type {number}
@@ -109,87 +109,56 @@ const delayBetweenDownloads = 500;
  * Concurrency limit for asset downloads.
  * @type {number}
  */
-const concurrentDownloads = 3;
+const concurrentDownloads = 1;
 
 class Queue {
 	constructor(concurrency = 1, delay = 0) {
-	  this.queue = [];
-	  this.concurrency = concurrency;
-	  this.delay = delay;
-	  this.active = 0;
+		this.queue = [];
+		this.concurrency = concurrency;
+		this.delay = delay;
+		this.active = 0;
 	}
-  
-	async run(task) {
-	  this.active++;
-	  await task();
-	  this.active--;
-	  this.next();
-	}
-  
-	next() {
-	  if (this.queue.length === 0 || this.active >= this.concurrency) return;
-	  const task = this.queue.shift();
-	  setTimeout(() => this.run(task), this.delay);
-	}
-  
 	enqueue(task) {
-	  this.queue.push(task);
-	  this.next();
+		this.queue.push(task);
+		this.next();
 	}
-  }
-
-/**
- * Fetches a URL with a timeout.
- * @param {string} url - The URL to fetch.
- * @param {Object} [options={}] - Fetch options.
- * @returns {Promise<Response>} The fetch response.
- * @throws {Error} Throws an error if the fetch operation times out.
- */
-async function fetchWithTimeout(url, options = {}) {
-	const controller = new AbortController();
-	const timeout = setTimeout(() => {
-		controller.abort();
-	}, fetchTimeout);
-	try {
-		const response = await fetch(url, { ...options, signal: controller.signal });
-		return response;
-	} finally {
-		clearTimeout(timeout);
+	async run(task) {
+		this.active++;
+		await task();
+		this.active--;
+		this.next();
+	}
+	next() {
+		if (this.queue.length === 0 || this.active >= this.concurrency) return;
+		const task = this.queue.shift();
+		setTimeout(() => this.run(task), this.delay);
 	}
 }
 
-/**
- * Fetches a URL with retries in case of failure.
- * @param {string} url - The URL to fetch.
- * @param {number} - Number of retries.
- * @param {number} - Delay between retries in milliseconds.
- * @returns {Promise<Response>} The fetch response.
- * @throws {Error} Throws an error after all retries fail.
- */
-async function fetchWithRetry(url, retries = retryDownloads, delay = delayBetweenDownloads) {
-	for (let i = 0; i < retries; i++) {
-		if (i === retries - 1) {
-			console.error(`Failed to fetch URL after ${retries} attempts: ${url}`, error);
-			process.exit(1); // Exit the script with a failure status code
-		}
+async function fetchWithRetry(url) {
+	for (let i = 0; i < retryDownloads; i++) {
 		try {
-			const response = await fetchWithTimeout(url);
+			const controller = new AbortController();
+			const timeoutId = setTimeout(() => controller.abort(), fetchTimeout);
+
+			const response = await fetch(url, { signal: controller.signal });
+			clearTimeout(timeoutId); // Clear the timeout if the request was successful
+			if (!response.ok) {
+				console.error(`HTTP Error: ${response.status}`);
+				console.error(`URL: ${url}`);
+				exit(1);
+			}
 			if (response.ok) return response;
 		} catch (error) {
 			if (error.name === 'AbortError') {
-				console.warn(`Request aborted due to timeout for URL: ${url}. Retrying...`);
+				console.warn(`Request aborted for URL: ${url}. Retrying...`);
 			} else {
-				console.warn(`Attempt ${i + 1} failed for URL: ${url}. Retrying in ${delay}ms...`);
+				console.warn(`Error occurred for URL: ${url}. Retrying...`);
 			}
-
-			if (i === retries - 1) {
-				console.error(`Failed to fetch URL after ${retries} attempts: ${url}`, error);
-				throw error;
-			}
-
-			await new Promise((resolve) => setTimeout(resolve, delay));
+			await new Promise((resolve) => setTimeout(resolve, delayBetweenDownloads));
 		}
 	}
+	throw new Error(`Failed to fetch URL after ${retryDownloads} attempts: ${url}`);
 }
 
 /**
@@ -208,87 +177,42 @@ const getAssetUrl = (elem, $) => {
 	return url;
 };
 
-/**
- * Downloads an asset from a given URL.
- * @param {string} url - The URL of the asset.
- * @param {string} outputDir - The directory to save the downloaded asset.
- * @returns {Promise<void>}
- * @throws {Error} Throws an error if the asset download fails.
- */
-const downloadAsset = async (url, outputDir) => {
-	const urlPath = new URL(url).pathname;
-	const extension = path.extname(urlPath);
-	if (!allowedExtensions.includes(extension.toLowerCase())) {
-		return;
-	}
+async function downloadAsset(url, outputDir) {
+	const extension = path.extname(new URL(url).pathname).toLowerCase();
+	if (!allowedExtensions.includes(extension)) return;
 
 	const response = await fetchWithRetry(url);
-	if (!response.ok) {
-		console.error(`Failed to download asset from URL: ${url}`);
-		process.exit(1); // Exit the script with a failure status code
+
+	// Collecting chunks into an array
+	const chunks = [];
+	for await (const chunk of response.body) {
+		chunks.push(chunk);
 	}
 
+	// Convert to buffer
+	const buffer = Buffer.concat(chunks);
+
+	// Parse the URL to get the path
+	const urlPath = new URL(url).pathname;
+
+	// Create the corresponding directory structure
+	const fullDir = path.join(outputDir, path.dirname(urlPath));
+	if (!fs.existsSync(fullDir)) {
+		fs.mkdirSync(fullDir, { recursive: true });
+	}
+
+	// Save the asset in the corresponding directory
 	const filePath = path.join(outputDir, urlPath);
-	const dirPath = path.dirname(filePath);
-	if (!fs.existsSync(dirPath)) {
-		fs.mkdirSync(dirPath, { recursive: true });
-	}
-	const writer = fs.createWriteStream(filePath);
-	const arrayBuffer = await response.arrayBuffer();
-	const buffer = Buffer.from(arrayBuffer);
-	writer.write(buffer);
-	writer.end();
-	await new Promise((resolve, reject) => {
-		writer.on('finish', resolve);
-		writer.on('error', reject);
-	});
-};
+	fs.writeFileSync(filePath, buffer);
+}
 
-/**
- * Downloads multiple assets concurrently with a limit.
- * @param {Array<string>} urls - The URLs of the assets.
- * @param {string} outputDir - The directory to save the downloaded assets.
- * @param {number} [limit=5] - The concurrency limit.
- * @returns {Promise<void>}
- */
-const downloadAssetsConcurrently = async (urls, outputDir, limit = concurrentDownloads, delay = delayBetweenDownloads) => {
-	const downloadQueue = new Queue(limit, delayBetweenDownloads);
-  
-	urls.forEach((url) => {
-	  downloadQueue.enqueue(async () => {
-		try {
-		  await downloadAsset(url, outputDir);
-		} catch (error) {
-		  console.error(`Failed to download asset from URL: ${url}`, error);
-		}
-	  });
-	});
-  
-	// Wait for all downloads to complete
-	await new Promise((resolve) => {
-	  const checkDownloads = setInterval(() => {
-		if (downloadQueue.active === 0 && downloadQueue.queue.length === 0) {
-		  clearInterval(checkDownloads);
-		  resolve();
-		}
-	  }, 1000);
-	});
-  };
-
-/**
- * Processes the HTML content, downloads assets, and converts the content to Markdown.
- * @param {string} html - The HTML content.
- * @param {string} outputDir - The directory to save the downloaded assets.
- * @returns {Promise<string>} The processed content in Markdown format.
- */
-const processContent = async (html, outputDir, link, slug, tagsToRemove = []) => {
+async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 	const sanitizedHtml = DOMPurify.sanitize(html, {
 		ADD_TAGS: ['iframe'],
 		ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
 	});
 	const $ = cheerio.load(sanitizedHtml);
 	const assetUrls = [];
-
 	// Remove tags and their contents
 	tagsToRemove.forEach((tag) => {
 		$(tag).remove();
@@ -327,11 +251,17 @@ const processContent = async (html, outputDir, link, slug, tagsToRemove = []) =>
 			assetUrls.push(url);
 		}
 	});
+	const markdown = turndownService.turndown($.html());
 
-	await downloadAssetsConcurrently(assetUrls, outputDir);
+	//   const assetUrls = $('img').map((_, elem) => $(elem).attr('src')).get();
+	const downloadQueue = new Queue(concurrentDownloads, delayBetweenDownloads);
 
-	return turndownService.turndown($.html());
-};
+	assetUrls.forEach((url) => {
+		downloadQueue.enqueue(() => downloadAsset(url, outputDir));
+	});
+
+	return markdown;
+}
 
 /**
  * Fetches the featured image URL using its media ID.
@@ -344,83 +274,62 @@ const fetchFeaturedImage = async (mediaId) => {
 	return data.source_url;
 };
 
-/**
- * Fetches and processes content of a specific type.
- * @param {string} type - The type of content (e.g., "posts" or "pages").
- * @returns {Promise<void>}
- */
-const fetchAndProcessType = async (type) => {
-	const outputDir = path.join(process.cwd(), 'src', type);
+async function fetchAndProcessType(type) {
+	const outputDir = path.join('src', type);
+	fs.mkdirSync(outputDir, { recursive: true });
 
-	if (!fs.existsSync(outputDir)) {
-		fs.mkdirSync(outputDir, { recursive: true });
-	}
+	let page = 1,
+		fetched;
 
-	let page = 1;
-	let fetched;
 	do {
-		try {
-			const response = await fetchWithRetry(
-				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
-					categories.length > 0 ? `&categories=${categories.join(',')}` : ''
-				}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media`
+		const response = await fetchWithRetry(
+			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
+				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+			}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media`
+		);
+		const data = await response.json();
+
+		for (const item of data) {
+			const title = turndownService.turndown(item.title.rendered);
+			const content = await processContent(item.content.rendered, outputDir, item.link, item.slug);
+			const tagsToRemove = ['span', 'a'];
+			const excerpt = await processContent(
+				item.excerpt.rendered,
+				outputDir,
+				item.link,
+				item.slug,
+				tagsToRemove
 			);
-
-			if (!response.ok) {
-				throw new Error(`Failed to fetch data for page ${page}. Status: ${response.status}`);
+			const featuredImageUrl = item.featured_media
+				? await fetchFeaturedImage(item.featured_media)
+				: null;
+			if (featuredImageUrl) {
+				await downloadAsset(featuredImageUrl, outputDir);
 			}
+			const frontMatter = {
+				id: item.id,
+				title: title,
+				date: item.date,
+				modified: item.modified,
+				slug: item.slug,
+				author: item.author,
+				excerpt: excerpt,
+				featuredImage: featuredImageUrl ? path.join('.', featuredImageUrl.replace(baseURL, '')) : ''
+			};
+			const yamlFrontMatter = yaml.dump(frontMatter);
+			const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
 
-			const data = await response.json();
-			for (const item of data) {
-				const title = turndownService.turndown(item.title.rendered);
-				const content = await processContent(
-					item.content.rendered,
-					outputDir,
-					item.link,
-					item.slug
-				);
-				const tagsToRemove = ['span', 'a'];
-				const excerpt = await processContent(
-					item.excerpt.rendered,
-					outputDir,
-					item.link,
-					item.slug,
-					tagsToRemove
-				);
-				const featuredImageUrl = item.featured_media
-					? await fetchFeaturedImage(item.featured_media)
-					: null;
-				if (featuredImageUrl) {
-					await downloadAsset(featuredImageUrl, outputDir);
-				}
-				const frontMatter = {
-					id: item.id,
-					title: title,
-					date: item.date,
-					modified: item.modified,
-					slug: item.slug,
-					author: item.author,
-					excerpt: excerpt,
-					featuredImage: featuredImageUrl
-						? path.join('.', featuredImageUrl.replace(baseURL, ''))
-						: ''
-				};
-				const yamlFrontMatter = yaml.dump(frontMatter);
-				const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
-				fs.writeFileSync(path.join(outputDir, `${item.slug}.md`), markdownContent);
-			}
-			fetched = data.length;
-		} catch (error) {
-			console.error(`Error processing page ${page} of type ${type}:`, error.message);
-			process.exit(1); // Exit the script with a failure status code
+			fs.writeFileSync(path.join(outputDir, `${item.slug}.md`), markdownContent);
 		}
+
+		fetched = data.length;
 		page++;
 	} while (fetched === perPage);
-};
-
-// Sequentially process each type
-for (const type of types) {
-	await fetchAndProcessType(type);
 }
 
-console.log('Finished processing all content.');
+(async () => {
+	for (const type of types) {
+		await fetchAndProcessType(type);
+	}
+	console.log('Finished processing all content.');
+})();

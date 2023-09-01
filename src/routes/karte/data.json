@@ -1,479 +1,395 @@
 {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Agenda Basel",
-                "label": "Agenda Basel",
-                "description": "TBD",
-                "address": "Verein Kultur beider Basel c/o Kaserne Basel, Klybeckstrasse 1b, 4057 Basel",
-                "website": "https://www.agendabasel.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.5907,
-                    47.56365
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Antikenmuseum Basel",
-                "label": "Antikenmuseum",
-                "description": "TBD",
-                "address": "St. Alban-Graben 5, 4051 Basel",
-                "website": "https://www.antikenmuseumbasel.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59317,
-                    47.55436
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Archäologische Bodenforschung",
-                "label": "Archäologische Bodenforschung",
-                "description": "TBD",
-                "address": "Petersgraben 11, 4001 Basel",
-                "website": "https://www.archaeologie.bs.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.58541,
-                    47.56067
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Basler Papiermühle",
-                "label": "Papiermühle",
-                "description": "TBD",
-                "address": "St. Alban-Tal 37, 4052 Basel",
-                "website": "https://www.baslerpapiermuehle.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.60338,
-                    47.55472
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Basler Stadtspaziergänge",
-                "label": "Stadtspaziergänge",
-                "description": "TBD",
-                "address": "",
-                "website": "https://basler-stadtspaziergaenge.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.590556,
-                    47.560556
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Basler Zirkel für Ur- und Frühgeschichte",
-                "label": "Zirkel für Ur- und Frühgeschichte",
-                "description": "TBD",
-                "address": "c/o Departement Altertumswissenschaften, Petersgraben 51, 4051 Basel",
-                "website": "https://www.basler-zirkel.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.584615,
-                    47.55759
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Burgenfreunde beider Basel",
-                "label": "Burgenfreunde",
-                "description": "TBD",
-                "address": "Stapfelberg 4, 4051 Basel",
-                "website": "https://www.burgenfreunde.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.58953,
-                    47.55745
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Chemiemuseum Basel",
-                "label": "Chemiemuseum",
-                "description": "TBD",
-                "address": "Mauerstrasse 7, 4057 Basel",
-                "website": "https://www.imgrb.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59112,
-                    47.57394
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Dichter:innen- und Stadtmuseum Liestal (DISTL)",
-                "label": "DISTL",
-                "description": "TBD",
-                "address": "Rathausstrasse 30, 4410 Liestal",
-                "website": "https://distl.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.73466,
-                    47.48421
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Didi Offensiv",
-                "label": "Didi Offensiv",
-                "description": "TBD",
-                "address": "Erasmusplatz 12, 4057 Basel",
-                "website": "https://didioffensiv.ch/de/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.58937,
-                    47.56572
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Dokumentationsstelle / Kulturbüro Riehen",
-                "label": "Dokumentationsstelle / Kulturbüro",
-                "description": "TBD",
-                "address": "Baselstrasse 30, 4125 Riehen",
-                "website": "https://riehen.ch/leben-und-wohnen/kultur/index.php"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.64943,
-                    47.58387
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Frauenstadtrundgang Basel",
-                "label": "Frauenstadtrundgang",
-                "description": "TBD",
-                "address": "Verein Frauenstadtrundgang Basel, Hirschgässlein 21, 4051 Basel",
-                "website": "https://www.frauenstadtrundgang-basel.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59282,
-                    47.55077
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Grabmacherjoggi",
-                "label": "Grabmacherjoggi",
-                "description": "TBD",
-                "address": "Birsstrasse 170, 4052 Basel",
-                "website": "https://grabmacherjoggi.ch/index.html"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.6222,
-                    47.54906
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Grimm Kulturmanagement",
-                "label": "Grimm Kulturmanagement",
-                "description": "TBD",
-                "address": "Gerbergasse 43, 4001 Basel",
-                "website": "https://grimm-kulturmanagement.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.58872,
-                    47.55597
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Historisches Museum Basel",
-                "label": "HMB",
-                "description": "TBD",
-                "address": "Steinenberg 4, Postfach CH - 4001 Basel",
-                "website": "https://www.hmb.ch"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59034,
-                    47.55469
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Jüdisches Museum der Schweiz",
-                "label": "Jüdisches Museum",
-                "description": "TBD",
-                "address": "Kornhausgasse 8, 4051 Basel",
-                "website": "https://www.juedisches-museum.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.58338,
-                    47.55652
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Kunstmuseum",
-                "label": "Kunstmuseum",
-                "description": "TBD",
-                "address": "St. Alban-Graben 16, 4051 Basel",
-                "website": "https://kunstmuseumbasel.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59391,
-                    47.55425
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Literaturspur",
-                "label": "Literaturspur",
-                "description": "TBD",
-                "address": "Wanderstrasse 8, 4054 Basel",
-                "website": "https://literaturspur.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.56967,
-                    47.55299
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Mira Film",
-                "label": "Mira Film",
-                "description": "TBD",
-                "address": "Schwarzwaldallee 200, 4058 Basel",
-                "website": "https://mirafilm.ch/de/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.60722,
-                    47.56715
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Museum der Kulturen",
-                "label": "MKB",
-                "description": "TBD",
-                "address": "Münsterpl. 20, 4051 Basel",
-                "website": "https://www.mkb.ch/de.html"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59085,
-                    47.55711
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Naturhistorisches Museum",
-                "label": "NMBS",
-                "description": "TBD",
-                "address": "Augustinergasse 2, 4051 Basel",
-                "website": "https://www.nmbs.ch/home"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59036,
-                    47.55773
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Regio Basiliensis",
-                "label": "Regio Basiliensis",
-                "description": "TBD",
-                "address": "St. Jakob-Strasse 25, 4052 Basel",
-                "website": "https://www.regbas.ch/de/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59689,
-                    47.54997
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Schürch & Koellreuter",
-                "label": "Schürch & Koellreuter",
-                "description": "TBD",
-                "address": "Dornacherstrasse 192, 4053 Basel",
-                "website": "https://www.schuerchkoellreuter.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59292,
-                    47.54145
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Schweizerisches Architekturmuseum",
-                "label": "SAM",
-                "description": "TBD",
-                "address": "Steinenberg 7, 4051 Basel",
-                "website": "https://www.sam-basel.org/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59111,
-                    47.55375
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Staatsarchiv Basel-Stadt",
-                "label": "Staatsarchiv",
-                "description": "TBD",
-                "address": "Martinsgasse 2, 4051 Basel",
-                "website": "https://www.staatsarchiv.bs.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.58882,
-                    47.55852
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Stadt.Geschichte.Basel",
-                "label": "SGB",
-                "description": "Wir schreiben Basler Geschichten."
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59274,
-                    47.55094
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Universitätsbibliothek Basel",
-                "label": "Universitätsbibliothek",
-                "description": "TBD",
-                "address": "Schönbeinstrasse 18-20, 4056 Basel",
-                "website": "https://ub.unibas.ch/de/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.58112,
-                    47.55961
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Volkshochschule beider Basel",
-                "label": "Volkshochschule",
-                "description": "TBD",
-                "address": "Clarastrasse 12, 4058 Basel",
-                "website": "https://www.vhsbb.ch/"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.59616,
-                    47.56218
-                ]
-            }
-        }
-    ]
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Agenda Basel",
+				"label": "Agenda Basel",
+				"description": "TBD",
+				"address": "Verein Kultur beider Basel c/o Kaserne Basel, Klybeckstrasse 1b, 4057 Basel",
+				"website": "https://www.agendabasel.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.5907, 47.56365]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Antikenmuseum Basel",
+				"label": "Antikenmuseum",
+				"description": "TBD",
+				"address": "St. Alban-Graben 5, 4051 Basel",
+				"website": "https://www.antikenmuseumbasel.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59317, 47.55436]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Archäologische Bodenforschung",
+				"label": "Archäologische Bodenforschung",
+				"description": "TBD",
+				"address": "Petersgraben 11, 4001 Basel",
+				"website": "https://www.archaeologie.bs.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58541, 47.56067]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Basler Papiermühle",
+				"label": "Papiermühle",
+				"description": "TBD",
+				"address": "St. Alban-Tal 37, 4052 Basel",
+				"website": "https://www.baslerpapiermuehle.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.60338, 47.55472]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Basler Stadtspaziergänge",
+				"label": "Stadtspaziergänge",
+				"description": "TBD",
+				"address": "",
+				"website": "https://basler-stadtspaziergaenge.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.590556, 47.560556]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Basler Zirkel für Ur- und Frühgeschichte",
+				"label": "Zirkel für Ur- und Frühgeschichte",
+				"description": "TBD",
+				"address": "c/o Departement Altertumswissenschaften, Petersgraben 51, 4051 Basel",
+				"website": "https://www.basler-zirkel.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.584615, 47.55759]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Burgenfreunde beider Basel",
+				"label": "Burgenfreunde",
+				"description": "TBD",
+				"address": "Stapfelberg 4, 4051 Basel",
+				"website": "https://www.burgenfreunde.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58953, 47.55745]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Chemiemuseum Basel",
+				"label": "Chemiemuseum",
+				"description": "TBD",
+				"address": "Mauerstrasse 7, 4057 Basel",
+				"website": "https://www.imgrb.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59112, 47.57394]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Dichter:innen- und Stadtmuseum Liestal (DISTL)",
+				"label": "DISTL",
+				"description": "TBD",
+				"address": "Rathausstrasse 30, 4410 Liestal",
+				"website": "https://distl.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.73466, 47.48421]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Didi Offensiv",
+				"label": "Didi Offensiv",
+				"description": "TBD",
+				"address": "Erasmusplatz 12, 4057 Basel",
+				"website": "https://didioffensiv.ch/de/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58937, 47.56572]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Dokumentationsstelle / Kulturbüro Riehen",
+				"label": "Dokumentationsstelle / Kulturbüro",
+				"description": "TBD",
+				"address": "Baselstrasse 30, 4125 Riehen",
+				"website": "https://riehen.ch/leben-und-wohnen/kultur/index.php"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.64943, 47.58387]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Frauenstadtrundgang Basel",
+				"label": "Frauenstadtrundgang",
+				"description": "TBD",
+				"address": "Verein Frauenstadtrundgang Basel, Hirschgässlein 21, 4051 Basel",
+				"website": "https://www.frauenstadtrundgang-basel.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59282, 47.55077]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Grabmacherjoggi",
+				"label": "Grabmacherjoggi",
+				"description": "TBD",
+				"address": "Birsstrasse 170, 4052 Basel",
+				"website": "https://grabmacherjoggi.ch/index.html"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.6222, 47.54906]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Grimm Kulturmanagement",
+				"label": "Grimm Kulturmanagement",
+				"description": "TBD",
+				"address": "Gerbergasse 43, 4001 Basel",
+				"website": "https://grimm-kulturmanagement.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58872, 47.55597]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Historisches Museum Basel",
+				"label": "HMB",
+				"description": "TBD",
+				"address": "Steinenberg 4, Postfach CH - 4001 Basel",
+				"website": "https://www.hmb.ch"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59034, 47.55469]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Jüdisches Museum der Schweiz",
+				"label": "Jüdisches Museum",
+				"description": "TBD",
+				"address": "Kornhausgasse 8, 4051 Basel",
+				"website": "https://www.juedisches-museum.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58338, 47.55652]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Kunstmuseum",
+				"label": "Kunstmuseum",
+				"description": "TBD",
+				"address": "St. Alban-Graben 16, 4051 Basel",
+				"website": "https://kunstmuseumbasel.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59391, 47.55425]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Literaturspur",
+				"label": "Literaturspur",
+				"description": "TBD",
+				"address": "Wanderstrasse 8, 4054 Basel",
+				"website": "https://literaturspur.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.56967, 47.55299]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Mira Film",
+				"label": "Mira Film",
+				"description": "TBD",
+				"address": "Schwarzwaldallee 200, 4058 Basel",
+				"website": "https://mirafilm.ch/de/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.60722, 47.56715]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Museum der Kulturen",
+				"label": "MKB",
+				"description": "TBD",
+				"address": "Münsterpl. 20, 4051 Basel",
+				"website": "https://www.mkb.ch/de.html"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59085, 47.55711]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Naturhistorisches Museum",
+				"label": "NMBS",
+				"description": "TBD",
+				"address": "Augustinergasse 2, 4051 Basel",
+				"website": "https://www.nmbs.ch/home"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59036, 47.55773]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Regio Basiliensis",
+				"label": "Regio Basiliensis",
+				"description": "TBD",
+				"address": "St. Jakob-Strasse 25, 4052 Basel",
+				"website": "https://www.regbas.ch/de/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59689, 47.54997]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Schürch & Koellreuter",
+				"label": "Schürch & Koellreuter",
+				"description": "TBD",
+				"address": "Dornacherstrasse 192, 4053 Basel",
+				"website": "https://www.schuerchkoellreuter.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59292, 47.54145]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Schweizerisches Architekturmuseum",
+				"label": "SAM",
+				"description": "TBD",
+				"address": "Steinenberg 7, 4051 Basel",
+				"website": "https://www.sam-basel.org/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59111, 47.55375]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Staatsarchiv Basel-Stadt",
+				"label": "Staatsarchiv",
+				"description": "TBD",
+				"address": "Martinsgasse 2, 4051 Basel",
+				"website": "https://www.staatsarchiv.bs.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58882, 47.55852]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Stadt.Geschichte.Basel",
+				"label": "SGB",
+				"description": "Wir schreiben Basler Geschichten."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59274, 47.55094]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Universitätsbibliothek Basel",
+				"label": "Universitätsbibliothek",
+				"description": "TBD",
+				"address": "Schönbeinstrasse 18-20, 4056 Basel",
+				"website": "https://ub.unibas.ch/de/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58112, 47.55961]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Volkshochschule beider Basel",
+				"label": "Volkshochschule",
+				"description": "TBD",
+				"address": "Clarastrasse 12, 4058 Basel",
+				"website": "https://www.vhsbb.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59616, 47.56218]
+			}
+		}
+	]
 }
