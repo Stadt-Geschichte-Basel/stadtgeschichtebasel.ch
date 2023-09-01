@@ -16,7 +16,7 @@
 	<meta name="theme-color" content={config.themeColor} />
 
 	<!-- Canonical link -->
-	<link rel="canonical" href={$page.url.pathname} />
+	<link rel="canonical" href={config.url}{$page.url.pathname} />
 
 	<!-- Manifest link -->
 	{@html webManifestLink}

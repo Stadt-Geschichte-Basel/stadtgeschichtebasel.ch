@@ -12,5 +12,15 @@ export default {
 	theme: {
 		extend: {}
 	},
-	plugins: [ typography, skeleton()]
+	plugins: [
+		typography,
+		skeleton({
+			themes: {
+				preset: [
+					// Enable 'enhancements' per each registered theme:
+					{ name: 'skeleton', enhancements: false }
+				]
+			}
+		})
+	]
 };
