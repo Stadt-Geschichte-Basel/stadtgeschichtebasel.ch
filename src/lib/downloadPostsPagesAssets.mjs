@@ -17,20 +17,14 @@ const DOMPurify = createDOMPurify(window);
 let turndownService = new TurndownService();
 turndownService.keep(['iframe', 'audio', 'video']);
 const figureToMarkdownRule = {
-	filter: function (node) {
-		return (
-			node.nodeName === 'FIGURE' && node.querySelector('img') && node.querySelector('figcaption')
-		);
-	},
-	replacement: function (content, node) {
+	filter: (node) =>
+		node.nodeName === 'FIGURE' && node.querySelector('img') && node.querySelector('figcaption'),
+	replacement: (content, node) => {
 		const imgElement = node.querySelector('img');
 		const figcaptionElement = node.querySelector('figcaption');
-
 		const imageUrl = imgElement.getAttribute('src') || '';
-		// Fixed: Escape all double quotes in alt text
 		const altText = imgElement.getAttribute('alt').replace(/"/g, "'") || '';
 		const captionText = figcaptionElement.textContent || '';
-
 		return `![${altText}](${imageUrl})\nFigure: ${captionText}\n\n`;
 	}
 };
@@ -112,6 +106,9 @@ const delayBetweenDownloads = 500;
  */
 const concurrentDownloads = 1;
 
+/**
+ * Queue class for managing tasks.
+ */
 class Queue {
 	constructor(concurrency = 1, delay = 0) {
 		this.queue = [];
@@ -119,16 +116,30 @@ class Queue {
 		this.delay = delay;
 		this.active = 0;
 	}
+
+	/**
+	 * Enqueue a task.
+	 * @param {Function} task
+	 */
 	enqueue(task) {
 		this.queue.push(task);
 		this.next();
 	}
+
+	/**
+	 * Run a task.
+	 * @param {Function} task
+	 */
 	async run(task) {
 		this.active++;
 		await task();
 		this.active--;
 		this.next();
 	}
+
+	/**
+	 * Execute the next task in the queue.
+	 */
 	next() {
 		if (this.queue.length === 0 || this.active >= this.concurrency) return;
 		const task = this.queue.shift();
@@ -136,6 +147,11 @@ class Queue {
 	}
 }
 
+/**
+ * Fetch a URL with retry logic.
+ * @param {string} url
+ * @returns {Promise<Response>}
+ */
 async function fetchWithRetry(url) {
 	for (let i = 0; i < retryDownloads; i++) {
 		try {
@@ -163,10 +179,10 @@ async function fetchWithRetry(url) {
 }
 
 /**
- * Extracts asset URL from an HTML element.
- * @param {CheerioElement} elem - The HTML element.
- * @param {CheerioStatic} $ - The Cheerio instance.
- * @returns {string} The asset URL.
+ * Extract asset URL from an HTML element.
+ * @param {CheerioElement} elem
+ * @param {CheerioStatic} $
+ * @returns {string}
  */
 const getAssetUrl = (elem, $) => {
 	let url = $(elem).attr('href') || $(elem).attr('src');
@@ -178,6 +194,11 @@ const getAssetUrl = (elem, $) => {
 	return url;
 };
 
+/**
+ * Download an asset.
+ * @param {string} url
+ * @param {string} outputDir
+ */
 async function downloadAsset(url, outputDir) {
 	const extension = path.extname(new URL(url).pathname).toLowerCase();
 	if (!allowedExtensions.includes(extension)) return;
@@ -207,6 +228,15 @@ async function downloadAsset(url, outputDir) {
 	fs.writeFileSync(filePath, buffer);
 }
 
+/**
+ * Process HTML content.
+ * @param {string} html
+ * @param {string} outputDir
+ * @param {string} link
+ * @param {string} slug
+ * @param {Array<string>} tagsToRemove
+ * @returns {Promise<string>}
+ */
 async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 	const sanitizedHtml = DOMPurify.sanitize(html, {
 		ADD_TAGS: ['iframe'],
@@ -265,9 +295,9 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 }
 
 /**
- * Fetches the featured image URL using its media ID.
- * @param {number} mediaId - The media ID.
- * @returns {Promise<string|null>} The URL of the featured image, or null if not available.
+ * Fetch the featured image URL.
+ * @param {number} mediaId
+ * @returns {Promise<string|null>}
  */
 const fetchFeaturedImage = async (mediaId) => {
 	const response = await fetchWithRetry(`${baseURL}${apiEndpoint}/media/${mediaId}`);
@@ -275,6 +305,10 @@ const fetchFeaturedImage = async (mediaId) => {
 	return data.source_url;
 };
 
+/**
+ * Fetch and process a content type.
+ * @param {string} type
+ */
 async function fetchAndProcessType(type) {
 	const outputDir = path.join('src', type);
 	fs.mkdirSync(outputDir, { recursive: true });
@@ -328,6 +362,9 @@ async function fetchAndProcessType(type) {
 	} while (fetched === perPage);
 }
 
+/**
+ * Main function.
+ */
 (async () => {
 	for (const type of types) {
 		await fetchAndProcessType(type);
