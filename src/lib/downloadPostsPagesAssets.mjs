@@ -27,7 +27,8 @@ const figureToMarkdownRule = {
 		const figcaptionElement = node.querySelector('figcaption');
 
 		const imageUrl = imgElement.getAttribute('src') || '';
-		const altText = imgElement.getAttribute('alt') || '';
+		// FIXME Escape double quotes in alt text
+		const altText = imgElement.getAttribute('alt').replace('"', "'") || '';
 		const captionText = figcaptionElement.textContent || '';
 
 		return `![${altText}](${imageUrl})\nFigure: ${captionText}\n\n`;
