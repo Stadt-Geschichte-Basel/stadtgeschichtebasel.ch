@@ -239,7 +239,7 @@
 						© 2023 {config.author}
 						<!-- </a> -->
 						<span class="mx-2 opacity-10">|</span>
-						<a class="anchor" href="{base}/datenschutzerklaerung-der-stadt-geschichte-basel"
+						<a class="anchor" href="{base}/datenschutzerklaerung"
 							>Datenschutz
 						</a>
 						<span class="mx-2 opacity-10">|</span>
