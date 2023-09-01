@@ -1,8 +1,9 @@
 <script>
 	import * as config from '$lib/config';
 	import { pwaInfo } from 'virtual:pwa-info'; 
+	import { page } from '$app/stores';
 
-  	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '' 
+  	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : ''
 </script>
 
 <svelte:head>
@@ -15,7 +16,7 @@
 	<meta name="theme-color" content={config.themeColor} />
 
 	<!-- Canonical link -->
-	<link rel="canonical" href={config.url} />
+	<link rel="canonical" href={$page.url.pathname} />
 
 	<!-- Manifest link -->
 	{@html webManifestLink}
