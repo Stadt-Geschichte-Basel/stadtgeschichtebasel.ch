@@ -108,11 +108,11 @@
                     <a href="/ueber-uns#impressum">Impressum</a>
                 </li>
                 <li
-                    aria-current={$page.url.pathname === '/datenschutzerklaerung-der-stadt-geschichte-basel'
+                    aria-current={$page.url.pathname === '/datenschutzerklaerung'
                         ? 'page'
                         : undefined}
                 >
-                    <a href="/datenschutzerklaerung-der-stadt-geschichte-basel">Datenschutz</a>
+                    <a href="/datenschutzerklaerung">Datenschutz</a>
                 </li>
             </ul> -->
 		</li>
