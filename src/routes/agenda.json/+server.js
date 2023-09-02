@@ -6,6 +6,11 @@ import { parseStringPromise } from 'xml2js';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { dev } from '$app/environment';
+import { JSDOM } from 'jsdom';
+import createDOMPurify from 'dompurify';
+
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
 
 /**
  * Indicates whether prerendering is enabled.
@@ -42,6 +47,7 @@ function getUniqueOwners(activities) {
  * @property {string} dauerausstellung - The dauerausstellung value.
  * @property {string} title - The title of the activity.
  * @property {string} shortDescription - The short description of the activity.
+ * @property {string} longDescription - The long description of the activity.
  * @property {string} originUrl - The origin URL of the activity.
  * @property {Array<ActivityDate>} dates - The dates of the activity.
  */
@@ -90,7 +96,8 @@ async function getActivities() {
 			owner: activity['$'].owner,
 			dauerausstellung: activity['$'].dauerausstellung,
 			title: activity.Title[0],
-			shortDescription: activity.ShortDescription[0],
+			shortDescription: DOMPurify.sanitize(activity.ShortDescription[0], { ALLOWED_TAGS: [] }),
+			longDescription: DOMPurify.sanitize(activity.LongDescription[0], { ALLOWED_TAGS: [] }),
 			originUrl: activity.OriginURL[0],
 			dates
 		};
