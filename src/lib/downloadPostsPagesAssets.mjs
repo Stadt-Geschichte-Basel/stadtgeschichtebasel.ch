@@ -92,13 +92,13 @@ const fetchTimeout = 10000; // 10 seconds
  * Number of retries for asset downloads.
  * @type {number}
  */
-const retryDownloads = 3;
+const retryDownloads = 10;
 
 /**
  * Delay between asset downloads in milliseconds.
  * @type {number}
  */
-const delayBetweenDownloads = 500;
+const delayBetweenDownloads = 1000;
 
 /**
  * Concurrency limit for asset downloads.
@@ -110,7 +110,7 @@ const concurrentDownloads = 1;
  * Queue class for managing tasks.
  */
 class Queue {
-	constructor(concurrency = 1, delay = 0) {
+	constructor(concurrency = concurrentDownloads, delay = delayBetweenDownloads) {
 		this.queue = [];
 		this.concurrency = concurrency;
 		this.delay = delay;
@@ -159,7 +159,7 @@ async function fetchWithRetry(url) {
 			const timeoutId = setTimeout(() => controller.abort(), fetchTimeout);
 
 			const response = await fetch(url, { signal: controller.signal });
-			clearTimeout(timeoutId); // Clear the timeout if the request was successful
+			clearTimeout(timeoutId);
 			if (!response.ok) {
 				console.error(`HTTP Error: ${response.status}`);
 				console.error(`URL: ${url}`);
