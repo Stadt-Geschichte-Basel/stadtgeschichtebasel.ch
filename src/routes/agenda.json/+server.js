@@ -42,7 +42,7 @@ function getUniqueOwners(activities) {
 	const allOwners = activities.map((item) => item['$'].owner);
 	const uniqueOwners = [...new Set(allOwners)];
 	return uniqueOwners;
-  }
+}
 
 /**
  * Represents an exhibition.
@@ -89,37 +89,51 @@ async function getActivities() {
 
 	const parsedActivities = activities
 		.filter(({ $: { owner } }) => partners.includes(owner))
-		.map(({ $: { owner, dauerausstellung }, Title: [title], ShortDescription: [shortDesc], LongDescription: [longDesc], OriginURL: [originUrl], ActivityDates: [{ ActivityDate: dates = [] } = {}] }) => ({
-			owner,
-			dauerausstellung,
-			title,
-			shortDescription: DOMPurify.sanitize(shortDesc, { ALLOWED_TAGS: [] }),
-			longDescription: DOMPurify.sanitize(longDesc, { ALLOWED_TAGS: [] }),
-			originUrl,
-			dates: dates.map(({ $: { startDate, endDate, startTime, endTime }, TicketURL: [ticketURL] }) => ({
-				startDate,
-				endDate,
-				startTime,
-				endTime,
-				TicketURL: ticketURL
-			}))
-		}));
+		.map(
+			({
+				$: { owner, dauerausstellung },
+				Title: [title],
+				ShortDescription: [shortDesc],
+				LongDescription: [longDesc],
+				OriginURL: [originUrl],
+				ActivityDates: [{ ActivityDate: dates = [] } = {}]
+			}) => ({
+				owner,
+				dauerausstellung,
+				title,
+				shortDescription: DOMPurify.sanitize(shortDesc, { ALLOWED_TAGS: [] }),
+				longDescription: DOMPurify.sanitize(longDesc, { ALLOWED_TAGS: [] }),
+				originUrl,
+				dates: dates.map(
+					({ $: { startDate, endDate, startTime, endTime }, TicketURL: [ticketURL] }) => ({
+						startDate,
+						endDate,
+						startTime,
+						endTime,
+						TicketURL: ticketURL
+					})
+				)
+			})
+		);
 
-	const exhibitions = parsedActivities.filter(({ dauerausstellung }) => dauerausstellung === '1').sort((a, b) => a.owner.localeCompare(b.owner));
+	const exhibitions = parsedActivities
+		.filter(({ dauerausstellung }) => dauerausstellung === '1')
+		.sort((a, b) => a.owner.localeCompare(b.owner));
 	const events = parsedActivities.filter(({ dauerausstellung }) => dauerausstellung === '0');
 
 	const flatEvents = events
-		.flatMap(({ dates, owner, title, shortDescription, originUrl }) => dates.map(date => ({ ...date, owner, title, shortDescription, originUrl })))
+		.flatMap(({ dates, owner, title, shortDescription, originUrl }) =>
+			dates.map((date) => ({ ...date, owner, title, shortDescription, originUrl }))
+		)
 		.sort((a, b) => a.startDate.localeCompare(b.startDate));
 
-		flatEvents.forEach(date => {
+	flatEvents.forEach((date) => {
 		const startDate = new Date(date.startDate);
 		const endDate = new Date(date.endDate);
 		date.startDate = startDate.toLocaleDateString('de-CH');
 		date.endDate = endDate.toLocaleDateString('de-CH');
 	});
 
-	console.log(flatEvents);
 	return { events: flatEvents, exhibitions };
 }
 
