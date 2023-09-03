@@ -29,12 +29,12 @@
 
 	{#each paginatedPosts as post}
 		<article>
-			<h2>
-				<a href={`/blog/${post.slug}`}>{post.title}</a>
+			<h2>{post.title}
+				<!-- <a href={`/blog/${post.slug}`}>{post.title}</a> -->
 			</h2>
 			<p class="description">{post.excerpt} <a href="/blog/{post.slug}">weiterlesen</a></p>
 		</article>
 	{/each}
 
-	<Paginator bind:settings={paginationSettings} showNumerals />
+	<Paginator bind:settings={paginationSettings} showNumerals amountText="Einträge"/>
 </Container>

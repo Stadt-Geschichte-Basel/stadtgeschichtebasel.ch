@@ -1,3 +1,7 @@
+/**
+ * @file This file contains API endpoints for fetching and displaying activities.
+ */
+
 import * as config from '$lib/config';
 
 import { json } from '@sveltejs/kit';
@@ -41,30 +45,34 @@ function getUniqueOwners(activities) {
 }
 
 /**
- * Represents an activity.
- * @typedef {Object} Activity
- * @property {string} owner - The owner of the activity.
- * @property {string} dauerausstellung - The dauerausstellung value.
- * @property {string} title - The title of the activity.
- * @property {string} shortDescription - The short description of the activity.
- * @property {string} longDescription - The long description of the activity.
- * @property {string} originUrl - The origin URL of the activity.
- * @property {Array<ActivityDate>} dates - The dates of the activity.
+ * Represents an exhibition.
+ * @typedef {Object} Exhibition
+ * @property {string} owner - The owner of the exhibition.
+ * @property {string} title - The title of the exhibition.
+ * @property {string} shortDescription - The short description of the exhibition.
+ * @property {string} longDescription - The long description of the exhibition.
+ * @property {string} originUrl - The origin URL of the exhibition.
  */
 
 /**
- * Represents a date for an activity.
- * @typedef {Object} ActivityDate
- * @property {string} startDate - The start date of the activity.
- * @property {string} endDate - The end date of the activity.
- * @property {string} startTime - The start time of the activity.
- * @property {string} endTime - The end time of the activity.
- * @property {string} TicketURL - The ticket URL of the activity.
+ * Represents an event with date and time details.
+ * @typedef {Object} Event
+ * @property {string} owner - The owner of the event.
+ * @property {string} title - The title of the event.
+ * @property {string} shortDescription - The short description of the event.
+ * @property {string} longDescription - The long description of the event.
+ * @property {string} originUrl - The origin URL of the event.
+ * @property {string} startDate - The start date of the event.
+ * @property {string} endDate - The end date of the event.
+ * @property {string} startTime - The start time of the event.
+ * @property {string} endTime - The end time of the event.
+ * @property {string} TicketURL - The ticket URL of the event.
  */
 
 /**
  * Fetches activities data from the XML export and filters them based on configured partners.
- * @returns {Promise<{ activities: Array<Activity> }>} A promise that resolves to an object containing the activities data.
+ * @async
+ * @returns {Promise<{ events: Array<Event>, exhibitions: Array<Exhibition> }>} A promise that resolves to an object containing the future dates and exhibitions.
  */
 async function getActivities() {
 	const response = await fetch('https://www.kulturzueri.ch/xmlexport/kzexport-basel.xml');
@@ -103,7 +111,37 @@ async function getActivities() {
 		};
 	});
 
-	return { activities: parsedActivities };
+	// Filter all activities that have a dauerausstellung property with the value 1
+	const exhibitions = parsedActivities.filter((activity) => activity['dauerausstellung'] === '1');
+	// Sort all exhibitions by owner
+	exhibitions.sort((a, b) => a.owner.localeCompare(b.owner));
+	// Filter all activities that have a dauerausstellung property with the value 0
+	const events = parsedActivities.filter((activity) => activity['dauerausstellung'] === '0');
+	// Flatten the dates array, add all dates and properties (owner, title, shortDescription, originUrl) to a new array and sort them by startDate
+	const dates = events
+		.flatMap((activity) =>
+			activity.dates.map((date) => ({
+				...date,
+				owner: activity.owner,
+				title: activity.title,
+				shortDescription: activity.shortDescription,
+				originUrl: activity.originUrl
+			}))
+		)
+		.sort((a, b) => a.startDate.localeCompare(b.startDate));
+	// Filter out all dates that are in the past
+	const futureDates = dates.filter((date) => new Date(date.startDate) > new Date());
+	// convert all dates to de-CH format
+	futureDates.forEach((date) => {
+		const startDate = new Date(date.startDate);
+		const endDate = new Date(date.endDate);
+		date.startDate = startDate.toLocaleDateString('de-CH');
+		date.endDate = endDate.toLocaleDateString('de-CH');
+		date.startTime = startDate.toLocaleTimeString('de-CH');
+		date.endTime = endDate.toLocaleTimeString('de-CH');
+	});
+
+	return { events: futureDates, exhibitions: exhibitions };
 }
 
 /**
