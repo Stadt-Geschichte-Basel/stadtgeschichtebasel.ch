@@ -125,15 +125,7 @@ async function getActivities() {
 		.flatMap(({ dates, owner, title, shortDescription, originUrl }) =>
 			dates.map((date) => ({ ...date, owner, title, shortDescription, originUrl }))
 		)
-		.sort((a, b) => a.startDate.localeCompare(b.startDate));
-
-	flatEvents.forEach((date) => {
-		const startDate = new Date(date.startDate);
-		const endDate = new Date(date.endDate);
-		date.startDate = startDate.toLocaleDateString('de-CH');
-		date.endDate = endDate.toLocaleDateString('de-CH');
-	});
-
+		.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
 	return { events: flatEvents, exhibitions };
 }
 

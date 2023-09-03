@@ -3,9 +3,14 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const events = data.events.filter(({ startDate }) => new Date(startDate) > new Date())
+	events.forEach((date) => {
+		const startDate = new Date(date.startDate);
+		const endDate = new Date(date.endDate);
+		date.startDate = startDate.toLocaleDateString('de-CH');
+		date.endDate = endDate.toLocaleDateString('de-CH');
+	});
 	const exhibitions = data.exhibitions;
 	import { Paginator } from '@skeletonlabs/skeleton';
-	// PaginatorSettings
 	let paginationSettings = {
 		page: 0,
 		limit: 10,
