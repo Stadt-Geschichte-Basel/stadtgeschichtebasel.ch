@@ -42,7 +42,7 @@ function getUniqueOwners(activities) {
 	const allOwners = activities.map((item) => item['$'].owner);
 	const uniqueOwners = [...new Set(allOwners)];
 	return uniqueOwners;
-}
+  }
 
 /**
  * Represents an exhibition.
@@ -82,66 +82,45 @@ async function getActivities() {
 
 	if (dev) {
 		await saveToFile(activities, join(tmpdir(), 'activities.json'));
-		const uniqueOwners = getUniqueOwners(activities);
-		console.log(uniqueOwners);
+		console.log(getUniqueOwners(activities));
 	}
 
 	const partners = config.partners;
-	const filteredActivities = activities.filter((item) => {
-		return partners.includes(item['$'].owner);
-	});
 
-	const parsedActivities = filteredActivities.map((activity) => {
-		const dates =
-			activity.ActivityDates?.[0]?.ActivityDate?.map((date) => ({
-				startDate: date.$.startDate,
-				endDate: date.$.endDate,
-				startTime: date.$.startTime,
-				endTime: date.$.endTime,
-				TicketURL: date.TicketURL[0]
-			})) ?? [];
-		return {
-			owner: activity['$'].owner,
-			dauerausstellung: activity['$'].dauerausstellung,
-			title: activity.Title[0],
-			shortDescription: DOMPurify.sanitize(activity.ShortDescription[0], { ALLOWED_TAGS: [] }),
-			longDescription: DOMPurify.sanitize(activity.LongDescription[0], { ALLOWED_TAGS: [] }),
-			originUrl: activity.OriginURL[0],
-			dates
-		};
-	});
-
-	// Filter all activities that have a dauerausstellung property with the value 1
-	const exhibitions = parsedActivities.filter((activity) => activity['dauerausstellung'] === '1');
-	// Sort all exhibitions by owner
-	exhibitions.sort((a, b) => a.owner.localeCompare(b.owner));
-	// Filter all activities that have a dauerausstellung property with the value 0
-	const events = parsedActivities.filter((activity) => activity['dauerausstellung'] === '0');
-	// Flatten the dates array, add all dates and properties (owner, title, shortDescription, originUrl) to a new array and sort them by startDate
-	const dates = events
-		.flatMap((activity) =>
-			activity.dates.map((date) => ({
-				...date,
-				owner: activity.owner,
-				title: activity.title,
-				shortDescription: activity.shortDescription,
-				originUrl: activity.originUrl
+	const parsedActivities = activities
+		.filter(({ $: { owner } }) => partners.includes(owner))
+		.map(({ $: { owner, dauerausstellung }, Title: [title], ShortDescription: [shortDesc], LongDescription: [longDesc], OriginURL: [originUrl], ActivityDates: [{ ActivityDate: dates = [] } = {}] }) => ({
+			owner,
+			dauerausstellung,
+			title,
+			shortDescription: DOMPurify.sanitize(shortDesc, { ALLOWED_TAGS: [] }),
+			longDescription: DOMPurify.sanitize(longDesc, { ALLOWED_TAGS: [] }),
+			originUrl,
+			dates: dates.map(({ $: { startDate, endDate, startTime, endTime }, TicketURL: [ticketURL] }) => ({
+				startDate,
+				endDate,
+				startTime,
+				endTime,
+				TicketURL: ticketURL
 			}))
-		)
+		}));
+
+	const exhibitions = parsedActivities.filter(({ dauerausstellung }) => dauerausstellung === '1').sort((a, b) => a.owner.localeCompare(b.owner));
+	const events = parsedActivities.filter(({ dauerausstellung }) => dauerausstellung === '0');
+
+	const flatEvents = events
+		.flatMap(({ dates, owner, title, shortDescription, originUrl }) => dates.map(date => ({ ...date, owner, title, shortDescription, originUrl })))
 		.sort((a, b) => a.startDate.localeCompare(b.startDate));
-	// Filter out all dates that are in the past
-	const futureDates = dates.filter((date) => new Date(date.startDate) > new Date());
-	// convert all dates to de-CH format
-	futureDates.forEach((date) => {
+
+		flatEvents.forEach(date => {
 		const startDate = new Date(date.startDate);
 		const endDate = new Date(date.endDate);
 		date.startDate = startDate.toLocaleDateString('de-CH');
 		date.endDate = endDate.toLocaleDateString('de-CH');
-		date.startTime = startDate.toLocaleTimeString('de-CH');
-		date.endTime = endDate.toLocaleTimeString('de-CH');
 	});
 
-	return { events: futureDates, exhibitions: exhibitions };
+	console.log(flatEvents);
+	return { events: flatEvents, exhibitions };
 }
 
 /**
