@@ -104,7 +104,7 @@ const delayBetweenDownloads = 2000;
  * Concurrency limit for asset downloads.
  * @type {number}
  */
-const concurrentDownloads = 1;
+const concurrentDownloads = 2;
 
 /**
  * Queue class for managing tasks.
@@ -142,7 +142,6 @@ class Queue {
 	 */
 	next() {
 		if (this.queue.length === 0 || this.active >= this.concurrency) return;
-		console.log(`Queue length: ${this.queue.length}, Active tasks: ${this.active}`);
 		const task = this.queue.shift();
 		setTimeout(() => this.run(task), this.delay);
 	}
@@ -384,5 +383,4 @@ async function fetchAndProcessType(type) {
 	for (const type of types) {
 		await fetchAndProcessType(type);
 	}
-	console.log('Finished processing all content.');
 })();
