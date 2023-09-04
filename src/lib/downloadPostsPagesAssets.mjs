@@ -239,14 +239,7 @@ async function downloadAsset(url, outputDir) {
  * @param {Array<string>} tagsToRemove
  * @returns {Promise<string>}
  */
-async function processContent(
-	html,
-	outputDir,
-	link,
-	slug,
-	convertToMarkdown = true,
-	tagsToRemove = []
-) {
+async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 	const sanitizedHtml = DOMPurify.sanitize(html, {
 		ADD_TAGS: ['iframe'],
 		ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
@@ -291,7 +284,6 @@ async function processContent(
 			assetUrls.push(url);
 		}
 	});
-	const markdown = turndownService.turndown($.html());
 
 	const downloadQueue = new Queue(concurrentDownloads, delayBetweenDownloads);
 
@@ -299,7 +291,7 @@ async function processContent(
 		downloadQueue.enqueue(() => downloadAsset(url, outputDir));
 	});
 
-	return markdown;
+	return turndownService.turndown($.html());
 }
 
 /**
@@ -345,7 +337,6 @@ async function fetchAndProcessType(type) {
 				outputDir,
 				item.link,
 				item.slug,
-				false,
 				tagsToRemove
 			);
 			const featuredImageUrl = item.featured_media

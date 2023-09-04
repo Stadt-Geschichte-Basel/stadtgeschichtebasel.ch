@@ -11,10 +11,10 @@
 
 	function flyToFeature(feature, zoomLevel = 18) {
 		map.flyTo({
-				center: feature.geometry.coordinates,
-				zoom: zoomLevel,
-				speed: 0.5
-			});
+			center: feature.geometry.coordinates,
+			zoom: zoomLevel,
+			speed: 0.5
+		});
 	}
 
 	function handleLegendItemKeydown(event, feature) {
@@ -24,13 +24,10 @@
 	}
 </script>
 
-<div class="map-and-legend">
-	<div class="map-container-wrapper">
-		<div id="map-container" class="maplibre-map" />
+<section class="flex flex-wrap">
 		<MapLibre
 			style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
-			class="relative aspect-[9/16] h-[90vh] max-h-[80vh] w-full sm:aspect-video sm:max-h-full"
-			standardControls
+			class="w-full md:w-3/4 overflow-hidden sm:h-screen md:h-auto"
 			zoom={14}
 			maxZoom={20}
 			center={[7.59274, 47.55094]}
@@ -39,7 +36,6 @@
 				[10.51, 47.81]
 			]}
 			bind:map
-			
 		>
 			<GeoJSON
 				id="data"
@@ -145,13 +141,11 @@
 			</Control>
 		-->
 		</MapLibre>
-	</div>
-	<div class="legend-outer-wrapper">
-		<div class="legend-wrapper">
-			<div class="legend">
+	
+	<div class="w-full md:w-1/4 overflow-y-scroll p-4">
 				{#each featuresWithLabels as feature}
 					<div
-						class="legend-item text-sm hover:bg-red-300"
+					class="cursor-pointer p-1 mb-1 rounded bg-gray-300 hover:bg-gray-400"
 						on:click={() => flyToFeature(feature, 17)}
 						on:keydown={(event) => handleLegendItemKeydown(event, feature)}
 						tabindex="0"
@@ -160,63 +154,6 @@
 						{feature.label}
 					</div>
 				{/each}
-			</div>
-		</div>
-	</div>	
-</div>
+	</div>
+</section>
 
-<style>
-	/* Neue Klasse für das Flexbox-Layout */
-	.map-and-legend {
-		display: flex;
-		flex-wrap: wrap;
-	}
-	/* Styling für die Karte */
-	.map-container-wrapper {
-		width: 75%; /* Die Karte nimmt 75% der Breite ein */
-		height: 100%;
-		display: inline-block; /* Karte als inline-Blockelement */
-	}
-
-	/* Styling für die Legende */
-	.legend-outer-wrapper {
-		width: 24%; /* Die Legende nimmt 24% der Breite ein */
-		height: calc(
-			100vh - 2rem
-		); /* Höhe der Legende auf 100% der Viewport-Höhe minus 2rem festlegen */
-		overflow-y: auto; /* Legende wird bei Bedarf scrollbar */
-		display: inline-block; /* Legende als inline-Blockelement */
-		vertical-align: top; /* Legende oben ausrichten */
-		box-sizing: border-box; /* Die Breite der Legende inklusive Padding und Border berechnen */
-	}
-
-	.legend-wrapper {
-		padding: 1rem;
-		background-color: white;
-		z-index: 1; /* Make sure the legend appears above the map */
-	}
-
-	.legend-item {
-		cursor: pointer;
-		padding: 5px;
-		margin-bottom: 5px;
-		border-radius: 3px;
-		background-color: #e5e5e5;
-	}
-
-	.legend-item:hover {
-		background-color: #d5d5d5;
-	}
-
-	/* Responsive layout für die Legende auf kleinen Bildschirmen */
-	@media screen and (max-width: 600px) {
-		.map-and-legend {
-			display: block; /* Legende rutscht unter die Karte */
-		}
-
-		.map-container-wrapper,
-		.legend-outer-wrapper {
-			width: 100%; /* Beide Elemente nehmen die volle Breite */
-		}
-	}
-</style>
