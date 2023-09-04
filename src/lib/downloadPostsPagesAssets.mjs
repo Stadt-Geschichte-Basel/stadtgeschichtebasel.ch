@@ -104,7 +104,7 @@ const delayBetweenDownloads = 2000;
  * Concurrency limit for asset downloads.
  * @type {number}
  */
-const concurrentDownloads = 2;
+const concurrentDownloads = 1;
 
 /**
  * Queue class for managing tasks.
