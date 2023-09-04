@@ -22,7 +22,7 @@
 </Container>
 
 <iframe
-	src="https://web.archive.org/https://www.stadtgeschichtebasel.ch/index/{data.url}"
+	src="https://web.archive.org/web/*/https://www.stadtgeschichtebasel.ch/index/{data.url}"
 	class="w-full h-96"
 	frameborder="0"
 	title="Archive.org"
