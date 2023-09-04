@@ -41,9 +41,9 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] feat: link to research data platform
 - [ ] feat: lunr.js bases search
 - [ ] feat: improved SEO
-  - [ ] feat: sitemap.xml
   - [ ] feat: rss.xml (via <https://github.com/matfantinel/sveltekit-static-blog-template/blob/main/src/routes/rss.xml/%2Bserver.ts>)
   - [ ] feat: atom.xml
+  - [ ] fix: replace svelte-sitemap and improve sitemap.xml
   - [ ] fix: improved meta-tags
   - [ ] fix: Add metadata to svg images <https://www.w3.org/TR/SVGTiny12/metadata.html>
   - [ ] fix: better description for old page redirects

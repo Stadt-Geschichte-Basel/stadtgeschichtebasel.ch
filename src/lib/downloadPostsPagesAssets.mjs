@@ -98,7 +98,7 @@ const retryDownloads = 10;
  * Delay between asset downloads in milliseconds.
  * @type {number}
  */
-const delayBetweenDownloads = 1000;
+const delayBetweenDownloads = 2000;
 
 /**
  * Concurrency limit for asset downloads.
@@ -142,6 +142,7 @@ class Queue {
 	 */
 	next() {
 		if (this.queue.length === 0 || this.active >= this.concurrency) return;
+		console.log(`Queue length: ${this.queue.length}, Active tasks: ${this.active}`);
 		const task = this.queue.shift();
 		setTimeout(() => this.run(task), this.delay);
 	}
@@ -200,6 +201,7 @@ const getAssetUrl = (elem, $) => {
  * @param {string} outputDir
  */
 async function downloadAsset(url, outputDir) {
+	console.log(`Downloading asset from ${url}`);
 	const extension = path.extname(new URL(url).pathname).toLowerCase();
 	if (!allowedExtensions.includes(extension)) return;
 
@@ -226,6 +228,7 @@ async function downloadAsset(url, outputDir) {
 	// Save the asset in the corresponding directory
 	const filePath = path.join(outputDir, urlPath);
 	fs.writeFileSync(filePath, buffer);
+	console.log(`Downloaded asset to ${filePath}`);
 }
 
 /**
@@ -237,7 +240,7 @@ async function downloadAsset(url, outputDir) {
  * @param {Array<string>} tagsToRemove
  * @returns {Promise<string>}
  */
-async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
+async function processContent(html, outputDir, link, slug, convertToMarkdown = true, tagsToRemove = []) {
 	const sanitizedHtml = DOMPurify.sanitize(html, {
 		ADD_TAGS: ['iframe'],
 		ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
@@ -284,7 +287,6 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 	});
 	const markdown = turndownService.turndown($.html());
 
-	//   const assetUrls = $('img').map((_, elem) => $(elem).attr('src')).get();
 	const downloadQueue = new Queue(concurrentDownloads, delayBetweenDownloads);
 
 	assetUrls.forEach((url) => {
@@ -300,8 +302,10 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
  * @returns {Promise<string|null>}
  */
 const fetchFeaturedImage = async (mediaId) => {
+	console.log(`Fetching featured image with ID: ${mediaId}`);
 	const response = await fetchWithRetry(`${baseURL}${apiEndpoint}/media/${mediaId}`);
 	const data = await response.json();
+	console.log(`Fetched featured image URL: ${data.source_url}`);
 	return data.source_url;
 };
 
@@ -317,12 +321,13 @@ async function fetchAndProcessType(type) {
 		fetched;
 
 	do {
+		console.log(`Fetching ${type} data, page ${page}`);
 		const response = await fetchWithRetry(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
-				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''
 			}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media`
 		);
 		const data = await response.json();
+		const featuredImageQueue = new Queue(concurrentDownloads, delayBetweenDownloads);
 
 		for (const item of data) {
 			const title = turndownService.turndown(item.title.rendered);
@@ -333,13 +338,14 @@ async function fetchAndProcessType(type) {
 				outputDir,
 				item.link,
 				item.slug,
+				false,
 				tagsToRemove
 			);
 			const featuredImageUrl = item.featured_media
 				? await fetchFeaturedImage(item.featured_media)
 				: null;
 			if (featuredImageUrl) {
-				await downloadAsset(featuredImageUrl, outputDir);
+				featuredImageQueue.enqueue(() => downloadAsset(featuredImageUrl, outputDir));
 			}
 			const frontMatter = {
 				id: item.id,
@@ -359,6 +365,7 @@ async function fetchAndProcessType(type) {
 
 		fetched = data.length;
 		page++;
+		console.log(`Fetched ${fetched} items from ${type}, page ${page}`);
 	} while (fetched === perPage);
 }
 

@@ -6,11 +6,11 @@
 	"url": "https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues",
 	"license": "AGPL-3.0",
 	"engines": {
-		"node": ">=18",
+		"node": ">=20",
 		"pnpm": ">=8"
 	},
 	"private": true,
-	"packageManager": "pnpm@8.6.12",
+	"packageManager": "pnpm@8.7.1",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -32,7 +32,7 @@
 		"@skeletonlabs/skeleton": "^2.0.0",
 		"@skeletonlabs/tw-plugin": "^0.1.0",
 		"@sveltejs/adapter-static": "^2.0.3",
-		"@sveltejs/kit": "^1.24.0",
+		"@sveltejs/kit": "^1.24.1",
 		"@tailwindcss/typography": "^0.5.9",
 		"@vite-pwa/sveltekit": "^0.2.5",
 		"autoprefixer": "^10.4.15",
