@@ -34,39 +34,19 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 
 ## Roadmap
 
-- [x] Basic layout (inspired by <https://sveltekit-mdsvex-starter-blog.vercel.app/posts>)
-- [x] Download all posts and pages from sgb.hypotheses.org
-- [x] Download all assets from sgb.hypotheses.org
-- [x] Implement blog functionality
-- [x] Implement page functionality
-- [x] Add robots.txt
-- [x] Add fonts
-- [x] Add Meta-Tag, Twitter Card and OpenGraph Generator
-- [ ] Add search functionality via lunr or elasticlunr (or similar)
-- [ ] Collapse search on mobile
-- [ ] ~~Read params from url~~
-- [ ] ~~Add newsletter functionality~~
-- [ ] Add wcag accessibility functionality and logo
-- [x] Add copyright info
-- [ ] Add sitemap
-- [x] Add agenda page <https://github.com/vkurko/calendar>
-- [x] Add map page
-- [ ] ~~Add dark mode~~
-- [x] Add breadcrumb
-- [ ] ~~Add confirmation page for newsletter subscription~~
-- [ ] ~~Remove mdsvex dependency if no longer needed~~
-- [ ] ~~Remove turndown dependency if no longer needed~~
-- [ ] <https://toc.janosh.dev/?ref=madewithsvelte.com>
-- [ ] <https://a11y.digitaldialog.swiss/checklist>
-- [ ] <https://www.neurodiversity.design/>
-- [ ] Add metadata to svg <https://www.w3.org/TR/SVGTiny12/metadata.html>
-- [x] Add "@vite-pwa/sveltekit": "^0.2.1",
-- [x] <https://github.com/n1kk/rehype-mdsvex-image-autoimport>
-- [x] <rehypeAutolinkHeadings>
-- [ ] https://sveltekit-static-blog-template.vercel.app/
-- [ ] ~~https://github.com/matfantinel/image-transmutation~~
-- [x] make all page prerenderable
-- [ ] Cloudflare rule für weiterleitungen www.stadtgeschichtebasel.ch/index... stadtgeschichtebasel.ch/index (siehe kernreaktor.ch/\* Forwarding URL (Status Code: 301 - Permanent Redirect, Url: https://web.archive.org/web/kernreaktor.ch/$1))
+- [ ] feat: improved accessability
+  - [ ] feat: wcag 2.1 compliance <https://a11y.digitaldialog.swiss/checklist>
+  - [ ] feat: <https://www.neurodiversity.design/>
+  - [ ] feat: Add toc to long pages <https://toc.janosh.dev/?ref=madewithsvelte.com>
+- [ ] feat: link to research data platform
+- [ ] feat: lunr.js bases search
+- [ ] feat: improved SEO
+  - [ ] feat: sitemap.xml
+  - [ ] feat: rss.xml (via <https://github.com/matfantinel/sveltekit-static-blog-template/blob/main/src/routes/rss.xml/%2Bserver.ts>)
+  - [ ] feat: atom.xml
+  - [ ] fix: improved meta-tags
+  - [ ] fix: Add metadata to svg images <https://www.w3.org/TR/SVGTiny12/metadata.html>
+  - [ ] fix: better description for old page redirects
 
 ## Contributing
 

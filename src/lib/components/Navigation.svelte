@@ -9,7 +9,7 @@
 	}
 </script>
 
-<nav class="list-nav p-4 text-xl">
+<nav class="list-nav p-4 text-xl" aria-label="Hauptmenü">
 	<ul>
 		<li aria-current={$page.url.pathname === base + '/' ? 'page' : undefined}>
 			<a

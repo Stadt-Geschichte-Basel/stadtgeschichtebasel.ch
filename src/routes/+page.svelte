@@ -35,6 +35,7 @@
 			<p class="description">{post.excerpt} <a href="/blog/{post.slug}">weiterlesen</a></p>
 		</article>
 	{/each}
-
+	<nav aria-label="Blognavigation">
 	<Paginator bind:settings={paginationSettings} showNumerals amountText="Einträge"/>
+</nav>
 </Container>
