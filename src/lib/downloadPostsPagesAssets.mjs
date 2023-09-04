@@ -240,7 +240,14 @@ async function downloadAsset(url, outputDir) {
  * @param {Array<string>} tagsToRemove
  * @returns {Promise<string>}
  */
-async function processContent(html, outputDir, link, slug, convertToMarkdown = true, tagsToRemove = []) {
+async function processContent(
+	html,
+	outputDir,
+	link,
+	slug,
+	convertToMarkdown = true,
+	tagsToRemove = []
+) {
 	const sanitizedHtml = DOMPurify.sanitize(html, {
 		ADD_TAGS: ['iframe'],
 		ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
@@ -323,7 +330,8 @@ async function fetchAndProcessType(type) {
 	do {
 		console.log(`Fetching ${type} data, page ${page}`);
 		const response = await fetchWithRetry(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
+				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
 			}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media`
 		);
 		const data = await response.json();
