@@ -8,82 +8,84 @@ import { json } from '@sveltejs/kit';
 export const prerender = true;
 
 /**
- * Represents a contributor.
- * @typedef {Object} Contributor
- * @property {string} login - The login of the contributor.
- * @property {string} avatar_url - The avatar URL of the contributor.
- * @property {string} html_url - The HTML URL of the contributor.
+ * @constant
+ * @type {Object}
+ * @description GitHub configuration constants.
  */
+const { githubHandle, githubRepo, url } = config;
 
 /**
- * Represents the latest commit.
- * @typedef {Object} LatestCommit
- * @property {string} html_url - The HTML URL of the latest commit.
- * @property {string} date - The date of the latest commit.
+ * @constant
+ * @type {string}
+ * @description API URL for GitHub repository.
  */
+const apiUrl = `https://api.github.com/repos/${githubHandle}/${githubRepo}/commits`;
 
 /**
- * Represents the credits data.
- * @typedef {Object} Credits
- * @property {Array<Contributor>} contributors - The contributors.
- * @property {LatestCommit} latest_commit - The latest commit.
+ * @constant
+ * @type {Object}
+ * @description Fallback data in case of API failure.
  */
+const fallbackData = {
+	contributors: [
+		{
+			login: githubHandle,
+			avatar_url: '/icon.svg',
+			html_url: `https://github.com/${githubHandle}`
+		}
+	],
+	latest_commit: {
+		html_url: url,
+		date: new Date().toISOString()
+	}
+};
+
+/**
+ * Fetches data from a given GitHub API endpoint.
+ * 
+ * @async
+ * @function
+ * @param {string} endpoint - The API endpoint URL.
+ * @returns {Promise<any>} A promise that resolves with the fetched data.
+ * @throws {Error} Throws an error if the fetch operation fails.
+ */
+async function fetchData(endpoint) {
+	const response = await fetch(endpoint);
+	const data = await response.json();
+	return data;
+}
 
 /**
  * Fetches credits data from the GitHub API.
+ * 
+ * @async
+ * @function
  * @returns {Promise<Credits>} A promise that resolves with the credits data.
- * @throws {Error} An error is thrown if the request fails.
+ * @throws {Error} Throws an error if the fetch operation fails.
  */
 async function getCredits() {
-	const repoOwner = config.githubHandle;
-	const repoName = config.githubRepo;
-	const fallbackData = {
-		contributors: [
-			{
-				login: config.githubHandle,
-				avatar_url: '/icon.svg',
-				html_url: `https://github.com/${config.githubHandle}`
-			}
-		],
-		latest_commit: {
-			html_url: config.url,
-			date: new Date().toISOString()
-		}
-	};
-
 	try {
-		const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/commits`;
-		const [contributors, latestCommit] = await Promise.all([
-			fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contributors`)
-				.then((res) => res.json())
-				.then((data) =>
-					data && Array.isArray(data)
-						? data.map((contributor) => ({
-								login: contributor.login,
-								avatar_url: contributor.avatar_url,
-								html_url: contributor.html_url
-						  }))
-						: []
-				),
-			fetch(`${apiUrl}?per_page=1`)
-				.then((res) => res.json())
-				.then((data) => {
-					if (data && Array.isArray(data) && data[0]) {
-						return {
-							html_url: data[0].html_url,
-							date: data[0].commit.author.date
-						};
-					} else {
-						console.error('Error:', data);
-						return fallbackData;
-					}
-				})
+		const [contributorsData, latestCommitData] = await Promise.all([
+			fetchData(`${apiUrl}/contributors`),
+			fetchData(`${apiUrl}?per_page=1`)
 		]);
+
+		// Check if contributorsData is an empty array or not an array at all
+		const contributors = Array.isArray(contributorsData) && contributorsData.length > 0
+			? contributorsData.map(({ login, avatar_url, html_url }) => ({ login, avatar_url, html_url }))
+			: fallbackData.contributors;
+
+		// Check if latestCommitData is an empty array or not an array at all
+		const latestCommit = Array.isArray(latestCommitData) && latestCommitData.length > 0 && latestCommitData[0]
+			? {
+				html_url: latestCommitData[0].html_url,
+				date: latestCommitData[0].commit.author.date
+			  }
+			: fallbackData.latest_commit;
 
 		return { contributors, latest_commit: latestCommit };
 	} catch (error) {
 		console.error('Error:', error);
-
 		return fallbackData;
 	}
 }
