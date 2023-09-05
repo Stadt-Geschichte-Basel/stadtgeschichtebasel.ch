@@ -16,14 +16,14 @@
 	</p>
 	<ul class="grid grid-cols-2 gap-4">
 		{#each data.contributors as contributor}
-			<div class="flex items-center space-x-2">
+			<li class="flex items-center space-x-2">
 				<div class="mask mask-hexagon w-16">
 					<img src={contributor.avatar_url} alt="Avatar of {contributor.login}" />
 				</div>
 				<div class="text-lg font-extrabold">
 					<a href={contributor.html_url}>{contributor.login}</a>
 				</div>
-			</div>
+			</li>
 		{/each}
 	</ul>
 	<p>
