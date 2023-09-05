@@ -102,8 +102,8 @@ devDependencies:
     specifier: ^3.5.1
     version: 3.5.1(@babel/core@7.22.15)(postcss@8.4.29)(svelte@3.59.2)
   svelte-maplibre:
-    specifier: ^0.3.4
-    version: 0.3.4(svelte@3.59.2)
+    specifier: ^0.3.5
+    version: 0.3.5(svelte@3.59.2)
   svelte-sitemap:
     specifier: ^2.6.0
     version: 2.6.0
@@ -2336,7 +2336,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.10
-      caniuse-lite: 1.0.30001525
+      caniuse-lite: 1.0.30001527
       fraction.js: 4.3.6
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -2451,7 +2451,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001525
+      caniuse-lite: 1.0.30001527
       electron-to-chromium: 1.4.508
       node-releases: 2.0.13
       update-browserslist-db: 1.0.11(browserslist@4.21.10)
@@ -2528,8 +2528,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /caniuse-lite@1.0.30001525:
-    resolution: {integrity: sha512-/3z+wB4icFt3r0USMwxujAqRvaD/B7rvGTsKhbhSQErVrJvkZCLhgNLJxU8MevahQVH6hCU9FsHdNUFbiwmE7Q==}
+  /caniuse-lite@1.0.30001527:
+    resolution: {integrity: sha512-YkJi7RwPgWtXVSgK4lG9AHH57nSzvvOp9MesgXmw4Q7n0C3H04L0foHqfxcmSAm5AcWb8dW9AYj2tR7/5GnddQ==}
     dev: true
 
   /chai@4.3.8:
@@ -3045,7 +3045,7 @@ packages:
       safe-regex-test: 1.0.0
       string.prototype.trim: 1.2.7
       string.prototype.trimend: 1.0.6
-      string.prototype.trimstart: 1.0.6
+      string.prototype.trimstart: 1.0.7
       typed-array-buffer: 1.0.0
       typed-array-byte-length: 1.0.0
       typed-array-byte-offset: 1.0.0
@@ -5674,8 +5674,8 @@ packages:
       es-abstract: 1.22.1
     dev: true
 
-  /string.prototype.trimstart@1.0.6:
-    resolution: {integrity: sha512-omqjMDaY92pbn5HOX7f9IccLA+U1tA9GvtU4JrodiXFfYB7jPzzHpRzpglLAjtUV6bB557zwClJezTqnAiYnQA==}
+  /string.prototype.trimstart@1.0.7:
+    resolution: {integrity: sha512-NGhtDFu3jCEm7B4Fy0DpLewdJQOZcQ0rGbwQ/+stjnrp2i+rlKeCvos9hOIeCmqwratM47OBxY7uFZzjxHXmrg==}
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.2.0
@@ -5839,8 +5839,8 @@ packages:
       svelte: 3.59.2
     dev: true
 
-  /svelte-maplibre@0.3.4(svelte@3.59.2):
-    resolution: {integrity: sha512-WHnIeSeWTKKW813242jzuzJGhsMdoZRRwhyz9+f64lkmxc6vItVtaE6lzxZW5P6zGsM97zJ3P9RqGFEEZLSmsw==}
+  /svelte-maplibre@0.3.5(svelte@3.59.2):
+    resolution: {integrity: sha512-djPL1c7jJQ0ct5fY3vs8/3GSNGZWZQ+jPuoePqyUN6n8Y7EmW4Bxa1HIqKVJ944hJUICWuygmlRdGRcATmAUWw==}
     peerDependencies:
       '@deck.gl/core': ^8.8.0
       '@deck.gl/layers': ^8.8.0
