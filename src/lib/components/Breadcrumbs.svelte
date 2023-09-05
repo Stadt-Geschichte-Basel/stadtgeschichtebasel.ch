@@ -2,13 +2,13 @@
 	import { page } from '$app/stores';
 </script>
 
-<div class="text-token flex justify-center p-4">
+<nav class="text-token flex justify-center p-4" aria-label="Breadcrumbs">
 	<ol class="breadcrumb">
 		<li class="crumb"><a class="anchor" href="/">Blog</a></li>
 		<li class="crumb-separator" aria-hidden>/</li>
 		<li>
-			<a class="anchor" href={$page.url.pathname}>{$page.data.meta.title}</a>
+			<a class="anchor" href={$page.url.pathname} aria-current="page">{$page.data.meta.title}</a>
 		</li>
 	</ol>
-</div>
+</nav>
 
