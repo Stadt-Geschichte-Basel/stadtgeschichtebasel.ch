@@ -48,6 +48,7 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
   - [ ] fix: Add metadata to svg images <https://www.w3.org/TR/SVGTiny12/metadata.html>
   - [ ] fix: better description for old page redirects
 - [ ] fix: improve map UX (https://www.skeleton.dev/utilities/modals)
+- [ ] fix: remove fallback data from credits.json
 
 ## Contributing
 

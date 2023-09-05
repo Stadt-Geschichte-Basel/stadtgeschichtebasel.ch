@@ -1,6 +1,8 @@
 <script>
 	import { CircleLayer, GeoJSON, MapLibre, MarkerLayer, Popup } from 'svelte-maplibre';
-	import data from '$lib/data/map.json';
+
+	/** @type {import('./$types').PageData} */
+	export let data;
 
 	let map;
 	let featuresWithLabels = data.features.map((feature) => ({
@@ -27,7 +29,7 @@
 <section class="flex flex-wrap">
 		<MapLibre
 			style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
-			class="w-full md:w-3/4 overflow-hidden sm:h-screen md:h-auto"
+		class="h-auto w-full overflow-hidden sm:h-screen md:w-3/4"
 			zoom={14}
 			maxZoom={20}
 			center={[7.59274, 47.55094]}
@@ -142,10 +144,10 @@
 		-->
 		</MapLibre>
 	
-	<div class="w-full md:w-1/4 overflow-y-scroll p-4">
+	<div class="w-full overflow-y-scroll p-4 md:w-1/4">
 				{#each featuresWithLabels as feature}
 					<div
-					class="cursor-pointer p-1 mb-1 rounded bg-gray-300 hover:bg-gray-400"
+				class="mb-1 cursor-pointer rounded bg-gray-300 p-1 hover:bg-gray-400"
 						on:click={() => flyToFeature(feature, 17)}
 						on:keydown={(event) => handleLegendItemKeydown(event, feature)}
 						tabindex="0"
@@ -156,4 +158,3 @@
 				{/each}
 	</div>
 </section>
-

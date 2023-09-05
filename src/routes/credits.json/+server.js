@@ -42,7 +42,7 @@ const fallbackData = {
 
 /**
  * Fetches data from a given GitHub API endpoint.
- * 
+ *
  * @async
  * @function
  * @param {string} endpoint - The API endpoint URL.
@@ -57,7 +57,7 @@ async function fetchData(endpoint) {
 
 /**
  * Fetches credits data from the GitHub API.
- * 
+ *
  * @async
  * @function
  * @returns {Promise<Credits>} A promise that resolves with the credits data.
@@ -71,17 +71,23 @@ async function getCredits() {
 		]);
 
 		// Check if contributorsData is an empty array or not an array at all
-		const contributors = Array.isArray(contributorsData) && contributorsData.length > 0
-			? contributorsData.map(({ login, avatar_url, html_url }) => ({ login, avatar_url, html_url }))
-			: fallbackData.contributors;
+		const contributors =
+			Array.isArray(contributorsData) && contributorsData.length > 0
+				? contributorsData.map(({ login, avatar_url, html_url }) => ({
+						login,
+						avatar_url,
+						html_url
+				  }))
+				: fallbackData.contributors;
 
 		// Check if latestCommitData is an empty array or not an array at all
-		const latestCommit = Array.isArray(latestCommitData) && latestCommitData.length > 0 && latestCommitData[0]
-			? {
-				html_url: latestCommitData[0].html_url,
-				date: latestCommitData[0].commit.author.date
-			  }
-			: fallbackData.latest_commit;
+		const latestCommit =
+			Array.isArray(latestCommitData) && latestCommitData.length > 0 && latestCommitData[0]
+				? {
+						html_url: latestCommitData[0].html_url,
+						date: latestCommitData[0].commit.author.date
+				  }
+				: fallbackData.latest_commit;
 
 		return { contributors, latest_commit: latestCommit };
 	} catch (error) {

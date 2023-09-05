@@ -211,7 +211,7 @@
 					<p>
 						<!-- <a
 							class="anchor"
-							href="https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/blob/main/LICENSE.md"
+							href="https://github.com/{config.githubHandle}/{config.githubRepo}/blob/main/LICENSE.md"
 							target="_blank"
 							rel="noreferrer"
 						> -->
