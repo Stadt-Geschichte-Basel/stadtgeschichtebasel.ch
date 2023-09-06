@@ -6,6 +6,7 @@ export async function load({ params }) {
 	if (params.path === '') {
 		return { url: 'index.html' };
 	}
+	if (!params.path.endsWith('.html')) params.path += '.html';
 	if (data.urls.includes(params.path)) {
 		return { url: params.path };
 	} else {

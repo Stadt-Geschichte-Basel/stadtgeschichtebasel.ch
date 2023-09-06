@@ -2,8 +2,6 @@
 	import Container from '$lib/components/Container.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
-	// append .html if not present
-	if (!data.url.endsWith('.html')) data.url += '.html';
 </script>
 
 <!-- SEO -->
