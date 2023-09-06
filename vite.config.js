@@ -33,14 +33,23 @@ export default defineConfig({
 		sveltekit(),
 		purgeCss(),
 		SvelteKitPWA({
+			srcDir: './src',
+			mode: 'development',
 			registerType: 'autoUpdate',
 			manifest: false,
 			manifestFile: 'manifest.webmanifest',
 			scope: '/',
+			base: '/',
+			injectManifest: {
+				globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}']
+			},
 			workbox: {
-				globPatterns: ['pages.json', 'posts.json', '**/*.{js,css,html,svg,ico,png,webp,avif}'],
-				globIgnores: ['**/sw*', '**/workbox-*']
-			}
+				globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}']
+			},
+			// workbox: {
+			// 	globPatterns: ['pages.json', 'posts.json', '**/*.{js,css,html,svg,ico,png,webp,avif}'],
+			// 	globIgnores: ['**/sw*', '**/workbox-*']
+			// }
 		})
 	],
 

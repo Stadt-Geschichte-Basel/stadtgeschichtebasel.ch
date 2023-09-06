@@ -1,9 +1,10 @@
 <script>
 	import * as config from '$lib/config';
-	import { pwaInfo } from 'virtual:pwa-info';
+	// import { pwaInfo } from 'virtual:pwa-info';
 	import { page } from '$app/stores';
 
-	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
+	// FIXME pwaInfo is not available in SvelteKit
+	// $: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
 </script>
 
 <svelte:head>
@@ -19,7 +20,8 @@
 	<link rel="canonical" href="{config.url}{$page.url.pathname}" />
 
 	<!-- Manifest link -->
-	{@html webManifestLink}
+	<link rel="manifest" href="/manifest.webmanifest" />
+	<!-- {@html webManifestLink} -->
 
 	<!-- Twitter tags -->
 	<meta name="twitter:title" content={config.title} />
