@@ -6,7 +6,17 @@ import * as config from '$lib/config';
  */
 export const prerender = true;
 
+/**
+ * Indicates whether trailing slashes are enabled.
+ * @type {string}
+ * @see https://kit.svelte.dev/docs#routing-api-trailing-slashes
+ */
 export const trailingSlash = 'never';
+
+/**
+ * Request handler for the GET method.
+ * @type {import('./$types').RequestHandler}
+ */
 export const GET = () =>
 	new Response(
 		JSON.stringify(

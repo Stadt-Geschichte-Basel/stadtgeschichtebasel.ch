@@ -1,5 +1,4 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vitest/config';
 import { imagetools } from 'vite-imagetools';
 import { purgeCss } from 'vite-plugin-tailwind-purgecss';
@@ -31,26 +30,7 @@ export default defineConfig({
 		// 	// }
 		// }),
 		sveltekit(),
-		purgeCss(),
-		SvelteKitPWA({
-			srcDir: './src',
-			mode: 'development',
-			registerType: 'autoUpdate',
-			manifest: false,
-			manifestFile: 'manifest.webmanifest',
-			scope: '/',
-			base: '/',
-			injectManifest: {
-				globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}']
-			},
-			workbox: {
-				globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}']
-			}
-			// workbox: {
-			// 	globPatterns: ['pages.json', 'posts.json', '**/*.{js,css,html,svg,ico,png,webp,avif}'],
-			// 	globIgnores: ['**/sw*', '**/workbox-*']
-			// }
-		})
+		purgeCss()
 	],
 
 	test: {
