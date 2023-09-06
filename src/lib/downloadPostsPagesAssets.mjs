@@ -5,7 +5,7 @@ import path from 'path';
 import TurndownService from 'turndown';
 import { JSDOM } from 'jsdom';
 import createDOMPurify from 'dompurify';
-import { exit } from 'process';
+import fetch from 'node-fetch';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
@@ -82,101 +82,43 @@ const allowedExtensions = [
 	'.xlsx',
 	'.zip'
 ];
-/**
- * Timeout duration for fetch operations.
- * @type {number}
- */
-const fetchTimeout = 10000; // 10 seconds
 
 /**
- * Number of retries for asset downloads.
- * @type {number}
- */
-const retryDownloads = 10;
-
-/**
- * Delay between asset downloads in milliseconds.
- * @type {number}
- */
-const delayBetweenDownloads = 2000;
-
-/**
- * Concurrency limit for asset downloads.
- * @type {number}
- */
-const concurrentDownloads = 1;
-
-/**
- * Queue class for managing tasks.
+ * A class representing a queue of tasks to be executed in order.
  */
 class Queue {
-	constructor(concurrency = concurrentDownloads, delay = delayBetweenDownloads) {
+	/**
+	 * Creates a new Queue instance.
+	 */
+	constructor() {
 		this.queue = [];
-		this.concurrency = concurrency;
-		this.delay = delay;
-		this.active = 0;
 	}
 
 	/**
-	 * Enqueue a task.
-	 * @param {Function} task
+	 * Adds a new task to the end of the queue.
+	 * @param {Function} task - The task to add to the queue.
 	 */
 	enqueue(task) {
 		this.queue.push(task);
-		this.next();
-	}
-
-	/**
-	 * Run a task.
-	 * @param {Function} task
-	 */
-	async run(task) {
-		this.active++;
-		await task();
-		this.active--;
-		this.next();
-	}
-
-	/**
-	 * Execute the next task in the queue.
-	 */
-	next() {
-		if (this.queue.length === 0 || this.active >= this.concurrency) return;
-		const task = this.queue.shift();
-		setTimeout(() => this.run(task), this.delay);
-	}
-}
-
-/**
- * Fetch a URL with retry logic.
- * @param {string} url
- * @returns {Promise<Response>}
- */
-async function fetchWithRetry(url) {
-	for (let i = 0; i < retryDownloads; i++) {
-		try {
-			const controller = new AbortController();
-			const timeoutId = setTimeout(() => controller.abort(), fetchTimeout);
-
-			const response = await fetch(url, { signal: controller.signal });
-			clearTimeout(timeoutId);
-			if (!response.ok) {
-				console.error(`HTTP Error: ${response.status}`);
-				console.error(`URL: ${url}`);
-				exit(1);
-			}
-			if (response.ok) return response;
-		} catch (error) {
-			if (error.name === 'AbortError') {
-				console.warn(`Request aborted for URL: ${url}. Retrying...`);
-			} else {
-				console.warn(`Error occurred for URL: ${url}. Retrying...`);
-			}
-			await new Promise((resolve) => setTimeout(resolve, delayBetweenDownloads));
+		if (this.queue.length === 1) {
+			this.dequeue();
 		}
 	}
-	throw new Error(`Failed to fetch URL after ${retryDownloads} attempts: ${url}`);
+
+	/**
+	 * Removes the first task from the queue and executes it.
+	 * If the queue is empty, does nothing.
+	 */
+	async dequeue() {
+		if (this.queue.length === 0) return;
+		const task = this.queue[0];
+		await task();
+		this.queue.shift();
+		this.dequeue();
+	}
 }
+
+const downloadQueue = new Queue();
 
 /**
  * Extract asset URL from an HTML element.
@@ -200,34 +142,38 @@ const getAssetUrl = (elem, $) => {
  * @param {string} outputDir
  */
 async function downloadAsset(url, outputDir) {
-	console.log(`Downloading asset from ${url}`);
-	const extension = path.extname(new URL(url).pathname).toLowerCase();
-	if (!allowedExtensions.includes(extension)) return;
+	downloadQueue.enqueue(async () => {
+		console.log(`Downloading asset from ${url}`);
+		const extension = path.extname(new URL(url).pathname).toLowerCase();
+		if (!allowedExtensions.includes(extension)) return;
 
-	const response = await fetchWithRetry(url);
+		const response = await fetch(url);
 
-	// Collecting chunks into an array
-	const chunks = [];
-	for await (const chunk of response.body) {
-		chunks.push(chunk);
-	}
+		if (!response.ok) {
+			console.log(`Failed to download asset from ${url}`);
+			return;
+		}
 
-	// Convert to buffer
-	const buffer = Buffer.concat(chunks);
+		const urlPath = new URL(url).pathname;
+		const fullDir = path.join(outputDir, path.dirname(urlPath));
+		if (!fs.existsSync(fullDir)) {
+			fs.mkdirSync(fullDir, { recursive: true });
+		}
 
-	// Parse the URL to get the path
-	const urlPath = new URL(url).pathname;
+		const filePath = path.join(outputDir, urlPath);
 
-	// Create the corresponding directory structure
-	const fullDir = path.join(outputDir, path.dirname(urlPath));
-	if (!fs.existsSync(fullDir)) {
-		fs.mkdirSync(fullDir, { recursive: true });
-	}
+		// Stream the file to disk
+		const fileStream = fs.createWriteStream(filePath);
+		response.body.pipe(fileStream);
 
-	// Save the asset in the corresponding directory
-	const filePath = path.join(outputDir, urlPath);
-	fs.writeFileSync(filePath, buffer);
-	console.log(`Downloaded asset to ${filePath}`);
+		fileStream.on('finish', () => {
+			console.log(`Downloaded asset to ${filePath}`);
+		});
+
+		fileStream.on('error', (error) => {
+			console.log(`Error writing file: ${error}`);
+		});
+	});
 }
 
 /**
@@ -285,10 +231,8 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		}
 	});
 
-	const downloadQueue = new Queue(concurrentDownloads, delayBetweenDownloads);
-
 	assetUrls.forEach((url) => {
-		downloadQueue.enqueue(() => downloadAsset(url, outputDir));
+		downloadAsset(url, outputDir);
 	});
 
 	return turndownService.turndown($.html());
@@ -301,7 +245,7 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
  */
 const fetchFeaturedImage = async (mediaId) => {
 	console.log(`Fetching featured image with ID: ${mediaId}`);
-	const response = await fetchWithRetry(`${baseURL}${apiEndpoint}/media/${mediaId}`);
+	const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
 	const data = await response.json();
 	console.log(`Fetched featured image URL: ${data.source_url}`);
 	return data.source_url;
@@ -320,13 +264,11 @@ async function fetchAndProcessType(type) {
 
 	do {
 		console.log(`Fetching ${type} data, page ${page}`);
-		const response = await fetchWithRetry(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
-				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+		const response = await fetch(
+			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''
 			}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media`
 		);
 		const data = await response.json();
-		const featuredImageQueue = new Queue(concurrentDownloads, delayBetweenDownloads);
 
 		for (const item of data) {
 			const title = turndownService.turndown(item.title.rendered);
@@ -343,7 +285,7 @@ async function fetchAndProcessType(type) {
 				? await fetchFeaturedImage(item.featured_media)
 				: null;
 			if (featuredImageUrl) {
-				featuredImageQueue.enqueue(() => downloadAsset(featuredImageUrl, outputDir));
+				await downloadAsset(featuredImageUrl, outputDir);
 			}
 			const frontMatter = {
 				id: item.id,
