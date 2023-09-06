@@ -96,7 +96,7 @@ async function getCredits() {
 }
 
 /** @type {import('./$types').PageLoad} */
-export async function load(event) {
+export async function load() {
 	const credits = await getCredits();
 	return {
 		...credits
