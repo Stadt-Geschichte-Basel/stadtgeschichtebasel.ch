@@ -13,3 +13,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - feat: blog via MDsveX and Wordpress API (https://sgb.hypotheses.org/wp-json/wp/v2/) by @maehr and @flicksolutions
 - feat: agenda via Agendabasel.ch API (https://www.kulturzueri.ch/xmlexport/kzexport-basel.xml)
 - feat: map via svelte-maplibre by @koilebeit and @maehr
+- feat: archive with archive.org preview by @maehr
