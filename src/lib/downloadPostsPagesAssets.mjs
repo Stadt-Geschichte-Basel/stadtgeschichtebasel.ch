@@ -265,7 +265,8 @@ async function fetchAndProcessType(type) {
 	do {
 		console.log(`Fetching ${type} data, page ${page}`);
 		const response = await fetch(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${categories.length > 0 ? `&categories=${categories.join(',')}` : ''
+			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
+				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
 			}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media`
 		);
 		const data = await response.json();
