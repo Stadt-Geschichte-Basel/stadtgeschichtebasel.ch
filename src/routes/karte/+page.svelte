@@ -29,7 +29,7 @@
 <section class="flex flex-wrap">
 		<MapLibre
 			style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
-		class="w-full overflow-hidden sm:h-screen md:h-auto md:w-3/4"
+		class="h-screen w-full overflow-hidden md:h-auto md:w-3/4"
 			zoom={14}
 			maxZoom={20}
 			center={[7.59274, 47.55094]}
