@@ -4,11 +4,9 @@
 	export let data;
 </script>
 
-<!-- SEO -->
 <svelte:head>
 	<title>Wir sind umgezogen</title>
 	<meta property="og:type" content="article" />
-	<!-- <meta property="og:title" content={data.meta.title} /> -->
 </svelte:head>
 
 <Container>
