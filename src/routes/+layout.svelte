@@ -27,8 +27,35 @@
 	const cRowTwo =
 		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0';
 
+	import { onMount } from 'svelte';
+	import { pwaInfo } from 'virtual:pwa-info';
 
+	onMount(async () => {
+		if (pwaInfo) {
+			const { registerSW } = await import('virtual:pwa-register');
+			registerSW({
+				immediate: true,
+				onRegistered(r) {
+					// uncomment following code if you want check for updates
+					// r && setInterval(() => {
+					//    console.log('Checking for sw update')
+					//    r.update()
+					// }, 20000 /* 20s for testing purposes */)
+					console.log(`SW Registered: ${r}`);
+				},
+				onRegisterError(error) {
+					console.log('SW registration error', error);
+				}
+			});
+		}
+	});
+
+	$: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : '';
 </script>
+
+<svelte:head>
+	{@html webManifest}
+</svelte:head>
 
 <Head />
 
@@ -163,7 +190,7 @@
 	<svelte:fragment slot="sidebarLeft">
 		<Navigation />
 	</svelte:fragment>
-	<slot />	
+	<slot />
 	<svelte:fragment slot="pageFooter">
 		<div class="page-footer {cBase}">
 			<div class="mx-auto w-full max-w-7xl space-y-10 p-4 py-16 md:py-24">
