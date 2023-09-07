@@ -6,6 +6,7 @@
 		MarkerLayer,
 		Popup,
 		Control,
+		ControlGroup,
 		NavigationControl,
 		FullscreenControl,
 		ScaleControl
@@ -50,7 +51,8 @@
 		]}
 		bind:map
 	>
-		<Control position="top-left" >
+	<ControlGroup>
+		<Control>
 			<select class="rounded bg-white p-2 text-xl shadow-md" on:change={handleSelectChange}>
 				<option value="">Springe zu</option>
 				{#each featuresWithLabels as feature}
@@ -61,6 +63,7 @@
 		<NavigationControl position="top-left" />
 		<FullscreenControl position="top-left" />
 		<ScaleControl position="top-left" />
+	</ControlGroup>
 		<GeoJSON
 			id="data"
 			{data}
