@@ -1,5 +1,15 @@
 <script>
-	import { CircleLayer, GeoJSON, MapLibre, MarkerLayer, Popup, Control, ControlGroup, ControlButton } from 'svelte-maplibre';
+	import {
+		CircleLayer,
+		GeoJSON,
+		MapLibre,
+		MarkerLayer,
+		Popup,
+		Control,
+		NavigationControl,
+		FullscreenControl,
+		ScaleControl
+	} from 'svelte-maplibre';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -38,17 +48,19 @@
 			[5.94, 45.81],
 			[10.51, 47.81]
 		]}
-		standardControls
 		bind:map
 	>
-	<div class="absolute top-4 right-4 z-50">
-		<select class="rounded bg-white p-2 shadow-md text-xl" on:change={handleSelectChange}>
-			<option value="">Springe zu</option>
-			{#each featuresWithLabels as feature}
-				<option value={feature.label}>{feature.label}</option>
-			{/each}
-		</select>
-	</div>
+		<Control position="top-left" >
+			<select class="rounded bg-white p-2 text-xl shadow-md" on:change={handleSelectChange}>
+				<option value="">Springe zu</option>
+				{#each featuresWithLabels as feature}
+					<option value={feature.label}>{feature.label}</option>
+				{/each}
+			</select>
+		</Control>
+		<NavigationControl position="top-right" />
+		<FullscreenControl position="top-right" />
+		<ScaleControl />
 		<GeoJSON
 			id="data"
 			{data}
