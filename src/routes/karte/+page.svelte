@@ -58,9 +58,9 @@
 				{/each}
 			</select>
 		</Control>
-		<NavigationControl position="top-right" />
-		<FullscreenControl position="top-right" />
-		<ScaleControl />
+		<NavigationControl position="top-left" />
+		<FullscreenControl position="top-left" />
+		<ScaleControl position="top-left" />
 		<GeoJSON
 			id="data"
 			{data}
