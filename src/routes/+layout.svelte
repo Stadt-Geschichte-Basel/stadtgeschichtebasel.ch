@@ -19,13 +19,6 @@
 		drawerStore.open(drawerSettings);
 	}
 	$: classesPageFooter = $page.url.pathname === '/karte' ? 'hidden' : '';
-
-	// Base Classes
-	const cBase = 'border-t border-surface-500/10 text-xs md:text-base';
-	const cRowOne =
-		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-5 md:space-y-0';
-	const cRowTwo =
-		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0';
 </script>
 
 <Head />
@@ -74,7 +67,7 @@
 			<svelte:fragment slot="trail">
 				<ul class="grid grid-flow-col gap-4">
 					<li>
-						<a href="https://www.instagram.com/sta.ge.ba/" aria-label="Instagram"
+						<a href="https://www.instagram.com/sta.ge.ba/" aria-label="Instagram" rel="noopener noreferrer"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -90,7 +83,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://www.facebook.com/Stadt.Geschichte.Basel" aria-label="Facebook"
+						<a href="https://www.facebook.com/Stadt.Geschichte.Basel" aria-label="Facebook" rel="noopener noreferrer"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -106,7 +99,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://twitter.com/basel_stadt" aria-label="Twitter"
+						<a href="https://twitter.com/basel_stadt" aria-label="Twitter" rel="noopener noreferrer"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -122,7 +115,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://vimeo.com/user31064894" aria-label="Vimeo"
+						<a href="https://vimeo.com/user31064894" aria-label="Vimeo" rel="noopener noreferrer"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -138,7 +131,7 @@
 						>
 					</li>
 					<li>
-						<a href="https://github.com/{config.githubHandle}" aria-label="Github">
+						<a href="https://github.com/{config.githubHandle}" aria-label="Github" rel="noopener noreferrer">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -163,16 +156,13 @@
 	</svelte:fragment>
 	<slot />
 	<svelte:fragment slot="pageFooter">
-		<div class="page-footer {cBase}">
+		<div class="page-footer border-t border-surface-500/10 text-xs md:text-base">
 			<div class="mx-auto w-full max-w-7xl space-y-10 p-4 py-16 md:py-24">
-				<!-- Row 1 -->
-				<section class={cRowOne}>
+				<section class="flex flex-col md:flex-row justify-between items-center md:items-start space-y-5 md:space-y-0">
 					<div
 						class="grid grid-cols-1 place-content-center place-items-center gap-2 md:place-items-start"
 					>
 						<p class="!text-sm opacity-80">{config.subtitle}</p>
-						<!-- Current Version -->
-						<!-- <span class="badge variant-soft" /> -->
 					</div>
 					<div class="hidden grid-cols-3 gap-8 md:grid">
 						<div class="space-y-6">
@@ -203,9 +193,7 @@
 				</section>
 
 				<hr class="opacity-20" />
-
-				<!-- Row 2 -->
-				<section class={cRowTwo}>
+				<section class="flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0">
 					<p>
 						<!-- <a
 							class="anchor"

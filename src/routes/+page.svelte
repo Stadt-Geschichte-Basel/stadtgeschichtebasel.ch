@@ -29,10 +29,10 @@
 
 	{#each paginatedPosts as post}
 		<article>
-			<h2>{post.title}
-				<!-- <a href={`/blog/${post.slug}`}>{post.title}</a> -->
+			<h2>
+				<a href="/blog/{post.slug}" class="no-underline hover:underline font-bold" title="{post.slug}">{post.title}</a>
 			</h2>
-			<p class="description">{post.excerpt} <a href="/blog/{post.slug}">weiterlesen</a></p>
+			<p class="description">{post.excerpt} <a href="/blog/{post.slug}" title="{post.slug}">weiterlesen</a></p>
 		</article>
 	{/each}
 	<nav aria-label="Blognavigation">

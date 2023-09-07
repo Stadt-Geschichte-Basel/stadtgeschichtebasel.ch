@@ -71,7 +71,7 @@ export const url = protocol + domain;
  * The language code of the website.
  * @type {string}
  */
-export const lang = 'de-CH';
+export const lang = 'de';
 
 /**
  * The theme color used for the website.
