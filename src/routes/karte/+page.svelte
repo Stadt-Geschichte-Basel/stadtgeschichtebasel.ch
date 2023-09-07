@@ -1,5 +1,5 @@
 <script>
-	import { CircleLayer, GeoJSON, MapLibre, MarkerLayer, Popup } from 'svelte-maplibre';
+	import { CircleLayer, GeoJSON, MapLibre, MarkerLayer, Popup, Control, ControlGroup, ControlButton } from 'svelte-maplibre';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -28,17 +28,6 @@
 </script>
 
 <section class="h-[94vh] w-full overflow-hidden">
-	<!-- Dropdown for features -->
-	<div class="absolute z-10 p-4">
-		<select class="rounded bg-white p-2 shadow-md" on:change={handleSelectChange}>
-			<option value="">Springe zu</option>
-			{#each featuresWithLabels as feature}
-				<option value={feature.label}>{feature.label}</option>
-			{/each}
-		</select>
-	</div>
-
-	<!-- Full width and height map -->
 	<MapLibre
 		style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
 		class="h-full w-full"
@@ -49,8 +38,17 @@
 			[5.94, 45.81],
 			[10.51, 47.81]
 		]}
+		standardControls
 		bind:map
 	>
+	<div class="absolute top-4 right-4 z-50">
+		<select class="rounded bg-white p-2 shadow-md text-xl" on:change={handleSelectChange}>
+			<option value="">Springe zu</option>
+			{#each featuresWithLabels as feature}
+				<option value={feature.label}>{feature.label}</option>
+			{/each}
+		</select>
+	</div>
 		<GeoJSON
 			id="data"
 			{data}
@@ -132,27 +130,5 @@
 				>
 			</MarkerLayer>
 		</GeoJSON>
-		<!--
-			<Control class="flex flex-col gap-y-2">
-				<ControlGroup>
-					{#each featuresWithLabels as feature}
-						<ControlButton
-							on:click={() => {
-								map.flyTo({
-									center: feature.geometry.coordinates,
-									zoom: 18
-								});
-							}}
-						>
-							{feature.label}
-						</ControlButton>
-					{/each}
-				</ControlGroup>
-
-				<ControlGroup>
-					<ControlButton on:click={() => alert('!')}>!</ControlButton>
-				</ControlGroup>
-			</Control>
-		-->
 	</MapLibre>
 </section>
