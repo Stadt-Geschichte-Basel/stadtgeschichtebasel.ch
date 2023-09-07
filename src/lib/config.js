@@ -4,7 +4,7 @@ import { dev } from '$app/environment';
  * The title of the website.
  * @type {string}
  */
-export const title = 'Stadt.Geschicht.Basel';
+export const title = 'Stadt.Geschichte.Basel';
 
 /**
  * The subtitle of the website.
@@ -22,7 +22,7 @@ export const keywords = 'Basel, Geschichte, Stadtgeschichte, Kultur';
  * The author of the website.
  * @type {string}
  */
-export const author = 'Stiftung Stadt.Geschicht.Basel';
+export const author = 'Stiftung Stadt.Geschichte.Basel';
 
 /**
  * The description of the website.
