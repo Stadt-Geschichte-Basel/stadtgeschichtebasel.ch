@@ -161,7 +161,7 @@
 				"name": "Frauenstadtrundgang Basel",
 				"label": "Frauenstadtrundgang",
 				"description": "TBD",
-				"address": "Verein Frauenstadtrundgang Basel, Hirschgässlein 21, 4051 Basel",
+				"address": "Hirschgässlein 21, 4051 Basel",
 				"website": "https://www.frauenstadtrundgang-basel.ch/"
 			},
 			"geometry": {
@@ -356,7 +356,9 @@
 			"properties": {
 				"name": "Stadt.Geschichte.Basel",
 				"label": "SGB",
-				"description": "Wir schreiben Basler Geschichten."
+				"description": "Wir schreiben Basler Geschichten.",
+				"address": "Hirschgässlein 21, 4051 Basel",
+				"website": "https://stadtgeschichtebasel.ch/"
 			},
 			"geometry": {
 				"type": "Point",

@@ -6,7 +6,6 @@
 		MarkerLayer,
 		Popup,
 		Control,
-		ControlGroup,
 		NavigationControl,
 		FullscreenControl,
 		ScaleControl
@@ -16,10 +15,11 @@
 	export let data;
 
 	let map;
-	let featuresWithLabels = data.features.map((feature) => ({
+	let features = data.features.map((feature) => ({
 		properties: feature.properties,
 		geometry: feature.geometry,
-		label: feature.properties.label
+		label: feature.properties.label,
+		name: feature.properties.name
 	}));
 
 	function flyToFeature(feature, zoomLevel = 18) {
@@ -31,7 +31,7 @@
 	}
 
 	function handleSelectChange(event) {
-		const selectedFeature = featuresWithLabels.find((f) => f.label === event.target.value);
+		const selectedFeature = features.find((f) => f.label === event.target.value);
 		if (selectedFeature) {
 			flyToFeature(selectedFeature);
 		}
@@ -54,8 +54,8 @@
 		<Control position="top-left">
 			<select class="rounded bg-white p-2 text-xl shadow-md" on:change={handleSelectChange}>
 				<option value="">Springe zu</option>
-				{#each featuresWithLabels as feature}
-					<option value={feature.label}>{feature.label}</option>
+				{#each features as feature}
+					<option value={feature.label}>{feature.name}</option>
 				{/each}
 			</select>
 		</Control>
@@ -134,11 +134,11 @@
 					{feature.properties.label}
 				</div>
 
-				<Popup openOn="click" offset={[0, -10]} maxWidth={'30%'}>
+				<Popup openOn="hover" offset={[0, -10]} maxWidth={'30%'}>
 					<h3 class="text-lg font-bold">{feature.properties.name}</h3>
 					<p class="text-sm">{feature.properties.address}</p>
 					<p class="text-sm">
-						<a href={feature.properties.website} target="_blank">{feature.properties.website}</a>
+						<a href={feature.properties.website} target="_blank" class="underline">Zur Webseite</a>
 					</p></Popup
 				>
 			</MarkerLayer>

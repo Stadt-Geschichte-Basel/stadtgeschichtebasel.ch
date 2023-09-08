@@ -41,6 +41,7 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 - [ ] feat: link to research data platform
 - [ ] feat: lunr.js based search
 - [ ] feat: improved SEO
+  - [ ] feat: allow all robots in robots.txt as soon as the page is public
   - [ ] feat: rss.xml (via <https://github.com/matfantinel/sveltekit-static-blog-template/blob/main/src/routes/rss.xml/%2Bserver.ts>)
   - [ ] feat: atom.xml
   - [ ] fix: replace svelte-sitemap and improve sitemap.xml
@@ -48,7 +49,8 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
   - [ ] fix: Add metadata to svg images <https://www.w3.org/TR/SVGTiny12/metadata.html>
   - [ ] fix: better description for old page redirects
 - [ ] fix: improve map UX (https://www.skeleton.dev/utilities/modals)
-- [ ] fix: remove fallback data from credits.json
+- [ ] fix: remove fallback data from /credits as soon as the repo is public
+- [ ] fix: configure purgecss so that it doesn't remove classes from svelte-maplibre
 
 ## Contributing
 
