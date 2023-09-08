@@ -51,8 +51,7 @@
 		]}
 		bind:map
 	>
-	<ControlGroup>
-		<Control>
+		<Control position="top-left">
 			<select class="rounded bg-white p-2 text-xl shadow-md" on:change={handleSelectChange}>
 				<option value="">Springe zu</option>
 				{#each featuresWithLabels as feature}
@@ -60,10 +59,9 @@
 				{/each}
 			</select>
 		</Control>
-		<NavigationControl position="top-left" />
-		<FullscreenControl position="top-left" />
-		<ScaleControl position="top-left" />
-	</ControlGroup>
+		<NavigationControl position="top-right"/>
+		<FullscreenControl position="top-right"/>
+		<ScaleControl position="top-right"/>
 		<GeoJSON
 			id="data"
 			{data}

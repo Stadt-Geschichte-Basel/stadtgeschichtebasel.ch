@@ -30,7 +30,12 @@ export default defineConfig({
 		// 	// }
 		// }),
 		sveltekit(),
-		purgeCss()
+		purgeCss({
+			safelist: {
+				// FIXME: This is a workaround for svelte-maplibre css
+				greedy: [/^maplibregl-ctrl/]
+			}
+		})
 	],
 
 	test: {
