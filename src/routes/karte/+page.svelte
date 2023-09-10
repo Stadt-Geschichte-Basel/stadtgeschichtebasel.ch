@@ -38,7 +38,7 @@
 	}
 </script>
 
-<section class="h-[94vh] w-full overflow-hidden">
+<section class="h-[90vh] w-full overflow-hidden bg-surface-50 dark:bg-surface-900 ">
 	<MapLibre
 		style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
 		class="h-full w-full"
@@ -134,7 +134,7 @@
 					{feature.properties.label}
 				</div>
 
-				<Popup openOn="hover" offset={[0, -10]} maxWidth={'30%'}>
+				<Popup openOn="click" offset={[0, -10]} maxWidth={'30%'}>
 					<h3 class="text-lg font-bold">{feature.properties.name}</h3>
 					<p class="text-sm">{feature.properties.address}</p>
 					<p class="text-sm">
