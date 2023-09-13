@@ -84,6 +84,12 @@ const allowedExtensions = [
 ];
 
 /**
+ * The directory where assets will be downloaded.
+ * @type {string}
+ */
+const staticDir = 'static';
+
+/**
  * A class representing a queue of tasks to be executed in order.
  */
 class Queue {
@@ -141,7 +147,7 @@ const getAssetUrl = (elem, $) => {
  * @param {string} url
  * @param {string} outputDir
  */
-async function downloadAsset(url, outputDir) {
+async function downloadAsset(url, outputDir = staticDir) {
 	downloadQueue.enqueue(async () => {
 		console.log(`Downloading asset from ${url}`);
 		const extension = path.extname(new URL(url).pathname).toLowerCase();
@@ -225,14 +231,14 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 	$('img').each((i, elem) => {
 		const url = getAssetUrl(elem, $);
 		if (url && url.startsWith(baseURL)) {
-			const relativeUrl = path.join('.', url.replace(baseURL, ''));
+			const relativeUrl = path.join('/', url.replace(baseURL, ''));
 			if ($(elem).attr('src')) $(elem).attr('src', relativeUrl);
 			assetUrls.push(url);
 		}
 	});
 
 	assetUrls.forEach((url) => {
-		downloadAsset(url, outputDir);
+		downloadAsset(url);
 	});
 
 	return turndownService.turndown($.html());
@@ -286,7 +292,7 @@ async function fetchAndProcessType(type) {
 				? await fetchFeaturedImage(item.featured_media)
 				: null;
 			if (featuredImageUrl) {
-				await downloadAsset(featuredImageUrl, outputDir);
+				await downloadAsset(featuredImageUrl);
 			}
 			const frontMatter = {
 				id: item.id,

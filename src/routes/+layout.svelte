@@ -27,7 +27,6 @@
 	<Navigation />
 </Drawer>
 
-<!-- App Shell -->
 <AppShell
 	slotSidebarLeft="bg-surface-50 dark:bg-surface-900 border-t border-surface-500/10 w-0 lg:w-64"
 	slotPageFooter="bg-white {classesPageFooter}"
@@ -83,22 +82,6 @@
 						>
 					</li>
 					<li>
-						<a href="https://www.facebook.com/Stadt.Geschichte.Basel" aria-label="Facebook" rel="noopener noreferrer"
-							><svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								fill="currentColor"
-								class="bi bi-facebook"
-								viewBox="0 0 16 16"
-							>
-								<path
-									d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
-								/>
-							</svg></a
-						>
-					</li>
-					<li>
 						<a href="https://twitter.com/basel_stadt" aria-label="Twitter" rel="noopener noreferrer"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -114,43 +97,10 @@
 							</svg></a
 						>
 					</li>
-					<li>
-						<a href="https://vimeo.com/user31064894" aria-label="Vimeo" rel="noopener noreferrer"
-							><svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								fill="currentColor"
-								class="bi bi-vimeo"
-								viewBox="0 0 16 16"
-							>
-								<path
-									d="M15.992 4.204c-.071 1.556-1.158 3.687-3.262 6.393-2.175 2.829-4.016 4.243-5.522 4.243-.933 0-1.722-.861-2.367-2.583L3.55 7.523C3.07 5.8 2.556 4.94 2.007 4.94c-.118 0-.537.253-1.254.754L0 4.724a209.56 209.56 0 0 0 2.334-2.081c1.054-.91 1.845-1.388 2.373-1.437 1.243-.123 2.01.728 2.298 2.553.31 1.968.526 3.19.646 3.666.36 1.631.756 2.446 1.186 2.445.334 0 .836-.53 1.508-1.587.671-1.058 1.03-1.863 1.077-2.415.096-.913-.263-1.37-1.077-1.37a3.022 3.022 0 0 0-1.185.261c.789-2.573 2.291-3.825 4.508-3.756 1.644.05 2.419 1.117 2.324 3.2z"
-								/>
-							</svg></a
-						>
-					</li>
-					<li>
-						<a href="https://github.com/{config.githubHandle}" aria-label="Github" rel="noopener noreferrer">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								fill="currentColor"
-								class="bi bi-github"
-								viewBox="0 0 16 16"
-							>
-								<path
-									d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-								/>
-							</svg>
-						</a>
-					</li>
 				</ul>
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
-
 	<svelte:fragment slot="sidebarLeft">
 		<Navigation />
 	</svelte:fragment>
@@ -204,7 +154,7 @@
 						© 2023 {config.author}
 						<!-- </a> -->
 						<span class="mx-2 opacity-10">|</span>
-						<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz </a>
+						<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a>
 						<span class="mx-2 opacity-10">|</span>
 						<a class="anchor" href="{base}/credits">Credits</a>
 					</p>

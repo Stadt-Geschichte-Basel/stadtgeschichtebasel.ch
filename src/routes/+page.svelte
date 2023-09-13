@@ -1,5 +1,4 @@
 <script>
-	
 	import Container from '$lib/components/Container.svelte';
 	import * as config from '$lib/config';
 	import { Paginator } from '@skeletonlabs/skeleton';
@@ -18,22 +17,24 @@
 		paginationSettings.page * paginationSettings.limit,
 		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
 	);
+	
+	// /* @vite-ignore */
+	// async function loadImages(posts) {
+	// 	for (const post of posts) {
+	// 		if (post.featuredImage) {
+	// 			try {
+	// 				// const module = await import(`../posts/${post.featuredImage}/* @vite-ignore */`);
+	// 				const path = `../posts/${post.featuredImage}`;
+	// 				const module = await import(path);
+	// 				post.imageSrc = module.default;
+	// 			} catch (error) {
+	// 				console.error(error);
+	// 			}
+	// 		}
+	// 	}
+	// }
 
-	async function loadImages(posts) {
-		for (const post of posts) {
-			if (post.featuredImage) {
-				try {
-					const module = await import(`../posts/${post.featuredImage}`);
-					// const module = await import(`../posts/${post.featuredImage}/* @vite-ignore */`);
-					post.imageSrc = module.default;
-				} catch (error) {
-					console.error(error);
-				}
-			}
-		}
-	}
-
-	$: loadImages(paginatedPosts);
+	// $: loadImages(paginatedPosts);
 </script>
 
 <svelte:head>
@@ -50,9 +51,9 @@
 					>{post.title}</a
 				>
 			</h2>
-			{#if post.imageSrc}
+			{#if post.featuredImage}
 				<a href="/blog/{post.slug}" title={post.slug}>
-					<img src={post.imageSrc} alt={post.title} class="mx-auto h-auto w-full md:max-w-md" />
+					<img src="/{post.featuredImage}" alt={post.title} class="mx-auto h-auto w-full md:max-w-md" />
 				</a>
 			{/if}
 			<p class="description">

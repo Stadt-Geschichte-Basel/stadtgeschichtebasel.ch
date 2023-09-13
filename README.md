@@ -38,6 +38,7 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
   - [ ] feat: wcag 2.1 compliance <https://a11y.digitaldialog.swiss/checklist>
   - [ ] feat: <https://www.neurodiversity.design/>
   - [ ] feat: Add toc to long pages <https://toc.janosh.dev/?ref=madewithsvelte.com>
+  - [ ] feat: add accessibility declaration
 - [ ] feat: link to research data platform
 - [ ] feat: lunr.js based search
 - [ ] feat: improved SEO
