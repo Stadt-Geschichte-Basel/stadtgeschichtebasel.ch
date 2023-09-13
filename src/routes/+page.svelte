@@ -1,12 +1,12 @@
 <script>
+	
 	import Container from '$lib/components/Container.svelte';
 	import * as config from '$lib/config';
 	import { Paginator } from '@skeletonlabs/skeleton';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-
-	// PaginatorSettings
+	
 	let paginationSettings = {
 		page: 0,
 		limit: 10,
@@ -18,6 +18,22 @@
 		paginationSettings.page * paginationSettings.limit,
 		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
 	);
+
+	async function loadImages(posts) {
+		for (const post of posts) {
+			if (post.featuredImage) {
+				try {
+					const module = await import(`../posts/${post.featuredImage}`);
+					// const module = await import(`../posts/${post.featuredImage}/* @vite-ignore */`);
+					post.imageSrc = module.default;
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		}
+	}
+
+	$: loadImages(paginatedPosts);
 </script>
 
 <svelte:head>
@@ -30,12 +46,21 @@
 	{#each paginatedPosts as post}
 		<article>
 			<h2>
-				<a href="/blog/{post.slug}" class="no-underline hover:underline font-bold" title="{post.slug}">{post.title}</a>
+				<a href="/blog/{post.slug}" class="font-bold no-underline hover:underline" title={post.slug}
+					>{post.title}</a
+				>
 			</h2>
-			<p class="description">{post.excerpt} <a href="/blog/{post.slug}" title="{post.slug}">weiterlesen</a></p>
+			{#if post.imageSrc}
+				<a href="/blog/{post.slug}" title={post.slug}>
+					<img src={post.imageSrc} alt={post.title} class="mx-auto h-auto w-full md:max-w-md" />
+				</a>
+			{/if}
+			<p class="description">
+				{post.excerpt} <a href="/blog/{post.slug}" title={post.slug}>weiterlesen</a>
+			</p>
 		</article>
 	{/each}
 	<nav aria-label="Blognavigation">
-	<Paginator bind:settings={paginationSettings} showNumerals amountText="Einträge"/>
-</nav>
+		<Paginator bind:settings={paginationSettings} showNumerals amountText="Einträge" />
+	</nav>
 </Container>

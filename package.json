@@ -29,10 +29,10 @@
 	"devDependencies": {
 		"@divriots/jampack": "^0.13.0",
 		"@playwright/test": "^1.37.1",
-		"@skeletonlabs/skeleton": "^2.0.0",
+		"@skeletonlabs/skeleton": "^2.1.0",
 		"@skeletonlabs/tw-plugin": "^0.1.0",
 		"@sveltejs/adapter-static": "^2.0.3",
-		"@sveltejs/kit": "^1.24.1",
+		"@sveltejs/kit": "^1.25.0",
 		"@tailwindcss/typography": "^0.5.10",
 		"autoprefixer": "^10.4.15",
 		"cheerio": "1.0.0-rc.12",
