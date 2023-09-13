@@ -7,7 +7,6 @@
 		Popup,
 		Control,
 		NavigationControl,
-		FullscreenControl,
 		ScaleControl
 	} from 'svelte-maplibre';
 
@@ -60,7 +59,6 @@
 			</select>
 		</Control>
 		<NavigationControl position="top-right"/>
-		<FullscreenControl position="top-right"/>
 		<ScaleControl position="top-right"/>
 		<GeoJSON
 			id="data"
@@ -134,7 +132,7 @@
 					{feature.properties.label}
 				</div>
 
-				<Popup openOn="click" offset={[0, -10]} maxWidth={'30%'}>
+				<Popup openOn="click" offset={[0, -10]}>
 					<h3 class="text-lg font-bold">{feature.properties.name}</h3>
 					<p class="text-sm">{feature.properties.address}</p>
 					<p class="text-sm">
