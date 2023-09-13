@@ -1,6 +1,6 @@
-import { redirect } from '@sveltejs/kit';
-
 /** @type {import('./$types').PageLoad} */
-export function load() {
-	throw redirect(307, '/');
+export async function load({ fetch }) {
+	const response = await fetch('posts.json');
+	const posts = await response.json();
+	return { posts };
 }

@@ -14,10 +14,10 @@
 		<li aria-current={$page.url.pathname === base + '/' ? 'page' : undefined}>
 			<a
 				class="cursor-pointer {$page.url.pathname === base + '/' ||
-				new String($page.url.pathname).startsWith(base +'/blog/')
+				new String($page.url.pathname).startsWith(base +'/blog')
 					? 'font-bold'
 					: 'font-normal'}"
-				href="{base}/"
+				href="{base}/blog"
 				on:click={drawerClose}>Blog</a
 			>
 		</li>

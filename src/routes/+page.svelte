@@ -1,51 +1,35 @@
 <script>
 	import Container from '$lib/components/Container.svelte';
-	import * as config from '$lib/config';
-	import { Paginator } from '@skeletonlabs/skeleton';
-
 	/** @type {import('./$types').PageData} */
 	export let data;
-
-	let paginationSettings = {
-		page: 0,
-		limit: 5,
-		size: data.posts.length,
-		amounts: [5, 10]
-	};
-
-	$: paginatedPosts = data.posts.slice(
-		paginationSettings.page * paginationSettings.limit,
-		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
-	);
+    const post = data.posts[0];
 </script>
 
-<svelte:head>
-	<title>{config.title}</title>
-</svelte:head>
-
 <Container>
-	<h1>Blog</h1>
-
-	{#each paginatedPosts as post}
-		<article>
-			<h2>
-				<a href="/blog/{post.slug}" class="font-bold no-underline hover:underline" title={post.slug}
-					>{post.title}</a
-				>
-			</h2>
-			{#if post.featuredImage}
-				<img
-					src={post.featuredImage}
-					alt={post.title}
-					class="mx-auto aspect-video h-auto w-full object-cover"
-				/>
-			{/if}
-			<p class="description">
-				{post.excerpt} <a href="/blog/{post.slug}" title={post.slug}>weiterlesen</a>
-			</p>
-		</article>
-	{/each}
-	<nav aria-label="Blognavigation">
-		<Paginator bind:settings={paginationSettings} showNumerals amountText="Einträge" />
-	</nav>
+	<h1>Wir schreiben Basler Geschichten</h1>
+    <p>
+        Tbd
+    </p>
+    <h2>Was Sie auf unserem Portal finden</h2>
+    <p>
+        Tbd
+    </p>
+    <h2>Unsere neusten Beiträge</h2>
+    <article>
+        <h3>
+            <a href="/blog/{post.slug}" class="font-bold no-underline hover:underline" title={post.slug}
+                >{post.title}</a
+            >
+        </h3>
+        {#if post.featuredImage}
+            <img
+                src={post.featuredImage}
+                alt={post.title}
+                class="mx-auto aspect-video h-auto w-full object-cover"
+            />
+        {/if}
+        <p class="description">
+            {post.excerpt} <a href="/blog/{post.slug}" title={post.slug}>weiterlesen</a>
+        </p>
+    </article>
 </Container>
