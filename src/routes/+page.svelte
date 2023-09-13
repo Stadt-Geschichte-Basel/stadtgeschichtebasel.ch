@@ -5,36 +5,18 @@
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-	
+
 	let paginationSettings = {
 		page: 0,
-		limit: 10,
+		limit: 5,
 		size: data.posts.length,
-		amounts: [10, 25, 50, 100]
+		amounts: [5, 10]
 	};
 
 	$: paginatedPosts = data.posts.slice(
 		paginationSettings.page * paginationSettings.limit,
 		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
 	);
-	
-	// /* @vite-ignore */
-	// async function loadImages(posts) {
-	// 	for (const post of posts) {
-	// 		if (post.featuredImage) {
-	// 			try {
-	// 				// const module = await import(`../posts/${post.featuredImage}/* @vite-ignore */`);
-	// 				const path = `../posts/${post.featuredImage}`;
-	// 				const module = await import(path);
-	// 				post.imageSrc = module.default;
-	// 			} catch (error) {
-	// 				console.error(error);
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	// $: loadImages(paginatedPosts);
 </script>
 
 <svelte:head>
@@ -52,9 +34,11 @@
 				>
 			</h2>
 			{#if post.featuredImage}
-				<a href="/blog/{post.slug}" title={post.slug}>
-					<img src="/{post.featuredImage}" alt={post.title} class="mx-auto h-auto w-full md:max-w-md" />
-				</a>
+				<img
+					src={post.featuredImage}
+					alt={post.title}
+					class="mx-auto aspect-video h-auto w-full object-cover"
+				/>
 			{/if}
 			<p class="description">
 				{post.excerpt} <a href="/blog/{post.slug}" title={post.slug}>weiterlesen</a>

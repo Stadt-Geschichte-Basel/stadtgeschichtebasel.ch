@@ -1,5 +1,6 @@
 <script>
 	import { assets, base } from '$app/paths';
+	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Head from '$lib/components/Head.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
@@ -19,6 +20,14 @@
 		drawerStore.open(drawerSettings);
 	}
 	$: classesPageFooter = $page.url.pathname === '/karte' ? 'hidden' : '';
+
+	afterNavigate(function (params) {
+		var isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
+		var elemPage = document.querySelector('#page');
+		if (isNewPage && elemPage !== null) {
+			elemPage.scrollTop = 0;
+		}
+	});
 </script>
 
 <Head />
@@ -66,7 +75,10 @@
 			<svelte:fragment slot="trail">
 				<ul class="grid grid-flow-col gap-4">
 					<li>
-						<a href="https://www.instagram.com/sta.ge.ba/" aria-label="Instagram" rel="noopener noreferrer"
+						<a
+							href="https://www.instagram.com/sta.ge.ba/"
+							aria-label="Instagram"
+							rel="noopener noreferrer"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -108,7 +120,9 @@
 	<svelte:fragment slot="pageFooter">
 		<div class="page-footer border-t border-surface-500/10 text-xs md:text-base">
 			<div class="mx-auto w-full max-w-7xl space-y-10 p-4 py-16 md:py-24">
-				<section class="flex flex-col md:flex-row justify-between items-center md:items-start space-y-5 md:space-y-0">
+				<section
+					class="flex flex-col items-center justify-between space-y-5 md:flex-row md:items-start md:space-y-0"
+				>
 					<div
 						class="grid grid-cols-1 place-content-center place-items-center gap-2 md:place-items-start"
 					>
@@ -143,7 +157,9 @@
 				</section>
 
 				<hr class="opacity-20" />
-				<section class="flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0">
+				<section
+					class="flex flex-col items-center justify-between space-y-4 md:flex-row md:items-start md:space-y-0"
+				>
 					<p>
 						<!-- <a
 							class="anchor"

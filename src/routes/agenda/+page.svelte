@@ -13,9 +13,9 @@
 	import { Paginator } from '@skeletonlabs/skeleton';
 	let paginationSettings = {
 		page: 0,
-		limit: 10,
+		limit: 5,
 		size: events.length,
-		amounts: [10, 25, 50, 100]
+		amounts: [5, 10]
 	};
 
 	$: paginatedEvents = events.slice(

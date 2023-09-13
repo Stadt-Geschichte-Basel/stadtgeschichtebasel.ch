@@ -302,7 +302,7 @@ async function fetchAndProcessType(type) {
 				slug: item.slug,
 				author: item.author,
 				excerpt: excerpt,
-				featuredImage: featuredImageUrl ? path.join('.', featuredImageUrl.replace(baseURL, '')) : ''
+				featuredImage: featuredImageUrl ? path.join('/', featuredImageUrl.replace(baseURL, '')) : ''
 			};
 			const yamlFrontMatter = yaml.dump(frontMatter);
 			const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
