@@ -20,7 +20,7 @@
 <article>
 	<!-- Title -->
 	<hgroup>
-		<h1>{data.meta.title}</h1>
+		<h1 class="h2 not-prose font-bold">{data.meta.title}</h1>
 		<span>Veröffentlicht am {date}{#if data.meta.modified}{#if data.meta.modified !== data.meta.date}, zuletzt geändert am {modified}{/if}{/if}</span>
 	</hgroup>
 
