@@ -1,8 +1,8 @@
 export default {
 	image: {
-  embed_size: 1536,
+		embed_size: 1536,
 		srcset_min_width: 640,
 		srcset_max_width: 1536 * 2,
-  max_size: 1536
+		max_size: 1536
 	}
 };
