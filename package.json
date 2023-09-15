@@ -28,7 +28,7 @@
 	},
 	"devDependencies": {
 		"@divriots/jampack": "^0.13.0",
-		"@playwright/test": "^1.37.1",
+		"@playwright/test": "^1.38.0",
 		"@skeletonlabs/skeleton": "^2.1.0",
 		"@skeletonlabs/tw-plugin": "^0.1.0",
 		"@sveltejs/adapter-static": "^2.0.3",

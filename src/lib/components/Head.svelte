@@ -1,5 +1,6 @@
 <script>
 	import * as config from '$lib/config';
+	import { base } from '$app/paths';
 	// import { pwaInfo } from 'virtual:pwa-info';
 	import { page } from '$app/stores';
 
@@ -20,7 +21,7 @@
 	<link rel="canonical" href="{config.url}{$page.url.pathname}" />
 
 	<!-- Manifest link -->
-	<link rel="manifest" href="/manifest.webmanifest" />
+	<link rel="manifest" href="{base}/manifest.webmanifest" />
 	<!-- {@html webManifestLink} -->
 
 	<!-- Twitter tags -->
@@ -28,7 +29,7 @@
 	<meta name="twitter:description" content={config.description} />
 	<meta name="twitter:site" content={config.twitterHandle} />
 	<meta name="twitter:creator" content={config.twitterHandle} />
-	<meta property="twitter:image" content="/android-chrome-512x512.png" />
+	<meta property="twitter:image" content="{base}/android-chrome-512x512.png" />
 	<meta property="twitter:image:width" content="512" />
 	<meta property="twitter:image:height" content="512" />
 
@@ -38,14 +39,14 @@
 	<meta property="og:url" content={config.url} />
 	<meta property="og:site_name" content={config.title} />
 	<meta property="og:type" content="website" />
-	<meta property="og:image" content="/android-chrome-512x512.png" />
+	<meta property="og:image" content="{base}/android-chrome-512x512.png" />
 	<meta property="og:image:width" content="512" />
 	<meta property="og:image:height" content="512" />
 	
 	<!-- FIXME -->
-	<!-- <link rel="alternate" type="application/feed+json" href="/feed.json" /> -->
-	<!-- <link rel="alternate" type="application/atom+xml" href="/atom.xml" /> -->
-	<!-- <link rel="sitemap" type="application/xml" href="/sitemap.xml" /> -->
+	<!-- <link rel="alternate" type="application/feed+json" href="{base}/feed.json" /> -->
+	<!-- <link rel="alternate" type="application/atom+xml" href="{base}/atom.xml" /> -->
+	<!-- <link rel="sitemap" type="application/xml" href="{base}/sitemap.xml" /> -->
 
 	<script
 		defer

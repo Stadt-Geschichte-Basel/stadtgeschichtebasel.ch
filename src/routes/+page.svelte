@@ -1,4 +1,5 @@
 <script>
+    import { base } from '$app/paths';
 	import Container from '$lib/components/Container.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -17,7 +18,7 @@
     <h2>Unsere neusten Beiträge</h2>
     <article>
         <h3>
-            <a href="/blog/{post.slug}" class="font-bold no-underline hover:underline" title={post.slug}
+            <a href="{base}/blog/{post.slug}" class="font-bold no-underline hover:underline" title={post.slug}
                 >{post.title}</a
             >
         </h3>
@@ -29,7 +30,7 @@
             />
         {/if}
         <p class="description">
-            {post.excerpt} <a href="/blog/{post.slug}" title={post.slug}>weiterlesen</a>
+            {post.excerpt} <a href="{base}/blog/{post.slug}" title={post.slug}>weiterlesen</a>
         </p>
     </article>
 </Container>

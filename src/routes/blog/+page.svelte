@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	// import { localStorageStore } from '@skeletonlabs/skeleton';
 	import Container from '$lib/components/Container.svelte';
 	import * as config from '$lib/config';
@@ -37,7 +38,7 @@
 	{#each paginatedPosts as post}
 		<article>
 			<h2>
-				<a href="/blog/{post.slug}" class="font-bold no-underline hover:underline" title={post.slug}
+				<a href="{base}/blog/{post.slug}" class="font-bold no-underline hover:underline" title={post.slug}
 					>{post.title}</a
 				>
 			</h2>
@@ -49,7 +50,7 @@
 				/>
 			{/if}
 			<p class="description">
-				{post.excerpt} <a href="/blog/{post.slug}" title={post.slug}>weiterlesen</a>
+				{post.excerpt} <a href="{base}/blog/{post.slug}" title={post.slug}>weiterlesen</a>
 			</p>
 		</article>
 	{/each}

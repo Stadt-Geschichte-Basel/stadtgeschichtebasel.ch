@@ -11,9 +11,9 @@
 
 <nav class="list-nav p-4 text-xl" aria-label="Hauptmenü" data-sveltekit-preload-data>
 	<ul>
-		<li aria-current={$page.url.pathname === base + '/' ? 'page' : undefined}>
+		<li aria-current={$page.url.pathname === base + '/blog' ? 'page' : undefined}>
 			<a
-				class="cursor-pointer {$page.url.pathname === base + '/' ||
+				class="cursor-pointer {$page.url.pathname === base + '/blog' ||
 				new String($page.url.pathname).startsWith(base +'/blog')
 					? 'font-bold'
 					: 'font-normal'}"
