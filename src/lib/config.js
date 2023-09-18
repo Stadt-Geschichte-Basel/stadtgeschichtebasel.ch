@@ -10,7 +10,7 @@ export const title = 'Stadt.Geschichte.Basel';
  * The subtitle of the website.
  * @type {string}
  */
-export const subtitle = 'Wir schreiben Basler Geschichten.';
+export const subtitle = 'Wir schreiben Basler Geschichte.';
 
 /**
  * Keywords related to the website content.
