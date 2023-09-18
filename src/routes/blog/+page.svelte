@@ -35,6 +35,10 @@
 <Container>
 	<h1>Blog</h1>
 
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet interdum purus finibus eget. 
+	</p>
+
 	{#each paginatedPosts as post}
 		<article>
 			<h2>

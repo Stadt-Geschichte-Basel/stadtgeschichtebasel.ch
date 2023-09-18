@@ -27,6 +27,9 @@
 
 <Container>
 	<h1>Agenda</h1>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet interdum purus finibus eget. 
+	</p>
 	<section>
 		<h2>Veranstaltungen</h2>
 

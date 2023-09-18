@@ -8,6 +8,9 @@
 <Container>
 	<section>
 		<h1>Archiv</h1>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet interdum purus finibus eget. 
+		</p>
 		<ul class="posts">
 			{#each data.urls as url}
 				<li class="post">

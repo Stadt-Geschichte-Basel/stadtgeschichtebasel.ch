@@ -12,6 +12,9 @@
 <Container>
 	<h1>Wir sind umgezogen</h1>
 	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet interdum purus finibus eget. 
+	</p>
+	<p>
 		Eine archivierte Version dieser Seite finden Sie <a
 			href="https://web.archive.org/web/https://www.stadtgeschichtebasel.ch/index/{data.url}"
 			>hier</a
