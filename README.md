@@ -34,24 +34,21 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 
 ## Roadmap
 
-- [ ] feat: improved accessability
-  - [ ] feat: wcag 2.1 compliance <https://a11y.digitaldialog.swiss/checklist>
-  - [ ] feat: <https://www.neurodiversity.design/>
-  - [ ] feat: Add toc to long pages <https://toc.janosh.dev/?ref=madewithsvelte.com>
-  - [ ] feat: add accessibility declaration
-- [ ] feat: link to research data platform
-- [ ] feat: lunr.js based search
+- [ ] feat: improved accessibility
+  - [ ] feat: wcag 2.1 compliance <https://a11y.digitaldialog.swiss/checklist> @mtwente
+  - [ ] feat: <https://www.neurodiversity.design/> @mtwente
+  - [ ] feat: add accessibility declaration @mtwente
+- [ ] feat: link to research data platform @maehr
 - [ ] feat: improved SEO
-  - [ ] feat: allow all robots in robots.txt as soon as the page is public
-  - [ ] feat: rss.xml (via <https://github.com/matfantinel/sveltekit-static-blog-template/blob/main/src/routes/rss.xml/%2Bserver.ts>)
-  - [ ] feat: atom.xml
-  - [ ] fix: replace svelte-sitemap and improve sitemap.xml
-  - [ ] fix: improved meta-tags
-  - [ ] fix: Add metadata to svg images <https://www.w3.org/TR/SVGTiny12/metadata.html>
-  - [ ] fix: better description for old page redirects
+  - [ ] feat: allow all robots in robots.txt as soon as the page is public @maehr
+  - [ ] feat: rss.xml (via <https://github.com/matfantinel/sveltekit-static-blog-template/blob/main/src/routes/rss.xml/%2Bserver.ts>) @maehr
+  - [ ] feat: atom.xml @maehr
+  - [ ] fix: replace svelte-sitemap and improve sitemap.xml @maehr
+  - [ ] fix: improved meta-tags @maehr
+  - [ ] fix: Add metadata to svg images <https://www.w3.org/TR/SVGTiny12/metadata.html> @maehr
 - [ ] fix: improve map UX (https://www.skeleton.dev/utilities/modals)
-- [ ] fix: remove fallback data from /credits as soon as the repo is public
-- [ ] fix: configure purgecss so that it doesn't remove classes from svelte-maplibre
+- [ ] fix: remove fallback data from /credits as soon as the repo is public @maehr
+- [ ] fix: configure purgecss so that it doesn't remove classes from svelte-maplibre @maehr
 
 ## Contributing
 
