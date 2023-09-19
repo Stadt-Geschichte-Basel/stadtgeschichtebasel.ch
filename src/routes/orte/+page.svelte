@@ -9,6 +9,7 @@
 		NavigationControl,
 		ScaleControl
 	} from 'svelte-maplibre';
+	import { onMount } from 'svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -35,9 +36,31 @@
 			flyToFeature(selectedFeature);
 		}
 	}
+
+	let maxLength = 0; // default maxLength
+
+	onMount(() => {
+		if (window.innerWidth <= 360) {
+			maxLength = 10;
+		} else if (window.innerWidth <= 640) {
+			maxLength = 20;
+		} else if (window.innerWidth <= 768) {
+			maxLength = 25;
+		} else {
+			maxLength = 99;
+		}
+	});
+
+	function truncateString(str) {
+		if (str.length > maxLength) {
+			return str.slice(0, maxLength) + '...';
+		} else {
+			return str;
+		}
+	}
 </script>
 
-<section class="h-[90vh] w-full overflow-hidden bg-surface-50 dark:bg-surface-900 ">
+<section class="h-[90vh] w-full overflow-hidden bg-surface-50 dark:bg-surface-900">
 	<MapLibre
 		style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
 		class="h-full w-full"
@@ -52,14 +75,14 @@
 	>
 		<Control position="top-left">
 			<select class="rounded bg-white p-2 text-xl shadow-md" on:change={handleSelectChange}>
-				<option value="">Springe zu</option>
+				<option value="">Springe zu ...</option>
 				{#each features as feature}
-					<option value={feature.label}>{feature.name}</option>
+					<option value={feature.label}>{truncateString(feature.name)}</option>
 				{/each}
 			</select>
 		</Control>
-		<NavigationControl position="top-right"/>
-		<ScaleControl position="top-right"/>
+		<NavigationControl position="top-right" />
+		<ScaleControl position="top-right" />
 		<GeoJSON
 			id="data"
 			{data}

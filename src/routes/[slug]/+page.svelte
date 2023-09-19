@@ -14,9 +14,5 @@
 <Container>
 		<h1>{data.meta.title}</h1>
 
-		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet interdum purus finibus eget. 
-		</p>
-
 		<svelte:component this={data.content} />
 </Container>
