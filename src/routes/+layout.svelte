@@ -65,11 +65,9 @@
 							>
 						</span>
 					</button>
-					<div class="h-12 w-full">
-						<a href="{base}/" class="cursor-pointer" aria-label="Home"
-							><img src="{assets}/icon.svg" alt="" class="h-full w-full" /></a
-						>
-					</div>
+					<a href="{base}/" class="cursor-pointer" aria-label="Home"
+						><img src="{assets}/icon.svg" alt="" class="h-12" /></a
+					>
 				</div>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
