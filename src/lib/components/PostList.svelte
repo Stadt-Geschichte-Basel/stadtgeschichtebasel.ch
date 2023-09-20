@@ -34,7 +34,13 @@
 		<div>
 			<!-- <div class="space-y-4 p-4"> -->
 			<!-- <h6 class="h6" data-toc-ignore>Announcements</h6> -->
-			<h2 class="h2">{post.title}</h2>
+            <h2>
+                <a
+                    href="{base}/blog/{post.slug}"
+                    class="font-bold no-underline hover:underline"
+                    title={post.slug}>{post.title}</a
+                >
+            </h2>
 			<article>
 				<p>
 					{post.excerpt} <a href="{base}/blog/{post.slug}" title={post.slug}>weiterlesen</a>
