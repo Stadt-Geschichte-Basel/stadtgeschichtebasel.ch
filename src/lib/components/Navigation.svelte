@@ -18,15 +18,6 @@
 				on:click={drawerClose}>Startseite</a
 			>
 		</li>
-		<li aria-current={$page.url.pathname === base + '/meilensteine' ? 'page' : undefined}>
-			<a
-				class="cursor-pointer {$page.url.pathname === base + '/meilensteine'
-					? 'font-bold'
-					: 'font-normal'}"
-				href="{base}/meilensteine"
-				on:click={drawerClose}>Meilensteine</a
-			>
-		</li>
 		<li aria-current={$page.url.pathname === base + '/blog' ? 'page' : undefined}>
 			<a
 				class="cursor-pointer {$page.url.pathname === base + '/blog' ||
@@ -35,6 +26,15 @@
 					: 'font-normal'}"
 				href="{base}/blog"
 				on:click={drawerClose}>Blog</a
+			>
+		</li>
+		<li aria-current={$page.url.pathname === base + '/meilensteine' ? 'page' : undefined}>
+			<a
+				class="cursor-pointer {$page.url.pathname === base + '/meilensteine'
+					? 'font-bold'
+					: 'font-normal'}"
+				href="{base}/meilensteine"
+				on:click={drawerClose}>Meilensteine</a
 			>
 		</li>
 		<!-- <li aria-current={$page.url.pathname === base + '/forschung' ? 'page' : undefined}>
