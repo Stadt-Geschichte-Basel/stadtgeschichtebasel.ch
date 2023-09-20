@@ -15,13 +15,6 @@
 		amounts: [5, 10]
 	};
 
-	// const paginationSettings = localStorageStore('paginationSettings', {
-	// 	page: 0,
-	// 	limit: 5,
-	// 	size: data.posts.length,
-	// 	amounts: [5, 10]
-	// });
-
 	$: paginatedPosts = data.posts.slice(
 		paginationSettings.page * paginationSettings.limit,
 		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
@@ -36,14 +29,17 @@
 	<h1>Blog</h1>
 
 	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet interdum purus finibus eget. 
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet
+		interdum purus finibus eget.
 	</p>
 
 	{#each paginatedPosts as post}
 		<article>
 			<h2>
-				<a href="{base}/blog/{post.slug}" class="font-bold no-underline hover:underline" title={post.slug}
-					>{post.title}</a
+				<a
+					href="{base}/blog/{post.slug}"
+					class="font-bold no-underline hover:underline"
+					title={post.slug}>{post.title}</a
 				>
 			</h2>
 			{#if post.featuredImage}
@@ -58,7 +54,14 @@
 			</p>
 		</article>
 	{/each}
-	<nav aria-label="Blognavigation" >
-		<Paginator bind:settings={paginationSettings} showNumerals amountText="Einträge" buttonClasses="btn btn-xl" active="variant-filled-secondary"/>
+	<nav aria-label="Blognavigation">
+		<Paginator
+			bind:settings={paginationSettings}
+			showNumerals
+			amountText="Einträge"
+			buttonClasses="btn btn-xl"
+			active="variant-filled-secondary"
+			select="hidden"
+		/>
 	</nav>
 </Container>
