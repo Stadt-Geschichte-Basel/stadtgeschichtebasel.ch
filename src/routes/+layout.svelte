@@ -1,5 +1,5 @@
 <script>
-	import { assets, base } from '$app/paths';
+	import { base } from '$app/paths';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Head from '$lib/components/Head.svelte';
@@ -32,7 +32,7 @@
 
 <Head />
 
-<Drawer>
+<Drawer width="w-64">
 	<Navigation />
 </Drawer>
 
