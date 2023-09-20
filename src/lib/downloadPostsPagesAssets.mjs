@@ -55,10 +55,10 @@ const types = ['posts', 'pages'];
 const perPage = 100;
 
 /**
- * The IDs of categories to fetch.
+ * IDs of categories to exclude
  * @type {Array<number>}
  */
-const categories = [1];
+const excludedCategories = [14];
 
 /**
  * The allowed file extensions for asset downloads.
@@ -117,14 +117,38 @@ class Queue {
 	 */
 	async dequeue() {
 		if (this.queue.length === 0) return;
-		const task = this.queue[0];
+		const task = this.queue.shift();
 		await task();
-		this.queue.shift();
 		this.dequeue();
 	}
 }
 
 const downloadQueue = new Queue();
+
+async function queuedFetch(url, options = {}) {
+	return new Promise((resolve, reject) => {
+		downloadQueue.enqueue(async () => {
+			try {
+				const response = await fetch(url, options); // Use native fetch here
+				resolve(response);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	});
+}
+
+const categoryCache = {};
+
+async function fetchCategoryNameById(id) {
+	if (categoryCache[id]) return categoryCache[id];
+
+	const response = await queuedFetch(`${baseURL}${apiEndpoint}/categories/${id}`);
+	const data = await response.json();
+	const name = data.name;
+	categoryCache[id] = name;
+	return name;
+}
 
 /**
  * Extract asset URL from an HTML element.
@@ -153,7 +177,7 @@ async function downloadAsset(url, outputDir = staticDir) {
 		const extension = path.extname(new URL(url).pathname).toLowerCase();
 		if (!allowedExtensions.includes(extension)) return;
 
-		const response = await fetch(url);
+		const response = await queuedFetch(url);
 
 		if (!response.ok) {
 			console.log(`Failed to download asset from ${url}`);
@@ -251,7 +275,7 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
  */
 const fetchFeaturedImage = async (mediaId) => {
 	console.log(`Fetching featured image with ID: ${mediaId}`);
-	const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
+	const response = await queuedFetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
 	const data = await response.json();
 	console.log(`Fetched featured image URL: ${data.source_url}`);
 	return data.source_url;
@@ -270,14 +294,16 @@ async function fetchAndProcessType(type) {
 
 	do {
 		console.log(`Fetching ${type} data, page ${page}`);
-		const response = await fetch(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}${
-				categories.length > 0 ? `&categories=${categories.join(',')}` : ''
-			}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media`
+		const response = await queuedFetch(
+			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media,categories`
 		);
 		const data = await response.json();
 
 		for (const item of data) {
+			const categoryIds = item.categories || [];
+			if (type === 'posts' && categoryIds.some((id) => excludedCategories.includes(id))) {
+				continue;
+			}
 			const title = turndownService.turndown(item.title.rendered);
 			const content = await processContent(item.content.rendered, outputDir, item.link, item.slug);
 			const tagsToRemove = ['span', 'a'];
@@ -294,6 +320,7 @@ async function fetchAndProcessType(type) {
 			if (featuredImageUrl) {
 				await downloadAsset(featuredImageUrl);
 			}
+			const categoryNames = await Promise.all(categoryIds.map(fetchCategoryNameById));
 			const frontMatter = {
 				id: item.id,
 				title: title,
@@ -302,6 +329,7 @@ async function fetchAndProcessType(type) {
 				slug: item.slug,
 				author: item.author,
 				excerpt: excerpt,
+				...(type === 'posts' && { categories: categoryNames }),
 				featuredImage: featuredImageUrl ? path.join('/', featuredImageUrl.replace(baseURL, '')) : ''
 			};
 			const yamlFrontMatter = yaml.dump(frontMatter);
