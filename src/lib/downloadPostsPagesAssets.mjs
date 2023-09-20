@@ -123,8 +123,30 @@ class Queue {
 	}
 }
 
+/**
+ * Creates a new instance of Queue and assigns it to downloadQueue variable.
+ * @type {Queue}
+ */
 const downloadQueue = new Queue();
 
+/**
+ * Fetches a URL using the native fetch API and enqueues the request to a download queue.
+ * @param {string} url - The URL to fetch.
+ * @param {Object} [options={}] - Additional options to pass to the fetch function.
+ * @returns {Promise<Response>} - A promise that resolves with the response from the fetch request.
+ */
+/**
+ * Queues a fetch request using the native fetch API.
+ * @param {string} url - The URL to fetch.
+ * @param {Object} options - The options to pass to the fetch request.
+ * @returns {Promise<Response>} - A promise that resolves with the response from the fetch request.
+ */
+/**
+ * Fetches a resource from the given URL using the native fetch API and enqueues the request to a download queue.
+ * @param {string} url - The URL of the resource to fetch.
+ * @param {object} [options={}] - An optional object containing any custom settings that you want to apply to the request.
+ * @returns {Promise<Response>} - A Promise that resolves with the Response object representing the fetched resource.
+ */
 async function queuedFetch(url, options = {}) {
 	return new Promise((resolve, reject) => {
 		downloadQueue.enqueue(async () => {
@@ -138,8 +160,17 @@ async function queuedFetch(url, options = {}) {
 	});
 }
 
+/**
+ * Cache object for categories.
+ * @type {Object}
+ */
 const categoryCache = {};
 
+/**
+ * Fetches the name of a category by its ID.
+ * @param {number} id - The ID of the category to fetch.
+ * @returns {Promise<string>} - A promise that resolves with the name of the category.
+ */
 async function fetchCategoryNameById(id) {
 	if (categoryCache[id]) return categoryCache[id];
 
@@ -192,7 +223,6 @@ async function downloadAsset(url, outputDir = staticDir) {
 
 		const filePath = path.join(outputDir, urlPath);
 
-		// Stream the file to disk
 		const fileStream = fs.createWriteStream(filePath);
 		response.body.pipe(fileStream);
 
@@ -222,23 +252,20 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 	});
 	const $ = cheerio.load(sanitizedHtml);
 	const assetUrls = [];
-	// Remove tags and their contents
+
 	tagsToRemove.forEach((tag) => {
 		$(tag).remove();
 	});
 
-	// Handle <iframe> tags
 	$('figure:has(iframe)').each(function () {
 		const innerContent = $(this).html();
 		$(this).replaceWith(innerContent);
 	});
 
-	// Modify <iframe> tags
 	$('iframe').each(function () {
 		$(this).removeAttr('width').removeAttr('height').addClass('w-full aspect-video');
 	});
 
-	// Handle <a> tags
 	$('a').each((i, elem) => {
 		const url = $(elem).attr('href');
 		if (url === link) {
@@ -251,7 +278,6 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		}
 	});
 
-	// Handle <img> tags
 	$('img').each((i, elem) => {
 		const url = getAssetUrl(elem, $);
 		if (url && url.startsWith(baseURL)) {
