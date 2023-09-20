@@ -3,10 +3,12 @@
 	import { Paginator } from '@skeletonlabs/skeleton';
 
 	export let posts;
+	export let limit = 5;
+	export let showControls = true;
 
 	let paginationSettings = {
 		page: 0,
-		limit: 5,
+		limit: limit,
 		size: posts.length,
 		amounts: [5, 10]
 	};
@@ -17,13 +19,27 @@
 	);
 </script>
 
+{#if showControls}
+	<nav aria-label="Blognavigation">
+		<Paginator
+			bind:settings={paginationSettings}
+			showNumerals
+			amountText="Einträge"
+			buttonClasses="btn btn-xl"
+			active="variant-filled-secondary"
+			select="hidden"
+			labelFirst="Erste Seite"
+			labelLast="Letzte Seite"
+			labelNext="Nächste Seite"
+			labelPrevious="Vorherige Seite"
+		/>
+	</nav>
+{/if}
+
+<hr class="opacity-50" />
+
 {#each paginatedPosts as post}
-    <div class="card card-hover overflow-hidden">
-	<!-- <a
-		class="card card-hover overflow-hidden no-underline hover:underline"
-		href="{base}/blog/{post.slug}"
-		title={post.slug}
-	> -->
+	<div class="card overflow-hidden">
 		<header>
 			<img
 				src={post.featuredImage}
@@ -32,15 +48,13 @@
 			/>
 		</header>
 		<div>
-			<!-- <div class="space-y-4 p-4"> -->
-			<!-- <h6 class="h6" data-toc-ignore>Announcements</h6> -->
-            <h2>
-                <a
-                    href="{base}/blog/{post.slug}"
-                    class="font-bold no-underline hover:underline"
-                    title={post.slug}>{post.title}</a
-                >
-            </h2>
+			<h2>
+				<a
+					href="{base}/blog/{post.slug}"
+					class="font-bold no-underline hover:underline"
+					title={post.slug}>{post.title}</a
+				>
+			</h2>
 			<article>
 				<p>
 					{post.excerpt} <a href="{base}/blog/{post.slug}" title={post.slug}>weiterlesen</a>
@@ -49,9 +63,7 @@
 		</div>
 
 		<footer class="flex items-center justify-start space-x-4 p-4">
-			<!-- <Avatar src={data.posts[0].featuredImage} width="w-8" /> -->
 			<div class="flex flex-auto items-center justify-between">
-				<!-- <h6 class="font-bold" data-toc-ignore>By Alex</h6> -->
 				{#each post.categories as category}
 					<a class="variant-filled badge" href="{base}/blog/kategorie/{category}">&num;{category}</a
 					>
@@ -65,10 +77,27 @@
 				</small>
 			</div>
 		</footer>
-	<!-- </a> -->
-</div>
+		<!-- </a> -->
+	</div>
 	<hr class="opacity-50" />
-	<!-- <article>
+{/each}
+{#if showControls}
+	<nav aria-label="Blognavigation">
+		<Paginator
+			bind:settings={paginationSettings}
+			showNumerals
+			amountText="Einträge"
+			buttonClasses="btn btn-xl"
+			active="variant-filled-secondary"
+			select="hidden"
+			labelFirst="Erste Seite"
+			labelLast="Letzte Seite"
+			labelNext="Nächste Seite"
+			labelPrevious="Vorherige Seite"
+		/>
+	</nav>
+{/if}
+<!-- <article>
     <h2>
         <a
             href="{base}/blog/{post.slug}"
@@ -89,14 +118,3 @@
     </p>
 </article>
 <hr /> -->
-{/each}
-<nav aria-label="Blognavigation">
-	<Paginator
-		bind:settings={paginationSettings}
-		showNumerals
-		amountText="Einträge"
-		buttonClasses="btn btn-xl"
-		active="variant-filled-secondary"
-		select="hidden"
-	/>
-</nav>
