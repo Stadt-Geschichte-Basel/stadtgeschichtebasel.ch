@@ -18,13 +18,13 @@
 				on:click={drawerClose}>Startseite</a
 			>
 		</li>
-		<li aria-current={$page.url.pathname === base + '/geschichte' ? 'page' : undefined}>
+		<li aria-current={$page.url.pathname === base + '/meilensteine' ? 'page' : undefined}>
 			<a
-				class="cursor-pointer {$page.url.pathname === base + '/geschichte'
+				class="cursor-pointer {$page.url.pathname === base + '/meilensteine'
 					? 'font-bold'
 					: 'font-normal'}"
-				href="{base}/geschichte"
-				on:click={drawerClose}>Geschichte</a
+				href="{base}/meilensteine"
+				on:click={drawerClose}>Meilensteine</a
 			>
 		</li>
 		<li aria-current={$page.url.pathname === base + '/blog' ? 'page' : undefined}>
@@ -40,7 +40,7 @@
 		<!-- <li aria-current={$page.url.pathname === base + '/forschung' ? 'page' : undefined}>
 			<a
 				class="cursor-pointer {$page.url.pathname === base + '/forschung' ? 'font-bold' : 'font-normal'}"
-				href="https://forschung.stadtgeschichtebasel.ch/">Forschung</a
+				href="https://forschung.stadtmeilensteinebasel.ch/">Forschung</a
 			>
 		</li> -->
 		<li aria-current={$page.url.pathname === base + '/agenda' ? 'page' : undefined}>

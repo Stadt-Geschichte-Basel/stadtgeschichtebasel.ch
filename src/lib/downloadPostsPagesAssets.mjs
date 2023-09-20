@@ -132,7 +132,6 @@ const downloadQueue = new Queue();
 const MAX_RETRIES = 3; // Maximum number of retries for each request
 const TIMEOUT = 1000; // 5 seconds timeout for each request
 
-
 /**
  * Fetches a URL using the native fetch API and enqueues the request to a download queue.
  * @param {string} url - The URL to fetch.
@@ -152,40 +151,39 @@ const TIMEOUT = 1000; // 5 seconds timeout for each request
  * @returns {Promise<Response>} - A Promise that resolves with the Response object representing the fetched resource.
  */
 async function queuedFetch(url, options = {}, retries = MAX_RETRIES) {
-  return new Promise((resolve, reject) => {
-    downloadQueue.enqueue(async () => {
-      let retryCount = 0;
-      while (retryCount <= retries) {
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
-          const response = await fetch(url, { ...options, signal: controller.signal });
-          clearTimeout(timeoutId);
+	return new Promise((resolve, reject) => {
+		downloadQueue.enqueue(async () => {
+			let retryCount = 0;
+			while (retryCount <= retries) {
+				try {
+					const controller = new AbortController();
+					const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
+					const response = await fetch(url, { ...options, signal: controller.signal });
+					clearTimeout(timeoutId);
 
-          if (response.ok) {
-            resolve(response);
-            return;
-          } else {
-            console.log(`Failed request to ${url}, status code: ${response.status}`);
-          }
-        } catch (error) {
-          console.log(`Error fetching ${url}: ${error.message}`);
-          if (error.name === 'AbortError') {
-            console.log(`Request to ${url} timed out`);
-          }
-        }
+					if (response.ok) {
+						resolve(response);
+						return;
+					} else {
+						console.log(`Failed request to ${url}, status code: ${response.status}`);
+					}
+				} catch (error) {
+					console.log(`Error fetching ${url}: ${error.message}`);
+					if (error.name === 'AbortError') {
+						console.log(`Request to ${url} timed out`);
+					}
+				}
 
-        retryCount++;
-        if (retryCount <= retries) {
-          console.log(`Retrying request to ${url} (${retryCount}/${retries})`);
-        }
-      }
+				retryCount++;
+				if (retryCount <= retries) {
+					console.log(`Retrying request to ${url} (${retryCount}/${retries})`);
+				}
+			}
 
-      reject(new Error(`Failed to fetch ${url} after ${retries + 1} attempts`));
-    });
-  });
+			reject(new Error(`Failed to fetch ${url} after ${retries + 1} attempts`));
+		});
+	});
 }
-
 
 /**
  * Cache object for categories.
