@@ -67,8 +67,7 @@
 					</button>
 					<div class="h-12">
 						<a href="{base}/" class="cursor-pointer" aria-label="Home">
-							<svg
-							class="h-full" viewBox="0 0 512 223.96" xmlns="http://www.w3.org/2000/svg"
+							<svg class="h-full" viewBox="0 0 512 223.96" xmlns="http://www.w3.org/2000/svg"
 								><path
 									d="m0 49.6c4.52 6.39 12.22 10.05 21.17 10.05 12.54 0 21.69-7.43 21.77-17.67.07-8.06-4.53-13.82-13.67-17.11l-4.71-1.47c-6.31-2.27-9.87-3.72-9.87-7.05 0-3.12 3.96-4.76 7.88-4.76 4.11 0 8.33 1.83 10.85 4.68l8.09-8.55c-4.89-5.12-11.27-7.72-18.99-7.72-12.21 0-20.42 7.1-20.42 17.66 0 7.6 5.01 13.32 14.49 16.54l4.23 1.39c6.59 2.23 9.4 4.41 9.4 7.29s-3.7 5.17-8.43 5.17-9.54-2.65-12.27-6.5z"
 								/><path d="m61.37 58.66h12.5v-45.83h15.03v-11.84h-42.4v11.84h14.87z" /><path
@@ -153,64 +152,42 @@
 	</svelte:fragment>
 	<slot />
 	<svelte:fragment slot="pageFooter">
-		<div class="page-footer border-t border-surface-500/10 text-xs md:text-base">
-			<div class="mx-auto w-full max-w-7xl space-y-10 p-4 py-16 md:py-24">
-				<section
-					class="flex flex-col items-center justify-between space-y-5 md:flex-row md:items-start md:space-y-0"
-				>
-					<div
-						class="grid grid-cols-1 place-content-center place-items-center gap-2 md:place-items-start"
-					>
-						<p class="!text-sm opacity-80">{config.subtitle}</p>
-					</div>
-					<div class="hidden grid-cols-3 gap-8 md:grid">
-						<div class="space-y-6">
-							<div class="h6">Mehr</div>
-							<ul class="space-y-3">
-								<li><a class="anchor" href="{base}/ueber-uns#medien-und-pressekit">Presse</a></li>
-								<li><a class="anchor" href="{base}/ueber-uns#lehrmittel">Lehrmittel</a></li>
-								<!-- <li>
-									<a
-										class="anchor"
-										href="https://forschung.stadtgeschichtebasel.ch"
-										target="_blank"
-										rel="noreferrer"
-									>
-										Forschung
-									</a>
-								</li> -->
-							</ul>
-						</div>
-						<div class="space-y-6">
-							<div class="h6">Impressum</div>
-							<p class="text-sm">
-								{config.author}<br />Hirschgässlein 21<br />4051 Basel<br />
-								<a href="mailto:info@stadtgeschichtebasel.ch">info@stadtgeschichtebasel.ch</a>
-							</p>
-						</div>
-					</div>
+		<div class="p-4 prose">
+			<!-- <hr class="my-4" /> -->
+			<div class="grid gap-4 md:grid-cols-2">
+				
+				<!-- Column 1 -->
+				<section>
+					<div class="h6">Mehr</div>
+					<ul >
+						<li><a class="anchor" href="{base}/ueber-uns#medien-und-pressekit">Presse</a></li>
+						<li><a class="anchor" href="{base}/ueber-uns#lehrmittel">Lehrmittel</a></li>
+					</ul>
 				</section>
 
-				<hr class="opacity-20" />
-				<section
-					class="flex flex-col items-center justify-between space-y-4 md:flex-row md:items-start md:space-y-0"
-				>
+				<!-- Column 2 -->
+				<section>
+					<div class="h6">Impressum</div>
 					<p>
-						<!-- <a
-							class="anchor"
-							href="https://github.com/{config.githubHandle}/{config.githubRepo}/blob/main/LICENSE.md"
-							target="_blank"
-							rel="noreferrer"
-						> -->
-						© 2023 {config.author}
-						<!-- </a> -->
-						<span class="mx-2 opacity-10">|</span>
-						<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a>
-						<span class="mx-2 opacity-10">|</span>
-						<a class="anchor" href="{base}/credits">Credits</a>
+						{config.author}<br />
+						Hirschgässlein 21<br />
+						4051 Basel<br />
+						<a class="anchor" href="mailto:info@stadtgeschichtebasel.ch">info@stadtgeschichtebasel.ch</a>
 					</p>
 				</section>
 			</div>
+
+			<!-- <hr class="my-4" /> -->
+
+			<section>
+				<p>
+					© 2023 {config.author}
+					<span class="mx-2 opacity-10">|</span>
+					<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a>
+					<span class="mx-2 opacity-10">|</span>
+					<a class="anchor" href="{base}/credits">Credits</a>
+				</p>
+			</section>
 		</div>
 	</svelte:fragment>
 </AppShell>
