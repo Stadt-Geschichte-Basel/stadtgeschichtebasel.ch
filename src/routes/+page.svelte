@@ -1,5 +1,5 @@
 <script>
-    import { base } from '$app/paths';
+    import * as config from '$lib/config';
 	import Container from '$lib/components/Container.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -7,7 +7,7 @@
 </script>
 
 <Container>
-	<h1>Wir schreiben Basler Geschichten</h1>
+	<h1>{config.subtitle}</h1>
     <p>
         Tbd
     </p>
