@@ -152,13 +152,13 @@
 	</svelte:fragment>
 	<slot />
 	<svelte:fragment slot="pageFooter">
-		<div class="p-4 prose">
+		<div class="p-4 prose prose-sm">
 			<!-- <hr class="my-4" /> -->
 			<div class="grid gap-4 md:grid-cols-2">
 				
 				<!-- Column 1 -->
 				<section>
-					<div class="h6">Mehr</div>
+					<div class="h5">Mehr</div>
 					<ul >
 						<li><a class="anchor" href="{base}/ueber-uns#medien-und-pressekit">Presse</a></li>
 						<li><a class="anchor" href="{base}/ueber-uns#lehrmittel">Lehrmittel</a></li>
@@ -167,7 +167,7 @@
 
 				<!-- Column 2 -->
 				<section>
-					<div class="h6">Impressum</div>
+					<div class="h5">Impressum</div>
 					<p>
 						{config.author}<br />
 						Hirschgässlein 21<br />
