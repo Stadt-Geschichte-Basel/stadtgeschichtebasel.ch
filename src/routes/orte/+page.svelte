@@ -119,7 +119,6 @@
 				>
 					{feature.properties.label}
 				</div>
-
 				<Popup openOn="click" offset={[0, -10]}>
 					<h3 class="text-lg font-bold">{feature.properties.name}</h3>
 					<p class="text-sm">{feature.properties.address}</p>

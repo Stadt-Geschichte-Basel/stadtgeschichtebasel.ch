@@ -19,7 +19,7 @@
 		const drawerSettings = { id: 'sidebar' };
 		drawerStore.open(drawerSettings);
 	}
-	$: classesPageFooter = $page.url.pathname === '/karte' ? 'hidden' : '';
+	$: classesPageFooter = $page.url.pathname === '/orte' ? 'hidden' : '';
 
 	afterNavigate(function (params) {
 		var isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
