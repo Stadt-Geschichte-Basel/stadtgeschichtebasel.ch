@@ -100,12 +100,7 @@
 				id="clusters"
 				hoverCursor="pointer"
 				paint={{
-					// Use step expressions (https://maplibre.org/maplibre-gl-js-docs/style-spec/#expressions-step)
-					// with three steps to implement three types of circles:
-					//   * Blue, 20px circles when point count is less than 100
-					//   * Yellow, 30px circles when point count is between 100 and 750
-					//   * Pink, 40px circles when point count is greater than or equal to 750
-					'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 3, '#f1f075', 5, '#f28cb1'],
+					'circle-color': '#51bbd6', // Single color for all circles
 					'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
 					'circle-stroke-color': '#f00',
 					'circle-stroke-width': 1
@@ -117,37 +112,7 @@
 						speed: 0.5
 					});
 				}}
-				><!-- 
-					<Popup openOn="hover" closeOnClickInside let:features>
-						<ClusterPopup feature={features?.[0]} />
-					</Popup>-->
-			</CircleLayer>
-
-			<!-- TODO: Funktioniert noch nicht. Soll die Anzahl Punkte pro Cluster anzeigen
-				<SymbolLayer
-					applyToClusters
-					paint={{}}
-					layout={{
-						'text-field': [
-							'format',
-							['get', 'point_count_abbreviated'],
-							{},
-							'\n',
-							{},
-							[
-								'number-format',
-								['/', ['get', 'total_mag'], ['get', 'point_count']],
-								{
-									'max-fraction-digits': 2
-								}
-							],
-							{ 'font-scale': 0.8 }
-						],
-						'text-size': 12,
-						'text-offset': [0, -0.1]
-					}}
-				/>-->
-
+			/>
 			<MarkerLayer applyToClusters={false} interactive let:feature>
 				<div
 					class="rounded-full bg-red-300 p-3 text-sm font-bold shadow-2xl focus:outline-2 focus:outline-black"
