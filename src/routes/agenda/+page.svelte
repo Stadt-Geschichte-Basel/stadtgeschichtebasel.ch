@@ -77,31 +77,27 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet
 		interdum purus finibus eget.
 	</p>
-	<div class="btn-group">
-		<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
-			<RadioItem bind:group={agenda} name="justify" value={'events'}
-				>Veranstaltungen ({events.length})</RadioItem
-			>
-			<RadioItem bind:group={agenda} name="justify" value={'exhibitions'}
-				>Dauerausstellungen ({exhibitions.length})</RadioItem
-			>
-			<RadioItem bind:group={agenda} name="justify" value={'info'}>ⓘ</RadioItem>
-		</RadioGroup>
-	</div>
+	<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+		<RadioItem bind:group={agenda} name="justify" value={'events'}
+			>Veranstaltungen ({events.length})</RadioItem
+		>
+		<RadioItem bind:group={agenda} name="justify" value={'exhibitions'}
+			>Dauerausstellungen ({exhibitions.length})</RadioItem
+		>
+		<RadioItem bind:group={agenda} name="justify" value={'info'}>ⓘ</RadioItem>
+	</RadioGroup>
 	{#if agenda === 'events'}
-		<div class="btn-group">
-			<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
-				<RadioItem bind:group={filter} name="justify" value={0}
-					>{thisMonthName} ({thisMonthEvents.length})</RadioItem
-				>
-				<RadioItem bind:group={filter} name="justify" value={1}
-					>{nextMonthName} ({nextMonthEvents.length})</RadioItem
-				>
-				<RadioItem bind:group={filter} name="justify" value={2}
-					>{afterwardsMonthName} und später ({afterwardsEvents.length})</RadioItem
-				>
-			</RadioGroup>
-		</div>
+		<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+			<RadioItem bind:group={filter} name="justify" value={0}
+				>{thisMonthName} ({thisMonthEvents.length})</RadioItem
+			>
+			<RadioItem bind:group={filter} name="justify" value={1}
+				>{nextMonthName} ({nextMonthEvents.length})</RadioItem
+			>
+			<RadioItem bind:group={filter} name="justify" value={2}
+				>{afterwardsMonthName} und später ({afterwardsEvents.length})</RadioItem
+			>
+		</RadioGroup>
 		{#if filteredEvents.length > 0}
 			<!-- {#if paginatedEvents.length > 0}
 	  <nav aria-label="Veranstaltungsnavigation">
@@ -109,7 +105,7 @@
 	  </nav> -->
 			<!-- {#each paginatedEvents as event} -->
 			{#each filteredEvents as event}
-				<article class="card">
+				<article class="card mt-4">
 					<hgroup class="card-header">
 						<h3>{event.title} ({event.owner})</h3>
 						<h4>
