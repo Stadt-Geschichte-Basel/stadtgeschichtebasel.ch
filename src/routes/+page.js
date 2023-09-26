@@ -1,6 +1,6 @@
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
-	const response = await fetch('posts.json');
-	const posts = await response.json();
-	return { posts };
+	const posts = await fetch('/posts.json').then((res) => res.json());
+	const data = await fetch('/agenda.json').then((res) => res.json());
+	return { posts, ...data };
 }
