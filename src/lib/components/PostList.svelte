@@ -36,10 +36,8 @@
 	</nav>
 {/if}
 
-<hr class="opacity-50" />
-
 {#each paginatedPosts as post}
-	<div class="card overflow-hidden">
+	<div class="card overflow-hidden mt-4">
 		<header>
 			<img
 				src={post.featuredImage}
@@ -79,10 +77,9 @@
 		</footer>
 		<!-- </a> -->
 	</div>
-	<hr class="opacity-50" />
 {/each}
 {#if showControls}
-	<nav aria-label="Blognavigation">
+	<nav aria-label="Blognavigation" class="mt-4">
 		<Paginator
 			bind:settings={paginationSettings}
 			showNumerals
@@ -97,24 +94,3 @@
 		/>
 	</nav>
 {/if}
-<!-- <article>
-    <h2>
-        <a
-            href="{base}/blog/{post.slug}"
-            class="font-bold no-underline hover:underline"
-            title={post.slug}>{post.title}</a
-        >
-    </h2>
-
-    {#if post.featuredImage}
-        <img
-            src={post.featuredImage}
-            alt={post.title}
-            class="mx-auto aspect-video h-auto w-full object-cover"
-        />
-    {/if}
-    <p>
-        {post.excerpt} <a href="{base}/blog/{post.slug}" title={post.slug}>weiterlesen</a>
-    </p>
-</article>
-<hr /> -->
