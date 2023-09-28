@@ -79,10 +79,10 @@
 	</p>
 	<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
 		<RadioItem bind:group={agenda} name="justify" value={'events'}
-			>Veranstaltungen ({events.length})</RadioItem
+			>Ver&shy;anstal&shy;tungen ({events.length})</RadioItem
 		>
 		<RadioItem bind:group={agenda} name="justify" value={'exhibitions'}
-			>Dauerausstellungen ({exhibitions.length})</RadioItem
+			>Dauer&shy;aus&shy;stellungen ({exhibitions.length})</RadioItem
 		>
 		<RadioItem bind:group={agenda} name="justify" value={'info'}>ⓘ</RadioItem>
 	</RadioGroup>
