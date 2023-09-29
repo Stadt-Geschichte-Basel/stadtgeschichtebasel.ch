@@ -37,12 +37,12 @@
 				on:click={drawerClose}>Meilensteine</a
 			>
 		</li>
-		<!-- <li aria-current={$page.url.pathname === base + '/forschung' ? 'page' : undefined}>
+		<li aria-current={$page.url.pathname === base + '/forschung' ? 'page' : undefined}>
 			<a
 				class="cursor-pointer {$page.url.pathname === base + '/forschung' ? 'font-bold' : 'font-normal'}"
-				href="https://forschung.stadtmeilensteinebasel.ch/">Forschung</a
+				href="{base}/forschung">Forschung</a
 			>
-		</li> -->
+		</li>
 		<li aria-current={$page.url.pathname === base + '/agenda' ? 'page' : undefined}>
 			<a
 				class="cursor-pointer {$page.url.pathname === base + '/agenda'
