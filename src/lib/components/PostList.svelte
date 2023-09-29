@@ -45,8 +45,8 @@
 				alt={post.title}
 			/>
 		</header>
-		<div>
-			<h2>
+		<div class="px-4">
+			<h2 class="m-0">
 				<a
 					href="{base}/blog/{post.slug}"
 					class="font-bold no-underline hover:underline"
@@ -59,7 +59,6 @@
 				</p>
 			</article>
 		</div>
-
 		<footer class="flex items-center justify-start space-x-4 p-4">
 			<div class="flex flex-auto items-center justify-between">
 				{#each post.categories as category}

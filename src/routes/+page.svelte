@@ -27,7 +27,7 @@
     <PostList posts={data.posts} limit={2} showControls={false}/>
     <p>Für weitere Beiträge siehe <a href="/blog">
         Blog</a>.</p>
-    <h2>Neuste Veranstaltungen</h2>
+    <h2>Veranstaltungen</h2>
 {#each events as event}
 <article class="card mt-4">
     <hgroup class="card-header">

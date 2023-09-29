@@ -105,8 +105,8 @@
 	  </nav> -->
 			<!-- {#each paginatedEvents as event} -->
 			{#each filteredEvents as event}
-				<article class="card mt-4">
-					<hgroup class="card-header">
+				<article class="card mt-4 px-4">
+					<hgroup class="m-0">
 						<h3>{event.title} ({event.owner})</h3>
 						<h4>
 							📅 <time datetime={event.localizedEndDate}>{event.localizedStartDate}</time>
@@ -116,9 +116,9 @@
 							{/if}
 						</h4>
 					</hgroup>
-					<p class="card-footer">
+					<footer>
 						{event.shortDescription} <a href={event.originUrl}>Mehr Infos</a>
-					</p>
+					</footer>
 				</article>
 			{/each}
 			<!-- <nav aria-label="Veranstaltungsnavigation">
