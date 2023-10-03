@@ -4,7 +4,6 @@
 	export let data;
 </script>
 
-<!-- SEO -->
 <svelte:head>
 	<title>{data.meta.title}</title>
 	<meta property="og:type" content="article" />

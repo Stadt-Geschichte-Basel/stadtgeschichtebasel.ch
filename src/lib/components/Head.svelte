@@ -1,15 +1,12 @@
 <script>
 	import * as config from '$lib/config';
 	import { base } from '$app/paths';
-	// import { pwaInfo } from 'virtual:pwa-info';
 	import { page } from '$app/stores';
-
-	// FIXME pwaInfo is not available in SvelteKit
-	// $: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
 </script>
 
 <svelte:head>
 	<title>{config.title} {config.subtitle}</title>
+
 	<!-- General meta tags -->
 	<meta name="generator" content="gh:{config.githubHandle}/{config.githubRepo}" />
 	<meta name="keywords" content={config.keywords} />
@@ -22,7 +19,6 @@
 
 	<!-- Manifest link -->
 	<link rel="manifest" href="{base}/manifest.webmanifest" />
-	<!-- {@html webManifestLink} -->
 
 	<!-- Twitter tags -->
 	<meta name="twitter:title" content={config.title} />
@@ -43,11 +39,6 @@
 	<meta property="og:image:width" content="512" />
 	<meta property="og:image:height" content="512" />
 	
-	<!-- FIXME -->
-	<!-- <link rel="alternate" type="application/feed+json" href="{base}/feed.json" /> -->
-	<!-- <link rel="alternate" type="application/atom+xml" href="{base}/atom.xml" /> -->
-	<!-- <link rel="sitemap" type="application/xml" href="{base}/sitemap.xml" /> -->
-
 	<script
 		defer
 		data-domain={config.domain}

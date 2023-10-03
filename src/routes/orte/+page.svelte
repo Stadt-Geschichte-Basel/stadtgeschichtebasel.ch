@@ -93,10 +93,6 @@
 			cluster={{
 				radius: 1000,
 				maxZoom: 15,
-				properties: {
-					// Sum the `mag` property from all the points in each cluster.
-					total_mag: ['+', ['get', 'geometry.coordinates[0]']]
-				}
 			}}
 		>
 			<CircleLayer
@@ -104,9 +100,9 @@
 				id="clusters"
 				hoverCursor="pointer"
 				paint={{
-					'circle-color': '#51bbd6', // Single color for all circles
+					'circle-color': '#a390a2',
 					'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
-					'circle-stroke-color': '#f00',
+					'circle-stroke-color': '#d4d2d6',
 					'circle-stroke-width': 1
 				}}
 				on:click={(e) => {
@@ -119,7 +115,7 @@
 			/>
 			<MarkerLayer applyToClusters={false} interactive let:feature>
 				<div
-					class="rounded-full bg-red-300 p-3 text-sm font-bold shadow-2xl focus:outline-2 focus:outline-black"
+					class="rounded-full bg-[#70416c] p-3 text-sm font-bold shadow-2xl focus:outline-2 focus:outline-black text-[#d4d2d6]"
 				>
 					{feature.properties.label}
 				</div>

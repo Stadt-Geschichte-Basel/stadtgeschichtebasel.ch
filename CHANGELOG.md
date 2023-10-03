@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/compare/...HEAD)
 
-- feat: Architecture by @maehr, @flicksolutions and @thgie
-- feat: UX by @maehr, @thgie and @amaehr
-- feat: Implementation with SvelteKit and Skeleton-UI by @maehr
+- feat: architecture by @maehr, @flicksolutions and @thgie
+- feat: UX by @maehr, @amaehr and @thgie
+- feat: implementation with SvelteKit and Skeleton-UI by @maehr
 - feat: blog via MDsveX and Wordpress API (https://sgb.hypotheses.org/wp-json/wp/v2/) by @maehr and @flicksolutions
-- feat: agenda via Agendabasel.ch API (https://www.kulturzueri.ch/xmlexport/kzexport-basel.xml)
+- feat: agenda via agendabasel.ch API (https://www.kulturzueri.ch/xmlexport/kzexport-basel.xml) by @maehr
 - feat: map via svelte-maplibre by @koilebeit and @maehr
 - feat: archive with archive.org preview by @maehr

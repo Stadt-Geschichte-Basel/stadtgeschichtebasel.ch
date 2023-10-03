@@ -53,7 +53,7 @@ export const githubRepo = 'stadtgeschichtebasel.ch';
  * The domain of the website.
  * @type {string}
  */
-export const domain = dev ? 'localhost:5173' : 'beta.stadtgeschichtebasel.ch';
+export const domain = dev ? 'localhost:5173' : 'stadtgeschichtebasel.ch';
 
 /**
  * The protocol used for the website URL.

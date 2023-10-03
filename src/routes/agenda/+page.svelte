@@ -1,18 +1,11 @@
 <script>
 	import { base } from '$app/paths';
 	import Container from '$lib/components/Container.svelte';
-	import { Paginator, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const today = new Date();
-	const events = data.events.filter(({ startDate }) => new Date(startDate) > today);
-	events.forEach((event) => {
-		event.startDate = new Date(event.startDate);
-		event.endDate = new Date(event.endDate);
-		event.localizedStartDate = event.startDate.toLocaleDateString('de-CH');
-		event.localizedEndDate = event.endDate.toLocaleDateString('de-CH');
-	});
 	const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
 	const afterwards = new Date(today.getFullYear(), today.getMonth() + 2, 1);
 	const monthNames = [
@@ -32,49 +25,39 @@
 	const thisMonthName = monthNames[today.getMonth()];
 	const nextMonthName = monthNames[nextMonth.getMonth()];
 	const afterwardsMonthName = monthNames[(nextMonth.getMonth() + 1) % 12];
-	const thisMonthEvents = events.filter(({ startDate }) => {
-		const eventDate = new Date(startDate);
-		return (
-			eventDate.getMonth() === today.getMonth() && eventDate.getFullYear() === today.getFullYear()
-		);
-	});
+	const events = data.events.filter(({ startDate }) => new Date(startDate) > today);
+	const filterEventsByMonth = (events, month, year) =>
+		events.filter(({ startDate }) => {
+			const eventDate = new Date(startDate);
+			return eventDate.getMonth() === month && eventDate.getFullYear() === year;
+		});
 
-	const nextMonthEvents = events.filter(({ startDate }) => {
-		const eventDate = new Date(startDate);
-		return (
-			eventDate.getMonth() === nextMonth.getMonth() &&
-			eventDate.getFullYear() === nextMonth.getFullYear()
-		);
-	});
+	const processedEvents = events.map((event) => ({
+		...event,
+		startDate: new Date(event.startDate),
+		endDate: new Date(event.endDate),
+		localizedStartDate: new Date(event.startDate).toLocaleDateString('de-CH'),
+		localizedEndDate: new Date(event.endDate).toLocaleDateString('de-CH')
+	}));
 
-	const afterwardsEvents = events.filter(({ startDate }) => {
-		const eventDate = new Date(startDate);
-		return eventDate > afterwards;
-	});
+	$: thisMonthEvents = filterEventsByMonth(processedEvents, today.getMonth(), today.getFullYear());
+	$: nextMonthEvents = filterEventsByMonth(
+		processedEvents,
+		nextMonth.getMonth(),
+		nextMonth.getFullYear()
+	);
+	$: afterwardsEvents = processedEvents.filter(({ startDate }) => new Date(startDate) > afterwards);
+	$: filteredEvents = [thisMonthEvents, nextMonthEvents, afterwardsEvents][filter];
 	const exhibitions = data.exhibitions;
 	let agenda = 'events';
 	$: filter = 0;
-	$: filteredEvents = {
-		0: thisMonthEvents,
-		1: nextMonthEvents,
-		2: afterwardsEvents
-	}[filter];
-	// $: paginationSettings = {
-	// 	page: 0,
-	// 	limit: 5,
-	// 	size: filteredEvents.length,
-	// 	amounts: [5, 10],
-	// };
-	// $: paginatedEvents = filteredEvents.slice(
-	// 	paginationSettings.page * paginationSettings.limit,
-	// 	paginationSettings.page * paginationSettings.limit + paginationSettings.limit,
-	// );
 </script>
 
 <Container>
 	<h1>Agenda</h1>
 	<p>
-		In Zusammenarbeit mit unseren Ko&shy;ope&shy;rations&shy;partnern präsentieren wir Ihnen eine vielfältige Auswahl an Veranstaltungen, die im Raum Basel stattfinden.
+		In Zusammenarbeit mit unseren Ko&shy;ope&shy;rations&shy;partnern präsentieren wir Ihnen eine
+		vielfältige Auswahl an Veranstaltungen, die im Raum Basel stattfinden.
 	</p>
 	<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
 		<RadioItem bind:group={agenda} name="justify" value={'events'}
@@ -98,11 +81,6 @@
 			>
 		</RadioGroup>
 		{#if filteredEvents.length > 0}
-			<!-- {#if paginatedEvents.length > 0}
-	  <nav aria-label="Veranstaltungsnavigation">
-		<Paginator bind:settings={paginationSettings} showNumerals amountText="Veranstaltungen" select="hidden"/>
-	  </nav> -->
-			<!-- {#each paginatedEvents as event} -->
 			{#each filteredEvents as event}
 				<article class="card mt-4 px-4">
 					<hgroup class="m-0">
@@ -120,9 +98,6 @@
 					</footer>
 				</article>
 			{/each}
-			<!-- <nav aria-label="Veranstaltungsnavigation">
-		<Paginator bind:settings={paginationSettings} showNumerals amountText="Veranstaltungen" select="hidden"/>
-	  </nav> -->
 		{:else}
 			<p>Keine Veranstaltungen gefunden.</p>
 		{/if}

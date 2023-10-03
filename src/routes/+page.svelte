@@ -31,8 +31,8 @@
 	<p>Für weitere Beiträge siehe <a href="/blog"> Blog</a>.</p>
 	<h2>Veranstaltungen</h2>
 	{#each events as event}
-		<article class="card mt-4">
-			<hgroup class="card-header">
+		<article class="card mt-4 px-4">
+			<hgroup class="m-0">
 				<h3>{event.title} ({event.owner})</h3>
 				<h4>
 					📅 <time datetime={event.localizedEndDate}>{event.localizedStartDate}</time>

@@ -74,7 +74,6 @@
 				</small>
 			</div>
 		</footer>
-		<!-- </a> -->
 	</div>
 {/each}
 {#if showControls}
