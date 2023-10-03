@@ -32,24 +32,6 @@ This project is maintained by [@maehr](https://github.com/maehr). Please underst
 | 🎁 **Feature Requests**                | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
 | 🛡 **Report a security vulnerability** | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
 
-## Roadmap
-
-- [ ] feat: improved accessibility
-  - [ ] feat: wcag 2.1 compliance <https://a11y.digitaldialog.swiss/checklist> @mtwente
-  - [ ] feat: <https://www.neurodiversity.design/> @mtwente
-  - [ ] feat: add accessibility declaration @mtwente
-- [ ] feat: link to research data platform @maehr
-- [ ] feat: improved SEO
-  - [ ] feat: allow all robots in robots.txt as soon as the page is public @maehr
-  - [ ] feat: rss.xml (via <https://github.com/matfantinel/sveltekit-static-blog-template/blob/main/src/routes/rss.xml/%2Bserver.ts>) @maehr
-  - [ ] feat: atom.xml @maehr
-  - [ ] fix: replace svelte-sitemap and improve sitemap.xml @maehr
-  - [ ] fix: improved meta-tags @maehr
-  - [ ] fix: Add metadata to svg images <https://www.w3.org/TR/SVGTiny12/metadata.html> @maehr
-- [ ] fix: improve map UX (https://www.skeleton.dev/utilities/modals)
-- [ ] fix: remove fallback data from /credits as soon as the repo is public @maehr
-- [ ] fix: configure purgecss so that it doesn't remove classes from svelte-maplibre @maehr
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
