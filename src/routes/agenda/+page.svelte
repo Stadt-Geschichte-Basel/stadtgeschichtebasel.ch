@@ -74,8 +74,7 @@
 <Container>
 	<h1>Agenda</h1>
 	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet
-		interdum purus finibus eget.
+		In Zusammenarbeit mit unseren Ko&shy;ope&shy;rations&shy;partnern präsentieren wir Ihnen eine vielfältige Auswahl an Veranstaltungen, die im Raum Basel stattfinden.
 	</p>
 	<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
 		<RadioItem bind:group={agenda} name="justify" value={'events'}

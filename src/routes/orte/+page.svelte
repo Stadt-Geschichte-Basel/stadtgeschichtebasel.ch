@@ -41,7 +41,7 @@
 
 	onMount(() => {
 		if (window.innerWidth <= 360) {
-			maxLength = 10;
+			maxLength = 15;
 		} else if (window.innerWidth <= 640) {
 			maxLength = 20;
 		} else if (window.innerWidth <= 768) {
@@ -59,6 +59,10 @@
 		}
 	}
 </script>
+
+<svelte:head>
+	<title>Orte</title>
+</svelte:head>
 
 <section class="h-[90vh] w-full overflow-hidden bg-surface-50 dark:bg-surface-900">
 	<MapLibre

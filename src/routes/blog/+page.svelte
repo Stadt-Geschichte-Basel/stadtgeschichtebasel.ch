@@ -15,8 +15,8 @@
 	<h1>Blog</h1>
 
 	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet
-		interdum purus finibus eget.
+		Unser Blog bietet Ihnen spannende Einblicke in die Welt der Basler Geschichte sowie
+		Veranstaltungshinweise.
 	</p>
 
 	<PostList posts={data.posts} />
