@@ -1,0 +1,51 @@
+<script>
+	import * as config from '$lib/config';
+	import Container from '$lib/components/Container.svelte';
+	/** @type {import('./$types').PageData} */
+	export let data;
+	import PostList from '$lib/components/PostList.svelte';
+	const today = new Date();
+	const events = data.events.filter(({ startDate }) => new Date(startDate) > today).slice(0, 3);
+	events.forEach((event) => {
+		event.startDate = new Date(event.startDate);
+		event.endDate = new Date(event.endDate);
+		event.localizedStartDate = event.startDate.toLocaleDateString('de-CH');
+		event.localizedEndDate = event.endDate.toLocaleDateString('de-CH');
+	});
+</script>
+
+<Container>
+	<h1>{config.subtitle}</h1>
+	<p>
+		Die Webseite "Stadt.Geschichte.Basel" bietet einen tiefen Einblick in die facettenreiche
+		Geschichte von Basel durch <a href="/meilensteine#bände"
+			>neun Einzelbände und einen Überblicksband</a
+		>. Was sie besonders macht, ist der öffentliche Zugang zu
+		<a href="/forschung">Forschungsdaten</a>, präsentiert als
+		<a href="/meilensteine#data-stories">Data Stories</a>. Plattform und <a href="/meilensteine#vermittlung">Vermittlungsangebote</a> sprechen ein breites
+		Publikum an, von Geschichtsbegeisterten über Studierende bis Forschende, und laden dazu ein,
+		Basels Geschichte auf innovative, datengetriebene Weise zu erkunden.
+	</p>
+	<h2>Neuste Beiträge</h2>
+	<PostList posts={data.posts} limit={2} showControls={false} />
+	<p>Für weitere Beiträge siehe <a href="/blog"> Blog</a>.</p>
+	<h2>Veranstaltungen</h2>
+	{#each events as event}
+		<article class="card mt-4 px-4">
+			<hgroup class="m-0">
+				<h3>{event.title} ({event.owner})</h3>
+				<h4>
+					📅 <time datetime={event.localizedEndDate}>{event.localizedStartDate}</time>
+					{#if event.startTime}
+						🕒 <time>{event.startTime}</time>
+						{#if event.endTime}- <time>{event.endTime}</time>{/if}
+					{/if}
+				</h4>
+			</hgroup>
+			<p class="card-footer">
+				{event.shortDescription} <a href={event.originUrl}>Mehr Infos</a>
+			</p>
+		</article>
+	{/each}
+	<p>Für weitere Veranstaltungen siehe <a href="/agenda"> Agenda</a>.</p>
+</Container>

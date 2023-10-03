@@ -26,15 +26,11 @@ pnpm run format
 
 This project is maintained by [@maehr](https://github.com/maehr). Please understand that we won't be able to provide individual support via email. We also believe that help is much more valuable if it's shared publicly, so that more people can benefit from it.
 
-| Type                                  | Platforms                                                                                        |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| 🚨 **Bug Reports**                    | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
-| 🎁 **Feature Requests**               | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
+| Type                                   | Platforms                                                                                        |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 🚨 **Bug Reports**                     | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
+| 🎁 **Feature Requests**                | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
 | 🛡 **Report a security vulnerability** | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues) |
-
-## Roadmap
-
-No changes are currently planned.
 
 ## Contributing
 
@@ -47,6 +43,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors and acknowledgment
 
 - **Moritz Mähr** - _Initial work_ - [maehr](https://github.com/maehr)
+- **Nico Görlich** - _Maps_ - [koilebeit](https://github.com/koilebeit)
+- **Sebastian Flick** - _Refinement_ - [flicksolutions](https://github.com/flicksolutions)
 
 See also the list of [contributors](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/graphs/contributors) who participated in this project.
 

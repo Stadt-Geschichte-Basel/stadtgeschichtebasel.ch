@@ -1,11 +1,31 @@
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+/dev-dist
+/.jampack
+/_trash/*
+
 # Exclude example.env
 !example.env
 
-# Created by https://www.toptal.com/developers/gitignore/api/git,linux,macos,node,dotenv,windows,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=git,linux,macos,node,dotenv,windows,visualstudiocode
+# Exclude downloaded data but keep .gitkeep
+/src/posts/*
+!/src/posts/.gitkeep
+/src/pages/*
+!/src/pages/.gitkeep
+/static/files/*
+!/static/files/.gitkeep
 
-### dotenv ###
-.env
+## Created by https://www.toptal.com/developers/gitignore/api/git,node,linux,macos,windows,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=git,node,linux,macos,windows,visualstudiocode
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -66,6 +86,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### macOS Patch ###
+# iCloud generated files
+*.icloud
+
 ### Node ###
 # Logs
 logs
@@ -123,6 +147,9 @@ web_modules/
 # Optional eslint cache
 .eslintcache
 
+# Optional stylelint cache
+.stylelintcache
+
 # Microbundle cache
 .rpt2_cache/
 .rts2_cache_cjs/
@@ -138,9 +165,12 @@ web_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env.test
-.env.production
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -162,6 +192,12 @@ dist
 
 # vuepress build output
 .vuepress/dist
+
+# vuepress v2.x temp and cache directory
+.temp
+
+# Docusaurus cache and generated files
+.docusaurus
 
 # Serverless directories
 .serverless/
@@ -185,16 +221,28 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+### Node Patch ###
+# Serverless Webpack directories
+.webpack/
+
+# Optional stylelint cache
+
+# SvelteKit build / generate output
+.svelte-kit
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-*.code-workspace
+!.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
+
+# Built Visual Studio Code Extensions
+*.vsix
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
@@ -227,4 +275,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/git,linux,macos,node,dotenv,windows,visualstudiocode
+# End of https://www.toptal.com/developers/gitignore/api/git,node,linux,macos,windows,visualstudiocode
