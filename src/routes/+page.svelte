@@ -1,34 +1,47 @@
 <script>
 	import * as config from '$lib/config';
+	import { base } from '$app/paths';
 	import Container from '$lib/components/Container.svelte';
+	import PostList from '$lib/components/PostList.svelte';
+
 	/** @type {import('./$types').PageData} */
 	export let data;
-	import PostList from '$lib/components/PostList.svelte';
+
 	const today = new Date();
-	const events = data.events.filter(({ startDate }) => new Date(startDate) > today).slice(0, 3);
-	events.forEach((event) => {
-		event.startDate = new Date(event.startDate);
-		event.endDate = new Date(event.endDate);
-		event.localizedStartDate = event.startDate.toLocaleDateString('de-CH');
-		event.localizedEndDate = event.endDate.toLocaleDateString('de-CH');
-	});
+
+	function processEvent(event) {
+		const startDate = new Date(event.startDate);
+		const endDate = new Date(event.endDate);
+		return {
+			...event,
+			startDate,
+			endDate,
+			localizedStartDate: startDate.toLocaleDateString('de-CH'),
+			localizedEndDate: endDate.toLocaleDateString('de-CH')
+		};
+	}
+
+	const events = data.events
+		.filter(({ startDate }) => new Date(startDate) > today)
+		.slice(0, 3)
+		.map(processEvent);
 </script>
 
 <Container>
 	<h1>{config.subtitle}</h1>
 	<p>
 		Die Webseite "Stadt.Geschichte.Basel" bietet einen tiefen Einblick in die facettenreiche
-		Geschichte von Basel durch <a href="/meilensteine#bände"
+		Geschichte von Basel durch <a href="{base}/meilensteine#bände"
 			>neun Einzelbände und einen Überblicksband</a
 		>. Was sie besonders macht, ist der öffentliche Zugang zu
-		<a href="/forschung">Forschungsdaten</a>, präsentiert als
-		<a href="/meilensteine#data-stories">Data Stories</a>. Plattform und <a href="/meilensteine#vermittlung">Vermittlungsangebote</a> sprechen ein breites
+		<a href="{base}/forschung">Forschungsdaten</a>, präsentiert als
+		<a href="{base}/meilensteine#data-stories">Data Stories</a>. Plattform und <a href="{base}/meilensteine#vermittlung">Vermittlungsangebote</a> sprechen ein breites
 		Publikum an, von Geschichtsbegeisterten über Studierende bis Forschende, und laden dazu ein,
 		Basels Geschichte auf innovative, datengetriebene Weise zu erkunden.
 	</p>
 	<h2>Neuste Beiträge</h2>
 	<PostList posts={data.posts} limit={2} showControls={false} />
-	<p>Für weitere Beiträge siehe <a href="/blog"> Blog</a>.</p>
+	<p>Für weitere Beiträge siehe <a href="{base}/blog"> Blog</a>.</p>
 	<h2>Veranstaltungen</h2>
 	{#each events as event}
 		<article class="card mt-4 px-4">
@@ -47,5 +60,5 @@
 			</p>
 		</article>
 	{/each}
-	<p>Für weitere Veranstaltungen siehe <a href="/agenda"> Agenda</a>.</p>
+	<p>Für weitere Veranstaltungen siehe <a href="{base}/agenda"> Agenda</a>.</p>
 </Container>
