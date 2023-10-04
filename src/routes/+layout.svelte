@@ -142,8 +142,8 @@
 				<section>
 					<div class="h5">Mehr</div>
 					<ul>
-						<li><a class="anchor" href="{base}/ueber-uns#medien-und-pressekit">Presse</a></li>
-						<li><a class="anchor" href="{base}/ueber-uns#lehrmittel">Lehrmittel</a></li>
+						<li><a class="anchor" href="{base}/ueber-uns#medien-und-pressekit" data-sveltekit-reload >Presse</a></li>
+						<li><a class="anchor" href="{base}/ueber-uns#lehrmittel" data-sveltekit-reload >Lehrmittel</a></li>
 					</ul>
 				</section>
 
@@ -167,7 +167,7 @@
 				<p>
 					© 2023 {config.author}
 					<span class="mx-2 opacity-10">|</span>
-					<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a>
+					<a class="anchor" href="{base}/datenschutzerklaerung" data-sveltekit-reload >Datenschutz</a>
 					<span class="mx-2 opacity-10">|</span>
 					<a class="anchor" href="{base}/credits">Credits</a>
 				</p>
