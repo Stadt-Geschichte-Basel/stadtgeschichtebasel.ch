@@ -11,33 +11,14 @@ export const prerender = true;
  * @type {Object}
  * @description GitHub configuration constants.
  */
-const { githubHandle, githubRepo, url } = config;
+const { githubHandle, githubRepo } = config;
 
 /**
  * @constant
  * @type {string}
  * @description API URL for GitHub repository.
  */
-const apiUrl = `https://api.github.com/repos/${githubHandle}/${githubRepo}/commits`;
-
-/**
- * @constant
- * @type {Object}
- * @description Fallback data in case of API failure.
- */
-const fallbackData = {
-	contributors: [
-		{
-			login: githubHandle,
-			avatar_url: '/icon.svg',
-			html_url: `https://github.com/${githubHandle}`
-		}
-	],
-	latest_commit: {
-		html_url: url,
-		date: new Date().toISOString()
-	}
-};
+const apiUrl = `https://api.github.com/repos/${githubHandle}/${githubRepo}`;
 
 /**
  * Fetches data from a given GitHub API endpoint.
@@ -50,6 +31,9 @@ const fallbackData = {
  */
 async function fetchData(endpoint) {
 	const response = await fetch(endpoint);
+	if (!response.ok) {
+		throw new Error(`Failed to fetch ${endpoint}: ${response.statusText}`);
+	}
 	const data = await response.json();
 	return data;
 }
@@ -63,42 +47,38 @@ async function fetchData(endpoint) {
  * @throws {Error} Throws an error if the fetch operation fails.
  */
 async function getCredits() {
-	try {
-		const [contributorsData, latestCommitData] = await Promise.all([
-			fetchData(`${apiUrl}/contributors`),
-			fetchData(`${apiUrl}?per_page=1`)
-		]);
+	const [contributorsData, latestCommitData] = await Promise.all([
+		fetchData(`${apiUrl}/contributors`),
+		fetchData(`${apiUrl}/commits?per_page=1`)
+	]);
 
-		// Check if contributorsData is an empty array or not an array at all
-		const contributors =
-			Array.isArray(contributorsData) && contributorsData.length > 0
-				? contributorsData.map(({ login, avatar_url, html_url }) => ({
-						login,
-						avatar_url,
-						html_url
-				  }))
-				: fallbackData.contributors;
-
-		// Check if latestCommitData is an empty array or not an array at all
-		const latestCommit =
-			Array.isArray(latestCommitData) && latestCommitData.length > 0 && latestCommitData[0]
-				? {
-						html_url: latestCommitData[0].html_url,
-						date: latestCommitData[0].commit.author.date
-				  }
-				: fallbackData.latest_commit;
-
-		return { contributors, latest_commit: latestCommit };
-	} catch (error) {
-		console.error('Error:', error);
-		return fallbackData;
+	if (!Array.isArray(contributorsData)) {
+		throw new Error('contributorsData is not an array');
 	}
+
+	const contributors = contributorsData.map(({ login, avatar_url, html_url }) => ({
+		login,
+		avatar_url,
+		html_url
+	}));
+
+	const latestCommit = {
+		html_url: latestCommitData[0].html_url,
+		date: latestCommitData[0].commit.author.date
+	};
+
+	return { contributors, latest_commit: latestCommit };
 }
 
 /** @type {import('./$types').PageLoad} */
 export async function load() {
-	const credits = await getCredits();
-	return {
-		...credits
-	};
+	try {
+		const credits = await getCredits();
+		return {
+			...credits
+		};
+	} catch (error) {
+		console.error('Error:', error);
+		throw new Error('Failed to fetch credits data');
+	}
 }
