@@ -31,11 +31,11 @@
 	<h1>{config.subtitle}</h1>
 	<p>
 		Die Webseite "Stadt.Geschichte.Basel" bietet einen tiefen Einblick in die facettenreiche
-		Geschichte von Basel durch <a href="{base}/meilensteine#bände"
+		Geschichte von Basel durch <a href="{base}/meilensteine#bände" data-sveltekit-reload
 			>neun Einzelbände und einen Überblicksband</a
 		>. Was sie besonders macht, ist der öffentliche Zugang zu
 		<a href="{base}/forschung">Forschungsdaten</a>, präsentiert als
-		<a href="{base}/meilensteine#data-stories">Data Stories</a>. Plattform und <a href="{base}/meilensteine#vermittlung">Vermittlungsangebote</a> sprechen ein breites
+		<a href="{base}/meilensteine#data-stories">Data Stories</a>. Plattform und <a href="{base}/meilensteine#vermittlung" data-sveltekit-reload>Vermittlungsangebote</a> sprechen ein breites
 		Publikum an, von Geschichtsbegeisterten über Studierende bis Forschende, und laden dazu ein,
 		Basels Geschichte auf innovative, datengetriebene Weise zu erkunden.
 	</p>
