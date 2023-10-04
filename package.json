@@ -24,7 +24,7 @@
 		"commit": "cz",
 		"prepare": "svelte-kit sync && husky install",
 		"prebuild": "node ./src/lib/downloadPostsPagesAssets.mjs",
-		"postbuild": "jampack ./build && npx svelte-sitemap --domain https://beta.stadtgeschichtebasel.ch"
+		"postbuild": "jampack ./build && npx svelte-sitemap --domain https://stadtgeschichtebasel.ch"
 	},
 	"devDependencies": {
 		"@divriots/jampack": "^0.21.0",
