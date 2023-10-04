@@ -15,7 +15,12 @@
 		{ label: 'Über uns', path: '/ueber-uns' }
 	];
 
-	const isActive = (path) => $page.url.pathname === base + path || new String($page.url.pathname).startsWith(base + path);
+	$: isActive = (path) => {
+		if (path === '/blog' && $page.url.pathname.startsWith(base + '/blog')) {
+			return true;
+		}
+		return $page.url.pathname === base + path;
+	};
 </script>
 
 <nav class="list-nav p-4 text-xl" aria-label="Hauptmenü" data-sveltekit-preload-data>
