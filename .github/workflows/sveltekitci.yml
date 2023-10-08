@@ -19,14 +19,10 @@ jobs:
   ci:
     runs-on: ubuntu-latest
 
-    permissions:
-      pages: write
-      id-token: write
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,6 +31,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -72,9 +71,6 @@ jobs:
 
       - name: Postbuild
         run: pnpm run postbuild
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
