@@ -18,6 +18,15 @@ concurrency:
 jobs:
   ci:
     runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -64,13 +73,6 @@ jobs:
       - name: Postbuild
         run: pnpm run postbuild
 
-  deploy:
-    needs: ci
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    steps:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
