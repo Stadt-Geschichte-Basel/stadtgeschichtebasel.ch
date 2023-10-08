@@ -1,9 +1,6 @@
 name: SvelteKit CI
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -20,12 +17,7 @@ concurrency:
 
 jobs:
   ci:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -72,6 +64,13 @@ jobs:
       - name: Postbuild
         run: pnpm run postbuild
 
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
