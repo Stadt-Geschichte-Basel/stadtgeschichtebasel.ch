@@ -20,7 +20,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-  
+
     strategy:
       matrix:
         event: ['pull_request', 'pull_request_target']
