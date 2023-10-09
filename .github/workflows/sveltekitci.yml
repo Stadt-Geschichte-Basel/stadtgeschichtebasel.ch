@@ -1,19 +1,16 @@
 name: SvelteKit CI
 
 on:
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+  pull_request_target:
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# concurrency:
-#   group: 'pages'
-#   cancel-in-progress: false
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
 
 jobs:
   ci:
