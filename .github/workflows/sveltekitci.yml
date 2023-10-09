@@ -1,6 +1,7 @@
 name: SvelteKit CI
 
 on:
+  pull_request:
   pull_request_target:
 
 permissions:
@@ -19,10 +20,15 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+  
+    strategy:
+      matrix:
+        event: ['pull_request', 'pull_request_target']
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        if: matrix.event == github.event_name
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -41,25 +47,20 @@ jobs:
 
       - name: Get pnpm store directory
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-
       - name: Install dependencies
         run: pnpm install
 
       - name: Lint
         run: pnpm run lint
-
-      # - name: Test
-      #   run: pnpm run test
 
       - name: Prebuild
         run: pnpm run prebuild
@@ -72,11 +73,13 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
+        if: github.event_name == 'pull_request_target'
         with:
           path: './build'
 
       - name: Deploy to GitHub Pages
         id: deployment
+        if: github.event_name == 'pull_request_target'
         uses: actions/deploy-pages@v2
         with:
           preview: true
