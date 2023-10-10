@@ -136,38 +136,24 @@
 	<slot />
 	<svelte:fragment slot="pageFooter">
 		<div class="prose prose-sm p-4">
-			<!-- <hr class="my-4" /> -->
-			<div class="grid gap-4 md:grid-cols-2">
-				<!-- Column 1 -->
-				<section>
-					<div class="h5">Mehr</div>
-					<ul>
-						<li><a class="anchor" href="{base}/ueber-uns#medien-und-pressekit" data-sveltekit-reload >Presse</a></li>
-						<li><a class="anchor" href="{base}/ueber-uns#lehrmittel" data-sveltekit-reload >Lehrmittel</a></li>
-					</ul>
-				</section>
-
-				<!-- Column 2 -->
-				<section>
-					<div class="h5">Impressum</div>
-					<p>
-						{config.author}<br />
-						Hirschgässlein 21<br />
-						4051 Basel<br />
-						<a class="anchor" href="mailto:info@stadtgeschichtebasel.ch"
-							>info@stadtgeschichtebasel.ch</a
-						>
-					</p>
-				</section>
-			</div>
-
-			<!-- <hr class="my-4" /> -->
+			<section>
+				<div class="h5">Impressum</div>
+				<p>
+					{config.author}<br />
+					Hirschgässlein 21<br />
+					4051 Basel<br />
+					<a class="anchor" href="mailto:info@stadtgeschichtebasel.ch"
+						>info@stadtgeschichtebasel.ch</a
+					>
+				</p>
+			</section>
 
 			<section>
 				<p>
 					© 2023 {config.author}
 					<span class="mx-2 opacity-10">|</span>
-					<a class="anchor" href="{base}/datenschutzerklaerung" data-sveltekit-reload >Datenschutz</a>
+					<a class="anchor" href="{base}/datenschutzerklaerung" data-sveltekit-reload>Datenschutz</a
+					>
 					<span class="mx-2 opacity-10">|</span>
 					<a class="anchor" href="{base}/credits">Credits</a>
 				</p>
