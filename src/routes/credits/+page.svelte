@@ -29,7 +29,7 @@
 	<p>
 		Diese <a href="https://github.com/{config.githubHandle}/{config.githubRepo}/graphs/contributors"
 			>Liste</a
-		> wurde automatisch generiert.
+		> wurde automatisch generiert. Co-authored Commits sind nicht berücksichtigt.
 	</p>
 
 	<h2>Technische Details</h2>
