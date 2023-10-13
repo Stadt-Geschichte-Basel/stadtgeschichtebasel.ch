@@ -21,9 +21,9 @@
 	}
 	$: classesPageFooter = $page.url.pathname === '/orte' ? 'hidden' : '';
 
-	afterNavigate(function (params) {
-		var isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
-		var elemPage = document.querySelector('#page');
+	afterNavigate((params) => {
+		const isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
+		const elemPage = document.querySelector('#page');
 		if (isNewPage && elemPage !== null) {
 			elemPage.scrollTop = 0;
 		}
