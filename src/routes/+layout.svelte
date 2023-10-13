@@ -40,6 +40,7 @@
 	slotSidebarLeft="bg-surface-50 dark:bg-surface-900 border-t border-surface-500/10 w-0 lg:w-64"
 	slotPageFooter="bg-white {classesPageFooter}"
 	slotPageContent="bg-white dark:bg-surface-900 border-t border-surface-500/10"
+	scrollbarGutter="auto"
 >
 	<svelte:fragment slot="header">
 		<AppBar>
