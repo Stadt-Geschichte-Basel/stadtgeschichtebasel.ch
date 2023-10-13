@@ -119,7 +119,7 @@
 		"url": "/index/geschichten/2019-2022/01/die-muba-ist-geschichte.html",
 		"slug": "die-muba-ist-geschichte-die-messe-als-ort-von-innovation-und-wandel"
 	},
-	{ "id": 1731.0, "url": "/index/geschichten/2019-2022/01/dreck.html", "slug": "draegg-waegg" },
+	{ "id": 1731, "url": "/index/geschichten/2019-2022/01/dreck.html", "slug": "draegg-waegg" },
 	{
 		"id": 995,
 		"url": "/index/geschichten/2019-2022/01/elisabethvischeralioth.html",
@@ -480,7 +480,7 @@
 		"url": "/index/geschichten/2019-2022/01/stadtgeschichte-gottesdienst.html",
 		"slug": "1000-jahre-10-geschichten-stadtgeschichte-als-gottesdienst"
 	},
-	{ "id": 2711.0, "url": "/index/geschichten/2019-2022/01/turmreiches_basel.html", "slug": null },
+	{ "id": 2711, "url": "/index/geschichten/2019-2022/01/turmreiches_basel.html", "slug": null },
 	{
 		"id": 1981,
 		"url": "/index/geschichten/2019-2022/01/volksrechte.html",
@@ -540,7 +540,7 @@
 		"url": "/index/making-of/2018/besuch-buergerforschungsprojekt.html",
 		"slug": "besuch-bei-freunden"
 	},
-	{ "id": 3669.0, "url": "/index/making-of/2018/grosses-interesse.html", "slug": "3669" },
+	{ "id": 3669, "url": "/index/making-of/2018/grosses-interesse.html", "slug": "3669" },
 	{
 		"id": 3589,
 		"url": "/index/making-of/2018/kick-off.html",
@@ -556,7 +556,7 @@
 		"url": "/index/making-of/2019/audiorundgang_reformation.html",
 		"slug": "rundgang-reformation-in-basel"
 	},
-	{ "id": 3474.0, "url": "/index/making-of/2019/bierkeller.html", "slug": null },
+	{ "id": 3474, "url": "/index/making-of/2019/bierkeller.html", "slug": null },
 	{
 		"id": 3629,
 		"url": "/index/making-of/2019/die-neue-website-ist-online.html",
@@ -577,15 +577,15 @@
 		"url": "/index/making-of/2019/politik.html",
 		"slug": "emmas-frage-nach-der-macht"
 	},
-	{ "id": 3411.0, "url": "/index/making-of/2019/retraite.html", "slug": "wo-wir-blueten-treiben" },
-	{ "id": 3519.0, "url": "/index/making-of/2019/schulbesuch.html", "slug": "schulbesuch" },
-	{ "id": 3541.0, "url": "/index/making-of/2019/themen-ordnen.html", "slug": "themen-ordnen" },
+	{ "id": 3411, "url": "/index/making-of/2019/retraite.html", "slug": "wo-wir-blueten-treiben" },
+	{ "id": 3519, "url": "/index/making-of/2019/schulbesuch.html", "slug": "schulbesuch" },
+	{ "id": 3541, "url": "/index/making-of/2019/themen-ordnen.html", "slug": "themen-ordnen" },
 	{
 		"id": 3499,
 		"url": "/index/making-of/2019/vermittlungsworkshop1.html",
 		"slug": "stadtgeschichte-fuer-alle-ein-vermittlungsworkshop-des-vereins"
 	},
-	{ "id": 3093.0, "url": "/index/making-of/2019/zeitspruenge.html", "slug": "die-stadt-im-museum" },
+	{ "id": 3093, "url": "/index/making-of/2019/zeitspruenge.html", "slug": "die-stadt-im-museum" },
 	{
 		"id": 3391,
 		"url": "/index/making-of/2020/besuch-im-verlag.html",
