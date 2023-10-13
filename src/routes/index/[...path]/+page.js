@@ -1,14 +1,18 @@
 import data from '$lib/data/archive.json';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageLoad}*/
 export async function load({ params }) {
-	if (!params.path.endsWith('.html')) params.path += '.html';
-	const fullPath = `/index/${params.path}`;
-	const found = data.some(entry => entry.url === fullPath);
-	if (found) {
-		return { url: params.path };
-	} else {
-		throw error(404, `Could not find ${params.path}`);
+	const path = params.path.endsWith('.html') ? params.path : `${params.path}.html`;
+	const fullPath = `/index/${path}`;
+	const foundEntry = data.find((entry) => entry.url === fullPath);
+
+	if (foundEntry) {
+		if (foundEntry.slug) {
+			return redirect(301, `/blog/${foundEntry.slug}`);
+		}
+		return { url: path };
 	}
+
+	throw error(404, `Could not find ${path}`);
 }

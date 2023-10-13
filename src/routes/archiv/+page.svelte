@@ -9,7 +9,7 @@
 	<ul class="posts">
 		{#each pages as { url }}
 			<li class="post">
-				<a href={url.replace('/index/', '')} class="title">{url.replace('/index/', '')}</a>
+				<a href={url} class="title">{url.replace('/index/', '')}</a>
 			</li>
 		{/each}
 	</ul>
