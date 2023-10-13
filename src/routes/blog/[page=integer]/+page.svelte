@@ -4,13 +4,18 @@
 	import Post from '$lib/components/Post.svelte';
 	import PostNav from '$lib/components/PostNav.svelte';
 
+
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const limit = 5;
-	const page = 1;
-	const lastPage = Math.ceil(data.posts.length / limit);
-	const start = 0;
-	const paginatedPosts = data.posts.slice(start, limit);
+	let page = 1;
+	let lastPage = Math.ceil(data.posts.length / limit);
+	$: page = parseInt(data.page) <= lastPage ? parseInt(data.page) : 1;
+	let start;
+	$: start = (page - 1) * limit;
+	let end;
+	$: end = start + limit;
+	$: paginatedPosts = data.posts.slice(start, end);
 </script>
 
 <svelte:head>
@@ -19,10 +24,6 @@
 
 <Container>
 	<h1>Blog</h1>
-	<p>
-		Unser Blog bietet Ihnen spannende Einblicke in die Welt der Basler Geschichte sowie
-		Veranstaltungshinweise.
-	</p>
 	{#each paginatedPosts as post}
 		<Post post={post} />
 	{/each}
