@@ -1,21 +1,16 @@
 <script>
 	import Container from '$lib/components/Container.svelte';
-	/** @type {import('./$types').PageData} */
-	export let data;
+	import pages from '$lib/data/archive.json';
 </script>
 
 <Container>
-	<section>
-		<h1>Archiv</h1>
-		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit egestas lorem, sit amet interdum purus finibus eget. 
-		</p>
-		<ul class="posts">
-			{#each data.urls as url}
-				<li class="post">
-					<a href="index/{url}" class="title">{url}</a>
-				</li>
-			{/each}
-		</ul>
-	</section></Container
->
+	<h1>Archiv</h1>
+	<p>Hier finden Sie alle Beiträge, die auf der alten Website veröffentlicht wurden.</p>
+	<ul class="posts">
+		{#each pages as { url }}
+			<li class="post">
+				<a href={url} class="title">{url.replace('/index/', '')}</a>
+			</li>
+		{/each}
+	</ul>
+</Container>
