@@ -5,7 +5,7 @@
 
 <Container>
 	<h1>Archiv</h1>
-	<p>Hier finden Sie alle Beiträge, die bisher auf dieser Seite erschienen sind.</p>
+	<p>Hier finden Sie alle Beiträge, die auf der alten Website veröffentlicht wurden.</p>
 	<ul class="posts">
 		{#each pages as { url }}
 			<li class="post">
