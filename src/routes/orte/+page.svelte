@@ -64,7 +64,7 @@
 	<title>Orte</title>
 </svelte:head>
 
-<section class="h-[90vh] w-full overflow-hidden bg-surface-50 dark:bg-surface-900">
+<section class="h-screen w-full">
 	<MapLibre
 		style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
 		class="h-full w-full"
@@ -92,7 +92,7 @@
 			{data}
 			cluster={{
 				radius: 1000,
-				maxZoom: 15,
+				maxZoom: 15
 			}}
 		>
 			<CircleLayer
@@ -115,7 +115,7 @@
 			/>
 			<MarkerLayer applyToClusters={false} interactive let:feature>
 				<div
-					class="rounded-full bg-[#70416c] p-3 text-sm font-bold shadow-2xl focus:outline-2 focus:outline-black text-[#d4d2d6]"
+					class="rounded-full bg-[#70416c] p-3 text-sm font-bold text-[#d4d2d6] shadow-2xl focus:outline-2 focus:outline-black"
 				>
 					{feature.properties.label}
 				</div>
