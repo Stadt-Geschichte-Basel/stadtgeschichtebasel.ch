@@ -153,10 +153,10 @@
 				<p>
 					© 2023
 					<span class="mx-2 opacity-10">|</span>
-					<a class="anchor" href="{base}/datenschutzerklaerung" data-sveltekit-reload>Datenschutz</a
+					<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a
 					>
 					<span class="mx-2 opacity-10">|</span>
-					<a class="anchor" href="{base}/credits" data-sveltekit-reload>Credits</a>
+					<a class="anchor" href="{base}/credits">Credits</a>
 				</p>
 			</section>
 		</div>
