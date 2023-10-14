@@ -4,13 +4,11 @@
 	import Post from '$lib/components/Post.svelte';
 	import PostNav from '$lib/components/PostNav.svelte';
 
-
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const limit = 5;
-	let page = 1;
-	let lastPage = Math.ceil(data.posts.length / limit);
-	$: page = parseInt(data.page) <= lastPage ? parseInt(data.page) : 1;
+	const lastPage = Math.ceil(data.posts.length / limit);
+	const page = parseInt(data.page) <= lastPage ? parseInt(data.page) : 1;
 	let start;
 	$: start = (page - 1) * limit;
 	let end;
@@ -25,7 +23,7 @@
 <Container>
 	<h1>Blog</h1>
 	{#each paginatedPosts as post}
-		<Post post={post} />
+		<Post {post} />
 	{/each}
-	<PostNav page={page} lastPage={lastPage}/>
+	<PostNav {page} {lastPage} />
 </Container>
