@@ -8,7 +8,8 @@
 	export let data;
 	const limit = 5;
 	const lastPage = Math.ceil(data.posts.length / limit);
-	const page = parseInt(data.page) <= lastPage ? parseInt(data.page) : 1;
+	let page = 1;
+	$: page = parseInt(data.page) <= lastPage ? parseInt(data.page) : 1;
 	let start;
 	$: start = (page - 1) * limit;
 	let end;
