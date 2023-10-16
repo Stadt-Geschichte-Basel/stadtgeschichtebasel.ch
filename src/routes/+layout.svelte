@@ -21,9 +21,9 @@
 	}
 	$: classesPageFooter = $page.url.pathname === '/orte' ? 'hidden' : '';
 
-	afterNavigate(function (params) {
-		var isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
-		var elemPage = document.querySelector('#page');
+	afterNavigate((params) => {
+		const isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
+		const elemPage = document.querySelector('#page');
 		if (isNewPage && elemPage !== null) {
 			elemPage.scrollTop = 0;
 		}
@@ -40,6 +40,7 @@
 	slotSidebarLeft="bg-surface-50 dark:bg-surface-900 border-t border-surface-500/10 w-0 lg:w-64"
 	slotPageFooter="bg-white {classesPageFooter}"
 	slotPageContent="bg-white dark:bg-surface-900 border-t border-surface-500/10"
+	scrollbarGutter="auto"
 >
 	<svelte:fragment slot="header">
 		<AppBar>
@@ -150,9 +151,9 @@
 
 			<section>
 				<p>
-					© 2023 {config.author}
+					© 2023
 					<span class="mx-2 opacity-10">|</span>
-					<a class="anchor" href="{base}/datenschutzerklaerung" data-sveltekit-reload>Datenschutz</a
+					<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a
 					>
 					<span class="mx-2 opacity-10">|</span>
 					<a class="anchor" href="{base}/credits">Credits</a>

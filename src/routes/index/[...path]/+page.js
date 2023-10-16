@@ -9,7 +9,7 @@ export async function load({ params }) {
 
 	if (foundEntry) {
 		if (foundEntry.slug) {
-			throw redirect(301, `/blog/${foundEntry.slug}`);
+			throw redirect(301, foundEntry.slug);
 		}
 		return { url: path };
 	}
