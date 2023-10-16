@@ -1,7 +1,6 @@
 <script>
 	import Container from '$lib/components/Container.svelte';
-	import PostList from '$lib/components/PostList.svelte';
-
+	import Post from '$lib/components/Post.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -14,5 +13,7 @@
 <Container>
 	<h1>Kategorie: {data.slug}</h1>
 
-	<PostList posts={data.posts} />
+	{#each data.posts as post}
+		<Post post={post} />
+	{/each}
 </Container>

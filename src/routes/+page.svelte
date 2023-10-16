@@ -2,10 +2,11 @@
 	import * as config from '$lib/config';
 	import { base } from '$app/paths';
 	import Container from '$lib/components/Container.svelte';
-	import PostList from '$lib/components/PostList.svelte';
+	import Post from '$lib/components/Post.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
+	const posts = data.posts.slice(0, 2)
 
 	const today = new Date();
 
@@ -40,7 +41,9 @@
 		Basels Geschichte auf innovative, datengetriebene Weise zu erkunden.
 	</p>
 	<h2>Neuste Beiträge</h2>
-	<PostList posts={data.posts} limit={2} showControls={false} />
+	{#each posts as post}
+		<Post post={post} />
+	{/each}
 	<p>Für weitere Beiträge siehe <a href="{base}/blog"> Blog</a>.</p>
 	<h2>Veranstaltungen</h2>
 	{#each events as event}
