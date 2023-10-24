@@ -149,7 +149,9 @@ export const partners = [
 	'Kunstmuseum Basel',
 	'LITERATURSPUR',
 	'Museum der Kulturen Basel',
+	'Naturhistorisches Museum Basel',
 	'Pharmaziemuseum der Universität Basel',
 	'S AM Schweizerisches Architekturmuseum',
-	'Verein Frauenstadtrundgang Basel'
+	'Verein Frauenstadtrundgang Basel',
+	'Volkshochschule beider Basel'
 ];

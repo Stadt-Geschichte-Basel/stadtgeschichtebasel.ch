@@ -200,6 +200,20 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"name": "Historische und Antiquarische Gesellschaft",
+				"label": "HAG",
+				"description": "TBD",
+				"address": "Schönbeinstrasse 20, 4056 Basel",
+				"website": "https://hag-basel.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58089, 47.55977]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"name": "Historisches Museum Basel",
 				"label": "HMB",
 				"description": "TBD",
@@ -284,6 +298,20 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"name": "Museum.BL",
+				"label": "Museum.BL",
+				"description": "TBD",
+				"address": "Zeughauspl. 28, 4410 Liestal",
+				"website": "https://www.museum.bl.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.735549, 47.485151]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"name": "Naturhistorisches Museum",
 				"label": "NMBS",
 				"description": "TBD",
@@ -293,6 +321,20 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [7.59036, 47.55773]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Pharmaziemuseum",
+				"label": "Pharmaziemuseum",
+				"description": "TBD",
+				"address": "Totengässlein 3, 4051 Basel",
+				"website": "https://pharmaziemuseum.ch/de/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58616, 47.55861]
 			}
 		},
 		{
