@@ -142,13 +142,16 @@ export const maskableicon = {
  * @type {Array<string>}
  */
 export const partners = [
-	'Kunstmuseum Basel',
-	'Museum der Kulturen Basel',
-	'Pharmaziemuseum der Universität Basel',
-	'Historisches Museum',
+	'Antikenmuseum Basel und Sammlung Ludwig',
 	'Basler Papiermühle',
+	'Historisches Museum',
 	'Jüdisches Museum der Schweiz',
+	'Kunstmuseum Basel',
+	'LITERATURSPUR',
+	'Museum der Kulturen Basel',
+	'Naturhistorisches Museum Basel',
+	'Pharmaziemuseum der Universität Basel',
 	'S AM Schweizerisches Architekturmuseum',
 	'Verein Frauenstadtrundgang Basel',
-	'Antikenmuseum Basel und Sammlung Ludwig'
+	'Volkshochschule beider Basel'
 ];
