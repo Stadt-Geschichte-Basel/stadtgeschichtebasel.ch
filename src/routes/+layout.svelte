@@ -161,4 +161,18 @@
 			</section>
 		</div>
 	</svelte:fragment>
+	<svelte:fragment slot="footer"
+		>
+		<aside class="alert variant-ghost-warning">
+			<div class="alert-message">
+				<h3 class="h3">Testphase aktiv</h3>
+				<p>Wir befinden uns in der Testphase. Was das genau heisst und wie Sie uns unterstützen können, erfahren Sie <a
+					class="anchor"
+					href="{base}/testphase"
+					data-sveltekit-reload>hier</a
+				>.</p>
+			</div>
+		</aside>
+		</svelte:fragment
+	>
 </AppShell>
