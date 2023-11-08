@@ -129,7 +129,7 @@ class Queue {
  */
 const downloadQueue = new Queue();
 
-const MAX_RETRIES = 3; // Maximum number of retries for each request
+const MAX_RETRIES = 5; // Maximum number of retries for each request
 const TIMEOUT = 1000; // 5 seconds timeout for each request
 
 /**
