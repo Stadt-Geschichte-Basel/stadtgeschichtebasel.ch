@@ -41,7 +41,6 @@
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.35.0",
 		"husky": "^8.0.3",
-		"ical.js": "^1.5.0",
 		"js-yaml": "^4.1.0",
 		"jsdom": "^22.1.0",
 		"mdsvex": "^0.11.0",
@@ -68,8 +67,5 @@
 		"vitest": "^0.34.6",
 		"xml2js": "^0.6.2"
 	},
-	"type": "module",
-	"dependencies": {
-		"rss-parser": "^3.13.0"
-	}
+	"type": "module"
 }

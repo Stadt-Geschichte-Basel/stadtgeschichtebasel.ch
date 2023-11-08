@@ -35,7 +35,7 @@
 		Geschichte von Basel durch <a href="{base}/meilensteine#bände" data-sveltekit-reload
 			>neun Einzelbände und einen Überblicksband</a
 		>. Was sie besonders macht, ist der öffentliche Zugang zu
-		<a href="{base}/forschung">Forschungsdaten</a>, präsentiert als
+		<a href="{base}/meilensteine#forschungsdaten" data-sveltekit-reload>Forschungsdaten</a>, präsentiert als
 		<a href="{base}/meilensteine#data-stories" data-sveltekit-reload>Data Stories</a>. Plattform und <a href="{base}/meilensteine#vermittlung" data-sveltekit-reload>Vermittlungsangebote</a> sprechen ein breites
 		Publikum an, von Geschichtsbegeisterten über Studierende bis Forschende, und laden dazu ein,
 		Basels Geschichte auf innovative, datengetriebene Weise zu erkunden.
@@ -44,7 +44,7 @@
 	{#each posts as post}
 		<Post post={post} />
 	{/each}
-	<p>Für weitere Beiträge siehe <a href="{base}/blog"> Blog</a>.</p>
+	<p>Für weitere Beiträge siehe <a href="{base}/blog">Blog</a>.</p>
 	<h2>Veranstaltungen</h2>
 	{#each events as event}
 		<article class="card mt-4 px-4">
