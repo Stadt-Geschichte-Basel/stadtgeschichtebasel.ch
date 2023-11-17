@@ -14,7 +14,7 @@
 	 * @property {string} endDate
 	 * @property {string} startTime
 	 * @property {string} endTime
-	 * @property {string} TicketUrl
+	 * @property {string} ticketURL
 	 */
 
 	/**

@@ -43,7 +43,7 @@
 	 * @property {string} endDate - The end date of the event.
 	 * @property {string} startTime - The start time of the event.
 	 * @property {string} endTime - The end time of the event.
-	 * @property {string} TicketURL - The ticket URL of the event.
+	 * @property {string} ticketURL - The ticket URL of the event.
 	 */
 
 	/**
@@ -58,7 +58,7 @@
 	 * @property {Date} endDate - The end date of the event.
 	 * @property {string} startTime - The start time of the event.
 	 * @property {string} endTime - The end time of the event.
-	 * @property {string} TicketURL - The ticket URL of the event.
+	 * @property {string} ticketURL - The ticket URL of the event.
 	 * @property {string} localizedStartDate - The localized start date of the event.
 	 * @property {string} localizedEndDate - The localized end date of the event.
 	 */
@@ -85,7 +85,7 @@
 	 * @type {ProcessedEvent[]}
 	 */
 	const events = data.events
-		.filter(({ startDate }) => new Date(startDate) > today)
+		.filter(({ startDate }) => new Date(startDate).getTime() > today.getTime())
 		.slice(0, 3)
 		.map(processEvent);
 </script>

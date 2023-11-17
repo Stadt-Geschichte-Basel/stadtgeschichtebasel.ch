@@ -4,13 +4,13 @@
 	 * The current page
 	 * @type {number}
 	 */
-	export let page;
+	export let page = 1;
 
 	/**
 	 * The last page
 	 * @type {number}
 	 */
-	export let lastPage;
+	export let lastPage = 1;
 </script>
 
 <nav
