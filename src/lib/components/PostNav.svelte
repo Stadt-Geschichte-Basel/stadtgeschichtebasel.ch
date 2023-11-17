@@ -1,7 +1,16 @@
 <script>
 	import { base } from '$app/paths';
-	export let page;
-	export let lastPage;
+	/**
+	 * The current page
+	 * @type {number}
+	 */
+	export let page = 1;
+
+	/**
+	 * The last page
+	 * @type {number}
+	 */
+	export let lastPage = 1;
 </script>
 
 <nav

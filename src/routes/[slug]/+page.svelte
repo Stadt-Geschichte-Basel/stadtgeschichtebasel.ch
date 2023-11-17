@@ -11,7 +11,7 @@
 </svelte:head>
 
 <Container>
-		<h1>{data.meta.title}</h1>
+	<h1>{data.meta.title}</h1>
 
-		<svelte:component this={data.content} />
+	<svelte:component this={data.content} />
 </Container>

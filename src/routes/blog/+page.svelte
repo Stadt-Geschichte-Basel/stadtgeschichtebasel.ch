@@ -24,7 +24,7 @@
 		Veranstaltungshinweise.
 	</p>
 	{#each paginatedPosts as post}
-		<Post post={post} />
+		<Post {post} />
 	{/each}
-	<PostNav page={page} lastPage={lastPage}/>
+	<PostNav {page} {lastPage} />
 </Container>

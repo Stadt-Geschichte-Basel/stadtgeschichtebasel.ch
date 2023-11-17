@@ -20,9 +20,8 @@
 		Updates und Neuigkeiten veröffentlichen, damit Sie stets auf dem Laufenden bleiben.
 	</p>
 	<p>
-		Vielen Dank für Ihr Interesse an der neuen Stadtgeschichte. Wir hoffen,
-		dass Sie unsere neue Webseite genauso schätzen wie wir, und stehen Ihnen gerne für Fragen und
-		Anliegen zur Verfügung.
+		Vielen Dank für Ihr Interesse an der neuen Stadtgeschichte. Wir hoffen, dass Sie unsere neue
+		Webseite genauso schätzen wie wir, und stehen Ihnen gerne für Fragen und Anliegen zur Verfügung.
 	</p>
 	<p>
 		Eine archivierte Version dieser Seite finden Sie <a
