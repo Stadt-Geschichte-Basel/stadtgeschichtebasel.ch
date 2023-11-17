@@ -1,14 +1,32 @@
-<script lang="ts">
+<script>
 	import { base } from '$app/paths';
 	import Container from '$lib/components/Container.svelte';
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
-	import type { PageData } from './$types';
 
-	export let data: PageData;
-	const today: Date = new Date();
-	const nextMonth: Date = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-	const afterwards: Date = new Date(today.getFullYear(), today.getMonth() + 2, 1);
-	const monthNames: string[] = [
+	/**
+	 * @typedef {Object} Event
+	 * @property {string} owner
+	 * @property {string} title
+	 * @property {string} shortDescription
+	 * @property {string} longDescription
+	 * @property {string} originUrl
+	 * @property {string} startDate
+	 * @property {string} endDate
+	 * @property {string} startTime
+	 * @property {string} endTime
+	 * @property {string} TicketUrl
+	 */
+
+	/**
+	 * @typedef {Event & { localizedStartDate: string, localizedEndDate: string }} ProcessedEvent
+	 */
+
+	/** @type {import('./$types').PageData} */
+	export let data;
+	const today = new Date();
+	const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+	const afterwards = new Date(today.getFullYear(), today.getMonth() + 2, 1);
+	const monthNames = [
 		'Januar',
 		'Februar',
 		'März',
@@ -22,68 +40,97 @@
 		'November',
 		'Dezember'
 	];
-	const thisMonthName: string = monthNames[today.getMonth()];
-	const nextMonthName: string = monthNames[nextMonth.getMonth()];
-	const afterwardsMonthName: string = monthNames[(nextMonth.getMonth() + 1) % 12];
+	const thisMonthName = monthNames[today.getMonth()];
+	const nextMonthName = monthNames[nextMonth.getMonth()];
+	const afterwardsMonthName = monthNames[(nextMonth.getMonth() + 1) % 12];
 
-	type Event = {
-		owner: string;
-		title: string;
-		shortDescription: string;
-		longDescription: string;
-		originUrl: string;
-		startDate: string;
-		endDate: string;
-		startTime: string;
-		endTime: string;
-		TicketUrl: string;
-	};
+	/**
+	 * Filters events which occur after today's date.
+	 * @param {Event[]} events - The list of events to filter.
+	 * @returns {ProcessedEvent[]} - The filtered list of events.
+	 */
+	const filterEvents = (events) =>
+		events
+			.filter((event) => {
+				const startDate = new Date(event.startDate);
+				return startDate > today;
+			})
+			.map((event) => ({
+				...event,
+				localizedStartDate: new Date(event.startDate).toLocaleDateString('de-CH'),
+				localizedEndDate: new Date(event.endDate).toLocaleDateString('de-CH')
+			}));
 
-	type ProcessedEvent = Event & {
-		localizedStartDate: string;
-		localizedEndDate: string;
-	};
-
-	const events: ProcessedEvent[] = data.events.filter((event: Event): event is ProcessedEvent => {
-		if (typeof event.startDate === 'string') {
-			return new Date(event.startDate) > today;
-		}
-		return false;
-	});
-
-	const filterEventsByMonth = (
-		events: ProcessedEvent[],
-		month: number,
-		year: number
-	): ProcessedEvent[] =>
-		events.filter(({ startDate }) => {
-			const eventDate: Date = new Date(startDate);
+	/**
+	 * Filters events by the given month and year.
+	 * @param {ProcessedEvent[]} events - The list of events to filter.
+	 * @param {number} month - The month to filter by.
+	 * @param {number} year - The year to filter by.
+	 * @returns {ProcessedEvent[]} - The filtered list of events.
+	 */
+	const filterEventsByMonth = (events, month, year) =>
+		events.filter((event) => {
+			const eventDate = new Date(event.startDate);
 			return eventDate.getMonth() === month && eventDate.getFullYear() === year;
 		});
 
-	const processedEvents: ProcessedEvent[] = events.map((event: Event) => ({
-		...event,
-		localizedStartDate: new Date(event.startDate).toLocaleDateString('de-CH'),
-		localizedEndDate: new Date(event.endDate).toLocaleDateString('de-CH')
-	}));
-
-	let thisMonthEvents: ProcessedEvent[];
-	let nextMonthEvents: ProcessedEvent[];
-	let afterwardsEvents: ProcessedEvent[];
-	let filteredEvents: ProcessedEvent[];
-	let filter: number = 0;
-
-	$: thisMonthEvents = filterEventsByMonth(processedEvents, today.getMonth(), today.getFullYear());
-	$: nextMonthEvents = filterEventsByMonth(
+	/**
+	 * The list of events.
+	 * @type {ProcessedEvent[]}
+	 */
+	const processedEvents = filterEvents(data.events);
+	/**
+	 * The list of events which occur this month.
+	 * @type {ProcessedEvent[]}
+	 */
+	let thisMonthEvents = filterEventsByMonth(processedEvents, today.getMonth(), today.getFullYear());
+	/**
+	 * The list of events which occur next month.
+	 * @type {ProcessedEvent[]}
+	 */
+	let nextMonthEvents = filterEventsByMonth(
 		processedEvents,
 		nextMonth.getMonth(),
 		nextMonth.getFullYear()
 	);
-	$: afterwardsEvents = processedEvents.filter(({ startDate }) => new Date(startDate) > afterwards);
-	$: filteredEvents = [thisMonthEvents, nextMonthEvents, afterwardsEvents][filter];
+	/**
+	 * The list of events which occur afterwards.
+	 * @type {ProcessedEvent[]}
+	 */
+	let afterwardsEvents = processedEvents.filter((event) => new Date(event.startDate) > afterwards);
 
+	/**
+	 * The list of events which are currently filtered.
+	 * @type {ProcessedEvent[]}
+	 */
+	let filteredEvents = [thisMonthEvents, nextMonthEvents, afterwardsEvents][0];
+	/**
+	 * The currently selected filter.
+	 * @type {number}
+	 */
+	let filter = 0;
+
+	/**
+	 * Updates the filtered events based on the selected filter.
+	 */
+	$: if (filter === 0) {
+		filteredEvents = thisMonthEvents;
+	} else if (filter === 1) {
+		filteredEvents = nextMonthEvents;
+	} else if (filter === 2) {
+		filteredEvents = afterwardsEvents;
+	}
+
+	/**
+	 * The list of exhibitions.
+	 * @type {Event[]}
+	 */
 	const exhibitions = data.exhibitions;
-	let agenda: 'events' | 'exhibitions' | 'info' = 'events';
+	/**
+	 * The currently selected agenda.
+	 * @type {'events' | 'exhibitions' | 'info'}
+	 */
+	let agenda = 'events';
 </script>
 
 <Container>
@@ -94,7 +141,7 @@
 	</p>
 	<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
 		<RadioItem bind:group={agenda} name="justify" value={'events'}
-			>Ver&shy;anstal&shy;tungen ({events.length})</RadioItem
+			>Ver&shy;anstal&shy;tungen ({processedEvents.length})</RadioItem
 		>
 		<RadioItem bind:group={agenda} name="justify" value={'exhibitions'}
 			>Dauer&shy;aus&shy;stellungen ({exhibitions.length})</RadioItem
