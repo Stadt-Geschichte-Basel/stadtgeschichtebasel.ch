@@ -3,7 +3,6 @@
  */
 
 import * as config from '$lib/config';
-
 import { json } from '@sveltejs/kit';
 import { promises as fs } from 'fs';
 import { parseStringPromise } from 'xml2js';

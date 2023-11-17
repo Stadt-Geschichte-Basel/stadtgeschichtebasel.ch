@@ -1,14 +1,14 @@
-<script>
+<script lang="ts">
 	import { base } from '$app/paths';
 	import Container from '$lib/components/Container.svelte';
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+	import type { PageData } from './$types';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
-	const today = new Date();
-	const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-	const afterwards = new Date(today.getFullYear(), today.getMonth() + 2, 1);
-	const monthNames = [
+	export let data: PageData;
+	const today: Date = new Date();
+	const nextMonth: Date = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+	const afterwards: Date = new Date(today.getFullYear(), today.getMonth() + 2, 1);
+	const monthNames: string[] = [
 		'Januar',
 		'Februar',
 		'März',
@@ -22,23 +22,56 @@
 		'November',
 		'Dezember'
 	];
-	const thisMonthName = monthNames[today.getMonth()];
-	const nextMonthName = monthNames[nextMonth.getMonth()];
-	const afterwardsMonthName = monthNames[(nextMonth.getMonth() + 1) % 12];
-	const events = data.events.filter(({ startDate }) => new Date(startDate) > today);
-	const filterEventsByMonth = (events, month, year) =>
+	const thisMonthName: string = monthNames[today.getMonth()];
+	const nextMonthName: string = monthNames[nextMonth.getMonth()];
+	const afterwardsMonthName: string = monthNames[(nextMonth.getMonth() + 1) % 12];
+
+	type Event = {
+		owner: string;
+		title: string;
+		shortDescription: string;
+		longDescription: string;
+		originUrl: string;
+		startDate: string;
+		endDate: string;
+		startTime: string;
+		endTime: string;
+		TicketUrl: string;
+	};
+
+	type ProcessedEvent = Event & {
+		localizedStartDate: string;
+		localizedEndDate: string;
+	};
+
+	const events: ProcessedEvent[] = data.events.filter((event: Event): event is ProcessedEvent => {
+		if (typeof event.startDate === 'string') {
+			return new Date(event.startDate) > today;
+		}
+		return false;
+	});
+
+	const filterEventsByMonth = (
+		events: ProcessedEvent[],
+		month: number,
+		year: number
+	): ProcessedEvent[] =>
 		events.filter(({ startDate }) => {
-			const eventDate = new Date(startDate);
+			const eventDate: Date = new Date(startDate);
 			return eventDate.getMonth() === month && eventDate.getFullYear() === year;
 		});
 
-	const processedEvents = events.map((event) => ({
+	const processedEvents: ProcessedEvent[] = events.map((event: Event) => ({
 		...event,
-		startDate: new Date(event.startDate),
-		endDate: new Date(event.endDate),
 		localizedStartDate: new Date(event.startDate).toLocaleDateString('de-CH'),
 		localizedEndDate: new Date(event.endDate).toLocaleDateString('de-CH')
 	}));
+
+	let thisMonthEvents: ProcessedEvent[];
+	let nextMonthEvents: ProcessedEvent[];
+	let afterwardsEvents: ProcessedEvent[];
+	let filteredEvents: ProcessedEvent[];
+	let filter: number = 0;
 
 	$: thisMonthEvents = filterEventsByMonth(processedEvents, today.getMonth(), today.getFullYear());
 	$: nextMonthEvents = filterEventsByMonth(
@@ -48,9 +81,9 @@
 	);
 	$: afterwardsEvents = processedEvents.filter(({ startDate }) => new Date(startDate) > afterwards);
 	$: filteredEvents = [thisMonthEvents, nextMonthEvents, afterwardsEvents][filter];
+
 	const exhibitions = data.exhibitions;
-	let agenda = 'events';
-	$: filter = 0;
+	let agenda: 'events' | 'exhibitions' | 'info' = 'events';
 </script>
 
 <Container>
