@@ -24,7 +24,8 @@
 	const footerStore = localStorageStore('footer', { closed: false });
 	$: classesFooter = $footerStore.closed ? 'hidden' : '';
 	afterNavigate((params) => {
-		const isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
+		const isNewPage =
+			params.from && params.to && params.from.url.pathname !== params.to.url.pathname;
 		const elemPage = document.querySelector('#page');
 		if (isNewPage && elemPage !== null) {
 			elemPage.scrollTop = 0;
