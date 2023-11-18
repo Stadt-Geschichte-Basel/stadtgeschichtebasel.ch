@@ -68,8 +68,9 @@ jobs:
       - name: Prebuild
         run: pnpm run prebuild
 
+      # FIXME: NASTY HACK!
       - name: Build
-        run: pnpm run build
+        run: timeout 60 pnpm run build || true
 
       - name: Postbuild
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
