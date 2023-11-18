@@ -169,9 +169,7 @@
 				<h3 class="h3">Testphase aktiv</h3>
 				<p>
 					Wir befinden uns in der Testphase. Was das genau heisst und wie Sie uns unterstützen
-					können, erfahren Sie <a class="anchor" href="{base}/testphase" data-sveltekit-reload
-						>hier</a
-					>.
+					können, erfahren Sie <a class="anchor" href="{base}/testphase">hier</a>.
 				</p>
 			</div>
 			<div class="alert-actions">

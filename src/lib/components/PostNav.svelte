@@ -25,7 +25,6 @@
 				class="btn btn-xl"
 				rel="prev"
 				aria-label="Springe zur vorherigen Seite"
-				data-sveltekit-reload
 			>
 				<span class="sm:block md:hidden">Zurück</span>
 				<span class="hidden md:block">Vorherige Seite</span></a
@@ -44,7 +43,6 @@
 				class="btn btn-xl"
 				rel="next"
 				aria-label="Springe zur nächsten Seite"
-				data-sveltekit-reload
 			>
 				<span class="sm:block md:hidden">Vor</span>
 				<span class="hidden md:block">Nächste Seite</span>
