@@ -52,7 +52,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: '.jampack'
-          key: jampack-${{ github.run_id }}
+          key: jampack
           restore-keys: |
             jampack
 
