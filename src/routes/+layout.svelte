@@ -24,7 +24,8 @@
 	const footerStore = localStorageStore('footer', { closed: false });
 	$: classesFooter = $footerStore.closed ? 'hidden' : '';
 	afterNavigate((params) => {
-		const isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
+		const isNewPage =
+			params.from && params.to && params.from.url.pathname !== params.to.url.pathname;
 		const elemPage = document.querySelector('#page');
 		if (isNewPage && elemPage !== null) {
 			elemPage.scrollTop = 0;
@@ -168,9 +169,7 @@
 				<h3 class="h3">Testphase aktiv</h3>
 				<p>
 					Wir befinden uns in der Testphase. Was das genau heisst und wie Sie uns unterstützen
-					können, erfahren Sie <a class="anchor" href="{base}/testphase" data-sveltekit-reload
-						>hier</a
-					>.
+					können, erfahren Sie <a class="anchor" href="{base}/testphase">hier</a>.
 				</p>
 			</div>
 			<div class="alert-actions">
