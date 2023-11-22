@@ -8,10 +8,18 @@ export const prerender = true;
 
 /**
  * @constant
- * @type {Object}
- * @description GitHub configuration constants.
+ * @type {string}
+ * @description GitHub handle of the repository owner.
  */
-const { githubHandle, githubRepo } = config;
+const githubHandle = config.githubHandle;
+
+/**
+ * @constant
+ * @type {string}
+ * @description GitHub repository name.
+ */
+
+const githubRepo = config.githubRepo;
 
 /**
  * @constant
