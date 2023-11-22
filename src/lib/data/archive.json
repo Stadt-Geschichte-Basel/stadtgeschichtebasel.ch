@@ -1,22 +1,74 @@
 [
-	{ "id": null, "url": "/index/buchbaende.html", "slug": null },
-	{ "id": null, "url": "/index/buchbaende/band-1.html", "slug": null },
-	{ "id": null, "url": "/index/buchbaende/band-2.html", "slug": null },
-	{ "id": null, "url": "/index/buchbaende/band-3.html", "slug": null },
-	{ "id": null, "url": "/index/buchbaende/band-4.html", "slug": null },
-	{ "id": null, "url": "/index/buchbaende/band-5.html", "slug": null },
-	{ "id": null, "url": "/index/buchbaende/band-6.html", "slug": null },
-	{ "id": null, "url": "/index/buchbaende/band-7.html", "slug": null },
-	{ "id": null, "url": "/index/buchbaende/band-8.html", "slug": null },
-	{ "id": null, "url": "/index/buchbaende/band-9.html", "slug": null },
-	{ "id": null, "url": "/index/das-projekt.html", "slug": null },
-	{ "id": null, "url": "/index/das-projekt/stadt-geschichte-basel.html", "slug": null },
+	{
+		"id": null,
+		"url": "/index/buchbaende.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/buchbaende/band-1.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/buchbaende/band-2.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/buchbaende/band-3.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/buchbaende/band-4.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/buchbaende/band-5.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/buchbaende/band-6.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/buchbaende/band-7.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/buchbaende/band-8.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/buchbaende/band-9.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/das-projekt.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/das-projekt/stadt-geschichte-basel.html",
+		"slug": null
+	},
 	{
 		"id": null,
 		"url": "/index/das-projekt/stadt-geschichte-basel/herausgebergremium.html",
 		"slug": null
 	},
-	{ "id": null, "url": "/index/das-projekt/stadt-geschichte-basel/partner.html", "slug": null },
+	{
+		"id": null,
+		"url": "/index/das-projekt/stadt-geschichte-basel/partner.html",
+		"slug": null
+	},
 	{
 		"id": null,
 		"url": "/index/das-projekt/stadt-geschichte-basel/projektgeschichte.html",
@@ -27,13 +79,41 @@
 		"url": "/index/das-projekt/stadt-geschichte-basel/projektleitung.html",
 		"slug": null
 	},
-	{ "id": null, "url": "/index/das-projekt/stadt-geschichte-basel/stiftung.html", "slug": null },
-	{ "id": null, "url": "/index/das-projekt/stadt-geschichte-basel/team.html", "slug": null },
-	{ "id": null, "url": "/index/das-projekt/veranstaltungen.html", "slug": null },
-	{ "id": null, "url": "/index/das-projekt/verein.html", "slug": null },
-	{ "id": null, "url": "/index/das-projekt/verein/mitgliedwerden.html", "slug": null },
-	{ "id": null, "url": "/index/das-projekt/verein/wanderboje.html", "slug": null },
-	{ "id": null, "url": "/index/geschichten.html", "slug": null },
+	{
+		"id": null,
+		"url": "/index/das-projekt/stadt-geschichte-basel/stiftung.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/das-projekt/stadt-geschichte-basel/team.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/das-projekt/veranstaltungen.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/das-projekt/verein.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/das-projekt/verein/mitgliedwerden.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/das-projekt/verein/wanderboje.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/geschichten.html",
+		"slug": null
+	},
 	{
 		"id": 1344,
 		"url": "/index/geschichten/2019-2022/01/alfred_rasser.html",
@@ -119,7 +199,11 @@
 		"url": "/index/geschichten/2019-2022/01/die-muba-ist-geschichte.html",
 		"slug": "/blog/die-muba-ist-geschichte-die-messe-als-ort-von-innovation-und-wandel"
 	},
-	{ "id": 1731, "url": "/index/geschichten/2019-2022/01/dreck.html", "slug": "/blog/draegg-waegg" },
+	{
+		"id": 1731,
+		"url": "/index/geschichten/2019-2022/01/dreck.html",
+		"slug": "/blog/draegg-waegg"
+	},
 	{
 		"id": 995,
 		"url": "/index/geschichten/2019-2022/01/elisabethvischeralioth.html",
@@ -480,7 +564,11 @@
 		"url": "/index/geschichten/2019-2022/01/stadtgeschichte-gottesdienst.html",
 		"slug": "/blog/1000-jahre-10-geschichten-stadtgeschichte-als-gottesdienst"
 	},
-	{ "id": 2711, "url": "/index/geschichten/2019-2022/01/turmreiches_basel.html", "slug": null },
+	{
+		"id": 2711,
+		"url": "/index/geschichten/2019-2022/01/turmreiches_basel.html",
+		"slug": null
+	},
 	{
 		"id": 1981,
 		"url": "/index/geschichten/2019-2022/01/volksrechte.html",
@@ -516,8 +604,16 @@
 		"url": "/index/geschichten/2019-2022/01/ziegelproduktion_basler_mission.html",
 		"slug": "/blog/basel-anderswo-ziegelherstellung-der-basler-mission-in-suedindien"
 	},
-	{ "id": null, "url": "/index/geschichten/kategorien.html", "slug": null },
-	{ "id": null, "url": "/index/geschichten~Dialog~.html", "slug": "/blog/kategorie/Dialog" },
+	{
+		"id": null,
+		"url": "/index/geschichten/kategorien.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/geschichten~Dialog~.html",
+		"slug": "/blog/kategorie/Dialog"
+	},
 	{
 		"id": null,
 		"url": "/index/geschichten~Ereignisbericht~.html",
@@ -528,7 +624,11 @@
 		"url": "/index/geschichten~Fr\u00fche-Neuzeit~.html",
 		"slug": "/blog/kategorie/Frühe%20Neuzeit"
 	},
-	{ "id": null, "url": "/index/geschichten~Gesellschaft~.html", "slug": null },
+	{
+		"id": null,
+		"url": "/index/geschichten~Gesellschaft~.html",
+		"slug": null
+	},
 	{
 		"id": null,
 		"url": "/index/geschichten~Keltische-Zeit-und-R\u00f6merzeit~.html",
@@ -549,15 +649,31 @@
 		"url": "/index/geschichten~Moderne-Neuzeit~.html",
 		"slug": "/blog/kategorie/Moderne%20und%20Neuzeit"
 	},
-	{ "id": null, "url": "/index/geschichten~Wirtschaft~.html", "slug": null },
-	{ "id": null, "url": "/index/geschichten~Wissenschaft~.html", "slug": null },
+	{
+		"id": null,
+		"url": "/index/geschichten~Wirtschaft~.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/geschichten~Wissenschaft~.html",
+		"slug": null
+	},
 	{
 		"id": null,
 		"url": "/index/geschichten~Zeitgeschichte~.html",
 		"slug": "/blog/kategorie/Zeitgeschichte"
 	},
-	{ "id": null, "url": "/index/impressum.html", "slug": "/blog/ueber-uns" },
-	{ "id": null, "url": "/index/making-of.html", "slug": null },
+	{
+		"id": null,
+		"url": "/index/impressum.html",
+		"slug": "/ueber-uns"
+	},
+	{
+		"id": null,
+		"url": "/index/making-of.html",
+		"slug": null
+	},
 	{
 		"id": 3647,
 		"url": "/index/making-of/2018/artikel-tageswoche.html",
@@ -568,7 +684,11 @@
 		"url": "/index/making-of/2018/besuch-buergerforschungsprojekt.html",
 		"slug": "/blog/besuch-bei-freunden"
 	},
-	{ "id": 3669, "url": "/index/making-of/2018/grosses-interesse.html", "slug": "/blog/3669" },
+	{
+		"id": 3669,
+		"url": "/index/making-of/2018/grosses-interesse.html",
+		"slug": null
+	},
 	{
 		"id": 3589,
 		"url": "/index/making-of/2018/kick-off.html",
@@ -584,7 +704,11 @@
 		"url": "/index/making-of/2019/audiorundgang_reformation.html",
 		"slug": "/blog/rundgang-reformation-in-basel"
 	},
-	{ "id": 3474, "url": "/index/making-of/2019/bierkeller.html", "slug": null },
+	{
+		"id": 3474,
+		"url": "/index/making-of/2019/bierkeller.html",
+		"slug": null
+	},
 	{
 		"id": 3629,
 		"url": "/index/making-of/2019/die-neue-website-ist-online.html",
@@ -610,8 +734,16 @@
 		"url": "/index/making-of/2019/retraite.html",
 		"slug": "/blog/wo-wir-blueten-treiben"
 	},
-	{ "id": 3519, "url": "/index/making-of/2019/schulbesuch.html", "slug": "/blog/schulbesuch" },
-	{ "id": 3541, "url": "/index/making-of/2019/themen-ordnen.html", "slug": "/blog/themen-ordnen" },
+	{
+		"id": 3519,
+		"url": "/index/making-of/2019/schulbesuch.html",
+		"slug": "/blog/schulbesuch"
+	},
+	{
+		"id": 3541,
+		"url": "/index/making-of/2019/themen-ordnen.html",
+		"slug": "/blog/themen-ordnen"
+	},
 	{
 		"id": 3499,
 		"url": "/index/making-of/2019/vermittlungsworkshop1.html",
@@ -662,6 +794,14 @@
 		"url": "/index/making-of/2021/verein-basler-geschichte-auf-tour.html",
 		"slug": "/blog/der-verein-basler-geschichte-auf-tour"
 	},
-	{ "id": null, "url": "/index/making-of/kategorien.html", "slug": null },
-	{ "id": null, "url": "/index/rechtliche-hinweise.html", "slug": "/datenschutzerklaerung" }
+	{
+		"id": null,
+		"url": "/index/making-of/kategorien.html",
+		"slug": null
+	},
+	{
+		"id": null,
+		"url": "/index/rechtliche-hinweise.html",
+		"slug": "/datenschutzerklaerung"
+	}
 ]
