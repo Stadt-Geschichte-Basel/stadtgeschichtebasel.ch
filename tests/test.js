@@ -14,7 +14,7 @@ test('ueber-uns page has expected h1', async ({ page }) => {
 
 test('agenda page has h3 elements', async ({ page }) => {
 	await page.goto('/agenda');
-	await expect(page.getByRole('heading', { level: 3 })).toBeVisible();
+	await expect(page.getByRole('heading', { level: 4 })).toBeVisible();
 });
 
 test('orte has select element', async ({ page }) => {
