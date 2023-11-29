@@ -2,7 +2,9 @@ import { expect, test } from '@playwright/test';
 
 test('index page has expected h1', async ({ page }) => {
 	await page.goto('/');
-	await expect(page.getByRole('heading', { name: 'Wir schreiben Basler Geschichte.' })).toBeVisible();
+	await expect(
+		page.getByRole('heading', { name: 'Wir schreiben Basler Geschichte.' })
+	).toBeVisible();
 });
 
 test('ueber-uns page has expected h1', async ({ page }) => {
@@ -22,5 +24,9 @@ test('orte has select element', async ({ page }) => {
 
 test('datenschutzerklaerung has Datenschutzbeauftragte', async ({ page }) => {
 	await page.goto('/datenschutzerklaerung');
-	await expect(page.getByRole('heading', { name: 'Datenschutzbeauftragte der Stiftung Stadt.Geschichte.Basel' })).toBeVisible();
+	await expect(
+		page.getByRole('heading', {
+			name: 'Datenschutzbeauftragte der Stiftung Stadt.Geschichte.Basel'
+		})
+	).toBeVisible();
 });
