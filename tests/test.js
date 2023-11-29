@@ -12,9 +12,9 @@ test('ueber-uns page has expected h1', async ({ page }) => {
 	await expect(page.getByRole('heading', { name: 'Über uns' })).toBeVisible();
 });
 
-test('agenda page has h3 elements', async ({ page }) => {
+test('agenda page has expected h1', async ({ page }) => {
 	await page.goto('/agenda');
-	await expect(page.getByRole('heading', { level: 4 })).toBeVisible();
+	await expect(page.getByRole('heading', { name: 'Agenda' })).toBeVisible();
 });
 
 test('orte has select element', async ({ page }) => {
