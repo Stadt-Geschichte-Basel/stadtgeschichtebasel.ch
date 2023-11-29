@@ -62,9 +62,6 @@ jobs:
       - name: Lint
         run: pnpm run lint
 
-      - name: Test
-        run: pnpm run test
-
       - name: Prebuild
         run: pnpm run prebuild
 
@@ -74,6 +71,9 @@ jobs:
       - name: Postbuild
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: pnpm run postbuild
+
+      - name: Test
+        run: pnpm run test
 
       - name: Publish to Cloudflare Pages
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
