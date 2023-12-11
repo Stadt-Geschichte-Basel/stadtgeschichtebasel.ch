@@ -11,7 +11,7 @@
 		{ label: 'Meilensteine', path: '/meilensteine' },
 		{ label: 'Agenda', path: '/agenda' },
 		{ label: 'Orte', path: '/orte' },
-		{ label: 'Forschung', path: '/forschung' },
+		{ label: 'Projekt', path: '/projekt' },
 		{ label: 'Über uns', path: '/ueber-uns' }
 	];
 

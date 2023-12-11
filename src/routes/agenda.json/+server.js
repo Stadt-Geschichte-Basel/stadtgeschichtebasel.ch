@@ -3,7 +3,6 @@
  */
 
 import * as config from '$lib/config';
-
 import { json } from '@sveltejs/kit';
 import { promises as fs } from 'fs';
 import { parseStringPromise } from 'xml2js';
@@ -66,7 +65,7 @@ function getUniqueOwners(activities) {
  * @property {string} endDate - The end date of the event.
  * @property {string} startTime - The start time of the event.
  * @property {string} endTime - The end time of the event.
- * @property {string} TicketURL - The ticket URL of the event.
+ * @property {string} ticketURL - The ticket URL of the event.
  */
 
 /**
@@ -110,7 +109,7 @@ async function getActivities() {
 						endDate,
 						startTime,
 						endTime,
-						TicketURL: ticketURL
+						ticketURL: ticketURL
 					})
 				)
 			})

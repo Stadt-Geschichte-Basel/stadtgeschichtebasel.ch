@@ -1,3 +1,3 @@
-<section class="p-4 lg:p-10 prose lg:prose-xl" role="main">
+<section class="prose p-4 lg:prose-xl lg:p-10" role="main">
 	<slot />
 </section>

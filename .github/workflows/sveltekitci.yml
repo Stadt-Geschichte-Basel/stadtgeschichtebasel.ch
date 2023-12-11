@@ -1,7 +1,12 @@
 name: SvelteKit CI
 
 on:
+  schedule:
+    - cron: '0 0 * * *'
   pull_request:
+    branches:
+      - main
+  push:
     branches:
       - main
   workflow_dispatch:
@@ -16,12 +21,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'latest'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -42,14 +47,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Setup jampack cache
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/cache@v3
+        with:
+          path: '.jampack'
+          key: jampack
+          restore-keys: |
+            jampack
+
       - name: Install dependencies
         run: pnpm install
 
+      - name: Install playwright
+        run: pnpm exec playwright install
+
       - name: Lint
         run: pnpm run lint
-
-      # - name: Test
-      #   run: pnpm run test
 
       - name: Prebuild
         run: pnpm run prebuild
@@ -58,4 +72,26 @@ jobs:
         run: pnpm run build
 
       - name: Postbuild
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: pnpm run postbuild
+
+      - name: Test
+        run: pnpm run test
+
+      - name: Publish to Cloudflare Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: stadtgeschichtebasel-ch
+          directory: build
+          # Optional: Enable this if you want to have GitHub Deployments triggered
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: Switch what branch you are publishing to.
+          # By default this will be the branch which triggered this workflow
+          branch: main
+          # Optional: Change the working directory
+          # workingDirectory: my-site
+          # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
+          # wranglerVersion: '3'

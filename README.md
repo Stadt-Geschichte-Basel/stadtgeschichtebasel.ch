@@ -15,7 +15,35 @@ Use the package manager [pnpm](https://pnpm.io/installation) to install all depe
 pnpm install
 ```
 
+Run the prebuild script to generate the static files.
+
+```bash
+pnpm run prebuild
+```
+
 ## Usage
+
+Run the development server.
+
+```bash
+pnpm run dev
+```
+
+To build for production.
+
+```bash
+pnpm run build
+```
+
+To optimize the build for production.
+
+```bash
+pnpm run postbuild
+```
+
+## Development
+
+To check the code and format it.
 
 ```bash
 pnpm run check
@@ -24,7 +52,7 @@ pnpm run format
 
 ## Support
 
-This project is maintained by [@maehr](https://github.com/maehr). Please understand that we won't be able to provide individual support via email. We also believe that help is much more valuable if it's shared publicly, so that more people can benefit from it.
+This project is maintained by [@Stadt-Geschichte-Basel](https://github.com/Stadt-Geschichte-Basel). Please understand that we won't be able to provide individual support via email. We also believe that help is much more valuable if it's shared publicly, so that more people can benefit from it.
 
 | Type                                   | Platforms                                                                                        |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -42,9 +70,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors and acknowledgment
 
-- **Moritz Mähr** - _Initial work_ - [maehr](https://github.com/maehr)
-- **Nico Görlich** - _Maps_ - [koilebeit](https://github.com/koilebeit)
-- **Sebastian Flick** - _Refinement_ - [flicksolutions](https://github.com/flicksolutions)
+- **Moritz Mähr** - [maehr](https://github.com/maehr)
+- **Nico Görlich** - [koilebeit](https://github.com/koilebeit)
 
 See also the list of [contributors](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/graphs/contributors) who participated in this project.
 

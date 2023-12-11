@@ -1,5 +1,22 @@
 <script>
 	import { base } from '$app/paths';
+
+	/**
+	 * Represents a post.
+	 * @typedef {Object} Post
+	 * @property {string} title - The title of the post.
+	 * @property {string} slug - The slug of the post.
+	 * @property {string} excerpt - The excerpt of the post.
+	 * @property {string} featuredImage - The featured image of the post.
+	 * @property {string[]} categories - The categories of the post.
+	 * @property {string} date - The date of the post.
+	 * @property {string} content - The content of the post.
+	 */
+
+	/**
+	 * The post to display.
+	 * @type {Post}
+	 */
 	export let post;
 </script>
 

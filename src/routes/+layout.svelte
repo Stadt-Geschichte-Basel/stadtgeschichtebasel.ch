@@ -10,7 +10,8 @@
 		AppBar,
 		Drawer,
 		getDrawerStore,
-		initializeStores
+		initializeStores,
+		localStorageStore
 	} from '@skeletonlabs/skeleton';
 	import '../app.postcss';
 	initializeStores();
@@ -20,9 +21,11 @@
 		drawerStore.open(drawerSettings);
 	}
 	$: classesPageFooter = $page.url.pathname === '/orte' ? 'hidden' : '';
-
+	const footerStore = localStorageStore('footer', { closed: false });
+	$: classesFooter = $footerStore.closed ? 'hidden' : '';
 	afterNavigate((params) => {
-		const isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
+		const isNewPage =
+			params.from && params.to && params.from.url.pathname !== params.to.url.pathname;
 		const elemPage = document.querySelector('#page');
 		if (isNewPage && elemPage !== null) {
 			elemPage.scrollTop = 0;
@@ -153,12 +156,27 @@
 				<p>
 					© 2023
 					<span class="mx-2 opacity-10">|</span>
-					<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a
-					>
+					<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a>
 					<span class="mx-2 opacity-10">|</span>
 					<a class="anchor" href="{base}/credits">Credits</a>
 				</p>
 			</section>
 		</div>
+	</svelte:fragment>
+	<svelte:fragment slot="footer">
+		<aside class="alert variant-ghost-warning {classesFooter}">
+			<div class="alert-message">
+				<h3 class="h3">Testphase aktiv</h3>
+				<p>
+					Wir befinden uns in der Testphase. Was das genau heisst und wie Sie uns unterstützen
+					können, erfahren Sie <a class="anchor" href="{base}/testphase">hier</a>.
+				</p>
+			</div>
+			<div class="alert-actions">
+				<button class="variant-ghost btn" on:click={() => ($footerStore.closed = true)}
+					>Mitteilung verbergen</button
+				>
+			</div>
+		</aside>
 	</svelte:fragment>
 </AppShell>

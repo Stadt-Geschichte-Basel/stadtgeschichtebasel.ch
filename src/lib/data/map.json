@@ -130,6 +130,34 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"name": "Departement Altertumswissenschaften ",
+				"label": "Departement Altertumswissenschaften ",
+				"description": "Departement Altertumswissenschaften  der Universität Basel",
+				"address": "Petersgraben 51, 4051 Basel",
+				"website": "https://daw.philhist.unibas.ch/de/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58458, 47.55762]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Departement Geschichte",
+				"label": "Departement Geschichte",
+				"description": "Departement Geschichte der Universität Basel",
+				"address": "Hirschgässlein 21, 4051 Basel",
+				"website": "https://dg.philhist.unibas.ch"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59282, 47.55062]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"name": "Dichter:innen- und Stadtmuseum Liestal (DISTL)",
 				"label": "DISTL",
 				"description": "TBD",
@@ -418,7 +446,7 @@
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [7.59274, 47.55094]
+				"coordinates": [7.59287, 47.55093]
 			}
 		},
 		{

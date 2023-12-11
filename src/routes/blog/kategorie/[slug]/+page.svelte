@@ -14,6 +14,6 @@
 	<h1>Kategorie: {data.slug}</h1>
 
 	{#each data.posts as post}
-		<Post post={post} />
+		<Post {post} />
 	{/each}
 </Container>
