@@ -17,7 +17,6 @@ test('agenda page has expected h1', async ({ page }) => {
 	await expect(page.getByRole('heading', { name: 'Agenda' })).toBeVisible();
 });
 
-
 test('Check if page loads correctly', async ({ page }) => {
 	// Check if the title is correct
 	await page.goto('/orte');

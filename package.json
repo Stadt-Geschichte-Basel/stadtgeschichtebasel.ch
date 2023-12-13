@@ -32,7 +32,7 @@
 		"@skeletonlabs/skeleton": "^2.6.0",
 		"@skeletonlabs/tw-plugin": "^0.3.0",
 		"@sveltejs/adapter-static": "^2.0.3",
-		"@sveltejs/kit": "^1.29.1",
+		"@sveltejs/kit": "^1.30.0",
 		"@tailwindcss/typography": "^0.5.10",
 		"autoprefixer": "^10.4.16",
 		"cheerio": "1.0.0-rc.12",
