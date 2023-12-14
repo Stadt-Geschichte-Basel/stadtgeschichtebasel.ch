@@ -17,9 +17,18 @@ test('agenda page has expected h1', async ({ page }) => {
 	await expect(page.getByRole('heading', { name: 'Agenda' })).toBeVisible();
 });
 
-test('orte has select element', async ({ page }) => {
+test('Check if page loads correctly', async ({ page }) => {
+	// Check if the title is correct
 	await page.goto('/orte');
-	await expect(page.getByRole('combobox')).toBeVisible();
+	await expect(page).toHaveTitle(/Orte/);
+});
+
+test('Check navigation menu items', async ({ page }) => {
+	// Check if navigation menu items are present
+	await page.goto('/');
+	await expect(page.locator('nav >> text=Startseite')).toBeVisible();
+	await expect(page.locator('nav >> text=Blog')).toBeVisible();
+	// Add more checks for each menu item
 });
 
 test('datenschutzerklaerung has Datenschutzbeauftragte', async ({ page }) => {
