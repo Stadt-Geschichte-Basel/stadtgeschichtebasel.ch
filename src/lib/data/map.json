@@ -46,6 +46,20 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"name": "Römerstadt Augusta Raurica",
+				"label": "Augusta Raurica",
+				"description": "TBD",
+				"address": "Giebenacherstrasse 17, 4302 Augst",
+				"website": "https://www.augustaraurica.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.72152, 47.53393]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"name": "Basler Papiermühle",
 				"label": "Papiermühle",
 				"description": "TBD",
