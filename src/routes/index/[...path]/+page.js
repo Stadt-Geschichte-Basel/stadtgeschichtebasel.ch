@@ -9,10 +9,10 @@ export async function load({ params }) {
 
 	if (foundEntry) {
 		if (foundEntry.slug) {
-			throw redirect(301, foundEntry.slug);
+			redirect(301, foundEntry.slug);
 		}
 		return { url: path };
 	}
 
-	throw error(404, `Could not find ${path}`);
+	error(404, `Could not find ${path}`);
 }

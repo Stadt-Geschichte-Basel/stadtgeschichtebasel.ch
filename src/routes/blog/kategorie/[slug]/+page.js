@@ -13,6 +13,6 @@ export async function load({ fetch, params }) {
 			posts: filteredPosts
 		};
 	} catch (e) {
-		throw error(404, `Could not find ${params.slug}`);
+		error(404, `Could not find ${params.slug}`);
 	}
 }
