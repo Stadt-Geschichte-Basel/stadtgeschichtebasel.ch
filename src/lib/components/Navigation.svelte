@@ -19,7 +19,7 @@
 		if (path == '/blog' && $page.url.pathname.startsWith(base + path)) {
 			return true;
 		}
-		return $page.url.pathname === base + path || $page.url.pathname === base + path + '/';
+		return $page.url.pathname === base + path;
 	};
 </script>
 
