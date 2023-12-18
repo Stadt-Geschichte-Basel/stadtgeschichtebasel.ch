@@ -16,7 +16,7 @@
 	];
 
 	$: isActive = (path) => {
-		if (path == '/blog' && $page.url.pathname.startsWith(base + path)) {
+		if (path === '/blog' && $page.url.pathname.startsWith(base + path)) {
 			return true;
 		}
 		return $page.url.pathname === base + path;
