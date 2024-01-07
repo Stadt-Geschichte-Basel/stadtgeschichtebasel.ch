@@ -1,8 +1,6 @@
-import data from '$lib/data/map.json';
+import { redirect } from '@sveltejs/kit';
 
-/** @type {import('./$types').PageLoad} */
+/** @type {import('./$types').PageLoad}*/
 export async function load() {
-	return {
-		...data
-	};
+	redirect(301, 'partner');
 }
