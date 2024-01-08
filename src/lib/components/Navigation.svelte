@@ -8,9 +8,9 @@
 	const navItems = [
 		{ label: 'Startseite', path: '/' },
 		{ label: 'Blog', path: '/blog' },
-		{ label: 'Meilensteine', path: '/meilensteine' },
+		{ label: 'Bände', path: '/baende' },
 		{ label: 'Agenda', path: '/agenda' },
-		{ label: 'Orte', path: '/orte' },
+		{ label: 'Partner', path: '/partner' },
 		{ label: 'Projekt', path: '/projekt' },
 		{ label: 'Über uns', path: '/ueber-uns' }
 	];
