@@ -23,7 +23,7 @@ const config = {
 			// does not work with JamPack
 			// precompress: true
 		}),
-		// do not abort on build errors
+		// do abort on build errors
 		prerender: {
 			handleHttpError: 'fail'
 		}
