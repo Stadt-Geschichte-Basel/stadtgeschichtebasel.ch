@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ params }) {
+export async function load() {
 	try {
 		const page = await import(`../pages/startseite.md`);
 
