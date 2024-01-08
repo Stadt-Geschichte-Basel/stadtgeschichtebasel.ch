@@ -25,7 +25,7 @@ const config = {
 		}),
 		// do not abort on build errors
 		prerender: {
-			handleHttpError: 'warn'
+			handleHttpError: 'fail'
 		}
 	}
 };
