@@ -68,9 +68,8 @@ jobs:
       - name: Prebuild
         run: pnpm run prebuild
 
-      # FIXME: Remove timeout
       - name: Build
-        run: timeout 90 pnpm run build || true
+        run: pnpm run build
 
       - name: Postbuild
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
@@ -96,3 +95,4 @@ jobs:
           # workingDirectory: my-site
           # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
           # wranglerVersion: '3'
+
