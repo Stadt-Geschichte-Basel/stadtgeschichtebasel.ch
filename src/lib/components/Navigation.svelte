@@ -7,9 +7,9 @@
 	const drawerClose = () => drawerStore.close();
 	const navItems = [
 		{ label: 'Startseite', path: '/' },
-		{ label: 'Blog', path: '/blog' },
-		{ label: 'Bände', path: '/baende' },
 		{ label: 'Agenda', path: '/agenda' },
+		{ label: 'Bände', path: '/baende' },
+		{ label: 'Blog', path: '/blog' },
 		{ label: 'Partner', path: '/partner' },
 		{ label: 'Projekt', path: '/projekt' },
 		{ label: 'Über uns', path: '/ueber-uns' }
