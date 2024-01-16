@@ -61,7 +61,7 @@
 </script>
 
 <svelte:head>
-	<title>Orte</title>
+	<title>Alle Kooperationspartner der Stadt.Geschichte.Basel im Überblick</title>
 </svelte:head>
 
 <section class="h-screen w-full">

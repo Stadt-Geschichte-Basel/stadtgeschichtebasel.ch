@@ -20,7 +20,8 @@
 		const drawerSettings = { id: 'sidebar' };
 		drawerStore.open(drawerSettings);
 	}
-	$: classesPageFooter = $page.url.pathname === '/orte' ? 'hidden' : '';
+	$: classesPageContentPartner = $page.url.pathname === '/partner' ? 'overflow-hidden' : '';
+	$: classesPageFooterPartner = $page.url.pathname === '/partner' ? 'hidden' : '';
 	const footerStore = localStorageStore('footer', { closed: false });
 	$: classesFooter = $footerStore.closed ? 'hidden' : '';
 	afterNavigate((params) => {
@@ -41,8 +42,8 @@
 
 <AppShell
 	slotSidebarLeft="bg-surface-50 dark:bg-surface-900 border-t border-surface-500/10 w-0 lg:w-64"
-	slotPageFooter="bg-white {classesPageFooter}"
-	slotPageContent="bg-white dark:bg-surface-900 border-t border-surface-500/10"
+	slotPageFooter="bg-white {classesPageFooterPartner}"
+	slotPageContent="bg-white dark:bg-surface-900 border-t border-surface-500/10 {classesPageContentPartner}"
 	scrollbarGutter="auto"
 >
 	<svelte:fragment slot="header">
