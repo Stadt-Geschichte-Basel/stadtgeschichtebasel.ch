@@ -147,9 +147,7 @@
 					{config.author}<br />
 					Hirschgässlein 21<br />
 					4051 Basel<br />
-					<a class="anchor" href="mailto:info@stadtgeschichtebasel.ch"
-						>info@stadtgeschichtebasel.ch</a
-					>
+					<a class="anchor" href="mailto:{config.email}">{config.email}</a>
 				</p>
 			</section>
 

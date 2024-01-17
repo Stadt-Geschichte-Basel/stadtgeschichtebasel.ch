@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import Container from '$lib/components/Container.svelte';
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+	import * as config from '$lib/config';
 
 	/**
 	 * @typedef {Object} Event
@@ -126,6 +127,7 @@
 	 * @type {Event[]}
 	 */
 	const exhibitions = data.exhibitions;
+
 	/**
 	 * The currently selected agenda.
 	 * @type {'events' | 'exhibitions' | 'info'}
@@ -201,13 +203,12 @@
 		<h2>Info</h2>
 		<p>
 			Alle Daten auf dieser Seite stammen von <a href="https://agendabasel.ch">agendabasel.ch</a>
-			und werden der Stiftung <a href="{base}/ueber-uns">Stadt.Geschichte.Basel</a> im Rahmen einer
-			Kooperation kostenlos zur Verfügung gestellt. Falls Sie eine Veranstaltung oder Ausstellung
-			auf Stadt.Geschichte.Basel publizieren möchten, wenden Sie sich bitte direkt an agendabasel.ch
+			und werden der <a href="{base}/ueber-uns">{config}</a> im Rahmen einer Kooperation kostenlos
+			zur Verfügung gestellt. Falls Sie eine Veranstaltung oder Ausstellung auf
+			Stadt.Geschichte.Basel publizieren möchten, wenden Sie sich bitte direkt an agendabasel.ch
 			oder an
-			<a href="mailto:vermittlung@stadtgeschichtebasel.ch">vermittlung@stadtgeschichtebasel.ch</a>.
-			Die Stiftung Stadt.Geschichte.Basel übernimmt keine Verantwortung für die Richtigkeit der
-			Daten.
+			<a href="mailto:{config.email}">{config.email}</a>. Die Stiftung Stadt.Geschichte.Basel
+			übernimmt keine Verantwortung für die Richtigkeit der Daten.
 		</p>
 	{/if}
 </Container>
