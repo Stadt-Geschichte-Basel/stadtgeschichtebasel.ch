@@ -10,6 +10,7 @@
 		ScaleControl
 	} from 'svelte-maplibre';
 	import { onMount } from 'svelte';
+	import * as config from '$lib/config';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -61,7 +62,7 @@
 </script>
 
 <svelte:head>
-	<title>Alle Kooperationspartner der Stadt.Geschichte.Basel im Überblick</title>
+	<title>Alle Kooperationspartner:innen von {config.title} im Überblick</title>
 </svelte:head>
 
 <section class="h-screen w-full">

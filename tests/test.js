@@ -19,8 +19,8 @@ test('agenda page has expected h1', async ({ page }) => {
 
 test('Check if page loads correctly', async ({ page }) => {
 	// Check if the title is correct
-	await page.goto('/orte');
-	await expect(page).toHaveTitle(/Orte/);
+	await page.goto('/partner');
+	await expect(page).toHaveTitle(/Kooperationspartner/);
 });
 
 test('Check navigation menu items', async ({ page }) => {
