@@ -1,89 +1,95 @@
 name: SvelteKit CI
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
   pull_request:
     branches:
       - main
   push:
     branches:
       - main
-  workflow_dispatch:
-
+  schedule:
+    - cron: 0 0 * * *
+  workflow_dispatch: null
 jobs:
-  ci:
+  setup:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      deployments: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
-
+          node-version: latest
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
           run_install: false
-
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
       - name: Setup pnpm cache
         uses: actions/cache@v3
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: '${{ env.STORE_PATH }}'
+          key: "${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}"
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install playwright
+        run: pnpm exec playwright install
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint
+        run: pnpm run lint
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
       - name: Setup jampack cache
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/cache@v3
         with:
-          path: '.jampack'
+          path: .jampack
           key: jampack
           restore-keys: |
             jampack
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Install playwright
-        run: pnpm exec playwright install
-
-      - name: Lint
-        run: pnpm run lint
-
       - name: Prebuild
         run: pnpm run prebuild
-
       - name: Build
         run: pnpm run build
-
       - name: Postbuild
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: pnpm run postbuild
-
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Test
         run: pnpm run test
-
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: '${{ steps.deployment.outputs.page_url }}'
+    steps:
       - name: Publish to Cloudflare Pages
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
+        if: >-
+          github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+          && github.repository ==
+          'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: '${{ secrets.CLOUDFLARE_API_TOKEN }}'
+          accountId: '${{ secrets.CLOUDFLARE_ACCOUNT_ID }}'
           projectName: stadtgeschichtebasel-ch
           directory: build
           # Optional: Enable this if you want to have GitHub Deployments triggered
