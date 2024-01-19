@@ -1,9 +1,15 @@
 import { expect, test } from '@playwright/test';
 import { readdirSync } from 'fs';
 
-const pages = readdirSync('src/pages').filter(
-	(file) => file.endsWith('.md') && file !== 'startseite.md'
-);
+let pages = [];
+
+try {
+	pages = readdirSync('src/pages').filter(
+		(file) => file.endsWith('.md') && file !== 'startseite.md'
+	);
+} catch (error) {
+	console.error('Failed to read directory:', error);
+}
 
 pages.forEach((page) => {
 	const pageName = page.replace('.md', '');
