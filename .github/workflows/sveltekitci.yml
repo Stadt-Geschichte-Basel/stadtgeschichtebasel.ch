@@ -11,7 +11,7 @@ on:
     - cron: 0 0 * * *
   workflow_dispatch: null
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,16 +40,8 @@ jobs:
         run: pnpm install
       - name: Install playwright
         run: pnpm exec playwright install
-  lint:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
       - name: Lint
         run: pnpm run lint
-  build:
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
       - name: Setup jampack cache
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/cache@v3
@@ -65,10 +57,6 @@ jobs:
       - name: Postbuild
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: pnpm run postbuild
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Test
         run: pnpm run test
   deploy:
