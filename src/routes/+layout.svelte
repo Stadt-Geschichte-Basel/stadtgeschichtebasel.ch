@@ -17,7 +17,9 @@
 	initializeStores();
 	const drawerStore = getDrawerStore();
 	function drawerOpen() {
-		const drawerSettings = { id: 'sidebar' };
+		const /** @type {import('@skeletonlabs/skeleton').DrawerSettings} */ drawerSettings = {
+				id: 'sidebar'
+			};
 		drawerStore.open(drawerSettings);
 	}
 	$: classesPageFooter = $page.url.pathname === '/orte' ? 'hidden' : '';
