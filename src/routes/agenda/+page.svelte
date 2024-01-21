@@ -135,6 +135,12 @@
 	let agenda = 'events';
 </script>
 
+<svelte:head>
+	<title
+		>Alle Veranstaltungen der Kooperationspartner:innen von {config.title} im Überblick (Agenda)</title
+	>
+</svelte:head>
+
 <Container>
 	<h1>Agenda</h1>
 	<p>
