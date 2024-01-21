@@ -14,7 +14,7 @@
 </script>
 
 <svelte:head>
-	<title>{config.title}</title>
+	<title>Aktuelle Beiträge von {config.title} und der Kooperationspartner:innen (Blog)</title>
 </svelte:head>
 
 <Container>

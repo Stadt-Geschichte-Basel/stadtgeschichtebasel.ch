@@ -136,9 +136,7 @@
 </script>
 
 <svelte:head>
-	<title
-		>Alle Veranstaltungen der Kooperationspartner:innen von {config.title} im Überblick (Agenda)</title
-	>
+	<title>Aktuelle Veranstaltungen der Kooperationspartner:innen von {config.title} (Agenda)</title>
 </svelte:head>
 
 <Container>
