@@ -74,9 +74,9 @@ jobs:
     permissions:
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: '${{ steps.deployment.outputs.page_url }}'
+    # environment:
+    #   name: github-pages
+    #   url: '${{ steps.deployment.outputs.page_url }}'
     steps:
       - name: Download the build artifact
         uses: actions/download-artifact@v4
@@ -90,7 +90,7 @@ jobs:
           projectName: stadtgeschichtebasel-ch
           directory: build
           # Optional: Enable this if you want to have GitHub Deployments triggered
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           # Optional: Switch what branch you are publishing to.
           # By default this will be the branch which triggered this workflow
           branch: main
