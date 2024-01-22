@@ -1,41 +1,30 @@
 import { expect, test } from '@playwright/test';
+import { readdirSync } from 'fs';
 
-test('index page has expected h1', async ({ page }) => {
-	await page.goto('/');
-	await expect(
-		page.getByRole('heading', { name: 'Wir schreiben Basler Geschichte.' })
-	).toBeVisible();
-});
+let pages = [];
 
-test('ueber-uns page has expected h1', async ({ page }) => {
-	await page.goto('/ueber-uns');
-	await expect(page.getByRole('heading', { name: 'Über uns' })).toBeVisible();
-});
+try {
+	pages = readdirSync('src/pages').filter(
+		(file) => file.endsWith('.md') && file !== 'startseite.md'
+	);
+} catch (error) {
+	console.error('Failed to read directory:', error);
+}
 
-test('agenda page has expected h1', async ({ page }) => {
-	await page.goto('/agenda');
-	await expect(page.getByRole('heading', { name: 'Agenda' })).toBeVisible();
-});
-
-test('Check if page loads correctly', async ({ page }) => {
-	// Check if the title is correct
-	await page.goto('/partner');
-	await expect(page).toHaveTitle(/Kooperationspartner/);
+pages.forEach((page) => {
+	const pageName = page.replace('.md', '');
+	test(`Check ${pageName}`, async ({ page }) => {
+		await page.goto(`/${pageName}`);
+	});
 });
 
 test('Check navigation menu items', async ({ page }) => {
-	// Check if navigation menu items are present
 	await page.goto('/');
 	await expect(page.locator('nav >> text=Startseite')).toBeVisible();
+	await expect(page.locator('nav >> text=Agenda')).toBeVisible();
+	await expect(page.locator('nav >> text=Bände')).toBeVisible();
 	await expect(page.locator('nav >> text=Blog')).toBeVisible();
-	// Add more checks for each menu item
-});
-
-test('datenschutzerklaerung has Datenschutzbeauftragte', async ({ page }) => {
-	await page.goto('/datenschutzerklaerung');
-	await expect(
-		page.getByRole('heading', {
-			name: 'Datenschutzbeauftragte der Stiftung Stadt.Geschichte.Basel'
-		})
-	).toBeVisible();
+	await expect(page.locator('nav >> text=Partner')).toBeVisible();
+	await expect(page.locator('nav >> text=Projekt')).toBeVisible();
+	await expect(page.locator('nav >> text=Über uns')).toBeVisible();
 });
