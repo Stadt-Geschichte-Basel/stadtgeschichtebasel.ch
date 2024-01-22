@@ -44,7 +44,7 @@ jobs:
       - name: Lint
         run: pnpm run lint
       - name: Setup jampack cache
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
         uses: actions/cache@v3
         with:
           path: .jampack
@@ -56,11 +56,19 @@ jobs:
       - name: Build
         run: pnpm run build
       - name: Postbuild
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
         run: pnpm run postbuild
       - name: Test
         run: pnpm run test
+      - name: Upload build artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build
+          retention-days: 1
   deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -70,11 +78,11 @@ jobs:
       name: github-pages
       url: '${{ steps.deployment.outputs.page_url }}'
     steps:
+      - name: Download the build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build
       - name: Publish to Cloudflare Pages
-        if: >-
-          github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-          && github.repository ==
-          'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: '${{ secrets.CLOUDFLARE_API_TOKEN }}'
