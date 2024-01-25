@@ -22,7 +22,8 @@ const config = {
 		adapter: adapter(),
 		// do not abort on build errors
 		prerender: {
-			handleHttpError: 'warn'
+			handleHttpError: 'warn',
+			handleMissingId: 'warn'
 		}
 	}
 };
