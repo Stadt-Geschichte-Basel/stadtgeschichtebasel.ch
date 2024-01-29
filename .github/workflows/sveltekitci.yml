@@ -12,8 +12,11 @@ on:
   workflow_dispatch: null
   repository_dispatch:
 jobs:
-  build:
+  sveltekitci:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,7 +47,7 @@ jobs:
       - name: Lint
         run: pnpm run lint
       - name: Setup jampack cache
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
         uses: actions/cache@v3
         with:
           path: .jampack
@@ -56,25 +59,12 @@ jobs:
       - name: Build
         run: pnpm run build
       - name: Postbuild
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
         run: pnpm run postbuild
       - name: Test
         run: pnpm run test
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: '${{ steps.deployment.outputs.page_url }}'
-    steps:
       - name: Publish to Cloudflare Pages
-        if: >-
-          github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-          && github.repository ==
-          'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: '${{ secrets.CLOUDFLARE_API_TOKEN }}'
@@ -82,7 +72,7 @@ jobs:
           projectName: stadtgeschichtebasel-ch
           directory: build
           # Optional: Enable this if you want to have GitHub Deployments triggered
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # gitHubToken: '${{ secrets.GITHUB_TOKEN }}'
           # Optional: Switch what branch you are publishing to.
           # By default this will be the branch which triggered this workflow
           branch: main
