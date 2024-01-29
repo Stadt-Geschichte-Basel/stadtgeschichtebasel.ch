@@ -12,6 +12,9 @@
 	import { onMount } from 'svelte';
 	import * as config from '$lib/config';
 
+	import Head from '$lib/components/Head.svelte';
+	import * as config from '$lib/config';
+
 	/** @type {import('./$types').PageData} */
 	export let data;
 
@@ -61,9 +64,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Alle Kooperationspartner:innen von {config.title} im Überblick</title>
-</svelte:head>
+<Head title="Partner | Alle Kooperationspartner*innen von {config.title}" />
 
 <section class="h-screen w-full">
 	<MapLibre

@@ -1,10 +1,13 @@
 <script>
 	import Container from '$lib/components/Container.svelte';
+	import Head from '$lib/components/Head.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 
 	import * as config from '$lib/config';
 </script>
+
+<Head title="Credits | Der Quellcode von stadtgeschichtebasel.ch ist Open Source" />
 
 <Container>
 	<h1>Credits</h1>

@@ -2,11 +2,13 @@
 	import Container from '$lib/components/Container.svelte';
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import * as config from '$lib/config';
+
+	import Head from '$lib/components/Head.svelte';
 </script>
 
+<Head title="Seite nicht gefunden" />
+
 <svelte:head>
-	<title>{$page.status}</title>
 	<script>
 		window.plausible =
 			window.plausible ||
@@ -15,6 +17,12 @@
 			};
 	</script>
 </svelte:head>
+
+{#if $page.error}
+	<h1>{$page.status} {$page.error.message}</h1>
+{:else}
+	<h1>{$page.status}</h1>
+{/if}
 
 <Container>
 	{#if $page.error}

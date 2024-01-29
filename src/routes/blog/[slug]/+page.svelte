@@ -2,18 +2,21 @@
 	import { base } from '$app/paths';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import Container from '$lib/components/Container.svelte';
+	import Head from '$lib/components/Head.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const date = new Date(data.meta.date).toLocaleDateString('de-CH').toString();
 	const modified = new Date(data.meta.modified).toLocaleDateString('de-CH').toString();
 </script>
 
-<!-- SEO -->
-<svelte:head>
-	<title>{data.meta.title}</title>
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={data.meta.title} />
-</svelte:head>
+<Head
+	title={data.meta.title}
+	date={data.meta.date}
+	modified={data.meta.modified}
+	excerpt={data.meta.excerpt}
+	jsonLdDataType="BlogPosting"
+	image={data.meta.featuredImage}
+/>
 
 <Breadcrumbs />
 

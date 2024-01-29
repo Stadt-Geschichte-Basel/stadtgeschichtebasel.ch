@@ -1,6 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import Container from '$lib/components/Container.svelte';
+	import Head from '$lib/components/Head.svelte';
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 	import * as config from '$lib/config';
 
@@ -135,9 +136,9 @@
 	let agenda = 'events';
 </script>
 
-<svelte:head>
-	<title>Aktuelle Veranstaltungen der Kooperationspartner:innen von {config.title} (Agenda)</title>
-</svelte:head>
+<Head
+	title="Agenda | Hier finden Sie alle Veranstaltungen und Ausstellungen rund um die Basler Geschichte"
+/>
 
 <Container>
 	<h1>Agenda</h1>

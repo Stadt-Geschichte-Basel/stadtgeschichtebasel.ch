@@ -38,6 +38,12 @@ export const description =
 export const email = 'info@stadtgeschichtebasel.ch';
 
 /**
+ * The instagram handle associated with the website.
+ * @type {string}
+ */
+export const instagramHandle = 'sta.ge.ba';
+
+/**
  * The Twitter handle associated with the website.
  * @type {string}
  */

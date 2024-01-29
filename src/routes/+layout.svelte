@@ -2,7 +2,6 @@
 	import { base } from '$app/paths';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Head from '$lib/components/Head.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import * as config from '$lib/config';
 	import {
@@ -35,8 +34,6 @@
 		}
 	});
 </script>
-
-<Head />
 
 <Drawer width="w-64">
 	<Navigation />
@@ -110,7 +107,7 @@
 				<ul class="grid grid-flow-col gap-4">
 					<li>
 						<a
-							href="https://www.instagram.com/sta.ge.ba/"
+							href="https://www.instagram.com/{config.instagramHandle}/"
 							aria-label="Instagram"
 							rel="noopener noreferrer"
 							><svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"
@@ -122,7 +119,7 @@
 					</li>
 					<li>
 						<a
-							href="https://twitter.com/basel_stadt"
+							href="https://twitter.com/{config.twitterHandle}/"
 							aria-label="Twitter"
 							rel="noopener noreferrer"
 						>
