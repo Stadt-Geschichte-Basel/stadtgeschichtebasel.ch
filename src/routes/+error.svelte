@@ -4,6 +4,7 @@
 	import { base } from '$app/paths';
 
 	import Head from '$lib/components/Head.svelte';
+	import * as config from '$lib/config';
 </script>
 
 <Head title="Seite nicht gefunden" />

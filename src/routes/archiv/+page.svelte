@@ -5,7 +5,7 @@
 </script>
 
 <Head
-	title="Archiv | Hier finden Sie alle Beiträge, die auf der alten Website veröffentlicht wurden."
+	title="Archiv | Hier finden Sie alle Beiträge, die auf der alten Website veröffentlicht wurden."
 	jsonLdDataType="Article"
 	date="2023-09-01"
 	modified="2023-09-01"

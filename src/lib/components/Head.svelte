@@ -107,11 +107,6 @@
 
 	let structuredData = generateStructuredData(jsonLdDataType);
 	let jsonLdString = JSON.stringify(structuredData);
-	let jsonLdScript = `
-    <script type="application/ld+json">
-      ${jsonLdString}
-    ${'<'}/script>
-  `;
 </script>
 
 <svelte:head>
@@ -156,7 +151,9 @@
 	<meta property="og:image:height" content={imageHeight} />
 
 	<!-- JSON-LD -->
-	{@html jsonLdScript}
+	<svelte:element this="script" type="application/ld+json">
+		{jsonLdString}
+	</svelte:element>
 
 	<script
 		defer

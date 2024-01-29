@@ -137,7 +137,7 @@
 </script>
 
 <Head
-	title="Agenda | Hier finden Sie alle Veranstaltungen und Ausstellungen rund um die Basler Geschichte"
+	title="Agenda | Hier finden Sie alle Veranstaltungen und Ausstellungen rund um die Basler Geschichte"
 />
 
 <Container>

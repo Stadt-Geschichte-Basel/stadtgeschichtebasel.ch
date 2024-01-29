@@ -7,7 +7,7 @@
 	import * as config from '$lib/config';
 </script>
 
-<Head title="Credits | Der Quellcode von stadtgeschichtebasel.ch ist Open Source" />
+<Head title="Credits | Der Quellcode von stadtgeschichtebasel.ch ist Open Source" />
 
 <Container>
 	<h1>Credits</h1>
