@@ -11,9 +11,7 @@
 	} from 'svelte-maplibre';
 	import { onMount } from 'svelte';
 	import * as config from '$lib/config';
-
 	import Head from '$lib/components/Head.svelte';
-	import * as config from '$lib/config';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
