@@ -118,7 +118,7 @@
 	<title>{title}</title>
 
 	<!-- General meta tags -->
-	<meta name="generator" content={`gh:${config.githubHandle}/${config.githubRepo}`} />
+	<meta name="generator" content="gh:{config.githubHandle}/{config.githubRepo}" />
 	<meta name="keywords" content={keywords} />
 	<meta name="description" content={description} />
 	<meta name="author" content={author} />
@@ -128,7 +128,13 @@
 	<link rel="canonical" href={canonical} />
 
 	<!-- Manifest link -->
-	<link rel="manifest" href={`${base}/manifest.webmanifest`} />
+	<link rel="manifest" href="{base}/manifest.webmanifest" />
+
+	<!-- RSS feed -->
+	<link rel="alternate" type="application/rss+xml" href="{base}/rss.xml" />
+
+	<!-- Sitemap link -->
+	<link rel="sitemap" type="application/xml" href="{base}/sitemap.xml" />
 
 	<!-- Twitter tags -->
 	<meta name="twitter:title" content={title} />
