@@ -123,7 +123,9 @@
 					<h3 class="text-lg font-bold">{feature.properties.name}</h3>
 					<p class="text-sm">{feature.properties.address}</p>
 					<p class="text-sm">
-						<a href={feature.properties.website} target="_blank" class="underline">Zur Webseite</a>
+						<a href={feature.properties.website} target="_blank" rel="nofollow" class="underline"
+							>Zur Webseite</a
+						>
 					</p></Popup
 				>
 			</MarkerLayer>

@@ -1,3 +1,5 @@
+import * as config from '$lib/config';
+
 /**
  * Indicates whether prerendering is enabled.
  * @type {boolean}
@@ -5,7 +7,7 @@
 export const prerender = true;
 
 /** @type {import('./$types').RequestHandler} */
-export async function GET({ url, fetch }) {
+export async function GET({ fetch }) {
 	const posts = await fetch('/posts.json').then((res) => res.json());
 	const categories = [...new Set(posts.flatMap((post) => post.categories))];
 	const pages = await fetch('/pages.json').then((res) => res.json());
@@ -15,7 +17,7 @@ export async function GET({ url, fetch }) {
 
 	pages.forEach((page) => {
 		xml += `<url>`;
-		xml += `<loc>${url.origin}/${page.slug}</loc>`;
+		xml += `<loc>${config.url}/${page.slug}</loc>`;
 		xml += `<lastmod>${page.modified}</lastmod>`;
 		xml += `<changefreq>weekly</changefreq>`;
 		xml += `<priority>1.0</priority>`;
@@ -23,14 +25,14 @@ export async function GET({ url, fetch }) {
 	});
 	staticPages.forEach((page) => {
 		xml += `<url>`;
-		xml += `<loc>${url.origin}/${page}</loc>`;
+		xml += `<loc>${config.url}/${page}</loc>`;
 		xml += `<changefreq>weekly</changefreq>`;
 		xml += `<priority>1.0</priority>`;
 		xml += `</url>`;
 	});
 	posts.forEach((post) => {
 		xml += `<url>`;
-		xml += `<loc>${url.origin}/blog/${post.slug}</loc>`;
+		xml += `<loc>${config.url}/blog/${post.slug}</loc>`;
 		xml += `<lastmod>${post.modified}</lastmod>`;
 		xml += `<changefreq>weekly</changefreq>`;
 		xml += `<priority>0.8</priority>`;
@@ -38,7 +40,7 @@ export async function GET({ url, fetch }) {
 	});
 	categories.forEach((category) => {
 		xml += `<url>`;
-		xml += `<loc>${url.origin}/blog/kategorie/${encodeURI(category)}</loc>`;
+		xml += `<loc>${config.url}/blog/kategorie/${encodeURI(category)}</loc>`;
 		xml += `<changefreq>weekly</changefreq>`;
 		xml += `<priority>0.5</priority>`;
 		xml += `</url>`;
