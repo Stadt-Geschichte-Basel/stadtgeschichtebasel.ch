@@ -1,0 +1,8 @@
+# Our security address
+Contact: mailto:info@stadtgeschichtebasel.ch
+
+# Our security policy
+Policy: https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch?tab=security-ov-file#readme
+
+# Preferred languages
+Preferred-Languages: en, de
