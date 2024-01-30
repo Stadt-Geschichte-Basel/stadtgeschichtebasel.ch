@@ -18,14 +18,14 @@ export async function GET({ url, fetch }) {
 		xml += `<loc>${url.origin}/${page.slug}</loc>`;
 		xml += `<lastmod>${page.modified}</lastmod>`;
 		xml += `<changefreq>weekly</changefreq>`;
-		xml += `<priority>1</priority>`;
+		xml += `<priority>1.0</priority>`;
 		xml += `</url>`;
 	});
 	staticPages.forEach((page) => {
 		xml += `<url>`;
 		xml += `<loc>${url.origin}/${page}</loc>`;
 		xml += `<changefreq>weekly</changefreq>`;
-		xml += `<priority>1</priority>`;
+		xml += `<priority>1.0</priority>`;
 		xml += `</url>`;
 	});
 	posts.forEach((post) => {
@@ -38,7 +38,7 @@ export async function GET({ url, fetch }) {
 	});
 	categories.forEach((category) => {
 		xml += `<url>`;
-		xml += `<loc>${url.origin}/blog/kategorie/${category}</loc>`;
+		xml += `<loc>${url.origin}/blog/kategorie/${encodeURI(category)}</loc>`;
 		xml += `<changefreq>weekly</changefreq>`;
 		xml += `<priority>0.5</priority>`;
 		xml += `</url>`;
