@@ -20,6 +20,17 @@ const config = {
 		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
+		csp: {
+			mode: 'hash',
+			directives: {
+				'default-src': ['self'],
+				'img-src': ['self', 'https:'],
+				'script-src': ['self', 'https://plausible.io'],
+				'style-src': ['self'],
+				'object-src': ['none'],
+				'connect-src': ['self', 'https://plausible.io']
+			}
+		},
 		// do not abort on build errors
 		prerender: {
 			handleHttpError: 'warn',
