@@ -154,10 +154,4 @@
 	<svelte:element this="script" type="application/ld+json">
 		{jsonLdString}
 	</svelte:element>
-
-	<script
-		defer
-		data-domain={config.domain}
-		src="https://plausible.io/js/script.outbound-links.js"
-	></script>
 </svelte:head>
