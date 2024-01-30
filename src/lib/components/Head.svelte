@@ -44,8 +44,8 @@
 				pageSpecificData = {
 					'@type': 'Article',
 					headline: title,
-					datePublished: date,
-					dateModified: modified,
+					datePublished: new Date(date).toUTCString(),
+					dateModified: new Date(modified).toUTCString(),
 					publisher: {
 						'@type': 'Organization',
 						name: config.title,
@@ -62,8 +62,8 @@
 				pageSpecificData = {
 					'@type': 'BlogPosting',
 					headline: title,
-					datePublished: date,
-					dateModified: modified,
+					datePublished: new Date(date).toUTCString(),
+					dateModified: new Date(modified).toUTCString(),
 					publisher: {
 						'@type': 'Organization',
 						name: config.title,
