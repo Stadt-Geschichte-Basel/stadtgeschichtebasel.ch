@@ -44,8 +44,8 @@
 				pageSpecificData = {
 					'@type': 'Article',
 					headline: title,
-					datePublished: date,
-					dateModified: modified,
+					datePublished: new Date(date).toUTCString(),
+					dateModified: new Date(modified).toUTCString(),
 					publisher: {
 						'@type': 'Organization',
 						name: config.title,
@@ -62,8 +62,8 @@
 				pageSpecificData = {
 					'@type': 'BlogPosting',
 					headline: title,
-					datePublished: date,
-					dateModified: modified,
+					datePublished: new Date(date).toUTCString(),
+					dateModified: new Date(modified).toUTCString(),
 					publisher: {
 						'@type': 'Organization',
 						name: config.title,
@@ -154,10 +154,4 @@
 	<svelte:element this="script" type="application/ld+json">
 		{jsonLdString}
 	</svelte:element>
-
-	<script
-		defer
-		data-domain={config.domain}
-		src="https://plausible.io/js/script.outbound-links.js"
-	></script>
 </svelte:head>
