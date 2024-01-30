@@ -1,13 +1,17 @@
 <script>
 	import Container from '$lib/components/Container.svelte';
+	import Head from '$lib/components/Head.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 </script>
 
-<svelte:head>
-	<title>Wir sind umgezogen</title>
-	<meta property="og:type" content="article" />
-</svelte:head>
+<Head
+	title="Wir sind umgezogen"
+	jsonLdDataType="Article"
+	date="2023-09-01"
+	modified="2023-09-01"
+	excerpt="Archiv der alten Website der Basler Geschichte. Hier finden Sie alle Beiträge, die auf der alten Website veröffentlicht wurden."
+/>
 
 <Container>
 	<h1>Wir sind umgezogen</h1>

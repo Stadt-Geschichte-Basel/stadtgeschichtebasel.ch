@@ -2,7 +2,6 @@
 	import { base } from '$app/paths';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Head from '$lib/components/Head.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import * as config from '$lib/config';
 	import {
@@ -22,7 +21,8 @@
 			};
 		drawerStore.open(drawerSettings);
 	}
-	$: classesPageFooter = $page.url.pathname === '/orte' ? 'hidden' : '';
+	$: classesPageContentPartner = $page.url.pathname === '/partner' ? 'overflow-hidden' : '';
+	$: classesPageFooterPartner = $page.url.pathname === '/partner' ? 'hidden' : '';
 	const footerStore = localStorageStore('footer', { closed: false });
 	$: classesFooter = $footerStore.closed ? 'hidden' : '';
 	afterNavigate((params) => {
@@ -35,16 +35,14 @@
 	});
 </script>
 
-<Head />
-
 <Drawer width="w-64">
 	<Navigation />
 </Drawer>
 
 <AppShell
 	slotSidebarLeft="bg-surface-50 dark:bg-surface-900 border-t border-surface-500/10 w-0 lg:w-64"
-	slotPageFooter="bg-white {classesPageFooter}"
-	slotPageContent="bg-white dark:bg-surface-900 border-t border-surface-500/10"
+	slotPageFooter="bg-white {classesPageFooterPartner}"
+	slotPageContent="bg-white dark:bg-surface-900 border-t border-surface-500/10 {classesPageContentPartner}"
 	scrollbarGutter="auto"
 >
 	<svelte:fragment slot="header">
@@ -109,7 +107,7 @@
 				<ul class="grid grid-flow-col gap-4">
 					<li>
 						<a
-							href="https://www.instagram.com/sta.ge.ba/"
+							href="https://www.instagram.com/{config.instagramHandle}/"
 							aria-label="Instagram"
 							rel="noopener noreferrer"
 							><svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"
@@ -121,7 +119,7 @@
 					</li>
 					<li>
 						<a
-							href="https://twitter.com/basel_stadt"
+							href="https://twitter.com/{config.twitterHandle}/"
 							aria-label="Twitter"
 							rel="noopener noreferrer"
 						>
@@ -148,9 +146,7 @@
 					{config.author}<br />
 					Hirschgässlein 21<br />
 					4051 Basel<br />
-					<a class="anchor" href="mailto:info@stadtgeschichtebasel.ch"
-						>info@stadtgeschichtebasel.ch</a
-					>
+					<a class="anchor" href="mailto:{config.email}">{config.email}</a>
 				</p>
 			</section>
 

@@ -1,14 +1,17 @@
 <script>
 	import Container from '$lib/components/Container.svelte';
+	import Head from '$lib/components/Head.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 </script>
 
-<svelte:head>
-	<title>{data.meta.title}</title>
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={data.meta.title} />
-</svelte:head>
+<Head
+	title={data.meta.title}
+	date={data.meta.date}
+	modified={data.meta.modified}
+	excerpt={data.meta.excerpt}
+	jsonLdDataType="Article"
+/>
 
 <Container>
 	<h1>{data.meta.title}</h1>

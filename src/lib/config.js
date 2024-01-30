@@ -32,6 +32,18 @@ export const description =
 	'Entdecken Sie die faszinierende Geschichte Basels. Tauchen Sie ein in die Kultur und Geschichte der Stadt am Rheinknie.';
 
 /**
+ * The email address associated with the website.
+ * @type {string}
+ */
+export const email = 'info@stadtgeschichtebasel.ch';
+
+/**
+ * The instagram handle associated with the website.
+ * @type {string}
+ */
+export const instagramHandle = 'sta.ge.ba';
+
+/**
  * The Twitter handle associated with the website.
  * @type {string}
  */

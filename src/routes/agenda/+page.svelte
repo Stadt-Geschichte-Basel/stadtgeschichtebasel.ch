@@ -1,7 +1,9 @@
 <script>
 	import { base } from '$app/paths';
 	import Container from '$lib/components/Container.svelte';
+	import Head from '$lib/components/Head.svelte';
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+	import * as config from '$lib/config';
 
 	/**
 	 * @typedef {Object} Event
@@ -126,12 +128,17 @@
 	 * @type {Event[]}
 	 */
 	const exhibitions = data.exhibitions;
+
 	/**
 	 * The currently selected agenda.
 	 * @type {'events' | 'exhibitions' | 'info'}
 	 */
 	let agenda = 'events';
 </script>
+
+<Head
+	title="Agenda | Hier finden Sie alle Veranstaltungen und Ausstellungen rund um die Basler Geschichte"
+/>
 
 <Container>
 	<h1>Agenda</h1>
@@ -201,13 +208,11 @@
 		<h2>Info</h2>
 		<p>
 			Alle Daten auf dieser Seite stammen von <a href="https://agendabasel.ch">agendabasel.ch</a>
-			und werden der Stiftung <a href="{base}/ueber-uns">Stadt.Geschichte.Basel</a> im Rahmen einer
-			Kooperation kostenlos zur Verfügung gestellt. Falls Sie eine Veranstaltung oder Ausstellung
-			auf Stadt.Geschichte.Basel publizieren möchten, wenden Sie sich bitte direkt an agendabasel.ch
-			oder an
-			<a href="mailto:vermittlung@stadtgeschichtebasel.ch">vermittlung@stadtgeschichtebasel.ch</a>.
-			Die Stiftung Stadt.Geschichte.Basel übernimmt keine Verantwortung für die Richtigkeit der
-			Daten.
+			und werden der <a href="{base}/ueber-uns">{config.title}</a> im Rahmen einer Kooperation
+			kostenlos zur Verfügung gestellt. Falls Sie eine Veranstaltung oder Ausstellung auf
+			{config.title} publizieren möchten, wenden Sie sich bitte direkt an agendabasel.ch oder an
+			<a href="mailto:{config.email}">{config.email}</a>. Die {config.author}
+			übernimmt keine Verantwortung für die Richtigkeit der Daten.
 		</p>
 	{/if}
 </Container>
