@@ -8,7 +8,7 @@
 	export let description = config.description;
 	export let author = config.author;
 	export let canonical = config.url + $page.url.pathname;
-	export let image = config.url + '/android-chrome-512x512.png';
+	export let image = '/android-chrome-512x512.png';
 	export let imageWidth = '512';
 	export let imageHeight = '512';
 	export let jsonLdDataType = 'WebSite';
