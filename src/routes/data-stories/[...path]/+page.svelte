@@ -7,4 +7,4 @@
 
 <Head />
 
-<iframe src={data.url} class="h-full w-full" frameborder="0" title={config.title}></iframe>
+<iframe src={data.url} class="h-full w-full" frameborder="0" title={config.title} allow="fullscreen"></iframe>
