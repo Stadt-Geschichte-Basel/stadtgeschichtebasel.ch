@@ -1,5 +1,4 @@
 <script>
-
 	import { onMount } from 'svelte';
 	import maplibregl from 'maplibre-gl';
 	import 'maplibre-gl/dist/maplibre-gl.css';
@@ -17,23 +16,7 @@
 		name: feature.properties.name
 	}));
 
-	function flyToFeature(feature, zoomLevel = 18) {
-		map.flyTo({
-			center: feature.geometry.coordinates,
-			zoom: zoomLevel,
-			speed: 0.5
-		});
-	}
-
-	function handleSelectChange(event) {
-		const selectedFeature = features.find((f) => f.label === event.target.value);
-		if (selectedFeature) {
-			flyToFeature(selectedFeature);
-		}
-	}
-
 	let maxLength = 0; // default maxLength
-
 
 	class SelectInputControl {
 		constructor(features, map) {
@@ -51,10 +34,10 @@
 
 			// Füge Optionen für jedes Feature hinzu
 			features.forEach((feature, index) => {
-			const option = document.createElement('option');
-			option.value = index;
-			option.textContent = feature.properties.name;
-			select.appendChild(option);
+				const option = document.createElement('option');
+				option.value = index;
+				option.textContent = feature.properties.name;
+				select.appendChild(option);
 			});
 
 			// Füge einen Event-Handler zum Zoomen hinzu, wenn ein Feature ausgewählt wird
@@ -67,12 +50,12 @@
 			const select = this._container.querySelector('#featureSelector');
 			const selectedIndex = select.value;
 			if (selectedIndex !== '') {
-			const selectedFeature = this._features[selectedIndex];
-			this._map.flyTo({
-				center: selectedFeature.geometry.coordinates,
-				zoom: 18,
-				speed: 0.5
-			});
+				const selectedFeature = this._features[selectedIndex];
+				this._map.flyTo({
+					center: selectedFeature.geometry.coordinates,
+					zoom: 18,
+					speed: 0.5
+				});
 			}
 		}
 
@@ -87,7 +70,6 @@
 		}
 	}
 
-
 	onMount(() => {
 		if (window.innerWidth <= 360) {
 			maxLength = 15;
@@ -101,23 +83,24 @@
 
 		map = new maplibregl.Map({
 			container: 'map',
-			style: "https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json",//'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+			style:
+				'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json', //'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
 			center: [7.59249, 47.55654], // starting position
 			zoom: 14, // starting zoom;
-			maxBounds: [ 
+			maxBounds: [
 				[5.94, 45.81],
 				[10.51, 47.81]
-				],
+			],
 			minZoom: 12,
 			maxZoom: 20,
 			scrollZoom: true,
-			attributionControl: true,
-				});
+			attributionControl: true
+		});
 
-			// Adding scale bar to the map
-			let scale = new maplibregl.ScaleControl({
+		// Adding scale bar to the map
+		let scale = new maplibregl.ScaleControl({
 			maxWidth: 200,
-			unit: 'metric',
+			unit: 'metric'
 		});
 		map.addControl(scale, 'bottom-left');
 
@@ -127,13 +110,12 @@
 		const selectInputControl = new SelectInputControl(features, map);
 		map.addControl(selectInputControl, 'top-left');
 
-
 		map.on('load', async () => {
 			map.on('error', function (e) {
 				console.error('Maplibre GL Error:', e.error);
 			});
 
-			const image = await map.loadImage('./src/lib/data/pin-48.png')
+			const image = await map.loadImage('./src/lib/data/pin-48.png');
 			map.addImage('custom-marker', image.data);
 
 			map.addSource('collaborators', {
@@ -141,7 +123,7 @@
 				data: data,
 				cluster: true,
 				clusterMaxZoom: 15, // Max zoom to cluster points on
-				clusterRadius: 60// Radius of each cluster when clustering points (defaults to 50)
+				clusterRadius: 60 // Radius of each cluster when clustering points (defaults to 50)
 			});
 
 			map.addLayer({
@@ -156,15 +138,7 @@
 					//   * Yellow, 30px circles when point count is between 100 and 750
 					//   * Pink, 40px circles when point count is greater than or equal to 750
 					'circle-color': '#70416C',
-					'circle-radius': [
-						'step',
-						['get', 'point_count'],
-						20,
-						3,
-						30,
-						5,
-						40
-					]
+					'circle-radius': ['step', ['get', 'point_count'], 20, 3, 30, 5, 40]
 				}
 			});
 
@@ -177,22 +151,20 @@
 					'text-field': '{point_count_abbreviated}',
 					'text-font': ['Frutiger Neue Bold'],
 					'text-size': 20,
-					'text-offset': [0, 0.15],
+					'text-offset': [0, 0.15]
 				},
-				paint:{
+				paint: {
 					'text-color': '#FFFFFF'
 				}
 			});
 
-
-
 			// Add a symbol layer
 			map.addLayer({
-				'id': 'collaborators',
-				'type': 'symbol',
-				'source': 'collaborators',
-				'filter': ['!', ['has', 'point_count']],
-				'layout': {
+				id: 'collaborators',
+				type: 'symbol',
+				source: 'collaborators',
+				filter: ['!', ['has', 'point_count']],
+				layout: {
 					'icon-image': 'custom-marker',
 					'icon-overlap': 'always',
 					'icon-size': 1,
@@ -201,22 +173,19 @@
 					'text-variable-anchor': ['left', 'bottom', 'top', 'right'],
 					'text-radial-offset': 0.8,
 					'text-justify': 'auto',
-					'text-size': 19,
+					'text-size': 19
 				},
-				paint:{
+				paint: {
 					'text-color': '#70416C',
 					'text-halo-width': 4,
 					'text-halo-color': 'white'
 				}
 			});
 
-
-
-
 			// inspect a cluster on click
 			map.on('click', 'clusters', async (e) => {
-            	const features = map.queryRenderedFeatures(e.point, {
-                	layers: ['clusters']
+				const features = map.queryRenderedFeatures(e.point, {
+					layers: ['clusters']
 				});
 				const clusterId = features[0].properties.cluster_id;
 				const zoom = await map.getSource('collaborators').getClusterExpansionZoom(clusterId);
@@ -244,12 +213,14 @@
 
 				new maplibregl.Popup()
 					.setLngLat(coordinates)
-					.setHTML(`<h3 class="text-lg font-bold">${name}</h3>
+					.setHTML(
+						`<h3 class="text-lg font-bold">${name}</h3>
 							<p class="text-sm">${description}</p>
 							<p class="text-sm">${address}</p>
 							<p class="text-sm">
 							<a href=${website} target="_blank" rel="nofollow" class="underline">Zur Webseite</a
-							</p>`)
+							</p>`
+					)
 					.addTo(map);
 			});
 
@@ -270,31 +241,17 @@
 				map.getCanvas().style.cursor = '';
 			});
 		});
-		
 	});
-
-	function truncateString(str) {
-		if (str.length > maxLength) {
-			return str.slice(0, maxLength) + '...';
-		} else {
-			return str;
-		}
-	}
 </script>
 
 <Head title="Partner | Alle Kooperationspartner*innen von {config.title}" />
 
 <section class="h-full w-full">
-	<div class="h-full w-full" id='map' ></div>	
+	<div class="h-full w-full" id="map"></div>
 </section>
 
 <style>
-	main {
-  overflow-y: hidden;
-}
-
-:global(body) {
-  overflow: hidden;
-}
-
+	:global(body) {
+		overflow: hidden;
+	}
 </style>
