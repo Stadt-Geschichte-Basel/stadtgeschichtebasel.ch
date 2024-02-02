@@ -269,8 +269,6 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		$(tag).remove();
 	});
 
-	$('figure, figcaption, img').removeAttr('class');
-
 	$('figure:has(iframe)').each(function () {
 		const innerContent = $(this).html();
 		$(this).replaceWith(innerContent);
