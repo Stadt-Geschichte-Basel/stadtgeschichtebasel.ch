@@ -25,8 +25,8 @@ export async function GET({ fetch }) {
 		rss += `<title>${post.title}</title>`;
 		rss += `<link>${config.url}/blog/${post.slug}</link>`;
 		rss += `<guid>${config.url}/blog/${post.slug}</guid>`;
-		rss += `<pubDate>${new Date(post.date).toUTCString()}</pubDate>`;
-		rss += `<lastBuildDate>${new Date(post.modified).toUTCString()}</lastBuildDate>`;
+		rss += `<pubDate>${new Date(post.date).toISOString()}</pubDate>`;
+		rss += `<lastBuildDate>${new Date(post.modified).toISOString()}</lastBuildDate>`;
 		rss += `<description>${post.excerpt}</description>`;
 		rss += `</item>`;
 	});
@@ -36,8 +36,8 @@ export async function GET({ fetch }) {
 		rss += `<title>${page.title}</title>`;
 		rss += `<link>${config.url}/${page.slug}</link>`;
 		rss += `<guid>${config.url}/${page.slug}</guid>`;
-		rss += `<pubDate>${new Date(page.date).toUTCString()}</pubDate>`;
-		rss += `<lastBuildDate>${new Date(page.modified).toUTCString()}</lastBuildDate>`;
+		rss += `<pubDate>${new Date(page.date).toISOString()}</pubDate>`;
+		rss += `<lastBuildDate>${new Date(page.modified).toISOString()}</lastBuildDate>`;
 		rss += `<description>${page.excerpt}</description>`;
 		rss += `</item>`;
 	});
@@ -47,8 +47,8 @@ export async function GET({ fetch }) {
 		rss += `<title>${page}</title>`;
 		rss += `<link>${config.url}/${page}</link>`;
 		rss += `<guid>${config.url}/${page}</guid>`;
-		rss += `<pubDate>${new Date().toUTCString()}</pubDate>`;
-		rss += `<lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`;
+		rss += `<pubDate>${new Date().toISOString()}</pubDate>`;
+		rss += `<lastBuildDate>${new Date().toISOString()}</lastBuildDate>`;
 		rss += `<description>${page}</description>`;
 		rss += `</item>`;
 	});
