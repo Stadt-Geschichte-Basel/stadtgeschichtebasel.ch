@@ -198,7 +198,7 @@
 					'icon-size': 1,
 					'text-field': ['get', 'label'],
 					'text-font': ['Frutiger Neue Bold'],
-					'text-variable-anchor': ['left', 'bottom', 'top', 'rightgit'],
+					'text-variable-anchor': ['left', 'bottom', 'top', 'right'],
 					'text-radial-offset': 0.8,
 					'text-justify': 'auto',
 					'text-size': 19,
