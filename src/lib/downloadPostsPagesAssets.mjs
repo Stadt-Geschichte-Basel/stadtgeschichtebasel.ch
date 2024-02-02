@@ -292,6 +292,14 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		}
 	});
 
+	$('figure, figcaption, img').removeAttr('class');
+
+	$('figure').each(function () {
+		$(this).addClass('flex flex-col items-center justify-center w-full');
+		$('img', this).addClass('mx-auto mb-2'); // Centers the image and adds margin at the bottom
+		$('figcaption', this).addClass('text-center'); // Centers the caption text
+	});
+
 	$('img').each((i, elem) => {
 		const url = getAssetUrl(elem, $);
 		if (url && url.startsWith(baseURL)) {
