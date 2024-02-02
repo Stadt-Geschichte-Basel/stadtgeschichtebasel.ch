@@ -15,20 +15,7 @@ const DOMPurify = createDOMPurify(window);
  * @type {TurndownService}
  */
 let turndownService = new TurndownService();
-turndownService.keep(['iframe', 'audio', 'video']);
-const figureToMarkdownRule = {
-	filter: (node) =>
-		node.nodeName === 'FIGURE' && node.querySelector('img') && node.querySelector('figcaption'),
-	replacement: (content, node) => {
-		const imgElement = node.querySelector('img');
-		const figcaptionElement = node.querySelector('figcaption');
-		const imageUrl = imgElement.getAttribute('src') || '';
-		const altText = imgElement.getAttribute('alt').replace(/"/g, "'") || '';
-		const captionText = figcaptionElement.textContent || '';
-		return `![${altText}](${imageUrl})\nFigure: ${captionText}\n\n`;
-	}
-};
-turndownService.addRule('figureToMarkdown', figureToMarkdownRule);
+turndownService.keep(['iframe', 'audio', 'video', 'table', 'figure', 'figcaption', 'img']);
 
 /**
  * The base URL of the website.
@@ -282,6 +269,8 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		$(tag).remove();
 	});
 
+	$('figure, figcaption, img').removeAttr('class');
+
 	$('figure:has(iframe)').each(function () {
 		const innerContent = $(this).html();
 		$(this).replaceWith(innerContent);
@@ -307,8 +296,25 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		const url = getAssetUrl(elem, $);
 		if (url && url.startsWith(baseURL)) {
 			const relativeUrl = path.join('/', url.replace(baseURL, ''));
-			if ($(elem).attr('src')) $(elem).attr('src', relativeUrl);
+			$(elem).attr('src', relativeUrl);
 			assetUrls.push(url);
+		}
+
+		// Handle srcset
+		const srcset = $(elem).attr('srcset');
+		if (srcset) {
+			const newSrcset = srcset
+				.split(',')
+				.map((src) => {
+					let [url, size] = src.trim().split(' ');
+					assetUrls.push(url);
+					if (url.startsWith(baseURL)) {
+						url = path.join('/', url.replace(baseURL, ''));
+					}
+					return `${url} ${size}`;
+				})
+				.join(', ');
+			$(elem).attr('srcset', newSrcset);
 		}
 	});
 
