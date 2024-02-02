@@ -23,6 +23,7 @@
 	}
 	$: classesPageContentPartner = $page.url.pathname === '/partner' ? 'overflow-hidden' : '';
 	$: classesPageFooterPartner = $page.url.pathname === '/partner' ? 'hidden' : '';
+	$: classesPageFooterDataStories = $page.url.pathname.startsWith('/data-stories') ? 'hidden' : '';
 	const footerStore = localStorageStore('footer', { closed: false });
 	$: classesFooter = $footerStore.closed ? 'hidden' : '';
 	afterNavigate((params) => {
@@ -41,7 +42,7 @@
 
 <AppShell
 	slotSidebarLeft="bg-surface-50 dark:bg-surface-900 border-t border-surface-500/10 w-0 lg:w-64"
-	slotPageFooter="bg-white {classesPageFooterPartner}"
+	slotPageFooter="bg-white {classesPageFooterPartner} {classesPageFooterDataStories}"
 	slotPageContent="bg-white dark:bg-surface-900 border-t border-surface-500/10 {classesPageContentPartner}"
 	scrollbarGutter="auto"
 >
