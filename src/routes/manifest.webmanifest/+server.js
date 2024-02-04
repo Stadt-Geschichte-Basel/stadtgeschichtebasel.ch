@@ -25,6 +25,7 @@ export const GET = () =>
 				short_name: config.title,
 				lang: config.lang,
 				description: config.description,
+				categories: ['education', 'blog'],
 				id: config.url + '/',
 				start_url: '/',
 				scope: '/',
