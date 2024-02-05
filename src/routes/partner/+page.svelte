@@ -26,7 +26,6 @@
 			// Erstelle das Control-Element
 			this._container = document.createElement('div');
 			this._container.className = 'maplibregl-ctrl rounded bg-white p-2 text-xl shadow-md';
-			//this._container.className = 'rounded bg-white p-2 text-xl shadow-md';
 			const select = document.createElement('select');
 			select.id = 'featureSelector';
 			select.className = 'bg-white';
@@ -111,135 +110,136 @@
 		map.addControl(selectInputControl, 'top-left');
 
 		map.on('load', async () => {
-			map.on('error', function (e) {
-				console.error('Maplibre GL Error:', e.error);
-			});
+			try {
+				const image = await map.loadImage('./src/lib/data/pin-48.png');
+				map.addImage('custom-marker', image.data);
 
-			const image = await map.loadImage('./src/lib/data/pin-48.png');
-			map.addImage('custom-marker', image.data);
-
-			map.addSource('collaborators', {
-				type: 'geojson',
-				data: data,
-				cluster: true,
-				clusterMaxZoom: 15, // Max zoom to cluster points on
-				clusterRadius: 60 // Radius of each cluster when clustering points (defaults to 50)
-			});
-
-			map.addLayer({
-				id: 'clusters',
-				type: 'circle',
-				source: 'collaborators',
-				filter: ['has', 'point_count'],
-				paint: {
-					// Use step expressions (https://maplibre.org/maplibre-style-spec/#expressions-step)
-					// with three steps to implement three types of circles:
-					//   * Blue, 20px circles when point count is less than 100
-					//   * Yellow, 30px circles when point count is between 100 and 750
-					//   * Pink, 40px circles when point count is greater than or equal to 750
-					'circle-color': '#70416C',
-					'circle-radius': ['step', ['get', 'point_count'], 20, 3, 30, 5, 40]
-				}
-			});
-
-			map.addLayer({
-				id: 'cluster-count',
-				type: 'symbol',
-				source: 'collaborators',
-				filter: ['has', 'point_count'],
-				layout: {
-					'text-field': '{point_count_abbreviated}',
-					'text-font': ['Frutiger Neue Bold'],
-					'text-size': 20,
-					'text-offset': [0, 0.15]
-				},
-				paint: {
-					'text-color': '#FFFFFF'
-				}
-			});
-
-			// Add a symbol layer
-			map.addLayer({
-				id: 'collaborators',
-				type: 'symbol',
-				source: 'collaborators',
-				filter: ['!', ['has', 'point_count']],
-				layout: {
-					'icon-image': 'custom-marker',
-					'icon-overlap': 'always',
-					'icon-size': 1,
-					'text-field': ['get', 'label'],
-					'text-font': ['Frutiger Neue Bold'],
-					'text-variable-anchor': ['left', 'bottom', 'top', 'right'],
-					'text-radial-offset': 0.8,
-					'text-justify': 'auto',
-					'text-size': 19
-				},
-				paint: {
-					'text-color': '#70416C',
-					'text-halo-width': 4,
-					'text-halo-color': 'white'
-				}
-			});
-
-			// inspect a cluster on click
-			map.on('click', 'clusters', async (e) => {
-				const features = map.queryRenderedFeatures(e.point, {
-					layers: ['clusters']
+				map.addSource('collaborators', {
+					type: 'geojson',
+					data: data,
+					cluster: true,
+					clusterMaxZoom: 15, // Max zoom to cluster points on
+					clusterRadius: 60 // Radius of each cluster when clustering points (defaults to 50)
 				});
-				const clusterId = features[0].properties.cluster_id;
-				const zoom = await map.getSource('collaborators').getClusterExpansionZoom(clusterId);
-				map.easeTo({
-					center: features[0].geometry.coordinates,
-					zoom
+
+				map.addLayer({
+					id: 'clusters',
+					type: 'circle',
+					source: 'collaborators',
+					filter: ['has', 'point_count'],
+					paint: {
+						// Use step expressions (https://maplibre.org/maplibre-style-spec/#expressions-step)
+						// with three steps to implement three types of circles:
+						//   * Blue, 20px circles when point count is less than 100
+						//   * Yellow, 30px circles when point count is between 100 and 750
+						//   * Pink, 40px circles when point count is greater than or equal to 750
+						'circle-color': '#70416C',
+						'circle-radius': ['step', ['get', 'point_count'], 20, 3, 30, 5, 40]
+					}
 				});
-			});
 
-			// When a click event occurs on a feature in the places layer, open a popup at the
-			// location of the feature, with description HTML from its properties.
-			map.on('click', 'collaborators', (e) => {
-				const coordinates = e.features[0].geometry.coordinates.slice();
-				const name = e.features[0].properties.name;
-				const description = e.features[0].properties.description;
-				const address = e.features[0].properties.address;
-				const website = e.features[0].properties.website;
+				map.addLayer({
+					id: 'cluster-count',
+					type: 'symbol',
+					source: 'collaborators',
+					filter: ['has', 'point_count'],
+					layout: {
+						'text-field': '{point_count_abbreviated}',
+						'text-font': ['Frutiger Neue Bold'],
+						'text-size': 20,
+						'text-offset': [0, 0.15]
+					},
+					paint: {
+						'text-color': '#FFFFFF'
+					}
+				});
 
-				// Ensure that if the map is zoomed out such that multiple
-				// copies of the feature are visible, the popup appears
-				// over the copy being pointed to.
-				while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-					coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-				}
+				// Add a symbol layer
+				map.addLayer({
+					id: 'collaborators',
+					type: 'symbol',
+					source: 'collaborators',
+					filter: ['!', ['has', 'point_count']],
+					layout: {
+						'icon-image': 'custom-marker',
+						'icon-overlap': 'always',
+						'icon-size': 1,
+						'text-field': ['get', 'label'],
+						'text-font': ['Frutiger Neue Bold'],
+						'text-variable-anchor': ['left', 'bottom', 'top', 'right'],
+						'text-radial-offset': 0.8,
+						'text-justify': 'auto',
+						'text-size': 19
+					},
+					paint: {
+						'text-color': '#70416C',
+						'text-halo-width': 4,
+						'text-halo-color': 'white'
+					}
+				});
 
-				new maplibregl.Popup()
-					.setLngLat(coordinates)
-					.setHTML(
-						`<h3 class="text-lg font-bold">${name}</h3>
-							<p class="text-sm">${description}</p>
-							<p class="text-sm">${address}</p>
-							<p class="text-sm">
-							<a href=${website} target="_blank" rel="nofollow" class="underline">Zur Webseite</a
-							</p>`
-					)
-					.addTo(map);
-			});
+				// inspect a cluster on click
+				map.on('click', 'clusters', async (e) => {
+					const features = map.queryRenderedFeatures(e.point, {
+						layers: ['clusters']
+					});
+					const clusterId = features[0].properties.cluster_id;
+					const zoom = await map.getSource('collaborators').getClusterExpansionZoom(clusterId);
+					map.easeTo({
+						center: features[0].geometry.coordinates,
+						zoom
+					});
+				});
 
-			// Change the cursor to a pointer when the mouse is over the places layer.
-			map.on('mouseenter', 'collaborators', () => {
-				map.getCanvas().style.cursor = 'pointer';
-			});
+				// When a click event occurs on a feature in the places layer, open a popup at the
+				// location of the feature, with description HTML from its properties.
+				map.on('click', 'collaborators', (e) => {
+					const coordinates = e.features[0].geometry.coordinates.slice();
+					const name = e.features[0].properties.name;
+					const description = e.features[0].properties.description;
+					const address = e.features[0].properties.address;
+					const website = e.features[0].properties.website;
 
-			// Change it back to a pointer when it leaves.
-			map.on('mouseleave', 'collaborators', () => {
-				map.getCanvas().style.cursor = '';
-			});
+					// Ensure that if the map is zoomed out such that multiple
+					// copies of the feature are visible, the popup appears
+					// over the copy being pointed to.
+					while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+						coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+					}
 
-			map.on('mouseenter', 'clusters', () => {
-				map.getCanvas().style.cursor = 'pointer';
-			});
-			map.on('mouseleave', 'clusters', () => {
-				map.getCanvas().style.cursor = '';
-			});
+					new maplibregl.Popup()
+						.setLngLat(coordinates)
+						.setHTML(
+							`<h3 class="text-lg font-bold">${name}</h3>
+								<p class="text-sm">${description}</p>
+								<p class="text-sm">${address}</p>
+								<p class="text-sm">
+								<a href=${website} target="_blank" rel="nofollow" class="underline">Zur Webseite</a
+								</p>`
+						)
+						.addTo(map);
+				});
+
+				// Change the cursor to a pointer when the mouse is over the places layer.
+				map.on('mouseenter', 'collaborators', () => {
+					map.getCanvas().style.cursor = 'pointer';
+				});
+
+				// Change it back to a pointer when it leaves.
+				map.on('mouseleave', 'collaborators', () => {
+					map.getCanvas().style.cursor = '';
+				});
+
+				map.on('mouseenter', 'clusters', () => {
+					map.getCanvas().style.cursor = 'pointer';
+				});
+				map.on('mouseleave', 'clusters', () => {
+					map.getCanvas().style.cursor = '';
+				});
+			} catch(error) {
+				console.error('Error initializing map:', error);
+			}
+			
 		});
 	});
 </script>
