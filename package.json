@@ -57,7 +57,6 @@
 		"remark-captions": "^2.2.3",
 		"svelte": "^4.2.9",
 		"svelte-check": "^3.6.3",
-		"svelte-maplibre": "^0.7.7",
 		"tailwindcss": "^3.4.1",
 		"turndown": "^7.1.2",
 		"typescript": "^5.3.3",

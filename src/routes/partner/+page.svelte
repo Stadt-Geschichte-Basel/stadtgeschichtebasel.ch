@@ -23,7 +23,7 @@
 			this._map = map;
 			this._features = features;
 
-			// Erstelle das Control-Element
+			// create the select element
 			this._container = document.createElement('div');
 			this._container.className = 'maplibregl-ctrl rounded bg-white p-2 text-xl shadow-md';
 			const select = document.createElement('select');
@@ -31,7 +31,7 @@
 			select.className = 'bg-white';
 			select.innerHTML = '<option value="">Springe zu ...</option>';
 
-			// Füge Optionen für jedes Feature hinzu
+			// add the features to the select element
 			features.forEach((feature, index) => {
 				const option = document.createElement('option');
 				option.value = index;
@@ -39,7 +39,7 @@
 				select.appendChild(option);
 			});
 
-			// Füge einen Event-Handler zum Zoomen hinzu, wenn ein Feature ausgewählt wird
+			// add event listener to the select element to zoom to the selected feature
 			select.addEventListener('change', () => this.zoomToSelectedFeature());
 
 			this._container.appendChild(select);
@@ -83,7 +83,7 @@
 		map = new maplibregl.Map({
 			container: 'map',
 			style:
-				'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json', //'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+				'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
 			center: [7.59249, 47.55654], // starting position
 			zoom: 14, // starting zoom;
 			maxBounds: [
@@ -96,14 +96,14 @@
 			attributionControl: true
 		});
 
-		// Adding scale bar to the map
+		// add scale bar to the map
 		let scale = new maplibregl.ScaleControl({
 			maxWidth: 200,
 			unit: 'metric'
 		});
 		map.addControl(scale, 'bottom-left');
 
-		// Adding zoom and rotation controls to the map
+		// add zoom and rotation controls to the map
 		map.addControl(new maplibregl.NavigationControl());
 
 		const selectInputControl = new SelectInputControl(features, map);
@@ -111,7 +111,7 @@
 
 		map.on('load', async () => {
 			try {
-				const image = await map.loadImage('./src/lib/data/pin-48.png');
+				const image = await map.loadImage('./src/lib/images/pin-48.png');
 				map.addImage('custom-marker', image.data);
 
 				map.addSource('collaborators', {
@@ -119,7 +119,7 @@
 					data: data,
 					cluster: true,
 					clusterMaxZoom: 15, // Max zoom to cluster points on
-					clusterRadius: 60 // Radius of each cluster when clustering points (defaults to 50)
+					clusterRadius: 60 // Radius of each cluster when clustering points
 				});
 
 				map.addLayer({
@@ -154,7 +154,7 @@
 					}
 				});
 
-				// Add a symbol layer
+				// add a symbol layer
 				map.addLayer({
 					id: 'collaborators',
 					type: 'symbol',
@@ -236,22 +236,14 @@
 				map.on('mouseleave', 'clusters', () => {
 					map.getCanvas().style.cursor = '';
 				});
-			} catch(error) {
+			} catch (error) {
 				console.error('Error initializing map:', error);
 			}
-			
 		});
 	});
 </script>
 
 <Head title="Partner | Alle Kooperationspartner*innen von {config.title}" />
 
-<section class="h-full w-full">
-	<div class="h-full w-full" id="map"></div>
-</section>
+<div class="h-full w-full" id="map"></div>
 
-<style>
-	:global(body) {
-		overflow: hidden;
-	}
-</style>
