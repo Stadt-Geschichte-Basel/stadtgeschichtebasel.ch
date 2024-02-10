@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
+	import * as config from '$lib/config';
 
 	const drawerStore = getDrawerStore();
 	const drawerClose = () => drawerStore.close();
@@ -50,7 +51,7 @@
 
 	<a
 		class="variant-ghost btn btn-sm mt-4"
-		href="mailto:info@stadtgeschichtebasel.ch?subject=Fehler%20auf%20{currentURL}&body={mailtoBody}"
+		href="mailto:{config.email}?subject=Fehler%20auf%20{currentURL}&body={mailtoBody}"
 		>Fehler melden</a
 	>
 </nav>
