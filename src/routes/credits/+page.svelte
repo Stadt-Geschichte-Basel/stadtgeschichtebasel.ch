@@ -31,10 +31,10 @@
 	<p>
 		Die folgenden Personen haben zum <a
 			href="https://github.com/{config.githubHandle}/{config.githubRepo}/"
-			rel="”nofollow”"
+			rel="nofollow"
 			target="_blank">Quellcode</a
 		>
-		von {config.title} beigetragen
+		von {config.title} beigetragen:
 	</p>
 	<ul class="grid grid-cols-2 gap-4">
 		{#each data.contributors as contributor}
@@ -43,7 +43,7 @@
 					<img src={contributor.avatar_url} alt="Avatar of {contributor.login}" />
 				</div>
 				<div class="text-lg font-extrabold">
-					<a href={contributor.html_url} rel="”nofollow”" target="_blank">{contributor.login}</a>
+					<a href={contributor.html_url} rel="nofollow" target="_blank">{contributor.login}</a>
 				</div>
 			</li>
 		{/each}
@@ -51,7 +51,7 @@
 	<p>
 		Diese <a
 			href="https://github.com/{config.githubHandle}/{config.githubRepo}/graphs/contributors"
-			rel="”nofollow”"
+			rel="nofollow"
 			target="_blank">Liste</a
 		> wurde automatisch generiert. Co-authored Commits sind nicht berücksichtigt.
 	</p>
@@ -60,33 +60,33 @@
 
 	<p>
 		{config.title} wurde mit <a href="https://kit.svelte.dev/">SvelteKit</a>,
-		<a href="https://www.skeleton.dev/" rel="”nofollow”" target="_blank">Skeleton</a>
+		<a href="https://www.skeleton.dev/" rel="nofollow" target="_blank">Skeleton</a>
 		und vielen
 		<a
 			href="https://github.com/{config.githubHandle}/{config.githubRepo}/blob/main/package.json"
-			rel="”nofollow”"
+			rel="nofollow"
 			target="_blank">anderen Libraries</a
 		>
 		erstellt. Das Projekt ist Open Source (<a
 			href="https://github.com/{config.githubHandle}/{config.githubRepo}/blob/main/LICENSE.md"
-			rel="”nofollow”"
+			rel="nofollow"
 			target="_blank">AGPL-3.0-Lizenz</a
 		>) und der Quellcode ist auf
 		<a
 			href="https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch"
-			rel="”nofollow”"
+			rel="nofollow"
 			target="_blank">GitHub</a
 		>
 		verfügbar.
 	</p>
 
 	<p>
-		Die Inhalte werden über <a href="https://pages.cloudflare.com/" rel="”nofollow”" target="_blank"
+		Die Webseite wird über <a href="https://pages.cloudflare.com/" rel="nofollow" target="_blank"
 			>Cloudflare Pages</a
 		>
-		ausgeliefert, unter
-		<a href="https://sgb.hypotheses.org/" rel="”nofollow”" target="_blank">sgb.hypotheses.org</a>
+		ausgeliefert, die Inhalte unter
+		<a href="https://sgb.hypotheses.org/" rel="nofollow" target="_blank">sgb.hypotheses.org</a>
 		verwaltet und von
-		<a href="https://hypotheses.org/" rel="”nofollow”" target="_blank">Hypotheses</a> langzeitarchiviert.
+		<a href="https://hypotheses.org/" rel="nofollow" target="_blank">Hypotheses</a> langzeitarchiviert.
 	</p>
 </Container>
