@@ -15,13 +15,32 @@ const DOMPurify = createDOMPurify(window);
  * @type {TurndownService}
  */
 let turndownService = new TurndownService();
-turndownService.keep(['iframe', 'audio', 'video', 'table', 'figure', 'figcaption', 'img']);
+turndownService.keep([
+	'aside',
+	'audio',
+	'blockquote',
+	'button',
+	'code',
+	'embed',
+	'figure',
+	'figcaption',
+	'img',
+	'iframe',
+	'table',
+	'video'
+]);
 
 /**
  * The base URL of the website.
  * @type {string}
  */
 const baseURL = 'https://sgb.hypotheses.org/';
+
+/**
+ * The new URL of the website.
+ * @type {string}
+ */
+const newURL = 'https://stadtgeschichtebasel.ch/';
 
 /**
  * The endpoint of the WordPress JSON API.
@@ -280,17 +299,16 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 
 	$('a').each((i, elem) => {
 		const url = $(elem).attr('href');
+		if (url && url.startsWith(newURL)) {
+			const relativeUrl = path.join('.', url.replace(newURL, ''));
+			$(elem).attr('href', relativeUrl);
+		}
 		if (url === link) {
 			const relativeUrl = path.join('.', url.replace(baseURL, ''), slug);
 			$(elem).attr('href', relativeUrl);
 		}
 		if (url && url.startsWith(baseURL)) {
 			const relativeUrl = path.join('.', url.replace(baseURL, ''));
-			$(elem).attr('href', relativeUrl);
-		}
-		// FIXME - This is a temporary fix for the issue with the URL
-		if (url && url.startsWith('https://stadtgeschichte.ch')) {
-			const relativeUrl = path.join('.', url.replace('https://stadtgeschichte.ch', ''));
 			$(elem).attr('href', relativeUrl);
 		}
 	});
