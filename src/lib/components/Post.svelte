@@ -20,7 +20,7 @@
 	export let post;
 </script>
 
-<div class="card mt-4 overflow-hidden" aria-label={post.title}>
+<div class="card variant-ringed-primary mt-4 overflow-hidden" aria-label={post.title}>
 	<header>
 		<img src="{base}{post.featuredImage}" class="max-h-96 w-full object-contain" alt="" />
 	</header>
@@ -44,7 +44,7 @@
 	<footer class="flex items-center justify-start space-x-4 p-4">
 		<div class="flex flex-auto items-center justify-between">
 			{#each post.categories as category}
-				<a class="variant-filled badge" href="{base}/blog/kategorie/{category}">&num;{category}</a>
+				<a class="variant-ghost badge bg-white hover:bg-primary-500 text-primary-500 hover:text-white" href="{base}/blog/kategorie/{category}">&num;{category}</a>
 			{/each}
 			<small>
 				{new Date(post.date).toLocaleDateString('de-CH')}
