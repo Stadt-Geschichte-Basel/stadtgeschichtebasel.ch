@@ -9,20 +9,6 @@
 	export let data;
 
 	let map;
-	let mapProperties = {
-		style:
-			'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
-		center: [7.59249, 47.55654],
-		zoom: 14,
-		maxBounds: [
-				[5.94, 45.81],
-				[10.51, 47.81]
-			],
-		minZoom: 12,
-		maxZoom: 20,
-		scrollZoom: true,
-		attributionControl: true
-	};
 	let features = data.features.map((feature) => ({
 		properties: feature.properties,
 		geometry: feature.geometry,
@@ -36,46 +22,39 @@
 		constructor(features, map) {
 			this._map = map;
 			this._features = features;
-			this._container = this.createContainer();
-			this._select = this.createSelect();
-			this.addOptionsToSelect();
 
-			this._select.addEventListener('change', () => this.zoomToSelectedFeature());
-			this._container.appendChild(this._select);
-		}
-
-		createContainer() {
-			const container = document.createElement('div');
-			container.className = 'maplibregl-ctrl rounded bg-white p-2 text-xl shadow-md';
-			return container;
-		}
-
-		createSelect() {
+			// create the select element
+			this._container = document.createElement('div');
+			this._container.className = 'maplibregl-ctrl rounded bg-white p-2 text-xl shadow-md';
 			const select = document.createElement('select');
 			select.id = 'featureSelector';
 			select.className = 'bg-white';
 			select.innerHTML = '<option value="">Springe zu ...</option>';
-			return select;
-		}
 
-		addOptionsToSelect() {
-			this._features.forEach((feature, index) => {
-			const option = document.createElement('option');
-			option.value = index;
-			option.textContent = feature.properties.name;
-			this._select.appendChild(option);
+			// add the features to the select element
+			features.forEach((feature, index) => {
+				const option = document.createElement('option');
+				option.value = index;
+				option.textContent = feature.properties.name;
+				select.appendChild(option);
 			});
+
+			// add event listener to the select element to zoom to the selected feature
+			select.addEventListener('change', () => this.zoomToSelectedFeature());
+
+			this._container.appendChild(select);
 		}
 
 		zoomToSelectedFeature() {
-			const selectedIndex = this._select.value;
+			const select = this._container.querySelector('#featureSelector');
+			const selectedIndex = select.value;
 			if (selectedIndex !== '') {
-			const selectedFeature = this._features[selectedIndex];
-			this._map.flyTo({
-				center: selectedFeature.geometry.coordinates,
-				zoom: 18,
-				speed: 0.5
-			});
+				const selectedFeature = this._features[selectedIndex];
+				this._map.flyTo({
+					center: selectedFeature.geometry.coordinates,
+					zoom: 18,
+					speed: 0.5
+				});
 			}
 		}
 
@@ -87,170 +66,6 @@
 		onRemove() {
 			this._container.parentNode.removeChild(this._container);
 			this._map = undefined;
-		}
-	}
-
-	class MapController {
-		constructor(map, data) {
-			this._map = map;
-			this._data = data;
-		}
-
-		async initializeMap() {
-			try {
-			await this.loadCustomMarkerImage();
-			this.addCollaboratorsSource();
-			this.addClustersLayer();
-			this.addClusterCountLayer();
-			this.addCollaboratorsLayer();
-			this.setupClusterClickHandler();
-			this.setupCollaboratorClickHandler();
-			this.setupMouseEnterLeaveHandlers();
-			} catch (error) {
-			console.error('Error initializing map:', error);
-			}
-		}
-
-		async loadCustomMarkerImage() {
-			try {
-			const image = await this._map.loadImage('./src/lib/images/pin-48.png');
-			this._map.addImage('custom-marker', image.data);
-			} catch (error) {
-			console.error('Error loading custom marker image:', error);
-			throw error; // Rethrow the error to stop further execution
-			}
-		}
-
-		addCollaboratorsSource() {
-			this._map.addSource('collaborators', {
-			type: 'geojson',
-			data: this._data,
-			cluster: true,
-			clusterMaxZoom: 15,
-			clusterRadius: 60
-			});
-		}
-
-		addClustersLayer() {
-			this._map.addLayer({
-			id: 'clusters',
-			type: 'circle',
-			source: 'collaborators',
-			filter: ['has', 'point_count'],
-			paint: {
-				'circle-color': '#70416C',
-				'circle-radius': ['step', ['get', 'point_count'], 20, 3, 30, 5, 40]
-			}
-			});
-		}
-
-		addClusterCountLayer() {
-			this._map.addLayer({
-			id: 'cluster-count',
-			type: 'symbol',
-			source: 'collaborators',
-			filter: ['has', 'point_count'],
-			layout: {
-				'text-field': '{point_count_abbreviated}',
-				'text-font': ['Frutiger Neue Bold'],
-				'text-size': 20,
-				'text-offset': [0, 0.15]
-			},
-			paint: {
-				'text-color': '#FFFFFF'
-			}
-			});
-		}
-
-		addCollaboratorsLayer() {
-			this._map.addLayer({
-			id: 'collaborators',
-			type: 'symbol',
-			source: 'collaborators',
-			filter: ['!', ['has', 'point_count']],
-			layout: {
-				'icon-image': 'custom-marker',
-				'icon-overlap': 'always',
-				'icon-size': 1,
-				'text-field': ['get', 'label'],
-				'text-font': ['Frutiger Neue Bold'],
-				'text-variable-anchor': ['left', 'bottom', 'top', 'right'],
-				'text-radial-offset': 0.8,
-				'text-justify': 'auto',
-				'text-size': 19
-			},
-			paint: {
-				'text-color': '#70416C',
-				'text-halo-width': 4,
-				'text-halo-color': 'white'
-			}
-			});
-		}
-
-		setupClusterClickHandler() {
-			this._map.on('click', 'clusters', async (e) => {
-			try {
-				const features = this._map.queryRenderedFeatures(e.point, {
-				layers: ['clusters']
-				});
-				const clusterId = features[0].properties.cluster_id;
-				const zoom = await this._map.getSource('collaborators').getClusterExpansionZoom(clusterId);
-				this._map.easeTo({
-				center: features[0].geometry.coordinates,
-				zoom
-				});
-			} catch (error) {
-				console.error('Error handling cluster click:', error);
-			}
-			});
-		}
-
-		setupCollaboratorClickHandler() {
-			this._map.on('click', 'collaborators', (e) => {
-			try {
-				const coordinates = e.features[0].geometry.coordinates.slice();
-				const name = e.features[0].properties.name;
-				const description = e.features[0].properties.description;
-				const address = e.features[0].properties.address;
-				const website = e.features[0].properties.website;
-
-				while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-				coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-				}
-
-				new maplibregl.Popup()
-				.setLngLat(coordinates)
-				.setHTML(
-					`<h3 class="text-lg font-bold">${name}</h3>
-					<p class="text-sm">${description}</p>
-					<p class="text-sm">${address}</p>
-					<p class="text-sm">
-					<a href=${website} target="_blank" rel="nofollow" class="underline">Zur Webseite</a>
-					</p>`
-				)
-				.addTo(this._map);
-			} catch (error) {
-				console.error('Error handling collaborator click:', error);
-			}
-			});
-		}
-
-		setupMouseEnterLeaveHandlers() {
-			this._map.on('mouseenter', 'collaborators', () => {
-			this._map.getCanvas().style.cursor = 'pointer';
-			});
-
-			this._map.on('mouseleave', 'collaborators', () => {
-			this._map.getCanvas().style.cursor = '';
-			});
-
-			this._map.on('mouseenter', 'clusters', () => {
-			this._map.getCanvas().style.cursor = 'pointer';
-			});
-
-			this._map.on('mouseleave', 'clusters', () => {
-			this._map.getCanvas().style.cursor = '';
-			});
 		}
 	}
 
@@ -267,14 +82,18 @@
 
 		map = new maplibregl.Map({
 			container: 'map',
-			style: mapProperties.style,
-			center: mapProperties.center,
-			zoom: mapProperties.zoom,
-			maxBounds: mapProperties.maxBounds,
-			minZoom: mapProperties.minZoom,
-			maxZoom: mapProperties.maxZoom,
-			scrollZoom: mapProperties.scrollZoom,
-			attributionControl: mapProperties.attributionControl
+			style:
+				'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
+			center: [7.59249, 47.55654], // starting position
+			zoom: 14, // starting zoom;
+			maxBounds: [
+				[5.94, 45.81],
+				[10.51, 47.81]
+			],
+			minZoom: 12,
+			maxZoom: 20,
+			scrollZoom: true,
+			attributionControl: true
 		});
 
 		// add scale bar to the map
@@ -290,9 +109,137 @@
 		const selectInputControl = new SelectInputControl(features, map);
 		map.addControl(selectInputControl, 'top-left');
 
-		const mapController = new MapController(map, data);
-		map.on('load', () => mapController.initializeMap());
+		map.on('load', async () => {
+			try {
+				const image = await map.loadImage('./src/lib/images/pin-48.png');
+				map.addImage('custom-marker', image.data);
 
+				map.addSource('collaborators', {
+					type: 'geojson',
+					data: data,
+					cluster: true,
+					clusterMaxZoom: 15, // Max zoom to cluster points on
+					clusterRadius: 60 // Radius of each cluster when clustering points
+				});
+
+				map.addLayer({
+					id: 'clusters',
+					type: 'circle',
+					source: 'collaborators',
+					filter: ['has', 'point_count'],
+					paint: {
+						// Use step expressions (https://maplibre.org/maplibre-style-spec/#expressions-step)
+						// with three steps to implement three types of circles:
+						//   * Blue, 20px circles when point count is less than 100
+						//   * Yellow, 30px circles when point count is between 100 and 750
+						//   * Pink, 40px circles when point count is greater than or equal to 750
+						'circle-color': '#70416C',
+						'circle-radius': ['step', ['get', 'point_count'], 20, 3, 30, 5, 40]
+					}
+				});
+
+				map.addLayer({
+					id: 'cluster-count',
+					type: 'symbol',
+					source: 'collaborators',
+					filter: ['has', 'point_count'],
+					layout: {
+						'text-field': '{point_count_abbreviated}',
+						'text-font': ['Frutiger Neue Bold'],
+						'text-size': 20,
+						'text-offset': [0, 0.15]
+					},
+					paint: {
+						'text-color': '#FFFFFF'
+					}
+				});
+
+				// add a symbol layer
+				map.addLayer({
+					id: 'collaborators',
+					type: 'symbol',
+					source: 'collaborators',
+					filter: ['!', ['has', 'point_count']],
+					layout: {
+						'icon-image': 'custom-marker',
+						'icon-overlap': 'always',
+						'icon-size': 1,
+						'text-field': ['get', 'label'],
+						'text-font': ['Frutiger Neue Bold'],
+						'text-variable-anchor': ['left', 'bottom', 'top', 'right'],
+						'text-radial-offset': 0.8,
+						'text-justify': 'auto',
+						'text-size': 19
+					},
+					paint: {
+						'text-color': '#70416C',
+						'text-halo-width': 4,
+						'text-halo-color': 'white'
+					}
+				});
+
+				// inspect a cluster on click
+				map.on('click', 'clusters', async (e) => {
+					const features = map.queryRenderedFeatures(e.point, {
+						layers: ['clusters']
+					});
+					const clusterId = features[0].properties.cluster_id;
+					const zoom = await map.getSource('collaborators').getClusterExpansionZoom(clusterId);
+					map.easeTo({
+						center: features[0].geometry.coordinates,
+						zoom
+					});
+				});
+
+				// When a click event occurs on a feature in the places layer, open a popup at the
+				// location of the feature, with description HTML from its properties.
+				map.on('click', 'collaborators', (e) => {
+					const coordinates = e.features[0].geometry.coordinates.slice();
+					const name = e.features[0].properties.name;
+					const description = e.features[0].properties.description;
+					const address = e.features[0].properties.address;
+					const website = e.features[0].properties.website;
+
+					// Ensure that if the map is zoomed out such that multiple
+					// copies of the feature are visible, the popup appears
+					// over the copy being pointed to.
+					while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+						coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+					}
+
+					new maplibregl.Popup()
+						.setLngLat(coordinates)
+						.setHTML(
+							`<h3 class="text-lg font-bold">${name}</h3>
+								<p class="text-sm">${description}</p>
+								<p class="text-sm">${address}</p>
+								<p class="text-sm">
+								<a href=${website} target="_blank" rel="nofollow" class="underline">Zur Webseite</a
+								</p>`
+						)
+						.addTo(map);
+				});
+
+				// Change the cursor to a pointer when the mouse is over the places layer.
+				map.on('mouseenter', 'collaborators', () => {
+					map.getCanvas().style.cursor = 'pointer';
+				});
+
+				// Change it back to a pointer when it leaves.
+				map.on('mouseleave', 'collaborators', () => {
+					map.getCanvas().style.cursor = '';
+				});
+
+				map.on('mouseenter', 'clusters', () => {
+					map.getCanvas().style.cursor = 'pointer';
+				});
+				map.on('mouseleave', 'clusters', () => {
+					map.getCanvas().style.cursor = '';
+				});
+			} catch (error) {
+				console.error('Error initializing map:', error);
+			}
+		});
 	});
 </script>
 
