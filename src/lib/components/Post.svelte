@@ -22,11 +22,7 @@
 
 <div class="card mt-4 overflow-hidden" aria-label={post.title}>
 	<header>
-		<img
-			src="{base}{post.featuredImage}"
-			class="aspect-[21/9] w-full bg-black/50 object-cover"
-			alt=""
-		/>
+		<img src="{base}{post.featuredImage}" class="max-h-96 w-full object-contain" alt="" />
 	</header>
 	<div class="px-4">
 		<h2 class="m-0">
