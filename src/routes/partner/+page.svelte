@@ -10,14 +10,13 @@
 
 	let map;
 	let mapProperties = {
-		style:
-			'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
+		style: 'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
 		center: [7.59249, 47.55654],
 		zoom: 14,
 		maxBounds: [
-				[5.94, 45.81],
-				[10.51, 47.81]
-			],
+			[5.94, 45.81],
+			[10.51, 47.81]
+		],
 		minZoom: 12,
 		maxZoom: 20,
 		scrollZoom: true,
@@ -263,4 +262,3 @@
 <Head title="Partner | Alle Kooperationspartner*innen von {config.title}" />
 
 <div class="h-full w-full" id="map" aria-label="Karte mit Standorten der Partner"></div>
-
