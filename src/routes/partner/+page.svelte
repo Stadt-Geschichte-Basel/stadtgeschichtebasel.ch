@@ -9,6 +9,20 @@
 	export let data;
 
 	let map;
+	let mapProperties = {
+		style:
+			'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
+		center: [7.59249, 47.55654],
+		zoom: 14,
+		maxBounds: [
+				[5.94, 45.81],
+				[10.51, 47.81]
+			],
+		minZoom: 12,
+		maxZoom: 20,
+		scrollZoom: true,
+		attributionControl: true
+	};
 	let features = data.features.map((feature) => ({
 		properties: feature.properties,
 		geometry: feature.geometry,
@@ -22,32 +36,39 @@
 		constructor(features, map) {
 			this._map = map;
 			this._features = features;
+			this._container = this.createContainer();
+			this._select = this.createSelect();
+			this.addOptionsToSelect();
 
-			// create the select element
-			this._container = document.createElement('div');
-			this._container.className = 'maplibregl-ctrl rounded bg-white p-2 text-xl shadow-md';
+			this._select.addEventListener('change', () => this.zoomToSelectedFeature());
+			this._container.appendChild(this._select);
+		}
+
+		createContainer() {
+			const container = document.createElement('div');
+			container.className = 'maplibregl-ctrl rounded bg-white p-2 text-xl shadow-md';
+			return container;
+		}
+
+		createSelect() {
 			const select = document.createElement('select');
 			select.id = 'featureSelector';
 			select.className = 'bg-white';
 			select.innerHTML = '<option value="">Springe zu ...</option>';
+			return select;
+		}
 
-			// add the features to the select element
-			features.forEach((feature, index) => {
+		addOptionsToSelect() {
+			this._features.forEach((feature, index) => {
 				const option = document.createElement('option');
 				option.value = index;
 				option.textContent = feature.properties.name;
-				select.appendChild(option);
+				this._select.appendChild(option);
 			});
-
-			// add event listener to the select element to zoom to the selected feature
-			select.addEventListener('change', () => this.zoomToSelectedFeature());
-
-			this._container.appendChild(select);
 		}
 
 		zoomToSelectedFeature() {
-			const select = this._container.querySelector('#featureSelector');
-			const selectedIndex = select.value;
+			const selectedIndex = this._select.value;
 			if (selectedIndex !== '') {
 				const selectedFeature = this._features[selectedIndex];
 				this._map.flyTo({
@@ -82,18 +103,14 @@
 
 		map = new maplibregl.Map({
 			container: 'map',
-			style:
-				'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json',
-			center: [7.59249, 47.55654], // starting position
-			zoom: 14, // starting zoom;
-			maxBounds: [
-				[5.94, 45.81],
-				[10.51, 47.81]
-			],
-			minZoom: 12,
-			maxZoom: 20,
-			scrollZoom: true,
-			attributionControl: true
+			style: mapProperties.style,
+			center: mapProperties.center,
+			zoom: mapProperties.zoom,
+			maxBounds: mapProperties.maxBounds,
+			minZoom: mapProperties.minZoom,
+			maxZoom: mapProperties.maxZoom,
+			scrollZoom: mapProperties.scrollZoom,
+			attributionControl: mapProperties.attributionControl
 		});
 
 		// add scale bar to the map
@@ -245,5 +262,5 @@
 
 <Head title="Partner | Alle Kooperationspartner*innen von {config.title}" />
 
-<div class="h-full w-full" id="map"></div>
+<div class="h-full w-full" id="map" aria-label="Karte mit Standorten der Partner"></div>
 
