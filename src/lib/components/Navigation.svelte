@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
+	import * as config from '$lib/config';
 
 	const drawerStore = getDrawerStore();
 	const drawerClose = () => drawerStore.close();
@@ -14,6 +15,14 @@
 		{ label: 'Projekt', path: '/projekt' },
 		{ label: 'Über uns', path: '/ueber-uns' }
 	];
+	$: currentURL = $page.url.pathname;
+	const mailtoBody = encodeURI(
+		`Ich habe ein Problem auf der Seite entdeckt: ${currentURL}\n` +
+			`Art des Problems: [Bitte angeben: Technischer Fehler, Inhaltlicher Fehler, Tippfehler, Sonstiges]\n` +
+			`Beschreibung des Problems: [Bitte beschreiben Sie das Problem so genau wie möglich.]\n` +
+			`Weitere Anmerkungen: [Optional]\n` +
+			`Kontaktinformationen: [Optional, falls Rückmeldung erwünscht]\n`
+	);
 
 	$: isActive = (path) => {
 		if (path === '/blog' && $page.url.pathname.startsWith(base + path)) {
@@ -23,7 +32,11 @@
 	};
 </script>
 
-<nav class="list-nav p-4 text-xl" aria-label="Hauptmenü" data-sveltekit-preload-data>
+<nav
+	class="list-nav flex h-full flex-col justify-between p-4 text-xl"
+	aria-label="Hauptmenü"
+	data-sveltekit-preload-data
+>
 	<ul>
 		{#each navItems as { label, path }}
 			<li aria-current={isActive(path) ? 'page' : undefined}>
@@ -35,4 +48,10 @@
 			</li>
 		{/each}
 	</ul>
+
+	<a
+		class="variant-ringed btn btn-sm mt-4"
+		href="mailto:{config.email}?subject=Fehler%20auf%20{currentURL}&body={mailtoBody}"
+		>Fehler melden</a
+	>
 </nav>
