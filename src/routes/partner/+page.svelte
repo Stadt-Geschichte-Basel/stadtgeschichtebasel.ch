@@ -31,6 +31,14 @@
 
 	let maxLength = 0; // default maxLength
 
+	function truncateString(str) {
+		if (str.length > maxLength) {
+			return str.slice(0, maxLength) + '...';
+		} else {
+			return str;
+		}
+	}
+
 	class SelectInputControl {
 		constructor(features, map) {
 			this._map = map;
@@ -61,7 +69,7 @@
 			this._features.forEach((feature, index) => {
 				const option = document.createElement('option');
 				option.value = index;
-				option.textContent = feature.properties.name;
+				option.textContent = truncateString(feature.properties.name);
 				this._select.appendChild(option);
 			});
 		}
@@ -125,8 +133,12 @@
 		const selectInputControl = new SelectInputControl(features, map);
 		map.addControl(selectInputControl, 'top-left');
 
+		// set map height to 100% of the viewport: hack to fix map not rendering properly. (https://github.com/mapbox/mapbox-gl-js/issues/3265)
+		setTimeout(() => map.resize(), 0);
+
 		map.on('load', async () => {
 			try {
+				//map.resize();
 				const image = await map.loadImage('./src/lib/images/pin-48.png');
 				map.addImage('custom-marker', image.data);
 
