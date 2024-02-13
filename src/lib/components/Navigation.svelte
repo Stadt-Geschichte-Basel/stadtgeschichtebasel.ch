@@ -50,7 +50,7 @@
 	</ul>
 
 	<a
-		class="variant-ghost btn btn-sm mt-4"
+		class="variant-ringed btn btn-sm mt-4"
 		href="mailto:{config.email}?subject=Fehler%20auf%20{currentURL}&body={mailtoBody}"
 		>Fehler melden</a
 	>
