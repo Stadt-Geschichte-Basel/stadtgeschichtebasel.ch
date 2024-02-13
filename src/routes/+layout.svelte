@@ -56,7 +56,11 @@
 						aria-label="Open navigation menu"
 					>
 						<span>
-							<svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512" fill="white"
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								height="2em"
+								viewBox="0 0 448 512"
+								fill="white"
 								><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
 									d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
 								/></svg
@@ -65,7 +69,11 @@
 					</button>
 					<div class="h-12">
 						<a href="{base}/" class="cursor-pointer" aria-label="Home">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-full" viewBox="0 0 512 223.96" fill="white"
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-full"
+								viewBox="0 0 512 223.96"
+								fill="white"
 								><path
 									d="m0 49.6c4.52 6.39 12.22 10.05 21.17 10.05 12.54 0 21.69-7.43 21.77-17.67.07-8.06-4.53-13.82-13.67-17.11l-4.71-1.47c-6.31-2.27-9.87-3.72-9.87-7.05 0-3.12 3.96-4.76 7.88-4.76 4.11 0 8.33 1.83 10.85 4.68l8.09-8.55c-4.89-5.12-11.27-7.72-18.99-7.72-12.21 0-20.42 7.1-20.42 17.66 0 7.6 5.01 13.32 14.49 16.54l4.23 1.39c6.59 2.23 9.4 4.41 9.4 7.29s-3.7 5.17-8.43 5.17-9.54-2.65-12.27-6.5z"
 								/><path d="m61.37 58.66h12.5v-45.83h15.03v-11.84h-42.4v11.84h14.87z" /><path
@@ -111,7 +119,11 @@
 							href="https://www.instagram.com/{config.instagramHandle}/"
 							aria-label="Instagram"
 							rel="noopener noreferrer"
-							><svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512" fill="white"
+							><svg
+								xmlns="http://www.w3.org/2000/svg"
+								height="2em"
+								viewBox="0 0 448 512"
+								fill="white"
 								><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
 									d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"
 								/></svg
@@ -124,7 +136,11 @@
 							aria-label="Twitter"
 							rel="noopener noreferrer"
 						>
-							<svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512" fill="white"
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								height="2em"
+								viewBox="0 0 512 512"
+								fill="white"
 								><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
 									d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"
 								/></svg

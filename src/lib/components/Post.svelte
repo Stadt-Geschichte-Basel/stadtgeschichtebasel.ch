@@ -44,7 +44,10 @@
 	<footer class="flex items-center justify-start space-x-4 p-4">
 		<div class="flex flex-auto items-center justify-between">
 			{#each post.categories as category}
-				<a class="variant-ghost badge bg-white hover:bg-primary-500 text-primary-500 hover:text-white" href="{base}/blog/kategorie/{category}">&num;{category}</a>
+				<a
+					class="variant-ghost badge bg-white text-primary-500 hover:bg-primary-500 hover:text-white"
+					href="{base}/blog/kategorie/{category}">&num;{category}</a
+				>
 			{/each}
 			<small>
 				{new Date(post.date).toLocaleDateString('de-CH')}
