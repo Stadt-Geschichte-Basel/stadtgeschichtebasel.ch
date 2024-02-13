@@ -9,8 +9,7 @@
 		AppBar,
 		Drawer,
 		getDrawerStore,
-		initializeStores,
-		localStorageStore
+		initializeStores
 	} from '@skeletonlabs/skeleton';
 	import '../app.postcss';
 	initializeStores();
@@ -24,8 +23,6 @@
 	$: classesPageContentPartner = $page.url.pathname === '/partner' ? 'overflow-hidden' : '';
 	$: classesPageFooterPartner = $page.url.pathname === '/partner' ? 'hidden' : '';
 	$: classesPageFooterDataStories = $page.url.pathname.startsWith('/data-stories') ? 'hidden' : '';
-	const footerStore = localStorageStore('footer', { closed: false });
-	$: classesFooter = $footerStore.closed ? 'hidden' : '';
 	afterNavigate((params) => {
 		const isNewPage =
 			params.from && params.to && params.from.url.pathname !== params.to.url.pathname;
@@ -161,21 +158,5 @@
 				</p>
 			</section>
 		</div>
-	</svelte:fragment>
-	<svelte:fragment slot="footer">
-		<aside class="alert variant-ghost-warning {classesFooter}">
-			<div class="alert-message">
-				<h3 class="h3">Testphase aktiv</h3>
-				<p>
-					Wir befinden uns in der Testphase. Was das genau heisst und wie Sie uns unterstützen
-					können, erfahren Sie <a class="anchor" href="{base}/testphase">hier</a>.
-				</p>
-			</div>
-			<div class="alert-actions">
-				<button class="variant-ghost btn" on:click={() => ($footerStore.closed = true)}
-					>Mitteilung verbergen</button
-				>
-			</div>
-		</aside>
 	</svelte:fragment>
 </AppShell>
