@@ -45,7 +45,7 @@
 		<div class="flex flex-auto items-center justify-between">
 			{#each post.categories as category}
 				<a
-					class="variant-ghost badge bg-white text-primary-500 hover:bg-primary-500 hover:text-white"
+					class="variant-ringed badge text-primary-500 hover:bg-primary-500 hover:text-white"
 					href="{base}/blog/kategorie/{category}">&num;{category}</a
 				>
 			{/each}
