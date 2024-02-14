@@ -1,12 +1,23 @@
 <script>
+	import * as config from '$lib/config';
 	import { base } from '$app/paths';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Head from '$lib/components/Head.svelte';
+	import {
+		Email,
+		LinkedIn,
+		Telegram,
+		WhatsApp,
+		Facebook,
+		X
+	} from 'svelte-share-buttons-component/src';
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const date = new Date(data.meta.date).toLocaleDateString('de-CH').toString();
 	const modified = new Date(data.meta.modified).toLocaleDateString('de-CH').toString();
+
+	const url = config.url + '/blog/' + data.meta.slug + '/';
 </script>
 
 <Head
@@ -33,4 +44,19 @@
 		</hgroup>
 		<svelte:component this={data.content} />
 	</article>
+	<div class="box-border text-end text-sm">
+		Teilen:
+		<Email subject={data.meta.title} body="{data.meta.excerpt} {url}" />
+		<LinkedIn class="share-button" {url} />
+		<Telegram class="share-button" text={data.meta.title} {url} />
+		<WhatsApp class="share-button" text="{data.meta.title} {url}" />
+		<Facebook class="share-button" {url} quote={data.meta.title} />
+		<X
+			class="share-button"
+			text={data.meta.title}
+			{url}
+			hashtags="Stadtgeschichte,Basel"
+			related="other,users"
+		/>
+	</div>
 </Container>
