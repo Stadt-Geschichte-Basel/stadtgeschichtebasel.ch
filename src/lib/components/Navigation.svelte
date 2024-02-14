@@ -16,7 +16,7 @@
 		{ label: 'Über uns', path: '/ueber-uns' }
 	];
 	$: currentURL = $page.url.pathname;
-	const mailtoBody = encodeURI(
+	$: mailtoBody = encodeURI(
 		`Ich habe ein Problem auf der Seite entdeckt: ${currentURL}\n` +
 			`Art des Problems: [Bitte angeben: Technischer Fehler, Inhaltlicher Fehler, Tippfehler, Sonstiges]\n` +
 			`Beschreibung des Problems: [Bitte beschreiben Sie das Problem so genau wie möglich.]\n` +
