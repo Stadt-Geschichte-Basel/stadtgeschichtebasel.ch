@@ -127,6 +127,14 @@ class Queue {
 		await task();
 		this.dequeue();
 	}
+
+	/**
+	 * Checks if the queue is empty.
+	 * @returns {boolean} - True if the queue is empty, false otherwise.
+	 */
+	isEmpty() {
+		return this.queue.length === 0;
+	}
 }
 
 /**
@@ -299,17 +307,23 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 
 	$('a').each((i, elem) => {
 		const url = $(elem).attr('href');
-		if (url && url.startsWith(newURL)) {
-			const relativeUrl = path.join('.', url.replace(newURL, ''));
-			$(elem).attr('href', relativeUrl);
-		}
-		if (url === link) {
-			const relativeUrl = path.join('.', url.replace(baseURL, ''), slug);
-			$(elem).attr('href', relativeUrl);
-		}
-		if (url && url.startsWith(baseURL)) {
-			const relativeUrl = path.join('.', url.replace(baseURL, ''));
-			$(elem).attr('href', relativeUrl);
+		let relativeUrl;
+
+		if (url) {
+			if (url === link) {
+				relativeUrl = path.join('.', url.replace(baseURL, ''), slug);
+			} else if (url.startsWith(newURL)) {
+				relativeUrl = path.join('.', url.replace(newURL, ''));
+			} else if (url.startsWith(baseURL)) {
+				relativeUrl = path.join('.', url.replace(baseURL, ''));
+			}
+
+			if (relativeUrl) {
+				$(elem).attr('href', relativeUrl);
+				if (allowedExtensions.includes(path.extname(relativeUrl).toLowerCase())) {
+					assetUrls.push(url);
+				}
+			}
 		}
 	});
 
@@ -436,5 +450,10 @@ async function fetchAndProcessType(type) {
 (async () => {
 	for (const type of types) {
 		await fetchAndProcessType(type);
+	}
+	if (downloadQueue.isEmpty()) {
+		console.log("The download queue is empty.");
+	} else {
+		console.log("The download queue is not empty.");
 	}
 })();
