@@ -391,5 +391,4 @@ async function fetchAndProcessType(type) {
 		fetchAndProcessType(type);
 		await Promise.all(downloadTasks);
 	}
-	console.log('All downloads completed.');
 })();
