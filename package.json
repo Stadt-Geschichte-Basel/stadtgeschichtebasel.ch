@@ -24,7 +24,8 @@
 		"commit": "cz",
 		"prepare": "svelte-kit sync && husky install",
 		"prebuild": "node ./src/lib/downloadPostsPagesAssets.mjs",
-		"postbuild": "jampack ./build"
+		"postbuild": "jampack ./build",
+		"clean": "rm -Rf static/files/* && touch static/files/.gitkeep && rm -Rf src/pages/* && touch src/pages/.gitkeep && rm -Rf src/posts/* && touch src/posts/.gitkeep"
 	},
 	"devDependencies": {
 		"@divriots/jampack": "^0.23.3",
