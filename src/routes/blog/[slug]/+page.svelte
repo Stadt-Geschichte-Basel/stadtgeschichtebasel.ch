@@ -29,7 +29,7 @@
 			>
 			{#each data.meta.categories as category}
 				<a
-					class="variant-ringed badge text-primary-500 hover:bg-primary-500 hover:text-white"
+					class="variant-ringed badge mr-1 text-primary-500 hover:bg-primary-500 hover:text-white"
 					href="{base}/blog/kategorie/{category}">&num;{category}</a
 				>
 			{/each}
