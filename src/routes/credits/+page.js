@@ -18,7 +18,6 @@ const githubHandle = config.githubHandle;
  * @type {string}
  * @description GitHub repository name.
  */
-
 const githubRepo = config.githubRepo;
 
 /**
@@ -47,7 +46,7 @@ async function fetchData(endpoint, fetch) {
 }
 
 /**
- * Fetches credits data from the GitHub API.
+ * Fetches contributors data from the GitHub API.
  *
  * @async
  * @function
@@ -55,10 +54,7 @@ async function fetchData(endpoint, fetch) {
  * @throws {Error} Throws an error if the fetch operation fails.
  */
 async function getCredits(fetch) {
-	const [contributorsData, latestCommitData] = await Promise.all([
-		fetchData(`${apiUrl}/contributors`, fetch),
-		fetchData(`${apiUrl}/commits?per_page=1`, fetch)
-	]);
+	const contributorsData = await fetchData(`${apiUrl}/contributors`, fetch);
 
 	if (!Array.isArray(contributorsData)) {
 		throw new Error('contributorsData is not an array');
@@ -70,12 +66,7 @@ async function getCredits(fetch) {
 		html_url
 	}));
 
-	const latestCommit = {
-		html_url: latestCommitData[0].html_url,
-		date: latestCommitData[0].commit.author.date
-	};
-
-	return { contributors, latest_commit: latestCommit };
+	return { contributors };
 }
 
 /** @type {import('./$types').PageLoad} */
