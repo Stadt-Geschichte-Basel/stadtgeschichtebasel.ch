@@ -41,11 +41,13 @@
 			</p>
 		</article>
 	</div>
-	<footer class="flex items-center justify-start space-x-4 p-4">
-		<div class="flex flex-auto items-center justify-between">
+	<footer class="flex gap-2 p-4">
+		<div class="flex w-full flex-wrap justify-start gap-1">
 			{#each post.categories as category}
 				<a class="variant-filled badge" href="{base}/blog/kategorie/{category}">&num;{category}</a>
 			{/each}
+		</div>
+		<div class="flex justify-end">
 			<small>
 				{new Date(post.date).toLocaleDateString('de-CH')}
 			</small>
