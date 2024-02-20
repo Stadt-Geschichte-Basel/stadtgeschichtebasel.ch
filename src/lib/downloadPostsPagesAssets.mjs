@@ -389,7 +389,7 @@ async function fetchAndProcessType(type) {
 (async () => {
 	for (const type of types) {
 		fetchAndProcessType(type);
+		await Promise.all(downloadTasks);
 	}
-	await Promise.all(downloadTasks);
 	console.log('All downloads completed.');
 })();
