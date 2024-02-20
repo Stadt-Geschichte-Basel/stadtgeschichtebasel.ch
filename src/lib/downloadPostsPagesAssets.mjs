@@ -207,7 +207,6 @@ async function downloadAsset(url) {
 		const fileStream = fs.createWriteStream(filePath);
 		response.body.pipe(fileStream);
 		fileStream.on('finish', () => {
-			console.log(`Downloaded asset to ${filePath}`);
 			resolve();
 		});
 		fileStream.on('error', (error) => {
@@ -316,10 +315,8 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
  * @returns {Promise<string|null>} - URL of the featured image.
  */
 const fetchFeaturedImage = async (mediaId) => {
-	console.log(`Fetching featured image with ID: ${mediaId}`);
 	const response = await queuedFetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
 	const data = await response.json();
-	console.log(`Fetched featured image URL: ${data.source_url}`);
 	return data.source_url;
 };
 
@@ -377,7 +374,7 @@ async function fetchAndProcessType(type) {
 			const yamlFrontMatter = yaml.dump(frontMatter);
 			const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
 
-			fs.writeFileSync(path.join(outputDir, `${item.slug}.md`), markdownContent);
+			await fs.promises.writeFile(path.join(outputDir, `${item.slug}.md`), markdownContent);
 		}
 
 		fetched = data.length;
@@ -391,7 +388,7 @@ async function fetchAndProcessType(type) {
  */
 (async () => {
 	for (const type of types) {
-		await fetchAndProcessType(type);
+		fetchAndProcessType(type);
 	}
 	await Promise.all(downloadTasks);
 	console.log('All downloads completed.');
