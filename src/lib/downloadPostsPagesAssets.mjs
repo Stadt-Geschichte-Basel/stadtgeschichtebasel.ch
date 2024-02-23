@@ -96,48 +96,99 @@ const allowedExtensions = [
 const staticDir = 'static';
 
 /**
- * An array of tasks to be executed in order.
- * @type {Array<Promise>}
+ * A class representing a queue of tasks to be executed in order.
  */
-let downloadTasks = [];
+class Queue {
+	/**
+	 * Creates a new Queue instance.
+	 */
+	constructor() {
+		this.queue = [];
+	}
+
+	/**
+	 * Adds a new task to the end of the queue.
+	 * @param {Function} task - The task to add to the queue.
+	 */
+	enqueue(task) {
+		this.queue.push(task);
+		if (this.queue.length === 1) {
+			this.dequeue();
+		}
+	}
+
+	/**
+	 * Removes the first task from the queue and executes it.
+	 * If the queue is empty, does nothing.
+	 */
+	async dequeue() {
+		if (this.queue.length === 0) return;
+		const task = this.queue.shift();
+		await task();
+		this.dequeue();
+	}
+}
+
+/**
+ * Creates a new instance of Queue and assigns it to downloadQueue variable.
+ * @type {Queue}
+ */
+const downloadQueue = new Queue();
 
 const MAX_RETRIES = 5; // Maximum number of retries for each request
 const TIMEOUT = 1000; // 5 seconds timeout for each request
 
 /**
- * Perform a fetch request with retry logic.
- * @param {string} url - URL to fetch.
- * @param {Object} [options={}] - Fetch options.
- * @param {number} [retries=MAX_RETRIES] - Number of retries.
- * @returns {Promise<Response>} - Fetch response.
+ * Fetches a URL using the native fetch API and enqueues the request to a download queue.
+ * @param {string} url - The URL to fetch.
+ * @param {Object} [options={}] - Additional options to pass to the fetch function.
+ * @returns {Promise<Response>} - A promise that resolves with the response from the fetch request.
+ */
+/**
+ * Queues a fetch request using the native fetch API.
+ * @param {string} url - The URL to fetch.
+ * @param {Object} options - The options to pass to the fetch request.
+ * @returns {Promise<Response>} - A promise that resolves with the response from the fetch request.
+ */
+/**
+ * Fetches a resource from the given URL using the native fetch API and enqueues the request to a download queue.
+ * @param {string} url - The URL of the resource to fetch.
+ * @param {object} [options={}] - An optional object containing any custom settings that you want to apply to the request.
+ * @returns {Promise<Response>} - A Promise that resolves with the Response object representing the fetched resource.
  */
 async function queuedFetch(url, options = {}, retries = MAX_RETRIES) {
-	let retryCount = 0;
-	while (retryCount <= retries) {
-		try {
-			const controller = new AbortController();
-			const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
-			const response = await fetch(url, { ...options, signal: controller.signal });
-			clearTimeout(timeoutId);
+	return new Promise((resolve, reject) => {
+		downloadQueue.enqueue(async () => {
+			let retryCount = 0;
+			while (retryCount <= retries) {
+				try {
+					const controller = new AbortController();
+					const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
+					const response = await fetch(url, { ...options, signal: controller.signal });
+					clearTimeout(timeoutId);
 
-			if (response.ok) {
-				return response;
-			} else {
-				console.log(`Failed request to ${url}, status code: ${response.status}`);
-			}
-		} catch (error) {
-			console.log(`Error fetching ${url}: ${error.message}`);
-			if (error.name === 'AbortError') {
-				console.log(`Request to ${url} timed out`);
-			}
-		}
+					if (response.ok) {
+						resolve(response);
+						return;
+					} else {
+						console.log(`Failed request to ${url}, status code: ${response.status}`);
+					}
+				} catch (error) {
+					console.log(`Error fetching ${url}: ${error.message}`);
+					if (error.name === 'AbortError') {
+						console.log(`Request to ${url} timed out`);
+					}
+				}
 
-		retryCount++;
-		if (retryCount <= retries) {
-			console.log(`Retrying request to ${url} (${retryCount}/${retries})`);
-		}
-	}
-	throw new Error(`Failed to fetch ${url} after ${retries + 1} attempts`);
+				retryCount++;
+				if (retryCount <= retries) {
+					console.log(`Retrying request to ${url} (${retryCount}/${retries})`);
+				}
+			}
+
+			reject(new Error(`Failed to fetch ${url} after ${retries + 1} attempts`));
+		});
+	});
 }
 
 /**
@@ -163,9 +214,9 @@ async function fetchCategoryNameById(id) {
 
 /**
  * Extract asset URL from an HTML element.
- * @param {CheerioElement} elem - Element to extract URL from.
- * @param {CheerioStatic} $ - Cheerio instance.
- * @returns {string} - Asset URL.
+ * @param {CheerioElement} elem
+ * @param {CheerioStatic} $
+ * @returns {string}
  */
 const getAssetUrl = (elem, $) => {
 	let url = $(elem).attr('href') || $(elem).attr('src');
@@ -180,38 +231,41 @@ const getAssetUrl = (elem, $) => {
 /**
  * Download an asset from a given URL to the static directory.
  * @param {string} url - URL of the asset.
- * @returns {Promise<void>} - Promise representing the completion of the download.
+ * @param {string} outputDir [outputDir=staticDir] - Directory to save the asset to.
  */
-async function downloadAsset(url) {
-	const extension = path.extname(new URL(url).pathname).toLowerCase();
-	if (!allowedExtensions.includes(extension)) {
-		console.log(`Skipping download of unsupported file type: ${url}`);
-		return; // Skip unsupported file types
-	}
+async function downloadAsset(url, outputDir = staticDir) {
+	downloadQueue.enqueue(async () => {
+		console.log(`Downloading asset from ${url}`);
+		const extension = path.extname(new URL(url).pathname).toLowerCase();
+		if (!allowedExtensions.includes(extension)) {
+			console.log(`Skipping download of unsupported file type: ${url}`);
+			return; // Skip unsupported file types
+		}
 
-	const response = await queuedFetch(url);
-	if (!response.ok) {
-		console.log(`Failed to download asset from ${url}`);
-		throw new Error(`Failed to download asset from ${url}`);
-	}
+		const response = await queuedFetch(url);
 
-	const urlPath = new URL(url).pathname;
-	const fullDir = path.join(staticDir, path.dirname(urlPath));
-	if (!fs.existsSync(fullDir)) {
-		fs.mkdirSync(fullDir, { recursive: true });
-	}
+		if (!response.ok) {
+			console.log(`Failed to download asset from ${url}`);
+			throw new Error(`Failed to download asset from ${url}`);
+		}
 
-	const filePath = path.join(staticDir, urlPath);
+		const urlPath = new URL(url).pathname;
+		const fullDir = path.join(outputDir, path.dirname(urlPath));
+		if (!fs.existsSync(fullDir)) {
+			fs.mkdirSync(fullDir, { recursive: true });
+		}
 
-	return new Promise((resolve, reject) => {
+		const filePath = path.join(outputDir, urlPath);
+
 		const fileStream = fs.createWriteStream(filePath);
 		response.body.pipe(fileStream);
+
 		fileStream.on('finish', () => {
-			resolve();
+			console.log(`Downloaded asset to ${filePath}`);
 		});
+
 		fileStream.on('error', (error) => {
 			console.log(`Error writing file: ${error}`);
-			reject(error);
 		});
 	});
 }
@@ -303,7 +357,7 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 	});
 
 	assetUrls.forEach((url) => {
-		downloadTasks.push(downloadAsset(url));
+		downloadAsset(url);
 	});
 
 	return turndownService.turndown($.html());
@@ -374,7 +428,7 @@ async function fetchAndProcessType(type) {
 			const yamlFrontMatter = yaml.dump(frontMatter);
 			const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
 
-			await fs.promises.writeFile(path.join(outputDir, `${item.slug}.md`), markdownContent);
+			fs.writeFileSync(path.join(outputDir, `${item.slug}.md`), markdownContent);
 		}
 
 		fetched = data.length;
@@ -388,7 +442,6 @@ async function fetchAndProcessType(type) {
  */
 (async () => {
 	for (const type of types) {
-		fetchAndProcessType(type);
-		await Promise.all(downloadTasks);
+		await fetchAndProcessType(type);
 	}
 })();
