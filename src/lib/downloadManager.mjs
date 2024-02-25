@@ -32,22 +32,36 @@ class DownloadManager {
 	constructor() {
 		this.activeDownloads = 0;
 		this.downloadQueue = [];
+		this.downloadedUrls = new Set();
 	}
 
-	async enqueueDownload(url, staticDir) {
+	enqueueDownload(url, staticDir) {
+		if (this.downloadedUrls.has(url)) {
+			console.log(`Skipping already downloaded URL: ${url}`);
+			return;
+		}
+
 		if (this.activeDownloads < MAX_CONCURRENT_DOWNLOADS) {
 			this.activeDownloads++;
-			this.download(url, staticDir).then(() => this.nextDownload());
+			this.download(url, staticDir)
+				.then(() => this.downloadedUrls.add(url))
+				.catch((error) => {
+					console.error(`Download failed: ${error}`);
+					process.exit(1);
+				})
+				.finally(() => this.nextDownload());
 		} else {
-			this.downloadQueue.push([url, staticDir]);
+			if (!this.downloadQueue.some((item) => item[0] === url)) {
+				this.downloadQueue.push([url, staticDir]);
+			}
 		}
 	}
 
 	nextDownload() {
 		this.activeDownloads--;
 		if (this.downloadQueue.length > 0) {
-			const [nextUrl, nextStaticDir] = this.downloadQueue.shift();
-			this.enqueueDownload(nextUrl, nextStaticDir);
+			const [url, staticDir] = this.downloadQueue.shift();
+			this.enqueueDownload(url, staticDir);
 		}
 	}
 
@@ -60,10 +74,11 @@ class DownloadManager {
 			await pipelineAsync(response.body, fs.createWriteStream(path.join(outputPath, fileName)));
 			console.log(`Downloaded ${url} to ${path.join(outputPath, fileName)}`);
 		} catch (error) {
-			console.error(`Error downloading ${url}: ${error}`);
 			if (retries > 0) {
-				console.log(`Retrying download for ${url}`);
+				console.log(`Retrying download for ${url}. Retries left: ${retries - 1}`);
 				await this.download(url, staticDir, retries - 1);
+			} else {
+				throw new Error(`Download failed for ${url} after ${MAX_RETRIES} retries`);
 			}
 		}
 	}
@@ -72,16 +87,14 @@ class DownloadManager {
 		const parsedUrl = new URL(url);
 		const fileName = path.basename(parsedUrl.pathname);
 		const outputPath = path.join(staticDir, path.dirname(parsedUrl.pathname));
-
 		if (!this.isAllowedExtension(fileName)) {
 			throw new Error(`Unsupported file type for ${url}`);
 		}
-
 		return { fileName, outputPath };
 	}
 
 	isAllowedExtension(fileName) {
-		const extension = path.extname(fileName).substring(1);
+		const extension = path.extname(fileName).substring(1); // Remove the dot from extension
 		return allowedExtensions.includes(extension);
 	}
 }
