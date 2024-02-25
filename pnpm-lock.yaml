@@ -3495,8 +3495,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /pmtiles@3.0.3:
-    resolution: {integrity: sha512-tj4l3HHJd6/qf9VefzlPK2eYEQgbf+4uXPzNlrj3k7hHvLtibYSxfp51TF6ALt4YezM8MCdiOminnHvdAyqyGg==}
+  /pmtiles@3.0.4:
+    resolution: {integrity: sha512-dqxfYM/b0Y59JEk55piird5gqcRwq9o3yLBV2/l7ecfMPbCt+ccVxtPf5Ox8h/amCyRov+WgnbLLFGp8D5E8Gw==}
     dependencies:
       '@types/leaflet': 1.9.8
       fflate: 0.8.2
@@ -3555,7 +3555,7 @@ packages:
     dependencies:
       lilconfig: 3.1.1
       postcss: 8.4.35
-      yaml: 2.3.4
+      yaml: 2.4.0
     dev: true
 
   /postcss-nested@6.0.1(postcss@8.4.35):
@@ -4367,7 +4367,7 @@ packages:
       just-compare: 2.3.0
       just-flush: 2.3.0
       maplibre-gl: 4.0.2
-      pmtiles: 3.0.3
+      pmtiles: 3.0.4
       svelte: 4.2.12
     dev: true
 
@@ -5079,9 +5079,10 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /yaml@2.3.4:
-    resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
+  /yaml@2.4.0:
+    resolution: {integrity: sha512-j9iR8g+/t0lArF4V6NE/QCfT+CO7iLqrXAHZbJdo+LfjqP1vR8Fg5bSiaq6Q2lOD1AUEVrEVIgABvBFYojJVYQ==}
     engines: {node: '>= 14'}
+    hasBin: true
     dev: true
 
   /yocto-queue@0.1.0:
