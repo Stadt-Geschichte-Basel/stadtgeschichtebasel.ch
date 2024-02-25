@@ -28,13 +28,24 @@ const allowedExtensions = [
 	'zip'
 ];
 
+/**
+ * Manages the downloading of files with concurrency control.
+ */
 class DownloadManager {
+	/**
+	 * Initializes a new instance of the DownloadManager.
+	 */
 	constructor() {
 		this.activeDownloads = 0;
 		this.downloadQueue = [];
 		this.downloadedUrls = new Set();
 	}
 
+	/**
+     * Enqueues a download task.
+     * @param {string} url - The URL to download.
+     * @param {string} staticDir - The directory where the file should be saved.
+     */
 	enqueueDownload(url, staticDir) {
 		if (this.downloadedUrls.has(url)) {
 			console.log(`Skipping already downloaded URL: ${url}`);
@@ -56,6 +67,9 @@ class DownloadManager {
 		}
 	}
 
+    /**
+     * Processes the next download in the queue.
+     */
 	nextDownload() {
 		this.activeDownloads--;
 		if (this.downloadQueue.length > 0) {
@@ -64,6 +78,13 @@ class DownloadManager {
 		}
 	}
 
+    /**
+     * Downloads a file from the given URL.
+     * @param {string} url - The URL of the file to download.
+     * @param {string} staticDir - The directory to save the file.
+     * @param {number} [retries=MAX_RETRIES] - The number of retries for the download.
+     * @throws {Error} Throws an error if the download fails after the maximum retries.
+     */
 	async download(url, staticDir, retries = MAX_RETRIES) {
 		try {
 			const { fileName, outputPath } = this.getFileNameAndPath(url, staticDir);
@@ -82,6 +103,13 @@ class DownloadManager {
 		}
 	}
 
+    /**
+     * Parses the URL to get the filename and output path.
+     * @param {string} url - The URL to parse.
+     * @param {string} staticDir - The base directory for the output path.
+     * @returns {{fileName: string, outputPath: string}} An object with the filename and outputPath.
+     * @throws {Error} Throws an error if the file type is unsupported.
+     */
 	getFileNameAndPath(url, staticDir) {
 		const parsedUrl = new URL(url);
 		const fileName = path.basename(parsedUrl.pathname);
@@ -92,6 +120,11 @@ class DownloadManager {
 		return { fileName, outputPath };
 	}
 
+    /**
+     * Checks if the file extension is allowed.
+     * @param {string} fileName - The name of the file.
+     * @returns {boolean} True if the extension is allowed, false otherwise.
+     */
 	isAllowedExtension(fileName) {
 		const extension = path.extname(fileName).substring(1); // Remove the dot from extension
 		return allowedExtensions.includes(extension);
