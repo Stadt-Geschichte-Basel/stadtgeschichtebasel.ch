@@ -118,7 +118,7 @@ const getAssetUrl = (elem, $) => {
 /**
  * Process and sanitize HTML content.
  * @param {string} html - HTML content to process.
- * @param {string} outputDir - Output directory for assets.
+ * @param {string} outputDir - Output directory for markdown files.
  * @param {string} link - Original link of the content.
  * @param {string} slug - Slug for the content.
  * @param {Array<string>} [tagsToRemove=[]] - Tags to remove during processing.
@@ -158,7 +158,7 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 			}
 
 			if (relativeUrl) {
-				$(elem).attr('href', relativeUrl);
+				$(elem).attr('href', path.join('/', relativeUrl));
 				downloadManager.enqueueDownload(url, staticDir);
 			}
 		}
@@ -177,7 +177,7 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		if (url && url.startsWith(baseURL)) {
 			const relativeUrl = path.join('/', url.replace(baseURL, ''));
 			$(elem).attr('src', relativeUrl);
-			downloadManager.enqueueDownload(url, staticDir);
+			downloadManager.enqueueDownload(url, outputDir);
 		}
 
 		// Handle srcset
