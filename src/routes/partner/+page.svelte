@@ -100,10 +100,10 @@
 				id="clusters"
 				hoverCursor="pointer"
 				paint={{
-					'circle-color': '#a390a2',
+					'circle-color': '#3a1e3e',
 					'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
-					'circle-stroke-color': '#d4d2d6',
-					'circle-stroke-width': 1
+					'circle-stroke-color': '#ffffff',
+					'circle-stroke-width': 2
 				}}
 				on:click={(e) => {
 					map.flyTo({
@@ -115,7 +115,7 @@
 			/>
 			<MarkerLayer applyToClusters={false} interactive let:feature>
 				<div
-					class="rounded-full bg-[#70416c] p-3 text-sm font-bold text-[#d4d2d6] shadow-2xl focus:outline-2 focus:outline-black"
+					class="rounded-full bg-[#3a1e3e] p-3 text-sm font-bold text-[#ffffff] shadow-2xl focus:outline-2 focus:outline-black"
 				>
 					{feature.properties.label}
 				</div>

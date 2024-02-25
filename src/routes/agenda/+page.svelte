@@ -169,7 +169,7 @@
 		</RadioGroup>
 		{#if filteredEvents.length > 0}
 			{#each filteredEvents as event}
-				<article class="card mt-4 px-4">
+				<article class="card variant-ringed-primary mt-4 px-4">
 					<hgroup class="m-0">
 						<h3>{event.title} ({event.owner})</h3>
 						<h4>
@@ -191,7 +191,7 @@
 	{/if}
 	{#if agenda === 'exhibitions'}
 		{#each exhibitions as exhibition}
-			<article class="card">
+			<article class="card variant-ringed-primary">
 				<h3 class="card-header">{exhibition.owner}: {exhibition.title}</h3>
 				<p class="card-footer">
 					{#if exhibition.longDescription}
