@@ -47,7 +47,6 @@ class DownloadManager {
 				.then(() => this.downloadedUrls.add(url))
 				.catch((error) => {
 					console.error(`Download failed: ${error}`);
-					process.exit(1);
 				})
 				.finally(() => this.nextDownload());
 		} else {
