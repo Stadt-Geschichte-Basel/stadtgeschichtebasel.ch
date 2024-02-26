@@ -60,6 +60,20 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"name": "Verein Basler Geschichtstage",
+				"label": "Basler Geschichtstage",
+				"description": "TBD",
+				"address": "Rudolfstrasse 9, 4054 Basel",
+				"website": "https://baslergeschichtstage.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.57513, 47.55537]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"name": "Basler Papiermühle",
 				"label": "Papiermühle",
 				"description": "TBD",
@@ -69,6 +83,20 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [7.60338, 47.55472]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Basler Stadtbuch (CMS)",
+				"label": "Basler Stadtbuch (CMS)",
+				"description": "TBD",
+				"address": "St. Alban-Vorstadt 12, 4052 Basel",
+				"website": "https://www.baslerstadtbuch.ch/home.html"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.59563, 47.55459]
 			}
 		},
 		{
@@ -96,7 +124,7 @@
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [7.584615, 47.55759]
+				"coordinates": [7.58458, 47.55749]
 			}
 		},
 		{
@@ -152,7 +180,7 @@
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [7.59282, 47.55062]
+				"coordinates": [7.59272, 47.5507]
 			}
 		},
 		{
@@ -208,35 +236,7 @@
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [7.59282, 47.55077]
-			}
-		},
-		{
-			"type": "Feature",
-			"properties": {
-				"name": "Grabmacherjoggi",
-				"label": "Grabmacherjoggi",
-				"description": "TBD",
-				"address": "Birsstrasse 170, 4052 Basel",
-				"website": "https://grabmacherjoggi.ch/index.html"
-			},
-			"geometry": {
-				"type": "Point",
-				"coordinates": [7.6222, 47.54906]
-			}
-		},
-		{
-			"type": "Feature",
-			"properties": {
-				"name": "Grimm Kulturmanagement",
-				"label": "Grimm Kulturmanagement",
-				"description": "TBD",
-				"address": "Gerbergasse 43, 4001 Basel",
-				"website": "https://grimm-kulturmanagement.ch/"
-			},
-			"geometry": {
-				"type": "Point",
-				"coordinates": [7.58872, 47.55597]
+				"coordinates": [7.59272, 47.5505]
 			}
 		},
 		{
@@ -312,20 +312,6 @@
 		{
 			"type": "Feature",
 			"properties": {
-				"name": "Mira Film",
-				"label": "Mira Film",
-				"description": "TBD",
-				"address": "Schwarzwaldallee 200, 4058 Basel",
-				"website": "https://mirafilm.ch/de/"
-			},
-			"geometry": {
-				"type": "Point",
-				"coordinates": [7.60722, 47.56715]
-			}
-		},
-		{
-			"type": "Feature",
-			"properties": {
 				"name": "Museum der Kulturen",
 				"label": "MKB",
 				"description": "TBD",
@@ -382,20 +368,6 @@
 		{
 			"type": "Feature",
 			"properties": {
-				"name": "Regio Basiliensis",
-				"label": "Regio Basiliensis",
-				"description": "TBD",
-				"address": "St. Jakob-Strasse 25, 4052 Basel",
-				"website": "https://www.regbas.ch/de/"
-			},
-			"geometry": {
-				"type": "Point",
-				"coordinates": [7.59689, 47.54997]
-			}
-		},
-		{
-			"type": "Feature",
-			"properties": {
 				"name": "Schürch & Koellreuter",
 				"label": "Schürch & Koellreuter",
 				"description": "TBD",
@@ -424,6 +396,20 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"name": "Staatsarchiv des Kantons Basel-Landschaft",
+				"label": "Staatsarchiv Basel-Landschaft",
+				"description": "TBD",
+				"address": "Wiedenhubstrasse 35, 4410 Liestal",
+				"website": "https://memory.bl.ch/start"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.72651, 47.48708]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"name": "Staatsarchiv Basel-Stadt",
 				"label": "Staatsarchiv",
 				"description": "TBD",
@@ -446,7 +432,21 @@
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [7.59287, 47.55093]
+				"coordinates": [7.59282, 47.5506]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Tram-Museum Basel",
+				"label": "Tram-Museum Basel",
+				"description": "TBD",
+				"address": "Münchensteinerstrasse 105, 4052 Basel",
+				"website": "https://www.trammuseum-basel.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.60747, 47.53831]
 			}
 		},
 		{
@@ -475,6 +475,20 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [7.59616, 47.56218]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "Zoologischer Garten Basel AG",
+				"label": "Zoo Basel",
+				"description": "TBD",
+				"address": "Binningerstrasse 40, 4054 Basel",
+				"website": "https://www.zoobasel.ch/de/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.58255, 47.54881]
 			}
 		}
 	]
