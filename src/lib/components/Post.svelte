@@ -22,7 +22,7 @@
 
 <div class="card variant-ringed-primary mt-4 overflow-hidden" aria-label={post.title}>
 	<header>
-		<img src="{base}{post.featuredImage}" class="max-h-96 w-full object-contain" alt="" />
+		<img src="{base}{post.featuredImage}" class="max-h-96 w-full object-contain px-px" alt="" />
 	</header>
 	<div class="px-4">
 		<h2 class="m-0">
