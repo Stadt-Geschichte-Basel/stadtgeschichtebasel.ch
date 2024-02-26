@@ -15,10 +15,10 @@
 
 <nav
 	aria-label="Blogpost-Navigation, zeigt Seite {page} aus {lastPage}"
-	class="variant-ghost btn-group mt-4 grid grid-cols-3 justify-items-stretch gap-4 text-center"
+	class="variant-ringed-primary btn-group mt-4 grid grid-cols-3 justify-items-stretch text-center"
 	data-sveltekit-preload-data
 >
-	<div>
+	<div class="group hover:bg-primary-500 hover:text-white">
 		{#if page > 1}
 			<a
 				href="{base}/blog/{page - 1}"
@@ -36,7 +36,7 @@
 		<span class="disabled btn hidden md:block" aria-current="page">Seite {page} von {lastPage}</span
 		>
 	</div>
-	<div>
+	<div class="group hover:bg-primary-500 hover:text-white">
 		{#if page < lastPage}
 			<a
 				href="{base}/blog/{page + 1}"

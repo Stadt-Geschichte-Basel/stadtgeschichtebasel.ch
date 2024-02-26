@@ -5,7 +5,7 @@ import path from 'path';
 import TurndownService from 'turndown';
 import { JSDOM } from 'jsdom';
 import createDOMPurify from 'dompurify';
-import fetch from 'node-fetch';
+import DownloadManager from './downloadManager.mjs';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
@@ -67,129 +67,16 @@ const perPage = 100;
 const excludedCategories = [14];
 
 /**
- * The allowed file extensions for asset downloads.
- * @type {Array<string>}
- */
-const allowedExtensions = [
-	'.avif',
-	'.doc',
-	'.docx',
-	'.gif',
-	'.jpeg',
-	'.jpg',
-	'.pdf',
-	'.png',
-	'.ppt',
-	'.pptx',
-	'.svg',
-	'.txt',
-	'.webp',
-	'.xls',
-	'.xlsx',
-	'.zip'
-];
-
-/**
  * The directory where assets will be downloaded.
  * @type {string}
  */
 const staticDir = 'static';
 
 /**
- * A class representing a queue of tasks to be executed in order.
+ * The download queue.
+ * @type {DownloadManager}
  */
-class Queue {
-	/**
-	 * Creates a new Queue instance.
-	 */
-	constructor() {
-		this.queue = [];
-	}
-
-	/**
-	 * Adds a new task to the end of the queue.
-	 * @param {Function} task - The task to add to the queue.
-	 */
-	enqueue(task) {
-		this.queue.push(task);
-		if (this.queue.length === 1) {
-			this.dequeue();
-		}
-	}
-
-	/**
-	 * Removes the first task from the queue and executes it.
-	 * If the queue is empty, does nothing.
-	 */
-	async dequeue() {
-		if (this.queue.length === 0) return;
-		const task = this.queue.shift();
-		await task();
-		this.dequeue();
-	}
-}
-
-/**
- * Creates a new instance of Queue and assigns it to downloadQueue variable.
- * @type {Queue}
- */
-const downloadQueue = new Queue();
-
-const MAX_RETRIES = 5; // Maximum number of retries for each request
-const TIMEOUT = 1000; // 5 seconds timeout for each request
-
-/**
- * Fetches a URL using the native fetch API and enqueues the request to a download queue.
- * @param {string} url - The URL to fetch.
- * @param {Object} [options={}] - Additional options to pass to the fetch function.
- * @returns {Promise<Response>} - A promise that resolves with the response from the fetch request.
- */
-/**
- * Queues a fetch request using the native fetch API.
- * @param {string} url - The URL to fetch.
- * @param {Object} options - The options to pass to the fetch request.
- * @returns {Promise<Response>} - A promise that resolves with the response from the fetch request.
- */
-/**
- * Fetches a resource from the given URL using the native fetch API and enqueues the request to a download queue.
- * @param {string} url - The URL of the resource to fetch.
- * @param {object} [options={}] - An optional object containing any custom settings that you want to apply to the request.
- * @returns {Promise<Response>} - A Promise that resolves with the Response object representing the fetched resource.
- */
-async function queuedFetch(url, options = {}, retries = MAX_RETRIES) {
-	return new Promise((resolve, reject) => {
-		downloadQueue.enqueue(async () => {
-			let retryCount = 0;
-			while (retryCount <= retries) {
-				try {
-					const controller = new AbortController();
-					const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
-					const response = await fetch(url, { ...options, signal: controller.signal });
-					clearTimeout(timeoutId);
-
-					if (response.ok) {
-						resolve(response);
-						return;
-					} else {
-						console.log(`Failed request to ${url}, status code: ${response.status}`);
-					}
-				} catch (error) {
-					console.log(`Error fetching ${url}: ${error.message}`);
-					if (error.name === 'AbortError') {
-						console.log(`Request to ${url} timed out`);
-					}
-				}
-
-				retryCount++;
-				if (retryCount <= retries) {
-					console.log(`Retrying request to ${url} (${retryCount}/${retries})`);
-				}
-			}
-
-			reject(new Error(`Failed to fetch ${url} after ${retries + 1} attempts`));
-		});
-	});
-}
+const downloadManager = new DownloadManager();
 
 /**
  * Cache object for categories.
@@ -205,7 +92,7 @@ const categoryCache = {};
 async function fetchCategoryNameById(id) {
 	if (categoryCache[id]) return categoryCache[id];
 
-	const response = await queuedFetch(`${baseURL}${apiEndpoint}/categories/${id}`);
+	const response = await fetch(`${baseURL}${apiEndpoint}/categories/${id}`);
 	const data = await response.json();
 	const name = data.name;
 	categoryCache[id] = name;
@@ -229,52 +116,13 @@ const getAssetUrl = (elem, $) => {
 };
 
 /**
- * Download an asset.
- * @param {string} url
- * @param {string} outputDir
- */
-async function downloadAsset(url, outputDir = staticDir) {
-	downloadQueue.enqueue(async () => {
-		console.log(`Downloading asset from ${url}`);
-		const extension = path.extname(new URL(url).pathname).toLowerCase();
-		if (!allowedExtensions.includes(extension)) return;
-
-		const response = await queuedFetch(url);
-
-		if (!response.ok) {
-			console.log(`Failed to download asset from ${url}`);
-			return;
-		}
-
-		const urlPath = new URL(url).pathname;
-		const fullDir = path.join(outputDir, path.dirname(urlPath));
-		if (!fs.existsSync(fullDir)) {
-			fs.mkdirSync(fullDir, { recursive: true });
-		}
-
-		const filePath = path.join(outputDir, urlPath);
-
-		const fileStream = fs.createWriteStream(filePath);
-		response.body.pipe(fileStream);
-
-		fileStream.on('finish', () => {
-			console.log(`Downloaded asset to ${filePath}`);
-		});
-
-		fileStream.on('error', (error) => {
-			console.log(`Error writing file: ${error}`);
-		});
-	});
-}
-
-/**
- * Process HTML content.
- * @param {string} html
- * @param {string} outputDir
- * @param {string} link
- * @param {string} slug
- * @param {Array<string>} tagsToRemove
- * @returns {Promise<string>}
+ * Process and sanitize HTML content.
+ * @param {string} html - HTML content to process.
+ * @param {string} outputDir - Output directory for markdown files.
+ * @param {string} link - Original link of the content.
+ * @param {string} slug - Slug for the content.
+ * @param {Array<string>} [tagsToRemove=[]] - Tags to remove during processing.
+ * @returns {Promise<string>} - Processed content in Markdown format.
  */
 async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 	const sanitizedHtml = DOMPurify.sanitize(html, {
@@ -282,7 +130,6 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
 	});
 	const $ = cheerio.load(sanitizedHtml);
-	const assetUrls = [];
 
 	tagsToRemove.forEach((tag) => {
 		$(tag).remove();
@@ -299,17 +146,23 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 
 	$('a').each((i, elem) => {
 		const url = $(elem).attr('href');
-		if (url && url.startsWith(newURL)) {
-			const relativeUrl = path.join('.', url.replace(newURL, ''));
-			$(elem).attr('href', relativeUrl);
-		}
-		if (url === link) {
-			const relativeUrl = path.join('.', url.replace(baseURL, ''), slug);
-			$(elem).attr('href', relativeUrl);
-		}
-		if (url && url.startsWith(baseURL)) {
-			const relativeUrl = path.join('.', url.replace(baseURL, ''));
-			$(elem).attr('href', relativeUrl);
+		let relativeUrl;
+
+		if (url) {
+			if (url === link) {
+				relativeUrl = path.join('.', url.replace(baseURL, ''), slug);
+			} else if (url.startsWith(newURL)) {
+				relativeUrl = path.join('.', url.replace(newURL, ''));
+			} else if (url.startsWith(baseURL)) {
+				relativeUrl = path.join('.', url.replace(baseURL, ''));
+			}
+
+			if (relativeUrl) {
+				$(elem).attr('href', path.join('/', relativeUrl));
+				if (path.extname(relativeUrl)) {
+					downloadManager.enqueueDownload(url, staticDir);
+				}
+			}
 		}
 	});
 
@@ -326,7 +179,7 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		if (url && url.startsWith(baseURL)) {
 			const relativeUrl = path.join('/', url.replace(baseURL, ''));
 			$(elem).attr('src', relativeUrl);
-			assetUrls.push(url);
+			downloadManager.enqueueDownload(url, staticDir);
 		}
 
 		// Handle srcset
@@ -336,7 +189,7 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 				.split(',')
 				.map((src) => {
 					let [url, size] = src.trim().split(' ');
-					assetUrls.push(url);
+					downloadManager.enqueueDownload(url, staticDir);
 					if (url.startsWith(baseURL)) {
 						url = path.join('/', url.replace(baseURL, ''));
 					}
@@ -347,29 +200,23 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		}
 	});
 
-	assetUrls.forEach((url) => {
-		downloadAsset(url);
-	});
-
 	return turndownService.turndown($.html());
 }
 
 /**
- * Fetch the featured image URL.
- * @param {number} mediaId
- * @returns {Promise<string|null>}
+ * Fetch the featured image URL for a given media ID.
+ * @param {number} mediaId - Media ID.
+ * @returns {Promise<string|null>} - URL of the featured image.
  */
 const fetchFeaturedImage = async (mediaId) => {
-	console.log(`Fetching featured image with ID: ${mediaId}`);
-	const response = await queuedFetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
+	const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
 	const data = await response.json();
-	console.log(`Fetched featured image URL: ${data.source_url}`);
 	return data.source_url;
 };
 
 /**
- * Fetch and process a content type.
- * @param {string} type
+ * Fetch and process content of a specific type from the API.
+ * @param {string} type - Content type (e.g., 'posts', 'pages').
  */
 async function fetchAndProcessType(type) {
 	const outputDir = path.join('src', type);
@@ -380,7 +227,7 @@ async function fetchAndProcessType(type) {
 
 	do {
 		console.log(`Fetching ${type} data, page ${page}`);
-		const response = await queuedFetch(
+		const response = await fetch(
 			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media,categories`
 		);
 		const data = await response.json();
@@ -404,7 +251,7 @@ async function fetchAndProcessType(type) {
 				? await fetchFeaturedImage(item.featured_media)
 				: null;
 			if (featuredImageUrl) {
-				await downloadAsset(featuredImageUrl);
+				await downloadManager.enqueueDownload(featuredImageUrl, staticDir);
 			}
 			const categoryNames = await Promise.all(categoryIds.map(fetchCategoryNameById));
 			const frontMatter = {
