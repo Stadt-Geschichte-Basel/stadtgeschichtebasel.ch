@@ -159,7 +159,9 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 
 			if (relativeUrl) {
 				$(elem).attr('href', path.join('/', relativeUrl));
-				downloadManager.enqueueDownload(url, staticDir);
+				if (path.extname(relativeUrl)) {
+					downloadManager.enqueueDownload(url, staticDir);
+				}
 			}
 		}
 	});
@@ -177,7 +179,7 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		if (url && url.startsWith(baseURL)) {
 			const relativeUrl = path.join('/', url.replace(baseURL, ''));
 			$(elem).attr('src', relativeUrl);
-			downloadManager.enqueueDownload(url, outputDir);
+			downloadManager.enqueueDownload(url, staticDir);
 		}
 
 		// Handle srcset
