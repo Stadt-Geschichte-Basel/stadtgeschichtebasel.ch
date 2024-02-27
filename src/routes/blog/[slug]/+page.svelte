@@ -4,14 +4,7 @@
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import {
-		Email,
-		LinkedIn,
-		Telegram,
-		WhatsApp,
-		Facebook,
-		X
-	} from 'svelte-share-buttons-component/src';
+	import { Email, LinkedIn, WhatsApp, Facebook, X } from 'svelte-share-buttons-component/src';
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const date = new Date(data.meta.date).toLocaleDateString('de-CH').toString();
@@ -44,22 +37,14 @@
 					href="{base}/blog/kategorie/{category}">&num;{category}</a
 				>
 			{/each}
+			<span class="badge">
+				<Email subject={data.meta.title} body="{data.meta.excerpt} {url}" />
+				<WhatsApp text="{data.meta.title} {url}" />
+				<Facebook {url} quote={data.meta.title} />
+				<X text={data.meta.title} {url} hashtags="Stadtgeschichte,Basel" related="other,users" />
+				<LinkedIn {url} />
+			</span>
 		</hgroup>
 		<svelte:component this={data.content} />
 	</article>
-	<div class="box-border text-end text-sm">
-		Teilen:
-		<Email subject={data.meta.title} body="{data.meta.excerpt} {url}" />
-		<LinkedIn class="share-button" {url} />
-		<Telegram class="share-button" text={data.meta.title} {url} />
-		<WhatsApp class="share-button" text="{data.meta.title} {url}" />
-		<Facebook class="share-button" {url} quote={data.meta.title} />
-		<X
-			class="share-button"
-			text={data.meta.title}
-			{url}
-			hashtags="Stadtgeschichte,Basel"
-			related="other,users"
-		/>
-	</div>
 </Container>
