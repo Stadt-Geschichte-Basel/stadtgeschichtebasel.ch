@@ -54,8 +54,9 @@
 		} else {
 			maxLength = 99;
 		}
-		let img = new Image(80, 30);
+		let img = new Image(33, 33);
 		img.onload = () => map.addImage('marker', img);
+		img.onerror = () => console.error('Failed to load map marker image.');
 		img.src = svg;
 	});
 
@@ -148,7 +149,7 @@
 					'text-font': ['Frutiger Neue Bold'],
 					'text-size': 19,
 					'text-justify': 'auto',
-					'text-variable-anchor': ['left', 'top', 'right', 'bottom'],
+					'text-variable-anchor': ['left', 'right', 'bottom', 'top'],
 					'text-radial-offset': 0.8,
 					'text-allow-overlap': true
 				}}
