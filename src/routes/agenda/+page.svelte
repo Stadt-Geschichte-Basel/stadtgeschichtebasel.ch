@@ -146,7 +146,13 @@
 		In Zusammenarbeit mit unseren Ko&shy;ope&shy;rations&shy;partnern präsentieren wir Ihnen eine
 		vielfältige Auswahl an Veranstaltungen, die im Raum Basel stattfinden.
 	</p>
-	<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+	<RadioGroup
+		display="flex"
+		background="bg-white"
+		border="border-token border-primary-500"
+		active="variant-filled-primary"
+		hover="hover:variant-ringed-primary hover:ring-2"
+	>
 		<RadioItem bind:group={agenda} name="justify" value={'events'}
 			>Ver&shy;anstal&shy;tungen ({processedEvents.length})</RadioItem
 		>
@@ -156,7 +162,13 @@
 		<RadioItem bind:group={agenda} name="justify" value={'info'}>ⓘ</RadioItem>
 	</RadioGroup>
 	{#if agenda === 'events'}
-		<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+		<RadioGroup
+			display="flex mt-4"
+			background="bg-white"
+			border="border-token border-primary-500"
+			active="variant-filled-primary"
+			hover="hover:variant-ringed-primary hover:ring-2"
+		>
 			<RadioItem bind:group={filter} name="justify" value={0}
 				>{thisMonthName} ({thisMonthEvents.length})</RadioItem
 			>
