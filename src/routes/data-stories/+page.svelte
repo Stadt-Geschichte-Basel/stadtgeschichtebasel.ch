@@ -10,9 +10,9 @@
 	<h1>Data Stories</h1>
 	<p>Hier finden Sie alle Data Stories.</p>
 	<ul class="posts">
-		{#each data as { title, url }}
+		{#each data as { title, slug }}
 			<li class="post">
-				<a href="/data-stories/{url}" class="title">{title}</a>
+				<a href="/data-stories/{slug}" class="title">{title}</a>
 			</li>
 		{/each}
 	</ul>
