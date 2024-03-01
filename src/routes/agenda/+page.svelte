@@ -146,7 +146,13 @@
 		In Zusammenarbeit mit unseren Ko&shy;ope&shy;rations&shy;partnern präsentieren wir Ihnen eine
 		vielfältige Auswahl an Veranstaltungen, die im Raum Basel stattfinden.
 	</p>
-	<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+	<RadioGroup
+		display="flex"
+		background="bg-white"
+		border="border-token border-primary-500"
+		active="variant-filled-primary"
+		hover="hover:variant-ringed-primary hover:ring-2"
+	>
 		<RadioItem bind:group={agenda} name="justify" value={'events'}
 			>Ver&shy;anstal&shy;tungen ({processedEvents.length})</RadioItem
 		>
@@ -156,7 +162,13 @@
 		<RadioItem bind:group={agenda} name="justify" value={'info'}>ⓘ</RadioItem>
 	</RadioGroup>
 	{#if agenda === 'events'}
-		<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+		<RadioGroup
+			display="flex mt-4"
+			background="bg-white"
+			border="border-token border-primary-500"
+			active="variant-filled-primary"
+			hover="hover:variant-ringed-primary hover:ring-2"
+		>
 			<RadioItem bind:group={filter} name="justify" value={0}
 				>{thisMonthName} ({thisMonthEvents.length})</RadioItem
 			>
@@ -169,14 +181,14 @@
 		</RadioGroup>
 		{#if filteredEvents.length > 0}
 			{#each filteredEvents as event}
-				<article class="card variant-ringed-primary mt-4 px-4">
+				<article class="card variant-ringed-primary mt-4 px-4 ring-2">
 					<hgroup class="m-0">
 						<h3>{event.title} ({event.owner})</h3>
 						<h4>
 							📅 <time datetime={event.localizedEndDate}>{event.localizedStartDate}</time>
 							{#if event.startTime}
 								🕒 <time>{event.startTime}</time>
-								{#if event.endTime}- <time>{event.endTime}</time>{/if}
+								{#if event.endTime}– <time>{event.endTime}</time>{/if}
 							{/if}
 						</h4>
 					</hgroup>
@@ -186,12 +198,12 @@
 				</article>
 			{/each}
 		{:else}
-			<p>Keine Veranstaltungen gefunden.</p>
+			<p>Keine Veranstaltungen in diesem Zeitraum gefunden.</p>
 		{/if}
 	{/if}
 	{#if agenda === 'exhibitions'}
 		{#each exhibitions as exhibition}
-			<article class="card variant-ringed-primary">
+			<article class="card variant-ringed-primary ring-2">
 				<h3 class="card-header">{exhibition.owner}: {exhibition.title}</h3>
 				<p class="card-footer">
 					{#if exhibition.longDescription}
