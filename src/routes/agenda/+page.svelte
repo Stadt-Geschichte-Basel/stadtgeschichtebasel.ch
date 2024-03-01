@@ -188,7 +188,7 @@
 							📅 <time datetime={event.localizedEndDate}>{event.localizedStartDate}</time>
 							{#if event.startTime}
 								🕒 <time>{event.startTime}</time>
-								{#if event.endTime}- <time>{event.endTime}</time>{/if}
+								{#if event.endTime}– <time>{event.endTime}</time>{/if}
 							{/if}
 						</h4>
 					</hgroup>
@@ -198,7 +198,7 @@
 				</article>
 			{/each}
 		{:else}
-			<p>Keine Veranstaltungen gefunden.</p>
+			<p>Keine Veranstaltungen in diesem Zeitraum gefunden.</p>
 		{/if}
 	{/if}
 	{#if agenda === 'exhibitions'}
