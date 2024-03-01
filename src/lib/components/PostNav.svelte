@@ -15,7 +15,7 @@
 
 <nav
 	aria-label="Blogpost-Navigation, zeigt Seite {page} aus {lastPage}"
-	class="variant-ringed-primary btn-group mt-4 grid grid-cols-3 justify-items-stretch text-center"
+	class="variant-ringed-primary btn-group mt-4 grid grid-cols-3 justify-items-stretch text-center ring-2"
 	data-sveltekit-preload-data
 >
 	<div class="group hover:bg-primary-500 hover:text-white">
