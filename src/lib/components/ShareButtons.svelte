@@ -29,7 +29,7 @@
 
 <div class="btn-group gap-1 sm:pt-4 md:pt-0">
 	{#if webShareAPISupported}
-		<button class=" variant-filled-primary btn-icon  cursor-pointer" on:click={handleWebShare}>
+		<button class=" variant-filled-primary btn-icon cursor-pointer" on:click={handleWebShare}>
 			Teilen
 			<svg
 				aria-hidden="true"
@@ -67,7 +67,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon  cursor-pointer"
+			class="variant-filled-primary btn-icon cursor-pointer"
 			target="_blank"
 			rel="noopener"
 			href="https://facebook.com/sharer/sharer.php?u={url}"
@@ -88,7 +88,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon  cursor-pointer"
+			class="variant-filled-primary btn-icon cursor-pointer"
 			target="_blank"
 			rel="noopener"
 			href="https://twitter.com/intent/tweet?url={url}&amp;text={title}"
@@ -110,7 +110,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon  cursor-pointer"
+			class="variant-filled-primary btn-icon cursor-pointer"
 			target="_blank"
 			rel="noopener"
 			href="https://api.whatsapp.com/send?text={url}"
