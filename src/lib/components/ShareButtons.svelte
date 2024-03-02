@@ -29,7 +29,7 @@
 
 <div class="btn-group gap-1 sm:pt-4 md:pt-0">
 	{#if webShareAPISupported}
-		<button class=" variant-filled-primary btn-icon cursor-pointer" on:click={handleWebShare}>
+		<button class="variant-filled-primary btn-icon" on:click={handleWebShare}>
 			Teilen
 			<svg
 				aria-hidden="true"
@@ -46,7 +46,7 @@
 		</button>
 	{:else}
 		<a
-			class="variant-filled-primary btn-icon cursor-pointer"
+			class="variant-filled-primary btn-icon"
 			href="mailto:?subject={title}&body={url}"
 			aria-label="Teilen mit Email"
 		>
@@ -67,7 +67,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon cursor-pointer"
+			class="variant-filled-primary btn-icon"
 			target="_blank"
 			rel="noopener"
 			href="https://facebook.com/sharer/sharer.php?u={url}"
@@ -88,7 +88,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon cursor-pointer"
+			class="variant-filled-primary btn-icon"
 			target="_blank"
 			rel="noopener"
 			href="https://twitter.com/intent/tweet?url={url}&amp;text={title}"
@@ -110,7 +110,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon cursor-pointer"
+			class="variant-filled-primary btn-icon"
 			target="_blank"
 			rel="noopener"
 			href="https://api.whatsapp.com/send?text={url}"
@@ -133,10 +133,10 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon cursor-pointer"
+			class="variant-filled-primary btn-icon"
 			target="_blank"
 			rel="noopener"
-			href="https://www.linkedin.com/shareArticle?mini=true&amp;url=&amp;title=&amp;summary=&amp;source="
+			href="https://www.linkedin.com/shareArticle?mini=true&amp;url={url}&amp;title={title}&amp;summary=&amp;source="
 			aria-label="Teilen auf Linkedin"
 			><span>
 				<svg
