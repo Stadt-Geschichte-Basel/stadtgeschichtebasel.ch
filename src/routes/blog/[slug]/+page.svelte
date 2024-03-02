@@ -1,16 +1,15 @@
 <script>
-	import * as config from '$lib/config';
 	import { base } from '$app/paths';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import { Email, LinkedIn, WhatsApp, Facebook, X } from 'svelte-share-buttons-component/src';
+	import ShareButtons from '$lib/components/ShareButtons.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const date = new Date(data.meta.date).toLocaleDateString('de-CH').toString();
 	const modified = new Date(data.meta.modified).toLocaleDateString('de-CH').toString();
 
-	const url = config.url + '/blog/' + data.meta.slug + '/';
+	const url = '/blog/' + data.meta.slug;
 </script>
 
 <Head
@@ -37,13 +36,7 @@
 					href="{base}/blog/kategorie/{category}">&num;{category}</a
 				>
 			{/each}
-			<span class="badge">
-				<Email subject={data.meta.title} body="{data.meta.excerpt} {url}" />
-				<WhatsApp text="{data.meta.title} {url}" />
-				<Facebook {url} quote={data.meta.title} />
-				<X text={data.meta.title} {url} hashtags="Stadtgeschichte,Basel" related="other,users" />
-				<LinkedIn {url} />
-			</span>
+			<ShareButtons slug={url} title={data.meta.title} />
 		</hgroup>
 		<svelte:component this={data.content} />
 	</article>
