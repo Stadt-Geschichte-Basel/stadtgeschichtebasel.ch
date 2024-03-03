@@ -1,6 +1,6 @@
-import { join } from 'path';
-import typography from '@tailwindcss/typography';
 import { skeleton } from '@skeletonlabs/tw-plugin';
+import typography from '@tailwindcss/typography';
+import { join } from 'path';
 
 /** @type {import('tailwindcss').Config} */
 export default {

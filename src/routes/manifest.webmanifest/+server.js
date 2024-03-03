@@ -31,7 +31,7 @@ export const GET = () =>
 				scope: '/',
 				display: 'standalone',
 				orientation: 'portrait',
-				background_color: config.themeColor,
+				background_color: config.backgroundColor,
 				theme_color: config.themeColor,
 				icons: [
 					...Object.values(config.icons)
