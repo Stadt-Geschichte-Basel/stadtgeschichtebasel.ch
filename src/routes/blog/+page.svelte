@@ -22,8 +22,10 @@
 		Unser Blog bietet Ihnen spannende Einblicke in die Welt der Basler Geschichte sowie
 		Veranstaltungshinweise.
 	</p>
-	{#each paginatedPosts as post}
-		<Post {post} />
-	{/each}
+	<div class="space-y-4">
+		{#each paginatedPosts as post}
+			<Post {post} />
+		{/each}
+	</div>
 	<PostNav {page} {lastPage} />
 </Container>
