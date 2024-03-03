@@ -11,8 +11,9 @@
 
 <Container>
 	<h1>Kategorie: {data.slug}</h1>
-
-	{#each data.posts as post}
-		<Post {post} />
-	{/each}
+	<div class="space-y-4">
+		{#each data.posts as post}
+			<Post {post} />
+		{/each}
+	</div>
 </Container>

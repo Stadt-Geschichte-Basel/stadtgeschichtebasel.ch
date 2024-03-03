@@ -41,8 +41,10 @@
 
 <Container>
 	<h1>Blog</h1>
-	{#each paginatedPosts as post}
-		<Post {post} />
-	{/each}
+	<div class="space-y-4">
+		{#each paginatedPosts as post}
+			<Post {post} />
+		{/each}
+	</div>
 	<PostNav {page} {lastPage} />
 </Container>
