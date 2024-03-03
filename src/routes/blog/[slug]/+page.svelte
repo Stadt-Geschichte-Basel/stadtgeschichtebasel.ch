@@ -27,16 +27,18 @@
 	<article>
 		<hgroup>
 			<h1 class="not-prose h2 font-bold">{data.meta.title}</h1>
-			<span class="text-sm"
-				>Veröffentlicht am {date}{#if modified !== date}, zuletzt geändert am {modified}{/if}</span
-			>
-			{#each data.meta.categories as category}
-				<a
-					class="variant-ringed badge mr-1 text-primary-500 hover:bg-primary-500 hover:text-white"
-					href="{base}/blog/kategorie/{category}">&num;{category}</a
+			<div class="flex flex-col flex-wrap gap-1 md:flex-row md:place-items-center">
+				<span class="text-sm"
+					>Veröffentlicht am {date}{#if modified !== date}, zuletzt geändert am {modified}{/if}</span
 				>
-			{/each}
-			<ShareButtons slug={url} title={data.meta.title} />
+				{#each data.meta.categories as category}
+					<a
+						class="variant-ringed badge mr-1 space-y-4 text-primary-500 hover:bg-primary-500 hover:text-white"
+						href="{base}/blog/kategorie/{category}">&num;{category}</a
+					>
+				{/each}
+				<ShareButtons slug={url} title={data.meta.title} />
+			</div>
 		</hgroup>
 		<svelte:component this={data.content} />
 	</article>

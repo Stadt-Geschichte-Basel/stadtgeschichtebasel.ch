@@ -27,13 +27,15 @@
 	const url = `${config.url}/${slug}`;
 </script>
 
-<div class="btn-group gap-1 sm:pt-4 md:pt-0">
+<div class="group gap-1">
 	{#if webShareAPISupported}
-		<button class="variant-filled-primary btn-icon" on:click={handleWebShare}>
+		<button
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
+			on:click={handleWebShare}
+		>
 			Teilen
 			<svg
 				aria-hidden="true"
-				fill="white"
 				xmlns="http://www.w3.org/2000/svg"
 				class="h-6 w-6"
 				viewBox="0 0 512 512"
@@ -46,8 +48,8 @@
 		</button>
 	{:else}
 		<a
-			class="variant-filled-primary btn-icon"
-			href="mailto:?subject={title}&body={url}"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
+			href="mailto:?subject={title}&body={title}:%20{url}"
 			aria-label="Teilen mit Email"
 		>
 			<span>
@@ -55,7 +57,6 @@
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 512 512"
 					aria-hidden="true"
-					fill="white"
 					class="h-6 w-6"
 					><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><title
 						>Email</title
@@ -67,7 +68,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
 			target="_blank"
 			rel="noopener"
 			href="https://facebook.com/sharer/sharer.php?u={url}"
@@ -75,7 +76,6 @@
 			><span>
 				<svg
 					aria-hidden="true"
-					fill="white"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 320 512"
 					class="h-6 w-6"
@@ -88,7 +88,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
 			target="_blank"
 			rel="noopener"
 			href="https://twitter.com/intent/tweet?url={url}&amp;text={title}"
@@ -98,7 +98,6 @@
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 512 512"
 					aria-hidden="true"
-					fill="white"
 					class="h-6 w-6"
 					><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><title
 						>Twitter</title
@@ -110,7 +109,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
 			target="_blank"
 			rel="noopener"
 			href="https://api.whatsapp.com/send?text={url}"
@@ -121,7 +120,6 @@
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 448 512"
 					aria-hidden="true"
-					fill="white"
 					class="h-6 w-6"
 					><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><title
 						>Whatsapp</title
@@ -133,15 +131,14 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
 			target="_blank"
 			rel="noopener"
-			href="https://www.linkedin.com/shareArticle?mini=true&amp;url={url}&amp;title={title}&amp;summary=&amp;source="
+			href="https://www.linkedin.com/sharing/share-offsite/?url={url}"
 			aria-label="Teilen auf Linkedin"
 			><span>
 				<svg
 					aria-hidden="true"
-					fill="white"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 448 512"
 					class="h-6 w-6"
