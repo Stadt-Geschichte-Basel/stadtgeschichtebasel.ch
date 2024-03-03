@@ -20,9 +20,9 @@
 	export let post;
 </script>
 
-<div class="card variant-ringed-primary mt-4 overflow-hidden ring-2" aria-label={post.title}>
+<div class="card variant-ringed-primary overflow-hidden ring-2" aria-label={post.title}>
 	<header>
-		<img src="{base}{post.featuredImage}" class="max-h-96 w-full object-contain px-px" alt="" />
+		<img src="{base}{post.featuredImage}" class="max-h-96 w-full object-contain px-0.5" alt="" />
 	</header>
 	<div class="px-4">
 		<h2 class="m-0">
