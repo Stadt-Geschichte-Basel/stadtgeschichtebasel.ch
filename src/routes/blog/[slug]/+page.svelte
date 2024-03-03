@@ -9,7 +9,7 @@
 	const date = new Date(data.meta.date).toLocaleDateString('de-CH').toString();
 	const modified = new Date(data.meta.modified).toLocaleDateString('de-CH').toString();
 
-	const url = '/blog/' + data.meta.slug;
+	const url = 'blog/' + data.meta.slug;
 </script>
 
 <Head
