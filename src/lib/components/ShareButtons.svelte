@@ -33,7 +33,6 @@
 			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
 			on:click={handleWebShare}
 		>
-			Teilen
 			<svg
 				aria-hidden="true"
 				xmlns="http://www.w3.org/2000/svg"
