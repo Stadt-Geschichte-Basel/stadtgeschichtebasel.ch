@@ -1,4 +1,5 @@
 <script>
+	import * as config from '$lib/config';
 	import { base } from '$app/paths';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import Container from '$lib/components/Container.svelte';
@@ -9,7 +10,7 @@
 	const date = new Date(data.meta.date).toLocaleDateString('de-CH').toString();
 	const modified = new Date(data.meta.modified).toLocaleDateString('de-CH').toString();
 
-	const url = 'blog/' + data.meta.slug;
+	const url = config.url + '/blog/' + data.meta.slug;
 </script>
 
 <Head
@@ -39,7 +40,7 @@
 						href="{base}/blog/kategorie/{category}">&num;{category}</a
 					>
 				{/each}
-				<ShareButtons slug={url} title={data.meta.title} />
+				<ShareButtons {url} title={data.meta.title} />
 			</div>
 		</hgroup>
 		<svelte:component this={data.content} />

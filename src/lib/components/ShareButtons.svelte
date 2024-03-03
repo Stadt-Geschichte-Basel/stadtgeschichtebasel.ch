@@ -3,7 +3,7 @@
 	import * as config from '$lib/config';
 
 	/** @type {string} */
-	export let slug;
+	export let url;
 
 	/** @type {string} */
 	export let title;
@@ -24,7 +24,6 @@
 			}
 		}
 	};
-	const url = `${config.url}/${slug}`;
 </script>
 
 {#if !webShareAPISupported}
