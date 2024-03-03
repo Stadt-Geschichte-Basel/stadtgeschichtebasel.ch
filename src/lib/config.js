@@ -89,7 +89,7 @@ export const lang = 'de';
  * The theme color used for the website.
  * @type {string}
  */
-export const themeColor = '#ffffff';
+export const themeColor = '#3A1E3E';
 
 /**
  * The background color used for the website.
