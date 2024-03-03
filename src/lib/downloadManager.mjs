@@ -1,8 +1,8 @@
-import fetch from 'node-fetch';
 import fs from 'fs';
+import fetch from 'node-fetch';
 import path from 'path';
-import { promisify } from 'util';
 import { pipeline } from 'stream';
+import { promisify } from 'util';
 
 const pipelineAsync = promisify(pipeline);
 

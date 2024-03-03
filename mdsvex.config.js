@@ -1,7 +1,7 @@
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeSlug from 'rehype-slug';
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeExternalLinks from 'rehype-external-links';
+import rehypeSlug from 'rehype-slug';
 import remarkCaptions from 'remark-captions';
 
 const config = defineConfig({

@@ -2,15 +2,15 @@
  * @file This file contains API endpoints for fetching and displaying activities.
  */
 
+import { dev } from '$app/environment';
 import * as config from '$lib/config';
 import { json } from '@sveltejs/kit';
+import createDOMPurify from 'dompurify';
 import { promises as fs } from 'fs';
-import { parseStringPromise } from 'xml2js';
+import { JSDOM } from 'jsdom';
 import { tmpdir } from 'os';
 import { join } from 'path';
-import { dev } from '$app/environment';
-import { JSDOM } from 'jsdom';
-import createDOMPurify from 'dompurify';
+import { parseStringPromise } from 'xml2js';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);

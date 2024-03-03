@@ -1,5 +1,5 @@
-import { error } from '@sveltejs/kit';
 import data from '$lib/data/datastories.json';
+import { error } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageLoad}*/
 export async function load({ params }) {

@@ -1,10 +1,10 @@
 import * as cheerio from 'cheerio';
+import createDOMPurify from 'dompurify';
 import fs from 'fs';
 import yaml from 'js-yaml';
+import { JSDOM } from 'jsdom';
 import path from 'path';
 import TurndownService from 'turndown';
-import { JSDOM } from 'jsdom';
-import createDOMPurify from 'dompurify';
 import DownloadManager from './downloadManager.mjs';
 
 const window = new JSDOM('').window;
