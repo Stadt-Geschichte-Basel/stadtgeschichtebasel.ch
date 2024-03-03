@@ -137,11 +137,11 @@
 		class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:fill-secondary-500"
 		on:click={handleWebShare}
 	>
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 512 512"
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 448 512"
 			><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
 			<title>Teilen</title>
 			<path
-				d="M307 34.8c-11.5 5.1-19 16.6-19 29.2v64H176C78.8 128 0 206.8 0 304C0 417.3 81.5 467.9 100.2 478.1c2.5 1.4 5.3 1.9 8.1 1.9c10.9 0 19.7-8.9 19.7-19.7c0-7.5-4.3-14.4-9.8-19.5C108.8 431.9 96 414.4 96 384c0-53 43-96 96-96h96v64c0 12.6 7.4 24.1 19 29.2s25 3 34.4-5.4l160-144c6.7-6.1 10.6-14.7 10.6-23.8s-3.8-17.7-10.6-23.8l-160-144c-9.4-8.5-22.9-10.6-34.4-5.4z"
+				d="M352 320c-22.6 0-43.4 7.8-59.8 20.9l-102.5-64.1a96.6 96.6 0 0 0 0-41.7l102.5-64.1C308.6 184.2 329.4 192 352 192c53 0 96-43 96-96S405 0 352 0s-96 43-96 96c0 7.2 .8 14.1 2.3 20.8L155.8 180.9C139.4 167.8 118.6 160 96 160c-53 0-96 43-96 96s43 96 96 96c22.6 0 43.4-7.8 59.8-20.9l102.5 64.1A96.3 96.3 0 0 0 256 416c0 53 43 96 96 96s96-43 96-96-43-96-96-96z"
 			/>
 		</svg>
 	</button>
