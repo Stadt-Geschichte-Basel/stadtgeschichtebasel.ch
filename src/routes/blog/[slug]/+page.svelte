@@ -27,7 +27,9 @@
 	<article>
 		<hgroup>
 			<h1 class="not-prose h2 font-bold">{data.meta.title}</h1>
-			<div class="flex flex-col flex-wrap gap-1 space-y-2 md:flex-row md:place-items-center">
+			<div
+				class="flex flex-col flex-wrap items-start gap-1 space-y-1 md:flex-row md:place-items-center"
+			>
 				<span class="text-sm"
 					>Veröffentlicht am {date}{#if modified !== date}, zuletzt geändert am {modified}{/if}</span
 				>

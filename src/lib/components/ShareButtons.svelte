@@ -30,7 +30,7 @@
 {#if !webShareAPISupported}
 	<div class="group gap-1">
 		<a
-			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:fill-secondary-500"
 			href="mailto:?subject={title}&body={title}:%20{url}"
 			aria-label="Teilen mit Email"
 		>
@@ -39,7 +39,7 @@
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 512 512"
 					aria-hidden="true"
-					class="h-6 w-6"
+					class="h-4 w-4"
 					><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><title
 						>Email</title
 					>
@@ -50,7 +50,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:fill-secondary-500"
 			target="_blank"
 			rel="noopener"
 			href="https://facebook.com/sharer/sharer.php?u={url}"
@@ -60,7 +60,7 @@
 					aria-hidden="true"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 320 512"
-					class="h-6 w-6"
+					class="h-4 w-4"
 					><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><title
 						>Facebook</title
 					><path
@@ -70,7 +70,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:fill-secondary-500"
 			target="_blank"
 			rel="noopener"
 			href="https://twitter.com/intent/tweet?url={url}&amp;text={title}"
@@ -80,7 +80,7 @@
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 512 512"
 					aria-hidden="true"
-					class="h-6 w-6"
+					class="h-4 w-4"
 					><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><title
 						>Twitter</title
 					>
@@ -91,7 +91,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:fill-secondary-500"
 			target="_blank"
 			rel="noopener"
 			href="https://api.whatsapp.com/send?text={url}"
@@ -102,7 +102,7 @@
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 448 512"
 					aria-hidden="true"
-					class="h-6 w-6"
+					class="h-4 w-4"
 					><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><title
 						>Whatsapp</title
 					>
@@ -113,7 +113,7 @@
 			>
 		</a>
 		<a
-			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
+			class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:fill-secondary-500"
 			target="_blank"
 			rel="noopener"
 			href="https://www.linkedin.com/sharing/share-offsite/?url={url}"
@@ -123,7 +123,7 @@
 					aria-hidden="true"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 448 512"
-					class="h-6 w-6"
+					class="h-4 w-4"
 					><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><title
 						>Linkedin</title
 					><path
@@ -135,10 +135,10 @@
 	</div>
 {:else}
 	<button
-		class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:scale-125"
+		class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:fill-secondary-500"
 		on:click={handleWebShare}
 	>
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 512 512"
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 512 512"
 			><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
 			<title>Teilen</title>
 			<path
