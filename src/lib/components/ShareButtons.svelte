@@ -135,6 +135,7 @@
 {:else}
 	<button
 		class="variant-filled-primary btn-icon btn-icon-sm fill-white hover:fill-secondary-500"
+		aria-label="Teilen"
 		on:click={handleWebShare}
 	>
 		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 448 512"
