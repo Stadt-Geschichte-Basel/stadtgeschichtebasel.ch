@@ -7,12 +7,7 @@
 
 <Head />
 
-<main id="main-content" class="h-full w-full">
-	<iframe
-		src={data.url}
-		class="h-full w-full"
-		frameborder="0"
-		title={config.title}
-		allow="fullscreen"
-	></iframe>
-</main>
+<main id="main-content"></main>
+
+<iframe src={data.url} class="h-full w-full" frameborder="0" title={config.title} allow="fullscreen"
+></iframe>
