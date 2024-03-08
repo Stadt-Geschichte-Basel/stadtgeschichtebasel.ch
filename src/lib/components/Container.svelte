@@ -1,5 +1,5 @@
-<main id="main-content">
-	<section class="prose p-4 lg:prose-xl lg:p-10">
+<section class="prose p-4 lg:prose-xl lg:p-10">
+	<main id="main-content">
 		<slot />
-	</section>
-</main>
+	</main>
+</section>
