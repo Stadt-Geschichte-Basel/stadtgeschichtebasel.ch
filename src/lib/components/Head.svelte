@@ -1,6 +1,6 @@
 <script>
 	import * as config from '$lib/config';
-	import { base } from '$app/paths';
+
 	import { page } from '$app/stores';
 
 	export let title = config.title + ' ' + config.subtitle;
@@ -123,13 +123,13 @@
 	<link rel="canonical" href={canonical} />
 
 	<!-- Manifest link -->
-	<link rel="manifest" href="{base}/manifest.webmanifest" />
+	<link rel="manifest" href="/manifest.webmanifest" />
 
 	<!-- RSS feed -->
-	<link rel="alternate" type="application/rss+xml" href="{base}/rss.xml" />
+	<link rel="alternate" type="application/rss+xml" href="/rss.xml" />
 
 	<!-- Sitemap link -->
-	<link rel="sitemap" type="application/xml" href="{base}/sitemap.xml" />
+	<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
 	<!-- Twitter tags -->
 	<meta name="twitter:title" content={title} />

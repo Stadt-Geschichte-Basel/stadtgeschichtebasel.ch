@@ -1,7 +1,6 @@
 <script>
 	import Container from '$lib/components/Container.svelte';
 	import { page } from '$app/stores';
-	import { base } from '$app/paths';
 
 	import Head from '$lib/components/Head.svelte';
 	import * as config from '$lib/config';
@@ -43,12 +42,12 @@
 	<h2>Können wir Ihnen weiterhelfen?</h2>
 	<ul>
 		<li>
-			Unter <a href="{base}/projekt">Projekt</a> erfahren Sie mehr über {config.title}.
+			Unter <a href="/projekt">Projekt</a> erfahren Sie mehr über {config.title}.
 		</li>
 		<li>
-			Die <a href="{base}/">Startseite</a> bietet einen Überblick über diese Webseite.
+			Die <a href="/">Startseite</a> bietet einen Überblick über diese Webseite.
 		</li>
-		<li>In der <a href="{base}/agenda">Agenda</a> finden Sie alle Veranstaltungen.</li>
-		<li>Im <a href="{base}/blog">Blog</a> finden Sie Beiträge zur Geschichte Basels.</li>
+		<li>In der <a href="/agenda">Agenda</a> finden Sie alle Veranstaltungen.</li>
+		<li>Im <a href="/blog">Blog</a> finden Sie Beiträge zur Geschichte Basels.</li>
 	</ul>
 </Container>

@@ -1,5 +1,4 @@
 <script>
-	import { base } from '$app/paths';
 	/**
 	 * The current page
 	 * @type {number}
@@ -21,7 +20,7 @@
 	<div class="group hover:bg-primary-500 hover:text-white">
 		{#if page > 1}
 			<a
-				href="{base}/blog/{page - 1}"
+				href="/blog/{page - 1}"
 				class="btn btn-xl"
 				rel="prev"
 				aria-label="Springe zur vorherigen Seite"
@@ -39,7 +38,7 @@
 	<div class="group hover:bg-primary-500 hover:text-white">
 		{#if page < lastPage}
 			<a
-				href="{base}/blog/{page + 1}"
+				href="/blog/{page + 1}"
 				class="btn btn-xl"
 				rel="next"
 				aria-label="Springe zur nächsten Seite"
