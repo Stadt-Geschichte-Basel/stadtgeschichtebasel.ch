@@ -171,7 +171,7 @@
 
 			<section>
 				<p>
-					© 2023
+					© 2024
 					<span class="mx-2 opacity-10">|</span>
 					<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a>
 					<span class="mx-2 opacity-10">|</span>
