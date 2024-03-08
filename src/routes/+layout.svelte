@@ -47,7 +47,7 @@
 		<div class="flex justify-center">
 			<a
 				class="bg-secondary variant-filled-secondary btn absolute m-4 -translate-y-16 transition focus:translate-y-0"
-				href="#main-content">zum Seiteninhalt springen</a
+				href="#page-content">zum Seiteninhalt springen</a
 			>
 		</div>
 		<AppBar background="bg-primary-500">
