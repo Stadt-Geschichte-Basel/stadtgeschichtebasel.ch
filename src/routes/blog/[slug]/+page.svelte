@@ -1,6 +1,6 @@
 <script>
 	import * as config from '$lib/config';
-	import { base } from '$app/paths';
+
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Head from '$lib/components/Head.svelte';
@@ -37,7 +37,7 @@
 				{#each data.meta.categories as category}
 					<a
 						class="variant-ringed badge text-primary-500 hover:bg-primary-500 hover:text-white"
-						href="{base}/blog/kategorie/{category}">&num;{category}</a
+						href="/blog/kategorie/{category}">&num;{category}</a
 					>
 				{/each}
 				<ShareButtons {url} title={data.meta.title} />

@@ -1,5 +1,4 @@
 <script>
-	import { base } from '$app/paths';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Navigation from '$lib/components/Navigation.svelte';
@@ -65,7 +64,7 @@
 						</span>
 					</button>
 					<div class="h-12">
-						<a href="{base}/" class="cursor-pointer" aria-label="Home">
+						<a href="/" class="cursor-pointer" aria-label="Home">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								class="h-full fill-white"
@@ -167,9 +166,9 @@
 				<p>
 					© 2023
 					<span class="mx-2 opacity-10">|</span>
-					<a class="anchor" href="{base}/datenschutzerklaerung">Datenschutz</a>
+					<a class="anchor" href="/datenschutzerklaerung">Datenschutz</a>
 					<span class="mx-2 opacity-10">|</span>
-					<a class="anchor" href="{base}/credits">Credits</a>
+					<a class="anchor" href="/credits">Credits</a>
 				</p>
 			</section>
 		</div>

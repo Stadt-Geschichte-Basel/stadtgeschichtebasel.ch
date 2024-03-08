@@ -1,6 +1,5 @@
 <script>
 	import { base } from '$app/paths';
-
 	/**
 	 * Represents a post.
 	 * @typedef {Object} Post
@@ -27,7 +26,7 @@
 	<div class="px-4">
 		<h2 class="m-0">
 			<a
-				href="{base}/blog/{post.slug}"
+				href="/blog/{post.slug}"
 				class="font-bold no-underline hover:underline"
 				title={post.slug}
 				aria-hidden="true"
@@ -37,7 +36,7 @@
 		<article>
 			<p>
 				{post.excerpt}
-				<a href="{base}/blog/{post.slug}" title={post.slug}>weiterlesen</a>
+				<a href="/blog/{post.slug}" title={post.slug}>weiterlesen</a>
 			</p>
 		</article>
 	</div>
@@ -46,7 +45,7 @@
 			{#each post.categories as category}
 				<a
 					class="variant-ringed badge text-primary-500 hover:bg-primary-500 hover:text-white"
-					href="{base}/blog/kategorie/{category}">&num;{category}</a
+					href="/blog/kategorie/{category}">&num;{category}</a
 				>
 			{/each}
 		</div>
