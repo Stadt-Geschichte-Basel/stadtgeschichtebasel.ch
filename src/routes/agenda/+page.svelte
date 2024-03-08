@@ -146,7 +146,7 @@
 		vielfältige Auswahl an Veranstaltungen, die im Raum Basel stattfinden.
 	</p>
 	<RadioGroup
-		display="flex"
+		display="flex items-center"
 		background="bg-white"
 		border="border-token border-primary-500"
 		active="variant-filled-primary"
