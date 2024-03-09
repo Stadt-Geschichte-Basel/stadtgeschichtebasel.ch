@@ -103,7 +103,7 @@ export const backgroundColor = '#ffffff';
  */
 export const favicon = {
 	src: url + '/favicon.png',
-	sizes: '48x48',
+	sizes: '512x512',
 	type: 'image/png'
 };
 
@@ -131,7 +131,7 @@ export const icons = {
 		type: 'image/png'
 	},
 	any: {
-		src: url + '/icon.svg',
+		src: url + '/favicon.svg',
 		sizes: '48x48 72x72 96x96 128x128 150x150 256x256 512x512 1024x1024',
 		type: 'image/svg+xml'
 	}
