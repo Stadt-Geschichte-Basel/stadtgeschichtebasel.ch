@@ -71,7 +71,7 @@
 					</button>
 					<div class="h-12">
 						<a href="/" class="cursor-pointer" aria-label="Home">
-							<img src="favicon.svg" class="h-full" />
+							<img src="favicon.svg" class="h-full" alt="" />
 						</a>
 					</div>
 				</div></svelte:fragment
