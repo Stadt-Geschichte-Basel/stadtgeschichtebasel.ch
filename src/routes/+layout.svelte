@@ -174,6 +174,8 @@
 					<span class="mx-2 opacity-10">|</span>
 					<a class="anchor" href="/datenschutzerklaerung">Datenschutz</a>
 					<span class="mx-2 opacity-10">|</span>
+					<a class="anchor" href="/barrierefreiheitserklaerung">Barrierefreiheit</a>
+					<span class="mx-2 opacity-10">|</span>
 					<a class="anchor" href="/credits">Credits</a>
 				</p>
 			</section>
