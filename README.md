@@ -13,7 +13,7 @@ Welcome to [Stadt.Geschichte.Basel](https://stadtgeschichtebasel.ch/), a compreh
 
 [Stadt.Geschichte.Basel](https://stadtgeschichtebasel.ch/) seeks to bridge research gaps and present historical findings in accessible formats. Our project encompasses an extensive nine-volume book series, an overview volume, a digital portal, and a digital platform for research data. These resources are aimed at scholars and the public, making historical research and insights more accessible than ever.
 
-This project is the open source code of the digital portal of Stadt.Geschichte.Basel. It is a static website built with [SvelteKit](https://kit.svelte.dev/). The website is hosted on [Cloudflare Pages](https://pages.cloudflare.com/). It uses [Hypothese.org](https://sgb.hypotheses.org/) as CMS and consumes data from [Agendabasel](https://agendabasel.ch/) for the agenda.
+This project is the open source code of the digital portal of Stadt.Geschichte.Basel. It is a static website built with [SvelteKit](https://kit.svelte.dev/). The website is hosted on [Cloudflare Pages](https://pages.cloudflare.com/). It uses [hypotheses.org](https://sgb.hypotheses.org/) as CMS and consumes data from [Agendabasel](https://agendabasel.ch/) for the agenda.
 
 The digital platform for research data can be found at [forschung.stadtgeschichtebasel.ch](https://forschung.stadtgeschichtebasel.ch/). The source code for the digital platform can be found [here](https://github.com/Stadt-Geschichte-Basel/forschung.stadtgeschichtebasel.ch).
 
