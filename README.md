@@ -7,12 +7,6 @@ The open source code of the digital portal of Stadt.Geschichte.Basel.
 [![GitHub stars](https://img.shields.io/github/stars/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch.svg)](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/stargazers)
 [![GitHub license](https://img.shields.io/github/license/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch.svg)](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/blob/main/LICENSE.md)
 
-![Lighthouse Accessibility Badge](./assets/images/scores/lighthouse_accessibility.svg)
-![Lighthouse Best Practices Badge](./assets/images/scores/lighthouse_best-practices.svg)
-![Lighthouse Performance Badge](./assets/images/scores/lighthouse_performance.svg)
-![Lighthouse PWA Badge](./assets/images/scores/lighthouse_pwa.svg)
-![Lighthouse SEO Badge](./assets/images/scores/lighthouse_seo.svg)
-
 ## Overview
 
 Welcome to [Stadt.Geschichte.Basel](https://stadtgeschichtebasel.ch/), a comprehensive digital and print project aimed at presenting the multifaceted history of Basel from its earliest beginnings to the present. Visit [Stadt.Geschichte.Basel](https://stadtgeschichtebasel.ch) to see how our digital portal is bringing Basel's history to life. This live site showcases the practical application of our open-source code, offering an interactive experience of Basel's rich heritage.
