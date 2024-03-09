@@ -165,7 +165,8 @@
 					<h3 class="text-lg font-bold">{props.name}</h3>
 					<p class="text-sm">{props.address}</p>
 					<p class="text-sm">
-						<a href={props.website} target="_blank" rel="nofollow" class="underline">Zur Webseite</a
+						<a href={props.website} target="_blank" rel="noopener nofollow" class="anchor"
+							>Zur Webseite</a
 						>
 					</p>
 				</Popup>
