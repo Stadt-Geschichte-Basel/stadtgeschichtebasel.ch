@@ -33,7 +33,7 @@ Use the package manager [pnpm](https://pnpm.io/installation) to install all depe
 pnpm install
 ```
 
-Run the prebuild script to download the pages, posts, and assets from [Hyphotheses.org](https://sgb.hypotheses.org/).
+Run the prebuild script to download the pages, posts, and assets from [hypotheses.org](https://sgb.hypotheses.org/).
 
 ```bash
 pnpm run prebuild
