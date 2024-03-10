@@ -192,7 +192,8 @@
 						</h4>
 					</hgroup>
 					<footer>
-						{event.shortDescription} <a href={event.originUrl}>Mehr Infos</a>
+						{event.shortDescription}
+						<a href={event.originUrl} rel="noopener nofollow" target="_blank">Mehr Infos</a>
 					</footer>
 				</article>
 			{/each}
@@ -210,7 +211,7 @@
 					{:else if exhibition.shortDescription}
 						{exhibition.shortDescription}
 					{/if}
-					<a href={exhibition.originUrl}>Mehr Infos</a>
+					<a href={exhibition.originUrl} rel="noopener nofollow">Mehr Infos</a>
 				</p>
 			</article>
 		{/each}
