@@ -54,7 +54,7 @@
 		} else {
 			maxLength = 99;
 		}
-		let img = new Image(33, 33);
+		let img = new Image(26, 34);
 		img.onload = () => map.addImage('marker', img);
 		img.onerror = () => console.error('Failed to load map marker image.');
 		img.src = svg;
@@ -75,7 +75,7 @@
 	<MapLibre
 		style="https://vectortiles.geo.admin.ch/styles/ch.swisstopo.leichte-basiskarte.vt/style.json"
 		class="h-full w-full"
-		images={[{ id: 'marker', url: 'src/lib/images/pin-48.png' }]}
+		images={[{ id: 'marker', url: 'src/lib/images/location-dot-solid.svg' }]}
 		zoom={14}
 		maxZoom={20}
 		center={[7.59274, 47.55094]}
@@ -165,7 +165,8 @@
 					<h3 class="text-lg font-bold">{props.name}</h3>
 					<p class="text-sm">{props.address}</p>
 					<p class="text-sm">
-						<a href={props.website} target="_blank" rel="nofollow" class="underline">Zur Webseite</a
+						<a href={props.website} target="_blank" rel="noopener nofollow" class="anchor"
+							>Zur Webseite</a
 						>
 					</p>
 				</Popup>
