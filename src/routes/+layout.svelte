@@ -68,9 +68,12 @@
 					</button>
 					<div class="h-12">
 						<a href="/" class="cursor-pointer" aria-label="Home">
-							<div
-								class="bg-[url('{assets}/favicon.svg')] h-full w-64 bg-contain bg-no-repeat"
-							></div>
+							<object
+								data="{assets}/favicon.svg"
+								class="h-full"
+								type="image/svg+xml"
+								aria-label=""
+							/>
 						</a>
 					</div>
 				</div></svelte:fragment
