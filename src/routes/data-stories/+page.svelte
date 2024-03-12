@@ -3,8 +3,6 @@
 	import Head from '$lib/components/Head.svelte';
 	import data from '$lib/data/datastories.json';
 
-	const whatIsADataStory =
-		'Data Storytelling ist eine innovative Methode, bei der erzählerische Elemente und Daten  miteinander kombiniert werden, um komplexe Informationen und Forschungsergebnisse in einer  zugänglichen und ansprechenden digitalen Form zu präsentieren. Im Kontext von  Stadt.Geschichte.Basel nutzen Autor*innen und Autoren-Kollektive diese Technik, um Geschichten  und Forschungsdaten aus dem Projekt aufzubereiten und so die faszinierende Historie von Basel  auf neue und spannende Weise zu vermitteln.';
 	function toSwissDate(date) {
 		return new Intl.DateTimeFormat('de-CH', { dateStyle: 'full' }).format(new Date(date));
 	}
@@ -12,7 +10,7 @@
 
 <Head
 	title="Data Stories | Hier finden Sie alle Data Stories"
-	description={whatIsADataStory}
+	description="Data Storytelling ist eine innovative Methode, bei der erzählerische Elemente und Daten  miteinander kombiniert werden, um komplexe Informationen und Forschungsergebnisse in einer  zugänglichen und ansprechenden digitalen Form zu präsentieren."
 	jsonLdDataType="Article"
 />
 
@@ -30,7 +28,12 @@
 		{/each}
 		<h2>Was ist eine Datastory?</h2>
 		<p>
-			{whatIsADataStory}
+			Data Storytelling ist eine innovative Methode, bei der erzählerische Elemente und Daten
+			miteinander kombiniert werden, um komplexe Informationen und Forschungsergebnisse in einer
+			zugänglichen und ansprechenden digitalen Form zu präsentieren. Im Kontext von
+			Stadt.Geschichte.Basel nutzen Autor*innen und Autoren-Kollektive diese Technik, um Geschichten
+			und Forschungsdaten aus dem Projekt aufzubereiten und so die faszinierende Historie von Basel
+			auf neue und spannende Weise zu vermitteln.
 		</p>
 	</ul></Container
 >
