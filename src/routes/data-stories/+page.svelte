@@ -5,9 +5,8 @@
 
 	const whatIsADataStory =
 		'Data Storytelling ist eine innovative Methode, bei der erzählerische Elemente und Daten  miteinander kombiniert werden, um komplexe Informationen und Forschungsergebnisse in einer  zugänglichen und ansprechenden digitalen Form zu präsentieren. Im Kontext von  Stadt.Geschichte.Basel nutzen Autor*innen und Autoren-Kollektive diese Technik, um Geschichten  und Forschungsdaten aus dem Projekt aufzubereiten und so die faszinierende Historie von Basel  auf neue und spannende Weise zu vermitteln.';
-
-	function toLocaleDateString(date) {
-		return new Date(date).toLocaleDateString('de-CH');
+	function toSwissDate(date) {
+		return new Intl.DateTimeFormat('de-CH', { dateStyle: 'full' }).format(new Date(date));
 	}
 </script>
 
@@ -25,7 +24,7 @@
 			<li class="post">
 				<p>
 					<a href="/data-stories/{slug}" class="title">{title}</a>
-					{description} (erstellt am {toLocaleDateString(created)})
+					{description} (erstellt am {toSwissDate(created)})
 				</p>
 			</li>
 		{/each}
