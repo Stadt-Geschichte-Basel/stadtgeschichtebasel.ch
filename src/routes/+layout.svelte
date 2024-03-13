@@ -56,7 +56,7 @@
 					<button
 						class="btn btn-sm mr-4 lg:hidden"
 						on:click={drawerOpen}
-						aria-label="Open navigation menu"
+						aria-label="Navigationsleiste öffnen"
 					>
 						<span>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-8 fill-white"
@@ -67,11 +67,11 @@
 						</span>
 					</button>
 					<div class="h-12">
-						<a href="/" class="cursor-pointer" aria-label="Home">
+						<a href="/" class="cursor-pointer" aria-label="Startseite">
 							<img
 								src="{assets}/favicon.svg"
 								class="h-full"
-								alt="Home"
+								alt="Logo der {config.title}"
 							/>
 						</a>
 					</div>
