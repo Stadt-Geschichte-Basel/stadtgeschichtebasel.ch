@@ -68,11 +68,10 @@
 					</button>
 					<div class="h-12">
 						<a href="/" class="cursor-pointer" aria-label="Home">
-							<object
-								data="{assets}/favicon.svg"
+							<img
+								src="{assets}/favicon.svg"
 								class="h-full"
-								type="image/svg+xml"
-								aria-label=""
+								alt="Home"
 							/>
 						</a>
 					</div>
