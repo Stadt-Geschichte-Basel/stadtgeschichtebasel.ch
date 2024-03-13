@@ -68,11 +68,7 @@
 					</button>
 					<div class="h-12">
 						<a href="/" class="cursor-pointer" aria-label="Startseite">
-							<img
-								src="{assets}/favicon.svg"
-								class="h-full"
-								alt="Logo der {config.title}"
-							/>
+							<img src="{assets}/favicon.svg" class="h-full" alt="Logo der {config.title}" />
 						</a>
 					</div>
 				</div></svelte:fragment
