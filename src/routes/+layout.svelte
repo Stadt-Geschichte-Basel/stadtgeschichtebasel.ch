@@ -3,7 +3,6 @@
 	import { page } from '$app/stores';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import * as config from '$lib/config';
-	import { assets } from '$app/paths';
 	import {
 		AppShell,
 		AppBar,
