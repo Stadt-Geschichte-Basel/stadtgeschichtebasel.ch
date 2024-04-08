@@ -24,7 +24,6 @@
 		label: feature.properties.label,
 		name: feature.properties.name
 	}));
-	// eslint-disable-next-line no-unused-vars
 	let selectedFeature = null;
 
 	function flyToFeature(feature, zoomLevel = 18) {
