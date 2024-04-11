@@ -2,16 +2,25 @@
 	{
 		"title": "Das jüdische Basel 1850 – 1914",
 		"url": "https://stadtgeschichtebasel-jb.geovistory.org",
-		"slug": "das-juedische-basel-1850-1914"
+		"slug": "das-juedische-basel-1850-1914",
+		"description": "bietet ein digitales Puzzle, das in zwölf Teilen Einblicke in die Geschichte der jüdischen Gemeinde Basels im angegebenen Zeitraum gibt. Die Benutzer*innen interagieren mit verschiedenen Puzzleteilen, die verschiedene Aspekte wie Gemeinden, Migration, Vereinswesen, Synagogen, Rabbiner, Friedhöfe, Zionistenkongresse, Persönlichkeiten und Zentren thematisieren. Durch das Lösen von Rätseln werden neue Teile freigeschaltet, und am Ende winkt als Belohnung ein Gratiseintritt in ein Museum. Das Spiel fördert Wohlbefinden, Konzentration und Kurzzeitgedächtnis.",
+		"created": "2024-03-05",
+		"modified": ""
 	},
 	{
 		"title": "Mit Bioarchäologie Geschichte schreiben. Die spätantike Gräbergruppe 'Basel Waisenhaus'",
 		"url": "https://storymaps.arcgis.com/stories/54d35e03bcdf4841b092d4c4906227e9",
-		"slug": "mit-bioarchaeologie-geschichte-schreiben"
+		"slug": "mit-bioarchaeologie-geschichte-schreiben",
+		"description": "beschäftigt sich mit der Bioarchäologie als Mittel zur Erforschung der menschlichen Geschichte. Sie zeigt, wie bioarchäologische Untersuchungen dazu beitragen können, Licht auf das Leben und den Tod vergangener Kulturen zu werfen. Die Data Story veranschaulicht diese Punkte durch Beispiele und Erkenntnisse, die durch die Analyse menschlicher Überreste gewonnen wurden. Die Erzählung ist interaktiv gestaltet und ermöglicht es dem Betrachter, tief in die Welt der Bioarchäologie einzutauchen.",
+		"created": "2024-01-09",
+		"modified": "2024-03-12"
 	},
 	{
 		"title": "Das Kontrollbüro und die Wundermaschine: Wie Basel-Stadt in den 1960er Jahren das Einwohnermeldewesen digitalisierte",
 		"url": "https://storymaps.arcgis.com/stories/6be823309a7b4254aa27b5486703b68b",
-		"slug": "das-kontrollbuero-und-die-wundermaschine"
+		"slug": "das-kontrollbuero-und-die-wundermaschine",
+		"description": "ist eine Data Story, die die Digitalisierung des Einwohnermeldewesens in Basel-Stadt in den 1960er Jahren behandelt. Es werden insbesondere die Aspekte der Datenverwaltung und des Zugriffs verschiedener Behörden auf Personendaten thematisiert. Die Data Story bietet Einblicke in die Anfänge der digitalen Verwaltung und deren Einfluss auf die Stadtverwaltung und den Datenschutz.",
+		"created": "2022-07-22",
+		"modified": "2022-12-01"
 	}
 ]
