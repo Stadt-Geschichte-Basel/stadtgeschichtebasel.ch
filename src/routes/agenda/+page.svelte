@@ -211,7 +211,7 @@
 					{:else if exhibition.shortDescription}
 						{exhibition.shortDescription}
 					{/if}
-					<a href={exhibition.originUrl} rel="noopener nofollow">Mehr Infos</a>
+					<a href={exhibition.originUrl} rel="noopener nofollow" target="_blank">Mehr Infos</a>
 				</p>
 			</article>
 		{/each}
@@ -219,7 +219,11 @@
 	{#if agenda === 'info'}
 		<h2>Info</h2>
 		<p>
-			Alle Daten auf dieser Seite stammen von <a href="https://agendabasel.ch">agendabasel.ch</a>
+			Alle Daten auf dieser Seite stammen von <a
+				href="https://agendabasel.ch"
+				rel="noopener nofollow"
+				target="_blank">agendabasel.ch</a
+			>
 			und werden der <a href="/ueber-uns">{config.title}</a> im Rahmen einer Kooperation kostenlos
 			zur Verfügung gestellt. Falls Sie eine Veranstaltung oder Ausstellung auf
 			{config.title} publizieren möchten, wenden Sie sich bitte direkt an agendabasel.ch oder an
