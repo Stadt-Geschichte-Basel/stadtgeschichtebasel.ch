@@ -21,7 +21,7 @@ The digital platform for research data can be found at [forschung.stadtgeschicht
 
 - **Fast Static Website**: The website is built with SvelteKit, providing a fast and responsive user experience.
 - **Interactive Features**: The website includes an interactive map and agenda.
-- **Accessibility-Focused Design**: Ensuring inclusivity for all users by complying with WCAG standards and observing neurodiversity design guidelines. More at our [accessibility statement](https://stadtgeschichtebasel.ch/barrierefreiheit/).
+- **Accessibility-Focused Design**: Ensuring inclusivity for all users by complying with WCAG standards and observing neurodiversity design guidelines. More at our [accessibility statement](https://stadtgeschichtebasel.ch/barrierefreiheitserklaerung/).
 
 ![Lighthouse Score](/assets/images/pagespeed-insights.svg)
 
