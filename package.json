@@ -30,7 +30,7 @@
 	"devDependencies": {
 		"@divriots/jampack": "^0.24.0",
 		"@playwright/test": "^1.43.1",
-		"@skeletonlabs/skeleton": "^2.9.1",
+		"@skeletonlabs/skeleton": "^2.9.2",
 		"@skeletonlabs/tw-plugin": "^0.4.0",
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.5.7",
