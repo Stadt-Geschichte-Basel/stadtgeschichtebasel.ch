@@ -26,6 +26,32 @@
 		<li>Noëlle Schnegg</li>
 	</ul>
 
+	<h2>Data Stories</h2>
+
+	<p>
+		Die folgenden Personen haben zu den auf {config.title} präsentierten
+		<a href="/data-stories">Data Stories</a> beigetragen:
+	</p>
+
+	<ul>
+		<li>
+			<a href="/data-stories/das-kontrollbuero-und-die-wundermaschine"
+				>Das Kontrollbüro und die Wundermaschine</a
+			>: Cristina Wildisen-Münch, Nico Görlich, Moritz Mähr
+		</li>
+		<li>
+			<a href="/data-stories/mit-bioarchaeologie-geschichte-schreiben"
+				>Mit Biorarchäologie Geschichte schreiben</a
+			>: Margaux L. C. Depaermentier
+		</li>
+		<li>
+			<a href="/data-stories/das-juedische-basel-1850-1914">Das jüdische Basel 1850–1914</a>: Beni
+			Pfister,
+			<a href="https://kleiolab.ch/" rel="noopener nofollow" target="_blank">Jonas Schneider</a>,
+			<a href="https://kleiolab.ch/" rel="noopener nofollow" target="_blank">David Knecht</a>
+		</li>
+	</ul>
+
 	<h2>Code</h2>
 
 	<p>
