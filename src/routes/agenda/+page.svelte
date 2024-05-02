@@ -158,7 +158,9 @@
 		<RadioItem bind:group={agenda} name="justify" value={'exhibitions'}
 			>Dauer&shy;aus&shy;stellungen ({exhibitions.length})</RadioItem
 		>
-		<RadioItem bind:group={agenda} name="justify" value={'info'}>ⓘ</RadioItem>
+		<RadioItem bind:group={agenda} name="justify" value={'info'}
+			><span class="sr-only">Information</span><span aria-hidden="true">ⓘ</span></RadioItem
+		>
 	</RadioGroup>
 	{#if agenda === 'events'}
 		<RadioGroup
@@ -184,10 +186,12 @@
 					<hgroup class="m-0">
 						<h3>{event.title} ({event.owner})</h3>
 						<h4>
-							📅 <time datetime={event.localizedEndDate}>{event.localizedStartDate}</time>
+							<span aria-hidden="true">📅 </span><time datetime={event.localizedEndDate}
+								>{event.localizedStartDate}</time
+							>
 							{#if event.startTime}
-								🕒 <time>{event.startTime}</time>
-								{#if event.endTime}– <time>{event.endTime}</time>{/if}
+								<span aria-hidden="true">🕒 </span><time>{event.startTime}</time>
+								{#if event.endTime}bis <time>{event.endTime}</time>{/if}
 							{/if}
 						</h4>
 					</hgroup>
