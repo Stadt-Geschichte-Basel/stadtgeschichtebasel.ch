@@ -56,7 +56,7 @@ pnpm run build
 Optimize the build with [Jampack](https://jampack.divriots.com/) for production.
 
 ```bash
-pnpm run postbuild
+rm -Rf build/_jampack/ && pnpm run postbuild # FIXME: Quick fix to make jampack work
 ```
 
 ## Development
