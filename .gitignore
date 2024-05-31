@@ -1,3 +1,5 @@
+test-results/.last-run.json
+
 .DS_Store
 node_modules
 /build
