@@ -61,7 +61,7 @@
 		"svelte-maplibre": "^0.9.4",
 		"tailwindcss": "^3.4.3",
 		"turndown": "^7.2.0",
-		"typescript": "^5.4.5",
+		"typescript": "^5.5.2",
 		"vite": "^5.2.12",
 		"vite-plugin-tailwind-purgecss": "^0.3.3",
 		"vitest": "^1.6.0",
