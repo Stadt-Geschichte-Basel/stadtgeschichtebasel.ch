@@ -50,7 +50,7 @@
 		"postcss": "^8.4.39",
 		"prettier": "^3.3.2",
 		"prettier-plugin-organize-imports": "^4.0.0",
-		"prettier-plugin-svelte": "^3.2.5",
+		"prettier-plugin-svelte": "^3.2.6",
 		"prettier-plugin-tailwindcss": "^0.6.5",
 		"rehype-autolink-headings": "^7.1.0",
 		"rehype-external-links": "^3.0.0",
