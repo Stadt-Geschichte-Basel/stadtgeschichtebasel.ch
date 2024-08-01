@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@divriots/jampack':
-        specifier: ^0.24.4
-        version: 0.24.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.25.0
+        version: 0.25.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@playwright/test':
         specifier: ^1.45.1
         version: 1.45.1
@@ -97,7 +97,7 @@ importers:
         version: 4.2.18
       svelte-check:
         specifier: ^3.8.4
-        version: 3.8.4(postcss-load-config@6.0.1(postcss@8.4.39))(postcss@8.4.39)(svelte@4.2.18)
+        version: 3.8.4(postcss-load-config@4.0.2(postcss@8.4.39))(postcss@8.4.39)(svelte@4.2.18)
       svelte-maplibre:
         specifier: ^0.9.8
         version: 0.9.8(svelte@4.2.18)
@@ -133,12 +133,17 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
+  '@commander-js/extra-typings@12.1.0':
+    resolution: {integrity: sha512-wf/lwQvWAA0goIghcb91dQYpkLBcyhOhQNqG/VgWhnKzgt+UOMvra7EX/2fv70arm5RW+PUHoQHHDa6/p77Eqg==}
+    peerDependencies:
+      commander: ~12.1.0
+
   '@divriots/cheerio@1.0.0-rc.12':
     resolution: {integrity: sha512-kQUVEgMDj0yE7LOdrDhKOC8JkfUzUKsUqp8m9WQDiSxim8Bnga+80opjXaCtHLhO3/W3DIZMow8QXtXUqNS+zA==}
     engines: {node: '>= 6'}
 
-  '@divriots/jampack@0.24.4':
-    resolution: {integrity: sha512-VCkz6Kmb1j3wBzsbc9aNTEmyAqvKZDjtRf7LnDktXE3xkVswHKXzvSqItnDkKJfBC670EQDLMQQqOCYLYVCDhw==}
+  '@divriots/jampack@0.25.0':
+    resolution: {integrity: sha512-r6WMX8nDoVqNmb+Xlt0ML63ES6u+hb/qdyXzUMwQccmwh0D8AW+TWKUEZZAHE1jSic4sp+jxmQZiAq3IAS0xlg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -2210,24 +2215,6 @@ packages:
       ts-node:
         optional: true
 
-  postcss-load-config@6.0.1:
-    resolution: {integrity: sha512-oPtTM4oerL+UXmx+93ytZVN82RrlY/wPUV8IeDxFrzIjXOLF1pN+EmKPLbubvKHT2HC20xXsCAH2Z+CKV6Oz/g==}
-    engines: {node: '>= 18'}
-    peerDependencies:
-      jiti: '>=1.21.0'
-      postcss: '>=8.0.9'
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      jiti:
-        optional: true
-      postcss:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-
   postcss-media-query-parser@0.2.3:
     resolution: {integrity: sha512-3sOlxmbKcSHMjlUXQZKQ06jOswE7oVkXPxmZdoB1r5l0q6gTFTQSHxNxOrCccElbW7dxNytifNEo8qidX2Vsig==}
 
@@ -3094,6 +3081,10 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
+  '@commander-js/extra-typings@12.1.0(commander@12.1.0)':
+    dependencies:
+      commander: 12.1.0
+
   '@divriots/cheerio@1.0.0-rc.12':
     dependencies:
       cheerio-select: 2.1.0
@@ -3108,8 +3099,9 @@ snapshots:
       undici: 5.28.4
       whatwg-mimetype: 3.0.0
 
-  '@divriots/jampack@0.24.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@divriots/jampack@0.25.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
+      '@commander-js/extra-typings': 12.1.0(commander@12.1.0)
       '@divriots/cheerio': 1.0.0-rc.12
       '@proload/core': 0.3.3
       '@swc/core': 1.6.13
@@ -5028,13 +5020,6 @@ snapshots:
     optionalDependencies:
       postcss: 8.4.39
 
-  postcss-load-config@6.0.1(postcss@8.4.39):
-    dependencies:
-      lilconfig: 3.1.2
-    optionalDependencies:
-      postcss: 8.4.39
-    optional: true
-
   postcss-media-query-parser@0.2.3: {}
 
   postcss-nested@6.0.1(postcss@8.4.39):
@@ -5441,14 +5426,14 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svelte-check@3.8.4(postcss-load-config@6.0.1(postcss@8.4.39))(postcss@8.4.39)(svelte@4.2.18):
+  svelte-check@3.8.4(postcss-load-config@4.0.2(postcss@8.4.39))(postcss@8.4.39)(svelte@4.2.18):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       chokidar: 3.6.0
       picocolors: 1.0.1
       sade: 1.8.1
       svelte: 4.2.18
-      svelte-preprocess: 5.1.4(postcss-load-config@6.0.1(postcss@8.4.39))(postcss@8.4.39)(svelte@4.2.18)(typescript@5.5.3)
+      svelte-preprocess: 5.1.4(postcss-load-config@4.0.2(postcss@8.4.39))(postcss@8.4.39)(svelte@4.2.18)(typescript@5.5.3)
       typescript: 5.5.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -5484,7 +5469,7 @@ snapshots:
       pmtiles: 3.0.6
       svelte: 4.2.18
 
-  svelte-preprocess@5.1.4(postcss-load-config@6.0.1(postcss@8.4.39))(postcss@8.4.39)(svelte@4.2.18)(typescript@5.5.3):
+  svelte-preprocess@5.1.4(postcss-load-config@4.0.2(postcss@8.4.39))(postcss@8.4.39)(svelte@4.2.18)(typescript@5.5.3):
     dependencies:
       '@types/pug': 2.0.10
       detect-indent: 6.1.0
@@ -5494,7 +5479,7 @@ snapshots:
       svelte: 4.2.18
     optionalDependencies:
       postcss: 8.4.39
-      postcss-load-config: 6.0.1(postcss@8.4.39)
+      postcss-load-config: 4.0.2(postcss@8.4.39)
       typescript: 5.5.3
 
   svelte@4.2.18:
