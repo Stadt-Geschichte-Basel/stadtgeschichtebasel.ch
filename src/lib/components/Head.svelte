@@ -25,6 +25,7 @@
 			logo: config.url + '/android-chrome-512x512.png',
 			sameAs: [
 				'https://www.instagram.com/' + config.instagramHandle,
+				'https://www.linkedin.com/company/' + config.linkedinHandle,
 				'https://twitter.com/' + config.twitterHandle,
 				'https://github.com/' + config.githubHandle
 			]

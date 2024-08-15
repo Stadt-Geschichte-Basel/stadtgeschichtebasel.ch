@@ -50,6 +50,12 @@ export const instagramHandle = 'sta.ge.ba';
 export const twitterHandle = '@basel_stadt';
 
 /**
+ * The LinkedIn handle associated with the website.
+ * @type {string}
+ */
+export const linkedinHandle = 'stadt-geschichte-basel';
+
+/**
  * The GitHub handle or organization associated with the website's repository.
  * @type {string}
  */
