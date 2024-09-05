@@ -74,7 +74,7 @@ function getUniqueOwners(activities) {
  * @returns {Promise<{ events: Array<Event>, exhibitions: Array<Exhibition> }>} A promise that resolves to an object containing the future dates and exhibitions.
  */
 async function getActivities() {
-	const response = await fetch('https://www.kulturzueri.ch/xmlexport/kzexport-basel.xml');
+	const response = await fetch('https://agendabasel.ch/xmlexport/kzexport-basel.xml');
 	const xml = await response.text();
 	const data = await parseStringPromise(xml);
 	const activities = data['kdz:exportActivities']['Activities'][0]['Activity'];
