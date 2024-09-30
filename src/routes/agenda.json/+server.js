@@ -74,58 +74,81 @@ function getUniqueOwners(activities) {
  * @returns {Promise<{ events: Array<Event>, exhibitions: Array<Exhibition> }>} A promise that resolves to an object containing the future dates and exhibitions.
  */
 async function getActivities() {
-	const response = await fetch('https://agendabasel.ch/xmlexport/kzexport-basel.xml');
-	const xml = await response.text();
-	const data = await parseStringPromise(xml);
-	const activities = data['kdz:exportActivities']['Activities'][0]['Activity'];
+	try {
+		const response = await fetch('https://agendabasel.ch/xmlexport/kzexport-basel.xml');
 
-	if (dev) {
-		await saveToFile(activities, join(tmpdir(), 'activities.json'));
-		console.log(getUniqueOwners(activities));
+		// Check if the response is OK (status 200-299)
+		if (!response.ok) {
+			throw new Error(`Failed to fetch data: ${response.statusText}`);
+		}
+
+		// Parse the response as text
+		const xml = await response.text();
+
+		// Check if the response is empty
+		if (!xml) {
+			throw new Error('Received empty response from the server.');
+		}
+
+		const data = await parseStringPromise(xml);
+		const activities = data['kdz:exportActivities']['Activities'][0]['Activity'];
+
+		if (dev) {
+			await saveToFile(activities, join(tmpdir(), 'activities.json'));
+			console.log(getUniqueOwners(activities));
+		}
+
+		const partners = config.partners;
+
+		const parsedActivities = activities
+			.filter(({ $: { owner } }) => partners.includes(owner))
+			.map(
+				({
+					$: { owner, dauerausstellung },
+					Title: [title],
+					ShortDescription: [shortDesc],
+					LongDescription: [longDesc],
+					OriginURL: [originUrl],
+					ActivityDates: [{ ActivityDate: dates = [] } = {}]
+				}) => ({
+					owner,
+					dauerausstellung,
+					title,
+					shortDescription: DOMPurify.sanitize(shortDesc, { ALLOWED_TAGS: [] }),
+					longDescription: DOMPurify.sanitize(longDesc, { ALLOWED_TAGS: [] }),
+					originUrl,
+					dates: dates.map(
+						({ $: { startDate, endDate, startTime, endTime }, TicketURL: [ticketURL] }) => ({
+							startDate,
+							endDate,
+							startTime,
+							endTime,
+							ticketURL: ticketURL
+						})
+					)
+				})
+			);
+
+		const exhibitions = parsedActivities
+			.filter(({ dauerausstellung }) => dauerausstellung === '1')
+			.sort((a, b) => a.owner.localeCompare(b.owner));
+		const events = parsedActivities.filter(({ dauerausstellung }) => dauerausstellung === '0');
+
+		const flatEvents = events
+			.flatMap(({ dates, owner, title, shortDescription, originUrl }) =>
+				dates.map((date) => ({ ...date, owner, title, shortDescription, originUrl }))
+			)
+			.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+		return { events: flatEvents, exhibitions };
+	} catch (error) {
+		// In production, throw an error to stop the build process
+		if (!dev) {
+			throw new Error(`Error fetching activities: ${error.message}`);
+		} else {
+			console.error(error);
+			return { events: [], exhibitions: [] }; // Return empty arrays in dev mode for testing
+		}
 	}
-
-	const partners = config.partners;
-
-	const parsedActivities = activities
-		.filter(({ $: { owner } }) => partners.includes(owner))
-		.map(
-			({
-				$: { owner, dauerausstellung },
-				Title: [title],
-				ShortDescription: [shortDesc],
-				LongDescription: [longDesc],
-				OriginURL: [originUrl],
-				ActivityDates: [{ ActivityDate: dates = [] } = {}]
-			}) => ({
-				owner,
-				dauerausstellung,
-				title,
-				shortDescription: DOMPurify.sanitize(shortDesc, { ALLOWED_TAGS: [] }),
-				longDescription: DOMPurify.sanitize(longDesc, { ALLOWED_TAGS: [] }),
-				originUrl,
-				dates: dates.map(
-					({ $: { startDate, endDate, startTime, endTime }, TicketURL: [ticketURL] }) => ({
-						startDate,
-						endDate,
-						startTime,
-						endTime,
-						ticketURL: ticketURL
-					})
-				)
-			})
-		);
-
-	const exhibitions = parsedActivities
-		.filter(({ dauerausstellung }) => dauerausstellung === '1')
-		.sort((a, b) => a.owner.localeCompare(b.owner));
-	const events = parsedActivities.filter(({ dauerausstellung }) => dauerausstellung === '0');
-
-	const flatEvents = events
-		.flatMap(({ dates, owner, title, shortDescription, originUrl }) =>
-			dates.map((date) => ({ ...date, owner, title, shortDescription, originUrl }))
-		)
-		.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
-	return { events: flatEvents, exhibitions };
 }
 
 /**
