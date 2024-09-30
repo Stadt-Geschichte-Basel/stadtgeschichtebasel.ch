@@ -79,18 +79,24 @@ async function getActivities() {
 
 		// Check if the response is OK (status 200-299)
 		if (!response.ok) {
-			throw new Error(`Failed to fetch data: ${response.statusText}`);
+			throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
 		}
 
 		// Parse the response as text
 		const xml = await response.text();
 
 		// Check if the response is empty
-		if (!xml) {
+		if (!xml || xml.trim() === '') {
 			throw new Error('Received empty response from the server.');
 		}
 
-		const data = await parseStringPromise(xml);
+		let data;
+		try {
+			data = await parseStringPromise(xml);
+		} catch (parseError) {
+			throw new Error('Failed to parse XML response.');
+		}
+
 		const activities = data['kdz:exportActivities']['Activities'][0]['Activity'];
 
 		if (dev) {
@@ -145,8 +151,7 @@ async function getActivities() {
 		if (!dev) {
 			throw new Error(`Error fetching activities: ${error.message}`);
 		} else {
-			console.error(error);
-			return { events: [], exhibitions: [] }; // Return empty arrays in dev mode for testing
+			throw error;
 		}
 	}
 }
