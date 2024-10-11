@@ -10,6 +10,7 @@ export async function load() {
 			meta: page.metadata
 		};
 	} catch (e) {
+		console.error(e);
 		error(404, `Could not find startseite.md`);
 	}
 }

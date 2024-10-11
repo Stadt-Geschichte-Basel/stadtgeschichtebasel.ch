@@ -93,8 +93,9 @@ class DownloadManager {
 			if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
 			await pipelineAsync(response.body, fs.createWriteStream(path.join(outputPath, fileName)));
 			console.log(`Downloaded ${url} to ${path.join(outputPath, fileName)}`);
-		} catch (error) {
+		} catch (e) {
 			if (retries > 0) {
+				console.error(e);
 				console.log(`Retrying download for ${url}. Retries left: ${retries - 1}`);
 				await this.download(url, staticDir, retries - 1);
 			} else {

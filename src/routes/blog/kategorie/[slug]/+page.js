@@ -13,6 +13,7 @@ export async function load({ fetch, params }) {
 			posts: filteredPosts
 		};
 	} catch (e) {
+		console.error(e);
 		error(404, `Could not find ${params.slug}`);
 	}
 }
