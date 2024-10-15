@@ -1,25 +1,23 @@
-import eslintPluginSvelte from 'eslint-plugin-svelte';
+import js from '@eslint/js';
+import prettier from 'eslint-config-prettier';
+import svelte from 'eslint-plugin-svelte';
+import globals from 'globals';
+
+/** @type {import('eslint').Linter.Config[]} */
 export default [
-	// add more generic rule sets here, such as:
-	// js.configs.recommended,
-	...eslintPluginSvelte.configs['flat/recommended'],
+	js.configs.recommended,
+	...svelte.configs['flat/recommended'],
+	prettier,
+	...svelte.configs['flat/prettier'],
 	{
-		ignores: [
-			'.DS_Store',
-			'node_modules',
-			'/build',
-			'/.svelte-kit',
-			'/package',
-			'.env',
-			'.env.*',
-			'!.env.example',
-			'pnpm-lock.yaml',
-			'package-lock.json',
-			'yarn.lock'
-		],
-		rules: {
-			// override/add rules settings here, such as:
-			// 'svelte/rule-name': 'error'
+		languageOptions: {
+			globals: {
+				...globals.browser,
+				...globals.node
+			}
 		}
+	},
+	{
+		ignores: ['build/', '.svelte-kit/', 'dist/']
 	}
 ];
