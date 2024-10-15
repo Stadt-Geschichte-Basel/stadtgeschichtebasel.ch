@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
@@ -95,7 +96,9 @@ class DownloadManager {
 			console.log(`Downloaded ${url} to ${path.join(outputPath, fileName)}`);
 		} catch (e) {
 			if (retries > 0) {
-				console.error(e);
+				if (dev) {
+					console.error(e);
+				}
 				console.log(`Retrying download for ${url}. Retries left: ${retries - 1}`);
 				await this.download(url, staticDir, retries - 1);
 			} else {
