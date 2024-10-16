@@ -94,7 +94,20 @@ async function getActivities() {
 		try {
 			data = await parseStringPromise(xml);
 		} catch (parseError) {
-			throw new Error('Failed to parse XML response.');
+			throw new Error(`Failed to parse XML response. Original error: ${parseError.message}`);
+		}
+
+		// Extract the ExportFileLastUpdate
+		const exportLastUpdateStr = data['kdz:exportActivities']['ExportFileLastUpdate'][0];
+		const exportLastUpdate = new Date(exportLastUpdateStr);
+		const now = new Date();
+
+		// Calculate the time difference in days
+		const timeDiff = (now - exportLastUpdate) / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+
+		// If older than 14 days, throw an error
+		if (timeDiff > 14) {
+			throw new Error('The export file is older than 2 weeks.');
 		}
 
 		const activities = data['kdz:exportActivities']['Activities'][0]['Activity'];
