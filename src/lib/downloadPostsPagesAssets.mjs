@@ -116,6 +116,15 @@ const getAssetUrl = (elem, $) => {
 };
 
 /**
+ * Cleans up escaped asterisks between word characters.
+ * @param {string} text
+ * @returns {string}
+ */
+function cleanEscapedAsterisks(text) {
+	return text.replace(/\\\*/gm, '*');
+}
+
+/**
  * Process and sanitize HTML content.
  * @param {string} html - HTML content to process.
  * @param {string} outputDir - Output directory for markdown files.
@@ -237,15 +246,11 @@ async function fetchAndProcessType(type) {
 			if (type === 'posts' && categoryIds.some((id) => excludedCategories.includes(id))) {
 				continue;
 			}
-			const title = turndownService.turndown(item.title.rendered);
+			const title = cleanEscapedAsterisks(turndownService.turndown(item.title.rendered));
 			const content = await processContent(item.content.rendered, outputDir, item.link, item.slug);
 			const tagsToRemove = ['span', 'a'];
-			const excerpt = await processContent(
-				item.excerpt.rendered,
-				outputDir,
-				item.link,
-				item.slug,
-				tagsToRemove
+			const excerpt = cleanEscapedAsterisks(
+				await processContent(item.excerpt.rendered, outputDir, item.link, item.slug, tagsToRemove)
 			);
 			const featuredImageUrl = item.featured_media
 				? await fetchFeaturedImage(item.featured_media)
