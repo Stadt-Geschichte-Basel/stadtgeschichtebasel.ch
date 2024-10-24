@@ -152,7 +152,7 @@
 	<meta property="og:image:height" content={imageHeight} />
 
 	<!-- JSON-LD -->
-	<svelte:element this="script" type="application/ld+json">
+	<svelte:element this={'script'} type="application/ld+json">
 		{jsonLdString}
 	</svelte:element>
 </svelte:head>
