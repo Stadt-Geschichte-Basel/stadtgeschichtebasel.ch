@@ -47,20 +47,14 @@ jobs:
       - name: Lint
         run: pnpm run lint
       - name: Setup jampack cache
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
         uses: actions/cache@v4
         with:
           path: .jampack
           key: jampack
           restore-keys: |
             jampack
-      - name: Prebuild
-        run: pnpm run prebuild
       - name: Build
         run: pnpm run build
-      - name: Postbuild
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'Stadt-Geschichte-Basel/stadtgeschichtebasel.ch'
-        run: rm -Rf build/_jampack/ && pnpm run postbuild # FIXME: Quick fix to make jampack work
       - name: Test
         run: pnpm run test
       - name: Publish to Cloudflare Pages
