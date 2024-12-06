@@ -1,9 +1,10 @@
 import { skeleton } from '@skeletonlabs/tw-plugin';
 import typography from '@tailwindcss/typography';
 import { join } from 'path';
+import type { Config } from 'tailwindcss';
 
 /** @type {import('tailwindcss').Config} */
-export default {
+const config = {
 	darkMode: 'class',
 	content: [
 		'./src/**/*.{html,js,svelte,ts}',
@@ -13,4 +14,6 @@ export default {
 		extend: {}
 	},
 	plugins: [typography, skeleton()]
-};
+} satisfies Config;
+
+export default config;
