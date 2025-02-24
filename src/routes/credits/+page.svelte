@@ -19,7 +19,7 @@
 		und gestaltet. Namentlich von
 	</p>
 	<ul>
-		<li>Cristina Wildisen-Münch</li>
+		<li>Cristina Münch</li>
 		<li>Moritz Mähr</li>
 		<li>Moritz Twente</li>
 		<li>Nico Görlich</li>
@@ -37,7 +37,7 @@
 		<li>
 			<a href="/data-stories/das-kontrollbuero-und-die-wundermaschine"
 				>Das Kontrollbüro und die Wundermaschine</a
-			>: Cristina Wildisen-Münch, Nico Görlich, Moritz Mähr
+			>: Cristina Münch, Nico Görlich, Moritz Mähr
 		</li>
 		<li>
 			<a href="/data-stories/mit-bioarchaeologie-geschichte-schreiben"
