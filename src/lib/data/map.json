@@ -368,6 +368,20 @@
 		{
 			"type": "Feature",
 			"properties": {
+				"name": "Radio X",
+				"label": "Radio X",
+				"description": "TBD",
+				"address": "Oslo-Strasse 8, 4142 Münchenstein",
+				"website": "https://radiox.ch/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.609696, 47.533512]
+			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
 				"name": "Schürch & Koellreuter",
 				"label": "Schürch & Koellreuter",
 				"description": "TBD",
