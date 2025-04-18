@@ -1,5 +1,13 @@
 [
 	{
+		"title": "Schulden in der Stadt",
+		"url": "https://storymaps.arcgis.com/stories/1955ccada8d74ff6919e9e1397cb168a",
+		"slug": "schulden-in-der-stadt",
+		"description": "Auch im Spätmittelalter führten unbezahlte und mitunter strittige Schulden zu Konflikten. Viele Basler*innen und auch Menschen aus dem Umland nutzten insbesondere das Stadtgericht genannt, um nicht bezahlte Schulden zu regeln. Ausgehend von einzelnen Gerichtsfällen lässt sich so ein Netzwerk von Schuldbeziehungen über die Stadt Basel legen. Dieses gibt eine Ahnung davon, wie dicht das Netz von Schulden war, in das wohl die meisten Baslerinnen und Basler verstrickt waren.",
+		"created": "2025-03-22",
+		"modified": ""
+	},
+	{
 		"title": "Verbriefte Märkte - Seidene Beziehungen",
 		"url": "https://storymaps.arcgis.com/stories/90a309d6d21342608d0ad3ee16fb3f30",
 		"slug": "verbriefte-maerkte-seidene-beziehungen",
@@ -13,7 +21,7 @@
 		"slug": "bleibt-die-kirche-in-der-stadt",
 		"description": "Wer im vormodernen Basel ein Haus besass, dem gehörte es oft nicht ganz. Es gab viele Grund- und Lehensherren, denen das Haus eigentlich gehörte und die es den Besitzer:innen zum Gebrauch überliessen. Dank dem Konzept der Erbleihe, das sich seit dem Hochmittelalter entwickelte, konnten die Leihenehmenden (also diejenigen Personen, die wir heute als Besitzende erachten) in zunehmendem Mass über «ihre» Liegenschaft verfügen, sie etwa weitervermieten oder verkaufen. Zunächst brauchte es dazu die Zustimmung der Lehensherren, später sank deren Einfluss. Der lehensrechtliche Anspruch, die «Eigenschaft» am Haus, blieb aber bestehen und wurde mit verschiedenen Zinsen entschädigt, etwa einem regelmässig fälligen (Geld-)Zins, einer jährlich geschuldeten Naturalabgabe, wenn der Lehensherr oder die Lehensherrin vor Ort erschien (die sogenannte Weisung) oder den Ehrschatz, der nur beim Verkauf des Hauses fällig wurde.",
 		"created": "2025-03-21",
-		"modified": ""
+		"modified": "2025-04-02"
 	},
 	{
 		"title": "Von Basler Fumoirs & Schnupftabakdosen",
