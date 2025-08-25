@@ -99,7 +99,7 @@ class DownloadManager {
 				console.log(`Retrying download for ${url}. Retries left: ${retries - 1}`);
 				await this.download(url, staticDir, retries - 1);
 			} else {
-				throw new Error(`Download failed for ${url} after ${MAX_RETRIES} retries`);
+				console.error(`Download failed for ${url} after ${MAX_RETRIES} retries`);
 			}
 		}
 	}
