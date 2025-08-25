@@ -92,11 +92,22 @@ const categoryCache = {};
 async function fetchCategoryNameById(id) {
 	if (categoryCache[id]) return categoryCache[id];
 
-	const response = await fetch(`${baseURL}${apiEndpoint}/categories/${id}`);
-	const data = await response.json();
-	const name = data.name;
-	categoryCache[id] = name;
-	return name;
+	try {
+		const response = await fetch(`${baseURL}${apiEndpoint}/categories/${id}`);
+		if (!response.ok) {
+			console.error(`Failed to fetch category ${id}: ${response.statusText}`);
+			return `Category ${id}`;
+		}
+		const data = await response.json();
+		const name = data.name;
+		categoryCache[id] = name;
+		return name;
+	} catch (error) {
+		console.error(`Error fetching category ${id}:`, error.message);
+		const fallbackName = `Category ${id}`;
+		categoryCache[id] = fallbackName;
+		return fallbackName;
+	}
 }
 
 /**
@@ -218,9 +229,18 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
  * @returns {Promise<string|null>} - URL of the featured image.
  */
 const fetchFeaturedImage = async (mediaId) => {
-	const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
-	const data = await response.json();
-	return data.source_url;
+	try {
+		const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
+		if (!response.ok) {
+			console.error(`Failed to fetch featured image ${mediaId}: ${response.statusText}`);
+			return null;
+		}
+		const data = await response.json();
+		return data.source_url;
+	} catch (error) {
+		console.error(`Error fetching featured image ${mediaId}:`, error.message);
+		return null;
+	}
 };
 
 /**
@@ -236,49 +256,67 @@ async function fetchAndProcessType(type) {
 
 	do {
 		console.log(`Fetching ${type} data, page ${page}`);
-		const response = await fetch(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media,categories`
-		);
-		const data = await response.json();
-
-		for (const item of data) {
-			const categoryIds = item.categories || [];
-			if (type === 'posts' && categoryIds.some((id) => excludedCategories.includes(id))) {
-				continue;
-			}
-			const title = cleanEscapedAsterisks(turndownService.turndown(item.title.rendered));
-			const content = await processContent(item.content.rendered, outputDir, item.link, item.slug);
-			const tagsToRemove = ['span', 'a'];
-			const excerpt = cleanEscapedAsterisks(
-				await processContent(item.excerpt.rendered, outputDir, item.link, item.slug, tagsToRemove)
+		try {
+			const response = await fetch(
+				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media,categories`
 			);
-			const featuredImageUrl = item.featured_media
-				? await fetchFeaturedImage(item.featured_media)
-				: null;
-			if (featuredImageUrl) {
-				await downloadManager.enqueueDownload(featuredImageUrl, staticDir);
+
+			if (!response.ok) {
+				console.error(`Failed to fetch ${type} data page ${page}: ${response.statusText}`);
+				break;
 			}
-			const categoryNames = await Promise.all(categoryIds.map(fetchCategoryNameById));
-			const frontMatter = {
-				id: item.id,
-				title: title,
-				date: item.date,
-				modified: item.modified,
-				slug: item.slug,
-				author: item.author,
-				excerpt: excerpt,
-				...(type === 'posts' && { categories: categoryNames }),
-				featuredImage: featuredImageUrl ? path.join('/', featuredImageUrl.replace(baseURL, '')) : ''
-			};
-			const yamlFrontMatter = yaml.dump(frontMatter);
-			const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
 
-			fs.writeFileSync(path.join(outputDir, `${item.slug}.md`), markdownContent);
+			const data = await response.json();
+
+			for (const item of data) {
+				const categoryIds = item.categories || [];
+				if (type === 'posts' && categoryIds.some((id) => excludedCategories.includes(id))) {
+					continue;
+				}
+				const title = cleanEscapedAsterisks(turndownService.turndown(item.title.rendered));
+				const content = await processContent(
+					item.content.rendered,
+					outputDir,
+					item.link,
+					item.slug
+				);
+				const tagsToRemove = ['span', 'a'];
+				const excerpt = cleanEscapedAsterisks(
+					await processContent(item.excerpt.rendered, outputDir, item.link, item.slug, tagsToRemove)
+				);
+				const featuredImageUrl = item.featured_media
+					? await fetchFeaturedImage(item.featured_media)
+					: null;
+				if (featuredImageUrl) {
+					await downloadManager.enqueueDownload(featuredImageUrl, staticDir);
+				}
+				const categoryNames = await Promise.all(categoryIds.map(fetchCategoryNameById));
+				const frontMatter = {
+					id: item.id,
+					title: title,
+					date: item.date,
+					modified: item.modified,
+					slug: item.slug,
+					author: item.author,
+					excerpt: excerpt,
+					...(type === 'posts' && { categories: categoryNames }),
+					featuredImage: featuredImageUrl
+						? path.join('/', featuredImageUrl.replace(baseURL, ''))
+						: ''
+				};
+				const yamlFrontMatter = yaml.dump(frontMatter);
+				const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
+
+				fs.writeFileSync(path.join(outputDir, `${item.slug}.md`), markdownContent);
+			}
+
+			fetched = data.length;
+			page++;
+			console.log(`Fetched ${fetched} items from ${type}, page ${page}`);
+		} catch (error) {
+			console.error(`Error processing ${type} page ${page}:`, error.message);
+			break;
 		}
-
-		fetched = data.length;
-		page++;
-		console.log(`Fetched ${fetched} items from ${type}, page ${page}`);
 	} while (fetched === perPage);
 }
 
@@ -286,7 +324,13 @@ async function fetchAndProcessType(type) {
  * Main function.
  */
 (async () => {
-	for (const type of types) {
-		await fetchAndProcessType(type);
+	try {
+		for (const type of types) {
+			await fetchAndProcessType(type);
+		}
+		console.log('Successfully completed processing all content types');
+	} catch (error) {
+		console.error('Error in main execution:', error.message);
+		process.exit(1);
 	}
 })();
