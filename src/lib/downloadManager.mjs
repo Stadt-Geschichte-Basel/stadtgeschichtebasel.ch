@@ -39,6 +39,7 @@ class DownloadManager {
 		this.activeDownloads = 0;
 		this.downloadQueue = [];
 		this.downloadedUrls = new Set();
+		this.failedDownloads = 0;
 	}
 
 	/**
@@ -100,7 +101,7 @@ class DownloadManager {
 	 * @param {string} url - The URL of the file to download.
 	 * @param {string} staticDir - The directory to save the file.
 	 * @param {number} [retries=MAX_RETRIES] - The number of retries for the download.
-	 * @throws {Error} Throws an error if the download fails after the maximum retries.
+	 * @throws {Error} Throws an error if the download fails after the maximum retries or if the failed download threshold is exceeded.
 	 */
 	async download(url, staticDir, retries = MAX_RETRIES) {
 		try {
@@ -116,8 +117,24 @@ class DownloadManager {
 				console.log(`Retrying download for ${url}. Retries left: ${retries - 1}`);
 				await this.download(url, staticDir, retries - 1);
 			} else {
-				throw new Error(`Download failed for ${url} after ${MAX_RETRIES} retries`);
+				this.failedDownloads++;
+				console.error(
+					`Download failed for ${url} after ${MAX_RETRIES} retries (${this.failedDownloads} total failures)`
+				);
+				this.checkErrorThreshold();
 			}
+		}
+	}
+
+	/**
+	 * Checks if the failed download count exceeds the threshold and throws an error if so.
+	 * @throws {Error} Throws an error if more than 3 downloads have failed.
+	 */
+	checkErrorThreshold() {
+		if (this.failedDownloads > 3) {
+			throw new Error(
+				`Build failed: ${this.failedDownloads} resources could not be downloaded (threshold: 3)`
+			);
 		}
 	}
 
