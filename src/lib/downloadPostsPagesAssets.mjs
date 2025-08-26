@@ -3,6 +3,7 @@ import createDOMPurify from 'dompurify';
 import fs from 'fs';
 import yaml from 'js-yaml';
 import { JSDOM } from 'jsdom';
+import fetch from 'node-fetch';
 import path from 'path';
 import TurndownService from 'turndown';
 import DownloadManager from './downloadManager.mjs';
@@ -94,19 +95,20 @@ async function fetchCategoryNameById(id) {
 
 	try {
 		const response = await fetch(`${baseURL}${apiEndpoint}/categories/${id}`);
+
 		if (!response.ok) {
-			console.error(`Failed to fetch category ${id}: ${response.statusText}`);
+			console.error(`Failed to fetch category ${id}: ${response.status}`);
 			return `Category ${id}`;
 		}
+
 		const data = await response.json();
-		const name = data.name;
+		const name = data.name || `Category ${id}`;
 		categoryCache[id] = name;
 		return name;
 	} catch (error) {
-		console.error(`Error fetching category ${id}:`, error.message);
-		const fallbackName = `Category ${id}`;
-		categoryCache[id] = fallbackName;
-		return fallbackName;
+		console.error(`Error fetching category ${id}:`, error);
+		categoryCache[id] = `Category ${id}`;
+		return `Category ${id}`;
 	}
 }
 
@@ -231,14 +233,16 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 const fetchFeaturedImage = async (mediaId) => {
 	try {
 		const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
+
 		if (!response.ok) {
-			console.error(`Failed to fetch featured image ${mediaId}: ${response.statusText}`);
+			console.error(`Failed to fetch media ${mediaId}: ${response.status}`);
 			return null;
 		}
+
 		const data = await response.json();
-		return data.source_url;
+		return data.source_url || null;
 	} catch (error) {
-		console.error(`Error fetching featured image ${mediaId}:`, error.message);
+		console.error(`Error fetching media ${mediaId}:`, error);
 		return null;
 	}
 };
@@ -255,18 +259,30 @@ async function fetchAndProcessType(type) {
 		fetched;
 
 	do {
-		console.log(`Fetching ${type} data, page ${page}`);
 		try {
+			console.log(`Fetching ${type} data, page ${page}`);
 			const response = await fetch(
 				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media,categories`
 			);
 
 			if (!response.ok) {
-				console.error(`Failed to fetch ${type} data page ${page}: ${response.statusText}`);
+				console.error(`HTTP error! status: ${response.status}`);
 				break;
 			}
 
 			const data = await response.json();
+
+			// Check if data is an array to prevent "not iterable" error
+			if (!Array.isArray(data)) {
+				console.log(`Finished fetching ${type}. Page ${page} returned non-array data:`, data);
+				break;
+			}
+
+			// Check for empty array to avoid unnecessary processing
+			if (data.length === 0) {
+				console.log(`No more ${type} items found on page ${page}`);
+				break;
+			}
 
 			for (const item of data) {
 				const categoryIds = item.categories || [];
@@ -288,7 +304,7 @@ async function fetchAndProcessType(type) {
 					? await fetchFeaturedImage(item.featured_media)
 					: null;
 				if (featuredImageUrl) {
-					await downloadManager.enqueueDownload(featuredImageUrl, staticDir);
+					downloadManager.enqueueDownload(featuredImageUrl, staticDir);
 				}
 				const categoryNames = await Promise.all(categoryIds.map(fetchCategoryNameById));
 				const frontMatter = {
@@ -314,7 +330,7 @@ async function fetchAndProcessType(type) {
 			page++;
 			console.log(`Fetched ${fetched} items from ${type}, page ${page}`);
 		} catch (error) {
-			console.error(`Error processing ${type} page ${page}:`, error.message);
+			console.error(`Error fetching ${type} on page ${page}:`, error);
 			break;
 		}
 	} while (fetched === perPage);
@@ -324,13 +340,12 @@ async function fetchAndProcessType(type) {
  * Main function.
  */
 (async () => {
-	try {
-		for (const type of types) {
-			await fetchAndProcessType(type);
-		}
-		console.log('Successfully completed processing all content types');
-	} catch (error) {
-		console.error('Error in main execution:', error.message);
-		process.exit(1);
+	for (const type of types) {
+		await fetchAndProcessType(type);
 	}
+
+	// Wait for all downloads to complete
+	console.log('Waiting for all downloads to complete...');
+	await downloadManager.waitForCompletion();
+	console.log('All downloads completed!');
 })();
