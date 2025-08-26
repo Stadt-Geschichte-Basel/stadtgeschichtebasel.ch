@@ -42,6 +42,23 @@ class DownloadManager {
 	}
 
 	/**
+	 * Returns a promise that resolves when all downloads are complete
+	 * @returns {Promise<void>}
+	 */
+	async waitForCompletion() {
+		return new Promise((resolve) => {
+			const checkCompletion = () => {
+				if (this.activeDownloads === 0 && this.downloadQueue.length === 0) {
+					resolve();
+				} else {
+					setTimeout(checkCompletion, 100);
+				}
+			};
+			checkCompletion();
+		});
+	}
+
+	/**
 	 * Enqueues a download task.
 	 * @param {string} url - The URL to download.
 	 * @param {string} staticDir - The directory where the file should be saved.

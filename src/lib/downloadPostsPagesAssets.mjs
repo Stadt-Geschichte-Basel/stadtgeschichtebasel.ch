@@ -3,6 +3,7 @@ import createDOMPurify from 'dompurify';
 import fs from 'fs';
 import yaml from 'js-yaml';
 import { JSDOM } from 'jsdom';
+import fetch from 'node-fetch';
 import path from 'path';
 import TurndownService from 'turndown';
 import DownloadManager from './downloadManager.mjs';
@@ -92,11 +93,23 @@ const categoryCache = {};
 async function fetchCategoryNameById(id) {
 	if (categoryCache[id]) return categoryCache[id];
 
-	const response = await fetch(`${baseURL}${apiEndpoint}/categories/${id}`);
-	const data = await response.json();
-	const name = data.name;
-	categoryCache[id] = name;
-	return name;
+	try {
+		const response = await fetch(`${baseURL}${apiEndpoint}/categories/${id}`);
+
+		if (!response.ok) {
+			console.error(`Failed to fetch category ${id}: ${response.status}`);
+			return `Category ${id}`;
+		}
+
+		const data = await response.json();
+		const name = data.name || `Category ${id}`;
+		categoryCache[id] = name;
+		return name;
+	} catch (error) {
+		console.error(`Error fetching category ${id}:`, error);
+		categoryCache[id] = `Category ${id}`;
+		return `Category ${id}`;
+	}
 }
 
 /**
@@ -218,9 +231,20 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
  * @returns {Promise<string|null>} - URL of the featured image.
  */
 const fetchFeaturedImage = async (mediaId) => {
-	const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
-	const data = await response.json();
-	return data.source_url;
+	try {
+		const response = await fetch(`${baseURL}${apiEndpoint}/media/${mediaId}`);
+
+		if (!response.ok) {
+			console.error(`Failed to fetch media ${mediaId}: ${response.status}`);
+			return null;
+		}
+
+		const data = await response.json();
+		return data.source_url || null;
+	} catch (error) {
+		console.error(`Error fetching media ${mediaId}:`, error);
+		return null;
+	}
 };
 
 /**
@@ -235,50 +259,80 @@ async function fetchAndProcessType(type) {
 		fetched;
 
 	do {
-		console.log(`Fetching ${type} data, page ${page}`);
-		const response = await fetch(
-			`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media,categories`
-		);
-		const data = await response.json();
-
-		for (const item of data) {
-			const categoryIds = item.categories || [];
-			if (type === 'posts' && categoryIds.some((id) => excludedCategories.includes(id))) {
-				continue;
-			}
-			const title = cleanEscapedAsterisks(turndownService.turndown(item.title.rendered));
-			const content = await processContent(item.content.rendered, outputDir, item.link, item.slug);
-			const tagsToRemove = ['span', 'a'];
-			const excerpt = cleanEscapedAsterisks(
-				await processContent(item.excerpt.rendered, outputDir, item.link, item.slug, tagsToRemove)
+		try {
+			console.log(`Fetching ${type} data, page ${page}`);
+			const response = await fetch(
+				`${baseURL}${apiEndpoint}/${type}?per_page=${perPage}&page=${page}&_fields=id,content.rendered,title.rendered,link,date,modified,slug,author,excerpt.rendered,featured_media,categories`
 			);
-			const featuredImageUrl = item.featured_media
-				? await fetchFeaturedImage(item.featured_media)
-				: null;
-			if (featuredImageUrl) {
-				await downloadManager.enqueueDownload(featuredImageUrl, staticDir);
+
+			if (!response.ok) {
+				console.error(`HTTP error! status: ${response.status}`);
+				break;
 			}
-			const categoryNames = await Promise.all(categoryIds.map(fetchCategoryNameById));
-			const frontMatter = {
-				id: item.id,
-				title: title,
-				date: item.date,
-				modified: item.modified,
-				slug: item.slug,
-				author: item.author,
-				excerpt: excerpt,
-				...(type === 'posts' && { categories: categoryNames }),
-				featuredImage: featuredImageUrl ? path.join('/', featuredImageUrl.replace(baseURL, '')) : ''
-			};
-			const yamlFrontMatter = yaml.dump(frontMatter);
-			const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
 
-			fs.writeFileSync(path.join(outputDir, `${item.slug}.md`), markdownContent);
+			const data = await response.json();
+
+			// Check if data is an array to prevent "not iterable" error
+			if (!Array.isArray(data)) {
+				console.log(`Finished fetching ${type}. Page ${page} returned non-array data:`, data);
+				break;
+			}
+
+			// Check for empty array to avoid unnecessary processing
+			if (data.length === 0) {
+				console.log(`No more ${type} items found on page ${page}`);
+				break;
+			}
+
+			for (const item of data) {
+				const categoryIds = item.categories || [];
+				if (type === 'posts' && categoryIds.some((id) => excludedCategories.includes(id))) {
+					continue;
+				}
+				const title = cleanEscapedAsterisks(turndownService.turndown(item.title.rendered));
+				const content = await processContent(
+					item.content.rendered,
+					outputDir,
+					item.link,
+					item.slug
+				);
+				const tagsToRemove = ['span', 'a'];
+				const excerpt = cleanEscapedAsterisks(
+					await processContent(item.excerpt.rendered, outputDir, item.link, item.slug, tagsToRemove)
+				);
+				const featuredImageUrl = item.featured_media
+					? await fetchFeaturedImage(item.featured_media)
+					: null;
+				if (featuredImageUrl) {
+					downloadManager.enqueueDownload(featuredImageUrl, staticDir);
+				}
+				const categoryNames = await Promise.all(categoryIds.map(fetchCategoryNameById));
+				const frontMatter = {
+					id: item.id,
+					title: title,
+					date: item.date,
+					modified: item.modified,
+					slug: item.slug,
+					author: item.author,
+					excerpt: excerpt,
+					...(type === 'posts' && { categories: categoryNames }),
+					featuredImage: featuredImageUrl
+						? path.join('/', featuredImageUrl.replace(baseURL, ''))
+						: ''
+				};
+				const yamlFrontMatter = yaml.dump(frontMatter);
+				const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
+
+				fs.writeFileSync(path.join(outputDir, `${item.slug}.md`), markdownContent);
+			}
+
+			fetched = data.length;
+			page++;
+			console.log(`Fetched ${fetched} items from ${type}, page ${page}`);
+		} catch (error) {
+			console.error(`Error fetching ${type} on page ${page}:`, error);
+			break;
 		}
-
-		fetched = data.length;
-		page++;
-		console.log(`Fetched ${fetched} items from ${type}, page ${page}`);
 	} while (fetched === perPage);
 }
 
@@ -289,4 +343,9 @@ async function fetchAndProcessType(type) {
 	for (const type of types) {
 		await fetchAndProcessType(type);
 	}
+
+	// Wait for all downloads to complete
+	console.log('Waiting for all downloads to complete...');
+	await downloadManager.waitForCompletion();
+	console.log('All downloads completed!');
 })();
