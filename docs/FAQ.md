@@ -23,6 +23,7 @@ Yes, under the terms of the AGPL-3.0 license. You must also open-source any modi
 ### What technology stack is used?
 
 The project uses:
+
 - **Frontend**: SvelteKit, Svelte, Tailwind CSS
 - **Build Tool**: Vite
 - **CMS**: hypotheses.org (WordPress-based)
@@ -33,6 +34,7 @@ The project uses:
 ### Why SvelteKit instead of other frameworks?
 
 SvelteKit was chosen for its:
+
 - Excellent performance and small bundle sizes
 - Static site generation capabilities
 - Great developer experience
@@ -46,6 +48,7 @@ The prebuild script (`pnpm run prebuild`) downloads content from the CMS at hypo
 ### How often should I run the prebuild script?
 
 Run it:
+
 - Initially when setting up the project
 - When you need to fetch updated content from the CMS
 - After running `pnpm run clean`
@@ -54,6 +57,7 @@ Run it:
 ### Why does the build take so long?
 
 The build process includes:
+
 1. Fetching content from the CMS (prebuild)
 2. Processing Markdown and MDsveX files
 3. Compiling Svelte components
@@ -87,6 +91,7 @@ The server starts at `http://localhost:5173` by default.
 ### Can I use a different port for development?
 
 Yes, pass the `--port` flag:
+
 ```bash
 pnpm run dev -- --port 3000
 ```
@@ -142,6 +147,7 @@ The production site is hosted on [Cloudflare Pages](https://pages.cloudflare.com
 ### How does deployment work?
 
 When changes are pushed to the `main` branch:
+
 1. GitHub Actions runs the CI/CD pipeline
 2. The code is linted, tested, and built
 3. If all checks pass, it's deployed to Cloudflare Pages
@@ -150,6 +156,7 @@ When changes are pushed to the `main` branch:
 ### Can I deploy my own instance?
 
 Yes! You can deploy to any static hosting provider:
+
 1. Run `pnpm run build`
 2. Upload the `build/` directory to your hosting
 3. Configure your hosting to serve the static files
@@ -188,6 +195,7 @@ pnpm run check
 ### Why do Playwright tests fail?
 
 Common causes:
+
 - Playwright browsers not installed: Run `pnpm exec playwright install --with-deps`
 - Development server not running (for some tests)
 - Content not downloaded: Run `pnpm run prebuild`
@@ -248,6 +256,7 @@ For detailed troubleshooting steps, see the Troubleshooting section in [README.m
 ### What is Jampack?
 
 [Jampack](https://jampack.divriots.com/) is a post-build optimization tool that:
+
 - Optimizes images
 - Minifies CSS and JavaScript
 - Improves loading performance
@@ -265,6 +274,7 @@ It runs automatically with `pnpm run postbuild`.
 ### What is the Lighthouse score?
 
 The project maintains high Lighthouse scores for:
+
 - Performance: 95+
 - Accessibility: 100
 - Best Practices: 100

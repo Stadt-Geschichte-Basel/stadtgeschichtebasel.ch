@@ -205,21 +205,25 @@ This removes all downloaded pages, posts, and assets. Run `pnpm run prebuild` ag
 ### Typical Development Cycle
 
 1. **Fetch latest changes**
+
    ```bash
    git pull origin main
    ```
 
 2. **Update dependencies** (if package.json changed)
+
    ```bash
    pnpm install
    ```
 
 3. **Download latest content** (if CMS content changed)
+
    ```bash
    pnpm run prebuild
    ```
 
 4. **Start development server**
+
    ```bash
    pnpm run dev
    ```
@@ -227,6 +231,7 @@ This removes all downloaded pages, posts, and assets. Run `pnpm run prebuild` ag
 5. **Make your changes** in the `src/` directory
 
 6. **Test your changes**
+
    ```bash
    pnpm run lint      # Check code quality
    pnpm run check     # Check types
@@ -248,6 +253,7 @@ This removes all downloaded pages, posts, and assets. Run `pnpm run prebuild` ag
 **Issue**: Development server fails to start with "Port 5173 is already in use"
 
 **Solution**: Either stop the process using that port or use a different port:
+
 ```bash
 pnpm run dev -- --port 3000
 ```
@@ -256,7 +262,8 @@ pnpm run dev -- --port 3000
 
 **Issue**: `pnpm run prebuild` fails or times out
 
-**Solution**: 
+**Solution**:
+
 - Check your internet connection
 - Verify that hypotheses.org is accessible
 - Try running the script again (sometimes it's a temporary network issue)
@@ -270,7 +277,8 @@ pnpm run dev -- --port 3000
 
 **Issue**: Build fails after pulling new changes
 
-**Solution**: 
+**Solution**:
+
 1. Clean install dependencies:
    ```bash
    rm -rf node_modules pnpm-lock.yaml
@@ -287,6 +295,7 @@ pnpm run dev -- --port 3000
 **Issue**: Tests fail with browser-related errors
 
 **Solution**: Install Playwright browsers:
+
 ```bash
 pnpm exec playwright install --with-deps
 ```
@@ -296,6 +305,7 @@ pnpm exec playwright install --with-deps
 **Issue**: `pnpm run postbuild` fails
 
 **Solution**: Clear the jampack cache and rebuild:
+
 ```bash
 rm -rf build/_jampack/
 pnpm run build
@@ -307,6 +317,7 @@ pnpm run postbuild
 **Issue**: Errors related to incompatible Node.js version
 
 **Solution**: Ensure you're using Node.js version 20 or 24. Use [nvm](https://github.com/nvm-sh/nvm) to manage versions:
+
 ```bash
 nvm install 20
 nvm use 20

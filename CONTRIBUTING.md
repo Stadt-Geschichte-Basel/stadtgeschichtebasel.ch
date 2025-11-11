@@ -111,6 +111,7 @@ This project prioritizes accessibility. Please ensure:
 - Screen readers can navigate the content
 
 Test your changes with:
+
 - Keyboard navigation (Tab, Enter, Arrow keys)
 - Screen reader (NVDA, JAWS, or VoiceOver)
 - Browser accessibility tools
@@ -120,6 +121,7 @@ Test your changes with:
 ### Before Submitting
 
 1. **Ensure your code is clean and tested**:
+
    ```bash
    pnpm run lint      # Fix linting issues
    pnpm run check     # Check types
@@ -137,6 +139,7 @@ Test your changes with:
 ### Submitting Your Pull Request
 
 1. **Push your branch** to your fork:
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -189,6 +192,7 @@ This will guide you through creating a properly formatted commit message.
 ```
 
 **Types:**
+
 - `feat`: A new feature
 - `fix`: A bug fix
 - `docs`: Documentation changes
@@ -201,6 +205,7 @@ This will guide you through creating a properly formatted commit message.
 - `chore`: Other changes that don't modify src or test files
 
 **Examples:**
+
 ```
 feat(map): add interactive timeline feature
 
@@ -260,6 +265,7 @@ If you have questions or need help:
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning:
+
 - **MAJOR**: Breaking changes
 - **MINOR**: New features (backward compatible)
 - **PATCH**: Bug fixes (backward compatible)
