@@ -234,52 +234,22 @@ Served as-is without processing:
 
 ### Content Pipeline
 
-```
-┌─────────────────────┐
-│  hypotheses.org CMS │
-│   (WordPress)       │
-└──────────┬──────────┘
-           │
-           │ prebuild script
-           │ (downloadPostsPagesAssets.mjs)
-           ▼
-┌─────────────────────┐
-│   src/pages/        │
-│   src/posts/        │
-│   static/files/     │
-└──────────┬──────────┘
-           │
-           │ SvelteKit build
-           │ (vite build)
-           ▼
-┌─────────────────────┐
-│   build/            │
-│   (static HTML)     │
-└──────────┬──────────┘
-           │
-           │ Jampack optimization
-           │ (postbuild)
-           ▼
-┌─────────────────────┐
-│ Cloudflare Pages    │
-│   (production)      │
-└─────────────────────┘
+```mermaid
+flowchart TD
+    A["hypotheses.org CMS<br/>(WordPress)"] -->|prebuild script<br/>downloadPostsPagesAssets.mjs| B["src/pages/<br/>src/posts/<br/>static/files/"]
+    B -->|SvelteKit build<br/>vite build| C["build/<br/>(static HTML)"]
+    C -->|Jampack optimization<br/>postbuild| D["Cloudflare Pages<br/>(production)"]
 ```
 
 ### Request Flow (Production)
 
-```
-User Request
-    ↓
-Cloudflare CDN (Edge Network)
-    ↓
-Static HTML File (cached at edge)
-    ↓
-User Browser
-    ↓
-Hydration (if JS enabled)
-    ↓
-Interactive Application
+```mermaid
+flowchart TD
+    A[User Request] --> B[Cloudflare CDN<br/>Edge Network]
+    B --> C[Static HTML File<br/>cached at edge]
+    C --> D[User Browser]
+    D --> E[Hydration<br/>if JS enabled]
+    E --> F[Interactive Application]
 ```
 
 ## Build Process
