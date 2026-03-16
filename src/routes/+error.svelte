@@ -8,16 +8,6 @@
 
 <Head title="Seite nicht gefunden" />
 
-<svelte:head>
-	<script>
-		window.plausible =
-			window.plausible ||
-			function () {
-				(window.plausible.q = window.plausible.q || []).push(arguments);
-			};
-	</script>
-</svelte:head>
-
 {#if $page.error}
 	<h1>{$page.status} {$page.error.message}</h1>
 {:else}
