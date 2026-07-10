@@ -174,6 +174,10 @@
 						target="_blank"
 						rel="noopener noreferrer">Forschung</a
 					>
+					<span class="mx-2 opacity-10" aria-hidden="true">|</span>
+					<a class="anchor" href={config.openAccessUrl} target="_blank" rel="noopener noreferrer"
+						>Open Access</a
+					>
 				</p>
 			</section>
 		</div>
