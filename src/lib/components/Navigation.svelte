@@ -13,6 +13,7 @@
 		{ label: 'Blog', path: '/blog' },
 		{ label: 'Partner', path: '/partner' },
 		{ label: 'Projekt', path: '/projekt' },
+		{ label: 'Forschung', href: 'https://forschung.stadtgeschichtebasel.ch/', external: true },
 		{ label: 'Über uns', path: '/ueber-uns' }
 	];
 	$: currentURL = $page.url.pathname;
@@ -38,14 +39,26 @@
 	data-sveltekit-preload-data
 >
 	<ul>
-		{#each navItems as { label, path }}
-			<li aria-current={isActive(path) ? 'page' : undefined}>
-				<a
-					class="cursor-pointer {isActive(path) ? 'font-bold' : 'font-normal'}"
-					href="{base}{path}"
-					on:click={drawerClose}>{label}</a
-				>
-			</li>
+		{#each navItems as { label, path, href, external }}
+			{#if external}
+				<li>
+					<a
+						class="cursor-pointer font-normal"
+						{href}
+						target="_blank"
+						rel="noopener noreferrer"
+						on:click={drawerClose}>{label}</a
+					>
+				</li>
+			{:else}
+				<li aria-current={isActive(path) ? 'page' : undefined}>
+					<a
+						class="cursor-pointer {isActive(path) ? 'font-bold' : 'font-normal'}"
+						href="{base}{path}"
+						on:click={drawerClose}>{label}</a
+					>
+				</li>
+			{/if}
 		{/each}
 	</ul>
 
