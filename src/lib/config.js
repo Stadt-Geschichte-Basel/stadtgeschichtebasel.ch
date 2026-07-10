@@ -38,6 +38,12 @@ export const description =
 export const email = 'info@stadtgeschichtebasel.ch';
 
 /**
+ * The URL of the freely available Open Access edition of the books.
+ * @type {string}
+ */
+export const openAccessUrl = 'https://emono.unibas.ch/stadtgeschichtebasel/';
+
+/**
  * The instagram handle associated with the website.
  * @type {string}
  */
