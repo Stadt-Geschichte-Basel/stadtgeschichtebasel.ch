@@ -9,3 +9,9 @@ updates:
     directory: '/' # Location of package manifests
     schedule:
       interval: 'monthly'
+  # Security updates only: the limit of 0 turns off version updates for actions.
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    open-pull-requests-limit: 0
