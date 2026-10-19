@@ -44,7 +44,7 @@
 		"clean": "rm -Rf static/files/* && touch static/files/.gitkeep && rm -Rf src/pages/* && touch src/pages/.gitkeep && rm -Rf src/posts/* && touch src/posts/.gitkeep"
 	},
 	"devDependencies": {
-		"@divriots/jampack": "^0.33.1",
+		"@divriots/jampack": "^0.34.2",
 		"@playwright/test": "^1.55.1",
 		"@skeletonlabs/skeleton": "^2.11.0",
 		"@skeletonlabs/tw-plugin": "^0.4.1",
