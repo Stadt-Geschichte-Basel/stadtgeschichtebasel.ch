@@ -98,7 +98,7 @@ stadtgeschichtebasel.ch/
 │   ├── params/           # Route parameter matchers
 │   └── app.html          # HTML template
 ├── static/               # Static files served as-is
-│   └── files/            # Downloaded assets from CMS
+│   └── files/            # Downloaded CMS files (WebP images and documents)
 ├── tests/                # Test files
 ├── svelte.config.js      # SvelteKit configuration
 ├── vite.config.js        # Vite build tool configuration
@@ -111,7 +111,7 @@ stadtgeschichtebasel.ch/
 
 - **`src/routes/`**: Contains the application routes following SvelteKit's file-based routing system
 - **`src/lib/`**: Shared libraries, components, and utilities
-- **`src/lib/downloadPostsPagesAssets.mjs`**: Script that fetches content from hypotheses.org CMS
+- **`src/lib/downloadPostsPagesAssets.mjs`**: Script that fetches content from hypotheses.org CMS. It converts each CMS image to one WebP file (see [CMS Images](docs/ARCHITECTURE.md#cms-images)).
 - **`src/pages/` and `src/posts/`**: Auto-generated from CMS (don't edit manually)
 - **`static/`**: Public files served directly (images, fonts, etc.)
 - **`.github/workflows/`**: CI/CD pipelines for testing and deployment to Cloudflare Pages
@@ -137,6 +137,12 @@ pnpm run build
 ```
 
 This creates an optimized production build in the `build/` directory.
+
+Check the size and the references of the build:
+
+```bash
+pnpm run audit:build
+```
 
 Optimize the build with [Jampack](https://jampack.divriots.com/) for production:
 
@@ -363,12 +369,12 @@ This project is built with modern web technologies:
 
 This project is maintained by [@Stadt-Geschichte-Basel](https://github.com/Stadt-Geschichte-Basel). Please understand that we won't be able to provide individual support via email. We believe that help is much more valuable if it's shared publicly, so that more people can benefit from it.
 
-| Type                                   | Platforms                                                                                           |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| 🚨 **Bug Reports**                     | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues)    |
-| 🎁 **Feature Requests**                | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues)    |
+| Type                                  | Platforms                                                                                           |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| 🚨 **Bug Reports**                    | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues)    |
+| 🎁 **Feature Requests**               | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues)    |
 | 🛡 **Report a security vulnerability** | [GitHub Issue Tracker](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues)    |
-| 💬 **General Questions**               | [GitHub Discussions](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/discussions) |
+| 💬 **General Questions**              | [GitHub Discussions](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/discussions) |
 
 ## Contributing
 

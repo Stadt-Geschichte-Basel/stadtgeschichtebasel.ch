@@ -12,13 +12,13 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
 
       - name: Generate a changelog
-        uses: orhun/git-cliff-action@970cdaa65d3d3e8ad4d61bb01fb1172931eba8ba # v1
+        uses: orhun/git-cliff-action@a9a95522b26fe6403f7bb24031f21fb573d0f5ff # v4.9.1
         id: git-cliff
         with:
           config: cliff.toml
