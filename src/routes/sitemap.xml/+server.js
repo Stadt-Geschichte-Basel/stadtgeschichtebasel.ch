@@ -21,14 +21,17 @@ export async function GET({ fetch }) {
 	xml += `<changefreq>daily</changefreq>`;
 	xml += `<priority>1.0</priority>`;
 	xml += `</url>`;
-	pages.forEach((page) => {
-		xml += `<url>`;
-		xml += `<loc>${config.url}/${page.slug}</loc>`;
-		xml += `<lastmod>${new Date(page.modified).toISOString()}</lastmod>`;
-		xml += `<changefreq>weekly</changefreq>`;
-		xml += `<priority>0.80</priority>`;
-		xml += `</url>`;
-	});
+	// startseite.md is rendered at the root URL above, not at /startseite
+	pages
+		.filter((page) => page.slug !== 'startseite')
+		.forEach((page) => {
+			xml += `<url>`;
+			xml += `<loc>${config.url}/${page.slug}</loc>`;
+			xml += `<lastmod>${new Date(page.modified).toISOString()}</lastmod>`;
+			xml += `<changefreq>weekly</changefreq>`;
+			xml += `<priority>0.80</priority>`;
+			xml += `</url>`;
+		});
 	staticPages.forEach((page) => {
 		xml += `<url>`;
 		xml += `<loc>${config.url}/${page}</loc>`;

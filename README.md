@@ -13,7 +13,7 @@ Welcome to [Stadt.Geschichte.Basel](https://stadtgeschichtebasel.ch/), a histori
 
 [Stadt.Geschichte.Basel](https://stadtgeschichtebasel.ch/) seeks to bridge research gaps and present historical findings in accessible formats. Our project encompasses an [extensive nine-volume book series](https://www.merianverlag.ch/buecher/stadt.geschichte.basel.html), an overview volume, a digital portal, and a digital platform for research data. Hosted at the University of Basel, this project aims to make historical research and insights accessible to scholars and the public like never before.
 
-This project is the open-source code of the digital portal of Stadt.Geschichte.Basel. It is a static website built with [SvelteKit](https://kit.svelte.dev/) and hosted on [Cloudflare Pages](https://pages.cloudflare.com/). It uses [hypotheses.org](https://sgb.hypotheses.org/) as CMS and consumes data from [Agendabasel](https://agendabasel.ch/) for the agenda.
+This project is the open-source code of the digital portal of Stadt.Geschichte.Basel. It is a static website built with [SvelteKit](https://kit.svelte.dev/) and hosted on [GitHub Pages](https://docs.github.com/en/pages). It uses [hypotheses.org](https://sgb.hypotheses.org/) as CMS and consumes data from [Agendabasel](https://agendabasel.ch/) for the agenda.
 
 The digital platform for research data can be found at [forschung.stadtgeschichtebasel.ch](https://forschung.stadtgeschichtebasel.ch/). The source code for the digital platform can be found [here](https://github.com/Stadt-Geschichte-Basel/forschung.stadtgeschichtebasel.ch).
 
@@ -114,7 +114,7 @@ stadtgeschichtebasel.ch/
 - **`src/lib/downloadPostsPagesAssets.mjs`**: Script that fetches content from hypotheses.org CMS. It converts each CMS image to one WebP file (see [CMS Images](docs/ARCHITECTURE.md#cms-images)).
 - **`src/pages/` and `src/posts/`**: Auto-generated from CMS (don't edit manually)
 - **`static/`**: Public files served directly (images, fonts, etc.)
-- **`.github/workflows/`**: CI/CD pipelines for testing and deployment to Cloudflare Pages
+- **`.github/workflows/`**: CI/CD pipelines for testing and deployment to GitHub Pages
 
 ## Usage
 
@@ -142,6 +142,12 @@ Check the size and the references of the build:
 
 ```bash
 pnpm run audit:build
+```
+
+Check the critical, sitemap and legacy URLs of a deployed site (see [Deployment](docs/DEPLOYMENT.md#audit-a-deployment)):
+
+```bash
+pnpm run audit:deployment [baseURL]
 ```
 
 Optimize the build with [Jampack](https://jampack.divriots.com/) for production:
@@ -354,12 +360,13 @@ This project is built with modern web technologies:
 - **[Playwright](https://playwright.dev/)**: End-to-end testing framework
 - **[Vitest](https://vitest.dev/)**: Unit testing framework
 - **[Jampack](https://jampack.divriots.com/)**: Post-build optimization tool
-- **[Cloudflare Pages](https://pages.cloudflare.com/)**: Hosting platform
+- **[GitHub Pages](https://docs.github.com/en/pages)**: Hosting platform
 
 ## Additional Documentation
 
 - **[FAQ](docs/FAQ.md)**: Frequently asked questions and answers
 - **[Architecture](docs/ARCHITECTURE.md)**: Technical architecture and design decisions
+- **[Deployment](docs/DEPLOYMENT.md)**: Deployment to GitHub Pages, cutover and rollback
 - **[Contributing Guidelines](CONTRIBUTING.md)**: How to contribute to this project
 - **[Code of Conduct](CODE_OF_CONDUCT.md)**: Our community guidelines
 - **[Security Policy](SECURITY.md)**: How to report security vulnerabilities
