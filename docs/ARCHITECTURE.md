@@ -292,7 +292,9 @@ These environment variables change the conversion:
 - `CMS_IMAGE_MAX_WIDTH`: the maximum width in pixels. The default is 1600.
 - `CMS_IMAGE_QUALITY`: the WebP quality from 1 to 100. The default is 80.
 
-To publish an original image unchanged, for example for zoom or download, add its public path to `keepOriginal` in `src/lib/cmsAssets.mjs`. The prebuild log lists all files that the script saves unchanged. If more than 3 downloads fail, the prebuild script fails.
+To publish an original image unchanged, for example for zoom or download, add its public path to `keepOriginal` in `src/lib/cmsAssets.mjs`. The prebuild log lists all files that the script saves unchanged.
+
+Two CMS files can have the same public path, for example `a.jpg` and `a.png`. In that case, the script publishes only the first file. The references to the second file keep the CMS URL, and the second file counts as a failed download. If more than 3 downloads fail, the prebuild script fails.
 
 ### 2. Development Build
 

@@ -46,12 +46,14 @@ class DownloadManager {
 	constructor(staticDir) {
 		this.staticDir = staticDir;
 		this.activeDownloads = 0;
-		/** @type {Array<() => void>} */
+		/** @type {Array<(value?: unknown) => void>} */
 		this.waitingDownloads = [];
 		/** @type {Map<string, Promise<void>>} Downloads by canonical CMS URL. */
 		this.downloads = new Map();
 		/** @type {Map<string, string>} Canonical CMS URLs by public path. */
 		this.publicPaths = new Map();
+		/** @type {Set<string>} Canonical CMS URLs that are not downloaded, because their public path is taken. */
+		this.rejectedSources = new Set();
 		this.convertedImages = 0;
 		/** @type {Array<string>} */
 		this.unchangedFiles = [];
@@ -83,8 +85,10 @@ class DownloadManager {
 	/**
 	 * Enqueues the download of a CMS file and returns the path under which the website publishes it.
 	 * Each canonical URL is downloaded only once, also while it is queued or in flight.
+	 * If another file already has the same public path (e.g. a.jpg and a.png), the file is not downloaded
+	 * and counts as a failed download.
 	 * @param {string} url - The CMS URL of the file, possibly of a WordPress size variant.
-	 * @returns {string|null} The public path, or null if the file type is unsupported.
+	 * @returns {string|null} The public path, or null if the file is not downloaded.
 	 */
 	enqueueDownload(url) {
 		if (!this.isAllowedExtension(url)) {
@@ -93,12 +97,18 @@ class DownloadManager {
 		}
 		const source = canonicalUrl(url);
 		const target = publicPath(source);
-		if (!this.downloads.has(source)) {
-			const otherSource = this.publicPaths.get(target);
-			if (otherSource) {
+		const otherSource = this.publicPaths.get(target);
+		if (otherSource && otherSource !== source) {
+			if (!this.rejectedSources.has(source)) {
+				this.rejectedSources.add(source);
 				this.failedDownloads++;
-				console.error(`Both ${otherSource} and ${source} are published as ${target}`);
+				console.error(
+					`Not downloading ${source}, because ${otherSource} is published as ${target}`
+				);
 			}
+			return null;
+		}
+		if (!this.downloads.has(source)) {
 			this.publicPaths.set(target, source);
 			this.downloads.set(
 				source,
@@ -172,7 +182,7 @@ class DownloadManager {
 		} catch (e) {
 			this.failedDownloads++;
 			console.error(
-				`Download failed for ${source}: ${e.message} (${this.failedDownloads} total failures)`
+				`Download failed for ${source}: ${/** @type {Error} */ (e).message} (${this.failedDownloads} total failures)`
 			);
 		}
 	}
@@ -191,7 +201,7 @@ class DownloadManager {
 			return response;
 		} catch (e) {
 			if (retries <= 0) throw e;
-			console.error(`Error: ${e.message}`);
+			console.error(`Error: ${/** @type {Error} */ (e).message}`);
 			console.log(`Retrying download for ${url}. Retries left: ${retries - 1}`);
 			return this.fetchWithRetries(url, retries - 1);
 		}
