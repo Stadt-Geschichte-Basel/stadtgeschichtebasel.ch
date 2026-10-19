@@ -200,6 +200,9 @@ Contains all reusable code:
 - **`components/`**: Shared Svelte components (buttons, cards, navigation, etc.)
 - **`data/`**: Data transformation and utility functions
 - **`downloadPostsPagesAssets.mjs`**: Main prebuild script that fetches content from CMS
+- **`downloadManager.mjs`**: Downloads CMS files and converts images to WebP (see [CMS Images](#cms-images))
+- **`cmsAssets.mjs`**: Rules that map CMS files to published files
+- **`auditBuild.mjs`**: Reports the size of `build/` and checks its references
 
 #### `src/routes/`
 
@@ -227,7 +230,7 @@ Content here...
 
 Served as-is without processing:
 
-- `static/files/`: Downloaded images and media from CMS
+- `static/files/`: Downloaded images and documents from CMS. The prebuild script empties this directory before each download.
 - Other static assets (favicon, robots.txt, etc.)
 
 ## Data Flow
@@ -266,8 +269,30 @@ The `downloadPostsPagesAssets.mjs` script:
 2. Parses all page and post URLs
 3. Downloads HTML content for each URL
 4. Converts HTML to Markdown (with frontmatter)
-5. Downloads associated images and media
+5. Downloads each referenced CMS file once and converts each raster image to one WebP file
 6. Saves everything to `src/pages/`, `src/posts/`, and `static/files/`
+
+### CMS Images
+
+The prebuild script publishes one file for each CMS file:
+
+| CMS file                                                   | Published file                                  |
+| ---------------------------------------------------------- | ----------------------------------------------- |
+| JPEG, PNG or WebP image                                    | One WebP file, 1600 px wide at most, quality 80 |
+| WordPress size variant (`-300x200`, `-scaled`, `-rotated`) | The WebP file of the original image             |
+| SVG or GIF image                                           | The original file, unchanged                    |
+| Document (PDF, DOCX, XLSX, ZIP and other types)            | The original file, unchanged                    |
+| Image in `keepOriginal` (`src/lib/cmsAssets.mjs`)          | The original file, unchanged                    |
+| File outside `https://sgb.hypotheses.org/files/`           | No download. The reference stays external.      |
+
+A published file keeps the CMS path. Only the extension of an image changes to `.webp`. For example, `https://sgb.hypotheses.org/files/2023/08/a-300x200.jpg` becomes `/files/2023/08/a.webp`.
+
+These environment variables change the conversion:
+
+- `CMS_IMAGE_MAX_WIDTH`: the maximum width in pixels. The default is 1600.
+- `CMS_IMAGE_QUALITY`: the WebP quality from 1 to 100. The default is 80.
+
+To publish an original image unchanged, for example for zoom or download, add its public path to `keepOriginal` in `src/lib/cmsAssets.mjs`. The prebuild log lists all files that the script saves unchanged. If more than 3 downloads fail, the prebuild script fails.
 
 ### 2. Development Build
 
@@ -306,11 +331,20 @@ pnpm run postbuild
 
 Jampack optimizes the build:
 
-- Compresses images (WebP, AVIF)
 - Minifies HTML, CSS, JS
 - Adds resource hints
 - Optimizes loading performance
-- Generates responsive images
+- Sets `loading`, `decoding`, `width` and `height` on images
+
+`jampack.config.js` stops Jampack from changing image files, because the prebuild script already converts them.
+
+### 5. Build Audit
+
+```bash
+pnpm run audit:build
+```
+
+The audit script prints a Markdown report about `build/`: the total size, the files by type, the largest files and the missing references. With `--strict`, the script fails if a CMS image has more than one raster file or if a CMS file is missing.
 
 ## Deployment Pipeline
 
@@ -323,9 +357,11 @@ On push to `main` or pull request:
 3. **Install**: `pnpm install`
 4. **Install Playwright**: For E2E tests
 5. **Lint**: `pnpm run lint`
-6. **Build**: `pnpm run build`
-7. **Test**: `pnpm run test`
-8. **Deploy**: (only on main) Deploy to Cloudflare Pages
+6. **Unit tests**: `pnpm run test:unit --run`
+7. **Build**: `pnpm run build`
+8. **Audit**: `pnpm run audit:build --strict`, with the report in the job summary
+9. **Test**: `pnpm run test`
+10. **Deploy**: (only on main) Deploy to Cloudflare Pages
 
 ### Deployment to Cloudflare Pages
 
@@ -363,9 +399,7 @@ SvelteKit automatically:
 
 ### 3. Asset Optimization
 
-- Images optimized with Jampack
-- Modern formats (WebP, AVIF) with fallbacks
-- Responsive images for different screen sizes
+- One WebP file for each CMS image (see [CMS Images](#cms-images))
 - Lazy loading of images
 
 ### 4. CSS Optimization

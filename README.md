@@ -98,7 +98,7 @@ stadtgeschichtebasel.ch/
 │   ├── params/           # Route parameter matchers
 │   └── app.html          # HTML template
 ├── static/               # Static files served as-is
-│   └── files/            # Downloaded assets from CMS
+│   └── files/            # Downloaded CMS files (WebP images and documents)
 ├── tests/                # Test files
 ├── svelte.config.js      # SvelteKit configuration
 ├── vite.config.js        # Vite build tool configuration
@@ -111,7 +111,7 @@ stadtgeschichtebasel.ch/
 
 - **`src/routes/`**: Contains the application routes following SvelteKit's file-based routing system
 - **`src/lib/`**: Shared libraries, components, and utilities
-- **`src/lib/downloadPostsPagesAssets.mjs`**: Script that fetches content from hypotheses.org CMS
+- **`src/lib/downloadPostsPagesAssets.mjs`**: Script that fetches content from hypotheses.org CMS. It converts each CMS image to one WebP file (see [CMS Images](docs/ARCHITECTURE.md#cms-images)).
 - **`src/pages/` and `src/posts/`**: Auto-generated from CMS (don't edit manually)
 - **`static/`**: Public files served directly (images, fonts, etc.)
 - **`.github/workflows/`**: CI/CD pipelines for testing and deployment to Cloudflare Pages
@@ -137,6 +137,12 @@ pnpm run build
 ```
 
 This creates an optimized production build in the `build/` directory.
+
+Check the size and the references of the build:
+
+```bash
+pnpm run audit:build
+```
 
 Optimize the build with [Jampack](https://jampack.divriots.com/) for production:
 
