@@ -1,14 +1,20 @@
 import fs from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
-import { pipeline } from 'stream';
-import { promisify } from 'util';
-
-const pipelineAsync = promisify(pipeline);
+import sharp from 'sharp';
+import {
+	canonicalUrl,
+	imageMaxWidth,
+	imageQuality,
+	isConverted,
+	keepOriginal,
+	publicPath
+} from './cmsAssets.mjs';
 
 const MAX_CONCURRENT_DOWNLOADS = 3;
-const TIMEOUT = 1500; // 1.5 seconds
+const TIMEOUT = 60000; // 60 seconds
 const MAX_RETRIES = 10;
+const MAX_FAILED_DOWNLOADS = 3;
 const allowedExtensions = [
 	'avif',
 	'doc',
@@ -29,139 +35,175 @@ const allowedExtensions = [
 ];
 
 /**
- * Manages the downloading of files with concurrency control.
+ * Manages the downloading of CMS files with concurrency control.
+ * Raster images are converted to one WebP file each; all other files are saved unchanged.
  */
 class DownloadManager {
 	/**
 	 * Initializes a new instance of the DownloadManager.
+	 * @param {string} staticDir - The directory where the files are saved.
 	 */
-	constructor() {
+	constructor(staticDir) {
+		this.staticDir = staticDir;
 		this.activeDownloads = 0;
-		this.downloadQueue = [];
-		this.downloadedUrls = new Set();
+		/** @type {Array<() => void>} */
+		this.waitingDownloads = [];
+		/** @type {Map<string, Promise<void>>} Downloads by canonical CMS URL. */
+		this.downloads = new Map();
+		/** @type {Map<string, string>} Canonical CMS URLs by public path. */
+		this.publicPaths = new Map();
+		this.convertedImages = 0;
+		/** @type {Array<string>} */
+		this.unchangedFiles = [];
 		this.failedDownloads = 0;
 	}
 
 	/**
-	 * Returns a promise that resolves when all downloads are complete
+	 * Returns a promise that resolves when all downloads are complete.
 	 * @returns {Promise<void>}
+	 * @throws {Error} Throws an error if more than MAX_FAILED_DOWNLOADS downloads have failed.
 	 */
 	async waitForCompletion() {
-		return new Promise((resolve) => {
-			const checkCompletion = () => {
-				if (this.activeDownloads === 0 && this.downloadQueue.length === 0) {
-					resolve();
-				} else {
-					setTimeout(checkCompletion, 100);
-				}
-			};
-			checkCompletion();
-		});
-	}
+		let count;
+		do {
+			count = this.downloads.size;
+			await Promise.all(this.downloads.values());
+		} while (count !== this.downloads.size);
 
-	/**
-	 * Enqueues a download task.
-	 * @param {string} url - The URL to download.
-	 * @param {string} staticDir - The directory where the file should be saved.
-	 */
-	enqueueDownload(url, staticDir) {
-		if (this.downloadedUrls.has(url)) {
-			console.log(`Skipping already downloaded URL: ${url}`);
-			return;
-		}
-
-		if (this.activeDownloads < MAX_CONCURRENT_DOWNLOADS) {
-			this.activeDownloads++;
-			this.download(url, staticDir)
-				.then(() => this.downloadedUrls.add(url))
-				.catch((error) => {
-					console.error(`Download failed: ${error}`);
-				})
-				.finally(() => this.nextDownload());
-		} else {
-			if (!this.downloadQueue.some((item) => item[0] === url)) {
-				this.downloadQueue.push([url, staticDir]);
-			}
-		}
-	}
-
-	/**
-	 * Processes the next download in the queue.
-	 */
-	nextDownload() {
-		this.activeDownloads--;
-		if (this.downloadQueue.length > 0) {
-			const [url, staticDir] = this.downloadQueue.shift();
-			this.enqueueDownload(url, staticDir);
-		}
-	}
-
-	/**
-	 * Downloads a file from the given URL.
-	 * @param {string} url - The URL of the file to download.
-	 * @param {string} staticDir - The directory to save the file.
-	 * @param {number} [retries=MAX_RETRIES] - The number of retries for the download.
-	 * @throws {Error} Throws an error if the download fails after the maximum retries or if the failed download threshold is exceeded.
-	 */
-	async download(url, staticDir, retries = MAX_RETRIES) {
-		try {
-			const { fileName, outputPath } = this.getFileNameAndPath(url, staticDir);
-			await fs.promises.mkdir(outputPath, { recursive: true });
-			const response = await fetch(url, { timeout: TIMEOUT });
-			if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
-			await pipelineAsync(response.body, fs.createWriteStream(path.join(outputPath, fileName)));
-			console.log(`Downloaded ${url} to ${path.join(outputPath, fileName)}`);
-		} catch (e) {
-			if (retries > 0) {
-				console.error(`Error: ${e.message}`);
-				console.log(`Retrying download for ${url}. Retries left: ${retries - 1}`);
-				await this.download(url, staticDir, retries - 1);
-			} else {
-				this.failedDownloads++;
-				console.error(
-					`Download failed for ${url} after ${MAX_RETRIES} retries (${this.failedDownloads} total failures)`
-				);
-				this.checkErrorThreshold();
-			}
-		}
-	}
-
-	/**
-	 * Checks if the failed download count exceeds the threshold and throws an error if so.
-	 * @throws {Error} Throws an error if more than 3 downloads have failed.
-	 */
-	checkErrorThreshold() {
-		if (this.failedDownloads > 3) {
+		console.log(`Converted ${this.convertedImages} images to WebP.`);
+		console.log(`Saved ${this.unchangedFiles.length} files unchanged:`);
+		this.unchangedFiles.sort().forEach((file) => console.log(`  ${file}`));
+		if (this.failedDownloads > MAX_FAILED_DOWNLOADS) {
 			throw new Error(
-				`Build failed: ${this.failedDownloads} resources could not be downloaded (threshold: 3)`
+				`Build failed: ${this.failedDownloads} resources could not be downloaded (threshold: ${MAX_FAILED_DOWNLOADS})`
 			);
 		}
 	}
 
 	/**
-	 * Parses the URL to get the filename and output path.
-	 * @param {string} url - The URL to parse.
-	 * @param {string} staticDir - The base directory for the output path.
-	 * @returns {{fileName: string, outputPath: string}} An object with the filename and outputPath.
-	 * @throws {Error} Throws an error if the file type is unsupported.
+	 * Enqueues the download of a CMS file and returns the path under which the website publishes it.
+	 * Each canonical URL is downloaded only once, also while it is queued or in flight.
+	 * @param {string} url - The CMS URL of the file, possibly of a WordPress size variant.
+	 * @returns {string|null} The public path, or null if the file type is unsupported.
 	 */
-	getFileNameAndPath(url, staticDir) {
-		const parsedUrl = new URL(url);
-		const fileName = path.basename(parsedUrl.pathname);
-		const outputPath = path.join(staticDir, path.dirname(parsedUrl.pathname));
-		if (!this.isAllowedExtension(fileName)) {
-			throw new Error(`Unsupported file type for ${url}`);
+	enqueueDownload(url) {
+		if (!this.isAllowedExtension(url)) {
+			console.error(`Unsupported file type for ${url}`);
+			return null;
 		}
-		return { fileName, outputPath };
+		const source = canonicalUrl(url);
+		const target = publicPath(source);
+		if (!this.downloads.has(source)) {
+			const otherSource = this.publicPaths.get(target);
+			if (otherSource) {
+				this.failedDownloads++;
+				console.error(`Both ${otherSource} and ${source} are published as ${target}`);
+			}
+			this.publicPaths.set(target, source);
+			this.downloads.set(
+				source,
+				this.limitConcurrency(() => this.download(source, url, target))
+			);
+		}
+		return target;
+	}
+
+	/**
+	 * Runs a task when fewer than MAX_CONCURRENT_DOWNLOADS tasks are active.
+	 * @param {() => Promise<void>} task
+	 * @returns {Promise<void>}
+	 */
+	async limitConcurrency(task) {
+		if (this.activeDownloads < MAX_CONCURRENT_DOWNLOADS) {
+			this.activeDownloads++;
+		} else {
+			await new Promise((resolve) => this.waitingDownloads.push(resolve));
+		}
+		try {
+			await task();
+		} finally {
+			// Hand the slot to the next waiting task
+			const next = this.waitingDownloads.shift();
+			if (next) {
+				next();
+			} else {
+				this.activeDownloads--;
+			}
+		}
+	}
+
+	/**
+	 * Downloads a CMS file and saves it, converted to WebP if it is a raster image.
+	 * If the canonical URL does not exist, the URL as referenced in the content is downloaded.
+	 * @param {string} source - The canonical CMS URL.
+	 * @param {string} referenced - The CMS URL as referenced in the content.
+	 * @param {string} target - The public path.
+	 */
+	async download(source, referenced, target) {
+		try {
+			let response = await this.fetchWithRetries(source);
+			if (response.status === 404 && referenced !== source) {
+				console.log(`Falling back to ${referenced}`);
+				response = await this.fetchWithRetries(referenced);
+			}
+			if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+
+			const data = Buffer.from(await response.arrayBuffer());
+			const outputFile = path.join(this.staticDir, target);
+			await fs.promises.mkdir(path.dirname(outputFile), { recursive: true });
+			if (isConverted(source)) {
+				await sharp(data)
+					.rotate() // Apply the EXIF orientation, because the WebP file has no metadata
+					// WebP supports at most 16383 pixels in each dimension
+					.resize({
+						width: imageMaxWidth,
+						height: 16383,
+						fit: 'inside',
+						withoutEnlargement: true
+					})
+					.webp({ quality: imageQuality })
+					.toFile(outputFile);
+				this.convertedImages++;
+			} else {
+				await fs.promises.writeFile(outputFile, data);
+				this.unchangedFiles.push(keepOriginal.has(target) ? `${target} (keepOriginal)` : target);
+			}
+			console.log(`Downloaded ${source} to ${outputFile}`);
+		} catch (e) {
+			this.failedDownloads++;
+			console.error(
+				`Download failed for ${source}: ${e.message} (${this.failedDownloads} total failures)`
+			);
+		}
+	}
+
+	/**
+	 * Fetches a URL. Network errors and server errors are retried.
+	 * @param {string} url - The URL to fetch.
+	 * @param {number} [retries=MAX_RETRIES] - The number of retries.
+	 * @returns {Promise<import('node-fetch').Response>}
+	 */
+	async fetchWithRetries(url, retries = MAX_RETRIES) {
+		try {
+			// node-fetch v3 has no timeout option, so abort with a signal
+			const response = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT) });
+			if (response.status >= 500) throw new Error(`${response.status} ${response.statusText}`);
+			return response;
+		} catch (e) {
+			if (retries <= 0) throw e;
+			console.error(`Error: ${e.message}`);
+			console.log(`Retrying download for ${url}. Retries left: ${retries - 1}`);
+			return this.fetchWithRetries(url, retries - 1);
+		}
 	}
 
 	/**
 	 * Checks if the file extension is allowed.
-	 * @param {string} fileName - The name of the file.
+	 * @param {string} url - The URL of the file.
 	 * @returns {boolean} True if the extension is allowed, false otherwise.
 	 */
-	isAllowedExtension(fileName) {
-		const extension = path.extname(fileName).substring(1); // Remove the dot from extension
+	isAllowedExtension(url) {
+		const extension = path.extname(new URL(url).pathname).substring(1).toLowerCase(); // Remove the dot from extension
 		return allowedExtensions.includes(extension);
 	}
 }

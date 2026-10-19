@@ -6,6 +6,7 @@ import { JSDOM } from 'jsdom';
 import fetch from 'node-fetch';
 import path from 'path';
 import TurndownService from 'turndown';
+import { baseURL, cmsAssetUrl, newURL } from './cmsAssets.mjs';
 import DownloadManager from './downloadManager.mjs';
 
 const window = new JSDOM('').window;
@@ -30,18 +31,6 @@ turndownService.keep([
 	'table',
 	'video'
 ]);
-
-/**
- * The base URL of the website.
- * @type {string}
- */
-const baseURL = 'https://sgb.hypotheses.org/';
-
-/**
- * The new URL of the website.
- * @type {string}
- */
-const newURL = 'https://stadtgeschichtebasel.ch/';
 
 /**
  * The endpoint of the WordPress JSON API.
@@ -80,10 +69,16 @@ const excludedCategories = [14];
 const staticDir = 'static';
 
 /**
+ * The directory of the downloaded CMS files. It is emptied before each download.
+ * @type {string}
+ */
+const filesDir = path.join(staticDir, 'files');
+
+/**
  * The download queue.
  * @type {DownloadManager}
  */
-const downloadManager = new DownloadManager();
+const downloadManager = new DownloadManager(staticDir);
 
 /**
  * Cache object for categories.
@@ -117,22 +112,6 @@ async function fetchCategoryNameById(id) {
 		return `Category ${id}`;
 	}
 }
-
-/**
- * Extract asset URL from an HTML element.
- * @param {CheerioElement} elem
- * @param {CheerioStatic} $
- * @returns {string}
- */
-const getAssetUrl = (elem, $) => {
-	let url = $(elem).attr('href') || $(elem).attr('src');
-	if ($(elem).is('img') && $(elem).attr('src')) {
-		const src = $(elem).attr('src');
-		const highResSrc = src.replace(/-\d+x\d+\./, '.');
-		url = highResSrc;
-	}
-	return url;
-};
 
 /**
  * Cleans up escaped asterisks between word characters.
@@ -177,6 +156,12 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 		let relativeUrl;
 
 		if (url) {
+			const assetUrl = cmsAssetUrl(url);
+			if (assetUrl) {
+				$(elem).attr('href', downloadManager.enqueueDownload(assetUrl) ?? url);
+				return;
+			}
+
 			if (url === link) {
 				relativeUrl = path.join('.', url.replace(baseURL, ''), slug);
 			} else if (url.startsWith(newURL)) {
@@ -187,9 +172,6 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 
 			if (relativeUrl) {
 				$(elem).attr('href', path.join('/', relativeUrl));
-				if (path.extname(relativeUrl)) {
-					downloadManager.enqueueDownload(url, staticDir);
-				}
 			}
 		}
 	});
@@ -203,28 +185,12 @@ async function processContent(html, outputDir, link, slug, tagsToRemove = []) {
 	});
 
 	$('img').each((i, elem) => {
-		const url = getAssetUrl(elem, $);
-		if (url && url.startsWith(baseURL)) {
-			const relativeUrl = path.join('/', url.replace(baseURL, ''));
-			$(elem).attr('src', relativeUrl);
-			downloadManager.enqueueDownload(url, staticDir);
-		}
-
-		// Handle srcset
-		const srcset = $(elem).attr('srcset');
-		if (srcset) {
-			const newSrcset = srcset
-				.split(',')
-				.map((src) => {
-					let [url, size] = src.trim().split(' ');
-					downloadManager.enqueueDownload(url, staticDir);
-					if (url.startsWith(baseURL)) {
-						url = path.join('/', url.replace(baseURL, ''));
-					}
-					return `${url} ${size}`;
-				})
-				.join(', ');
-			$(elem).attr('srcset', newSrcset);
+		const src = $(elem).attr('src');
+		const assetUrl = src && cmsAssetUrl(src);
+		const publicSrc = assetUrl && downloadManager.enqueueDownload(assetUrl);
+		if (publicSrc) {
+			// The website publishes one file per image, so drop the WordPress size variants
+			$(elem).attr('src', publicSrc).removeAttr('srcset').removeAttr('sizes');
 		}
 	});
 
@@ -332,9 +298,9 @@ async function fetchAndProcessType(type) {
 				const featuredImageUrl = item.featured_media
 					? await fetchFeaturedImage(item.featured_media)
 					: null;
-				if (featuredImageUrl) {
-					downloadManager.enqueueDownload(featuredImageUrl, staticDir);
-				}
+				const featuredImageAssetUrl = featuredImageUrl && cmsAssetUrl(featuredImageUrl);
+				const featuredImage =
+					(featuredImageAssetUrl && downloadManager.enqueueDownload(featuredImageAssetUrl)) || '';
 				const categoryNames = await Promise.all(categoryIds.map(fetchCategoryNameById));
 				const doi = type === 'posts' ? await fetchDoi(item.link) : null;
 				const frontMatter = {
@@ -347,9 +313,7 @@ async function fetchAndProcessType(type) {
 					excerpt: excerpt,
 					...(type === 'posts' && { categories: categoryNames }),
 					...(doi && { doi }),
-					featuredImage: featuredImageUrl
-						? path.join('/', featuredImageUrl.replace(baseURL, ''))
-						: ''
+					featuredImage: featuredImage
 				};
 				const yamlFrontMatter = yaml.dump(frontMatter);
 				const markdownContent = `---\n${yamlFrontMatter}---\n\n${content}`;
@@ -371,6 +335,11 @@ async function fetchAndProcessType(type) {
  * Main function.
  */
 (async () => {
+	// Remove files of earlier downloads, so that only referenced files are published
+	fs.rmSync(filesDir, { recursive: true, force: true });
+	fs.mkdirSync(filesDir, { recursive: true });
+	fs.writeFileSync(path.join(filesDir, '.gitkeep'), '');
+
 	for (const type of types) {
 		await fetchAndProcessType(type);
 	}
