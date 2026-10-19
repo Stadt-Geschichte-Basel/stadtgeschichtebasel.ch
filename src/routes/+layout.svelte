@@ -23,8 +23,9 @@
 	$: classesPageFooterPartner = $page.url.pathname === '/partner' ? 'hidden' : '';
 	$: classesPageFooterDataStories = $page.url.pathname.startsWith('/data-stories') ? 'hidden' : '';
 	afterNavigate((params) => {
+		// from.url is null when the 404.html fallback starts the app
 		const isNewPage =
-			params.from && params.to && params.from.url.pathname !== params.to.url.pathname;
+			params.from?.url && params.to?.url && params.from.url.pathname !== params.to.url.pathname;
 		const elemPage = document.querySelector('#page');
 		if (isNewPage && elemPage !== null) {
 			elemPage.scrollTop = 0;

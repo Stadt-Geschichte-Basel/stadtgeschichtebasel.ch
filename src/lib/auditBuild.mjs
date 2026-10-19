@@ -5,8 +5,8 @@ import path from 'path';
 /**
  * Audits the published build: reports its size and checks its local references.
  * Usage: node src/lib/auditBuild.mjs [--strict] [buildDir]
- * With --strict, the script fails if a CMS image is published as more than one raster file
- * or if a reference to a CMS file is broken.
+ * With --strict, the script fails if a CMS image is published as more than one raster file,
+ * if a reference to a CMS file is broken or if the build is larger than the GitHub Pages limit.
  */
 
 /**
@@ -14,6 +14,13 @@ import path from 'path';
  * @type {string}
  */
 const siteURL = 'https://stadtgeschichtebasel.ch';
+
+/**
+ * The maximum size of a published GitHub Pages site, in bytes.
+ * @type {number}
+ * @see {@link https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits}
+ */
+const pagesLimitBytes = 1_000_000_000;
 
 /**
  * Extensions of raster images.
@@ -180,6 +187,10 @@ const report = [
 		['Metric', 'Value'],
 		['---', '---:'],
 		['Total size', formatBytes(totalBytes)],
+		[
+			'Share of the GitHub Pages limit (1 GB)',
+			`${((totalBytes / pagesLimitBytes) * 100).toFixed(1)} %`
+		],
 		['Files', files.length],
 		[
 			'Size of `files/`',
@@ -244,9 +255,10 @@ if (missingCmsFiles.length > 0) {
 }
 console.log(report.join('\n'));
 
-if (strict && (imagesWithVariants.length > 0 || missingCmsFiles.length > 0)) {
+const overPagesLimit = totalBytes > pagesLimitBytes;
+if (strict && (imagesWithVariants.length > 0 || missingCmsFiles.length > 0 || overPagesLimit)) {
 	console.error(
-		`Audit failed: ${imagesWithVariants.length} CMS images with more than one raster file, ${missingCmsFiles.length} missing CMS files.`
+		`Audit failed: ${imagesWithVariants.length} CMS images with more than one raster file, ${missingCmsFiles.length} missing CMS files, build ${overPagesLimit ? 'above' : 'within'} the GitHub Pages limit.`
 	);
 	process.exitCode = 1;
 }

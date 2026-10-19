@@ -110,9 +110,9 @@
 
 	<p>
 		Die Webseite wird über <a
-			href="https://pages.cloudflare.com/"
+			href="https://pages.github.com/"
 			rel="noopener nofollow"
-			target="_blank">Cloudflare Pages</a
+			target="_blank">GitHub Pages</a
 		>
 		ausgeliefert, die Inhalte unter
 		<a href="https://sgb.hypotheses.org/" rel="noopener nofollow" target="_blank"
