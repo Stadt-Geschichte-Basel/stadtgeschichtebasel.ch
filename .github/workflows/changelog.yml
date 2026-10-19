@@ -2,18 +2,23 @@ name: Create changelog
 
 on: [push]
 
+permissions: {}
+
 jobs:
   changelog:
     name: Generate changelog
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Generate a changelog
-        uses: orhun/git-cliff-action@v1
+        uses: orhun/git-cliff-action@970cdaa65d3d3e8ad4d61bb01fb1172931eba8ba # v1
         id: git-cliff
         with:
           config: cliff.toml
@@ -22,4 +27,6 @@ jobs:
           OUTPUT: CHANGELOG.md
 
       - name: Print the changelog
-        run: cat "${{ steps.git-cliff.outputs.changelog }}"
+        env:
+          CHANGELOG: ${{ steps.git-cliff.outputs.changelog }}
+        run: cat "$CHANGELOG"

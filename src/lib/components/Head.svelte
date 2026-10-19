@@ -16,6 +16,7 @@
 	export let date = '';
 	export let modified = '';
 	export let excerpt = '';
+	export let doi = '';
 
 	function generateStructuredData(type) {
 		const websiteData = {
@@ -80,7 +81,11 @@
 						url: config.url + image,
 						width: imageWidth,
 						height: imageHeight
-					}
+					},
+					...(doi && {
+						identifier: { '@type': 'PropertyValue', propertyID: 'DOI', value: doi },
+						sameAs: 'https://doi.org/' + doi
+					})
 				};
 				break;
 			case 'map':
@@ -119,6 +124,10 @@
 	<meta name="description" content={description} />
 	<meta name="author" content={author} />
 	<meta name="theme-color" content={config.themeColor} />
+
+	{#if doi}
+		<meta name="citation_doi" content={doi} />
+	{/if}
 
 	<!-- Canonical link -->
 	<link rel="canonical" href={canonical} />

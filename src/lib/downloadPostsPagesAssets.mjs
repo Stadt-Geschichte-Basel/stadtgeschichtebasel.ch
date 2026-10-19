@@ -62,6 +62,12 @@ const types = ['posts', 'pages'];
 const perPage = 100;
 
 /**
+ * The timeout in milliseconds for a DOI request to a post page.
+ * @type {number}
+ */
+const doiTimeout = 10_000;
+
+/**
  * IDs of categories to exclude
  * @type {Array<number>}
  */
@@ -248,6 +254,29 @@ const fetchFeaturedImage = async (mediaId) => {
 };
 
 /**
+ * Fetch the DOI that OpenEdition assigns to a post.
+ * The REST API does not expose it, so read the citation_doi meta tag of the post page.
+ * @param {string} link - URL of the post on the blog.
+ * @returns {Promise<string|null>} - DOI of the post.
+ */
+const fetchDoi = async (link) => {
+	try {
+		const response = await fetch(link, { signal: AbortSignal.timeout(doiTimeout) });
+
+		if (!response.ok) {
+			console.error(`Failed to fetch DOI for ${link}: ${response.status}`);
+			return null;
+		}
+
+		const $ = cheerio.load(await response.text());
+		return $('meta[name="citation_doi"]').attr('content')?.trim() || null;
+	} catch (error) {
+		console.error(`Error fetching DOI for ${link}:`, error);
+		return null;
+	}
+};
+
+/**
  * Fetch and process content of a specific type from the API.
  * @param {string} type - Content type (e.g., 'posts', 'pages').
  */
@@ -307,6 +336,7 @@ async function fetchAndProcessType(type) {
 					downloadManager.enqueueDownload(featuredImageUrl, staticDir);
 				}
 				const categoryNames = await Promise.all(categoryIds.map(fetchCategoryNameById));
+				const doi = type === 'posts' ? await fetchDoi(item.link) : null;
 				const frontMatter = {
 					id: item.id,
 					title: title,
@@ -316,6 +346,7 @@ async function fetchAndProcessType(type) {
 					author: item.author,
 					excerpt: excerpt,
 					...(type === 'posts' && { categories: categoryNames }),
+					...(doi && { doi }),
 					featuredImage: featuredImageUrl
 						? path.join('/', featuredImageUrl.replace(baseURL, ''))
 						: ''
