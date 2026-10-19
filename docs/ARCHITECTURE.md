@@ -16,7 +16,7 @@ This document provides a detailed explanation of the stadtgeschichtebasel.ch arc
 
 ## Overview
 
-stadtgeschichtebasel.ch is a static site generator (SSG) application built with SvelteKit. It consumes content from a WordPress-based CMS (hypotheses.org) and generates a fast, accessible, and SEO-friendly static website deployed on Cloudflare Pages.
+stadtgeschichtebasel.ch is a static site generator (SSG) application built with SvelteKit. It consumes content from a WordPress-based CMS (hypotheses.org) and generates a fast, accessible, and SEO-friendly static website deployed on GitHub Pages. See [Deployment](DEPLOYMENT.md).
 
 ### Key Characteristics
 
@@ -34,14 +34,14 @@ stadtgeschichtebasel.ch is a static site generator (SSG) application built with 
 - **Presentation**: SvelteKit components and routes
 - **Data Processing**: Build-time scripts in `src/lib/`
 - **Styling**: Tailwind CSS utility classes
-- **Deployment**: Cloudflare Pages
+- **Deployment**: GitHub Pages
 
 ### 2. Performance
 
 - Static site generation for instant page loads
 - Optimized images and assets
 - Code splitting and lazy loading
-- CDN distribution via Cloudflare
+- CDN distribution via GitHub Pages
 - Post-build optimization with Jampack
 
 ### 3. Maintainability
@@ -241,14 +241,14 @@ Served as-is without processing:
 flowchart TD
     A["hypotheses.org CMS<br/>(WordPress)"] -->|prebuild script<br/>downloadPostsPagesAssets.mjs| B["src/pages/<br/>src/posts/<br/>static/files/"]
     B -->|SvelteKit build<br/>vite build| C["build/<br/>(static HTML)"]
-    C -->|Jampack optimization<br/>postbuild| D["Cloudflare Pages<br/>(production)"]
+    C -->|Jampack optimization<br/>postbuild| D["GitHub Pages<br/>(production)"]
 ```
 
 ### Request Flow (Production)
 
 ```mermaid
 flowchart TD
-    A[User Request] --> B[Cloudflare CDN<br/>Edge Network]
+    A[User Request] --> B[GitHub Pages CDN<br/>Edge Network]
     B --> C[Static HTML File<br/>cached at edge]
     C --> D[User Browser]
     D --> E[Hydration<br/>if JS enabled]
@@ -346,7 +346,7 @@ Jampack optimizes the build:
 pnpm run audit:build
 ```
 
-The audit script prints a Markdown report about `build/`: the total size, the files by type, the largest files and the missing references. With `--strict`, the script fails if a CMS image has more than one raster file or if a CMS file is missing.
+The audit script prints a Markdown report about `build/`: the total size, the files by type, the largest files and the missing references. With `--strict`, the script fails if a CMS image has more than one raster file or if a CMS file is missing. It also fails if `build/` exceeds the GitHub Pages limit of 1 GB.
 
 ## Deployment Pipeline
 
@@ -363,20 +363,20 @@ On push to `main` or pull request:
 7. **Build**: `pnpm run build`
 8. **Audit**: `pnpm run audit:build --strict`, with the report in the job summary
 9. **Test**: `pnpm run test`
-10. **Deploy**: (only on main) Deploy to Cloudflare Pages
+10. **Upload**: (only on main) Upload `build/` as the GitHub Pages artifact
+11. **Publish to Cloudflare Pages**: (only on main) The rollback target until the cutover is signed off
 
-### Deployment to Cloudflare Pages
+The job `deploy` then deploys the artifact to GitHub Pages. It runs `pnpm run audit:deployment` against the deployed site and adds the report to the job summary.
 
-When changes are merged to `main`:
+### Deployment to GitHub Pages
 
-- Build succeeds in CI
-- Cloudflare Pages Action deploys the `build/` directory
-- Content is distributed globally via Cloudflare's CDN
-- Site is available at stadtgeschichtebasel.ch
+[Deployment](DEPLOYMENT.md) describes the workflow, the limits of GitHub Pages, the URL behavior, the cutover and the rollback.
 
 ### Environment Variables
 
-Stored in GitHub Secrets:
+The `deploy` job needs no secret. It gets a short-lived token from GitHub (`id-token: write`).
+
+Until the cutover is signed off, the Cloudflare step uses these GitHub Secrets:
 
 - `CLOUDFLARE_API_TOKEN`: Cloudflare API authentication
 - `CLOUDFLARE_ACCOUNT_ID`: Cloudflare account identifier
@@ -413,7 +413,7 @@ SvelteKit automatically:
 
 ### 5. CDN Distribution
 
-- Cloudflare's global network
+- The CDN of GitHub Pages
 - Edge caching
 - Fast response times worldwide
 
@@ -480,7 +480,7 @@ The project implements:
 - **Performance**: Pre-rendered pages load instantly
 - **Security**: No server-side vulnerabilities
 - **Scalability**: CDN handles any traffic level
-- **Cost**: Cheap/free hosting on Cloudflare Pages
+- **Cost**: Free hosting on GitHub Pages
 
 ### Why Tailwind CSS?
 
@@ -489,12 +489,12 @@ The project implements:
 - **Productivity**: Rapid development
 - **Customization**: Easily themed
 
-### Why Cloudflare Pages?
+### Why GitHub Pages?
 
-- **Performance**: Global CDN network
-- **Reliability**: High uptime guarantee
-- **Integration**: GitHub Actions support
-- **Cost**: Free for this use case
+- **Integration**: The code, the CI and the hosting are in one place
+- **Security**: The deployment needs no API token for an external service
+- **Limits**: The build is about 160 MB, and the limit is 1 GB
+- **Cost**: Free for a public repository
 
 ## Future Considerations
 

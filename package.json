@@ -42,6 +42,7 @@
 		"prebuild": "node ./src/lib/downloadPostsPagesAssets.mjs",
 		"postbuild": "jampack ./build",
 		"audit:build": "node ./src/lib/auditBuild.mjs",
+		"audit:deployment": "node ./src/lib/auditDeployment.mjs",
 		"clean": "rm -Rf static/files/* && touch static/files/.gitkeep && rm -Rf src/pages/* && touch src/pages/.gitkeep && rm -Rf src/posts/* && touch src/posts/.gitkeep"
 	},
 	"devDependencies": {

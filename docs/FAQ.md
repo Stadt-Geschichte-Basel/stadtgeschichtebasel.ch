@@ -27,7 +27,7 @@ The project uses:
 - **Frontend**: SvelteKit, Svelte, Tailwind CSS
 - **Build Tool**: Vite
 - **CMS**: hypotheses.org (WordPress-based)
-- **Hosting**: Cloudflare Pages
+- **Hosting**: GitHub Pages
 - **Testing**: Playwright, Vitest
 - **Languages**: JavaScript, TypeScript
 
@@ -142,7 +142,7 @@ The prebuild script will fail. Since the site is static, the existing deployed v
 
 ### Where is the site hosted?
 
-The production site is hosted on [Cloudflare Pages](https://pages.cloudflare.com/), which provides fast global CDN delivery.
+The production site is hosted on [GitHub Pages](https://docs.github.com/en/pages). Until the cutover is signed off, the CI also publishes the site to [Cloudflare Pages](https://pages.cloudflare.com/) as the rollback target. See [Deployment](DEPLOYMENT.md).
 
 ### How does deployment work?
 
@@ -150,7 +150,7 @@ When changes are pushed to the `main` branch:
 
 1. GitHub Actions runs the CI/CD pipeline
 2. The code is linted, tested, and built
-3. If all checks pass, it's deployed to Cloudflare Pages
+3. If all checks pass, it's deployed to GitHub Pages
 4. The site is available at stadtgeschichtebasel.ch
 
 ### Can I deploy my own instance?
