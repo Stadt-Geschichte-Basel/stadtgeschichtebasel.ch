@@ -364,7 +364,6 @@ On push to `main` or pull request:
 8. **Audit**: `pnpm run audit:build --strict`, with the report in the job summary
 9. **Test**: `pnpm run test`
 10. **Upload**: (only on main) Upload `build/` as the GitHub Pages artifact
-11. **Publish to Cloudflare Pages**: (only on main) The rollback target until the cutover is signed off
 
 The job `deploy` then deploys the artifact to GitHub Pages. It runs `pnpm run audit:deployment` against the deployed site and adds the report to the job summary.
 
@@ -375,11 +374,6 @@ The job `deploy` then deploys the artifact to GitHub Pages. It runs `pnpm run au
 ### Environment Variables
 
 The `deploy` job needs no secret. It gets a short-lived token from GitHub (`id-token: write`).
-
-Until the cutover is signed off, the Cloudflare step uses these GitHub Secrets:
-
-- `CLOUDFLARE_API_TOKEN`: Cloudflare API authentication
-- `CLOUDFLARE_ACCOUNT_ID`: Cloudflare account identifier
 
 No runtime environment variables needed (static site).
 

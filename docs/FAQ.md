@@ -142,7 +142,7 @@ The prebuild script will fail. Since the site is static, the existing deployed v
 
 ### Where is the site hosted?
 
-The production site is hosted on [GitHub Pages](https://docs.github.com/en/pages). Until the cutover is signed off, the CI also publishes the site to [Cloudflare Pages](https://pages.cloudflare.com/) as the rollback target. See [Deployment](DEPLOYMENT.md).
+The CI deploys the site to [GitHub Pages](https://docs.github.com/en/pages). Until the DNS cutover, `stadtgeschichtebasel.ch` still points to [Cloudflare Pages](https://pages.cloudflare.com/), which shows the last version from before the move. See [Deployment](DEPLOYMENT.md).
 
 ### How does deployment work?
 

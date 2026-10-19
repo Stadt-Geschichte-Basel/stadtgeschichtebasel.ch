@@ -155,6 +155,9 @@ await runAll(
 const sitemapURLs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) =>
 	toURL(loc.trim().replaceAll('&amp;', '&'))
 );
+if (sitemapURLs.length === 0) {
+	record('Sitemap URL', false, `\`${toURL('/sitemap.xml')}\`: no URLs`);
+}
 const redirectTargets = new Set();
 await runAll([
 	...sitemapURLs.map((url) => async () => {

@@ -1,6 +1,6 @@
 # Deployment
 
-The CI workflow deploys the site to GitHub Pages. Until the cutover is signed off, the workflow also publishes the same build to Cloudflare Pages. Cloudflare Pages is the rollback target during this period ([#222](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues/222)).
+The CI workflow deploys the site to GitHub Pages. Before [#222](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues/222), the workflow published the site to Cloudflare Pages. The workflow no longer publishes to Cloudflare Pages. Until the DNS cutover, `stadtgeschichtebasel.ch` still points to Cloudflare Pages, which keeps its last deployment.
 
 ## Table of Contents
 
@@ -27,10 +27,12 @@ The workflow has two jobs:
 
 | Job           | Steps                                                                                                                                                                             |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sveltekitci` | Lint, unit tests, build, build audit, Playwright tests. On `main`, it uploads `build/` as the GitHub Pages artifact and publishes `build/` to Cloudflare Pages.                   |
+| `sveltekitci` | Lint, unit tests, build, build audit, Playwright tests. On `main`, it uploads `build/` as the GitHub Pages artifact.                                                              |
 | `deploy`      | Deploys the artifact to GitHub Pages with `actions/deploy-pages`. Then it runs `src/lib/auditDeployment.mjs` against the GitHub Pages URL and adds the report to the job summary. |
 
-The `deploy` job needs no secret. It gets a short-lived token from GitHub (`id-token: write`). The Cloudflare step uses the secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
+The `deploy` job needs no secret. It gets a short-lived token from GitHub (`id-token: write`).
+
+A newer run cancels an older run on the same branch (`concurrency`). Thus an older build cannot deploy after a newer build.
 
 Before the custom domain is set, GitHub Pages serves the site at `https://dokumentation.stadtgeschichtebasel.ch/stadtgeschichtebasel.ch/`. At this URL, the absolute links to CSS and JavaScript do not work. The deployment audit checks status codes only, so it still works there.
 
@@ -85,7 +87,7 @@ The report also shows the host that served the site: GitHub Pages or Cloudflare.
 
 ## Cutover
 
-The cutover moves `stadtgeschichtebasel.ch` and `www.stadtgeschichtebasel.ch` to GitHub Pages. The DNS zone stays on Cloudflare. The records for GitHub Pages use the proxy status "DNS only", so that GitHub can issue the certificate for HTTPS.
+The cutover moves `stadtgeschichtebasel.ch` and `www.stadtgeschichtebasel.ch` to GitHub Pages. Do the cutover soon after the merge of #222. Until the cutover, the live site shows no new CMS content, because Cloudflare Pages gets no new deployments. The DNS zone stays on Cloudflare. The records for GitHub Pages use the proxy status "DNS only", so that GitHub can issue the certificate for HTTPS.
 
 You need:
 
@@ -147,20 +149,20 @@ The organization has already verified the domain `stadtgeschichtebasel.ch` for G
 
 ## Rollback
 
-Until the sign-off, each run of the workflow also publishes to Cloudflare Pages. Thus the content on Cloudflare Pages is current.
+Cloudflare Pages keeps its last deployment from before the merge of #222. A rollback to Cloudflare Pages thus shows old content.
 
 1. In Cloudflare, delete the `A` and `AAAA` records for `stadtgeschichtebasel.ch`.
 2. Add the records that you wrote down before the cutover. Set the proxy status to "Proxied".
 3. Change the record for `www` back to the record that you wrote down.
 4. Run `pnpm run audit:deployment`. The report must show "Served by: Cloudflare".
+5. If Cloudflare Pages must show new content, restore the step "Publish to Cloudflare Pages" from the history of `.github/workflows/sveltekitci.yml`. The step uses the secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
 
 ## After the Sign-off
 
-Sign off the cutover after one week of passed `deploy` jobs without open problems. Then do these steps in a new pull request and in the settings:
+Sign off the cutover after one week of passed `deploy` jobs without open problems. Then do these steps:
 
-1. Remove the step "Publish to Cloudflare Pages" from `.github/workflows/sveltekitci.yml`.
-2. Delete the repository secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
-3. Change the hosting credit in `src/routes/credits/+page.svelte` to GitHub Pages.
-4. Remove the text about Cloudflare Pages from this document, `docs/ARCHITECTURE.md` and `docs/FAQ.md`.
-5. Delete the Cloudflare Pages project `stadtgeschichtebasel-ch`.
-6. Close [#222](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues/222).
+1. Delete the repository secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
+2. Delete the Cloudflare Pages project `stadtgeschichtebasel-ch`.
+3. Remove the section [Rollback](#rollback) from this document.
+4. Remove the text about the cutover from `docs/FAQ.md`.
+5. Close [#222](https://github.com/Stadt-Geschichte-Basel/stadtgeschichtebasel.ch/issues/222).
