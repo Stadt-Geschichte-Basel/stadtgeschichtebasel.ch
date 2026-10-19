@@ -62,6 +62,12 @@ const types = ['posts', 'pages'];
 const perPage = 100;
 
 /**
+ * The timeout in milliseconds for a DOI request to a post page.
+ * @type {number}
+ */
+const doiTimeout = 10_000;
+
+/**
  * IDs of categories to exclude
  * @type {Array<number>}
  */
@@ -255,7 +261,7 @@ const fetchFeaturedImage = async (mediaId) => {
  */
 const fetchDoi = async (link) => {
 	try {
-		const response = await fetch(link);
+		const response = await fetch(link, { signal: AbortSignal.timeout(doiTimeout) });
 
 		if (!response.ok) {
 			console.error(`Failed to fetch DOI for ${link}: ${response.status}`);
