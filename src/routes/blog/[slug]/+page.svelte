@@ -35,13 +35,6 @@
 				<span class="text-sm"
 					>Veröffentlicht am {date}{#if modified !== date}, zuletzt geändert am {modified}{/if}</span
 				>
-				{#if data.meta.doi}
-					<span class="text-sm"
-						>DOI: <a class="anchor" href="https://doi.org/{data.meta.doi}"
-							>https://doi.org/{data.meta.doi}</a
-						></span
-					>
-				{/if}
 				{#each data.meta.categories as category}
 					<a
 						class="variant-ringed badge text-primary-500 hover:bg-primary-500 hover:text-white"
@@ -52,5 +45,10 @@
 			</div>
 		</hgroup>
 		<svelte:component this={data.content} />
+		{#if data.meta.doi}
+			<footer class="not-prose mt-8 border-t border-surface-500/20 pt-4 text-sm opacity-75">
+				DOI: <a class="anchor" href="https://doi.org/{data.meta.doi}">{data.meta.doi}</a>
+			</footer>
+		{/if}
 	</article>
 </Container>
