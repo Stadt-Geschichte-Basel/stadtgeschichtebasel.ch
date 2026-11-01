@@ -67,7 +67,7 @@
 		"jsdom": "^25.0.1",
 		"mdsvex": "^0.12.8",
 		"node-fetch": "^3.3.2",
-		"postcss": "^8.5.31",
+		"postcss": "^8.5.32",
 		"prettier": "^3.9.10",
 		"prettier-plugin-organize-imports": "^4.3.0",
 		"prettier-plugin-svelte": "^3.5.2",
