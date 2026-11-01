@@ -61,7 +61,7 @@
 		"eslint": "^9.39.5",
 		"eslint-config-prettier": "^9.1.2",
 		"eslint-plugin-svelte": "^2.46.1",
-		"globals": "^15.15.0",
+		"globals": "^17.13.0",
 		"husky": "^9.1.7",
 		"js-yaml": "^4.3.2",
 		"jsdom": "^25.0.1",
