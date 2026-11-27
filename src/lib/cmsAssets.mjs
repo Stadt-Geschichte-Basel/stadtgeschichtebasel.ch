@@ -98,3 +98,25 @@ export function publicPath(url) {
 	}
 	return pathname.slice(0, -path.extname(pathname).length) + '.webp';
 }
+
+/**
+ * Decodes a public asset path for filesystem lookup.
+ * @param {string} pathname
+ * @returns {string|null} The decoded path, or null for an invalid path.
+ */
+export function assetFilePath(pathname) {
+	try {
+		const segments = pathname.split('/').map((segment) => decodeURIComponent(segment));
+		if (
+			segments.some(
+				(segment) =>
+					segment === '.' || segment === '..' || /[/\\]/.test(segment) || segment.includes('\0')
+			)
+		) {
+			return null;
+		}
+		return segments.join('/');
+	} catch {
+		return null;
+	}
+}

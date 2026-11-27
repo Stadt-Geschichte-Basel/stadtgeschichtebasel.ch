@@ -50,6 +50,20 @@ describe('DownloadManager', () => {
 		expect(manager.failedDownloads).toBe(0);
 	});
 
+	it('uses an encoded public URL and saves the decoded filename', async () => {
+		const manager = new DownloadManager(staticDir);
+		const source =
+			'https://sgb.hypotheses.org/files/2026/11/Mittlere_Bru%CC%88cke%20vor%201903.jpg';
+		const target = '/files/2026/11/Mittlere_Bru%CC%88cke%20vor%201903.webp';
+		expect(manager.enqueueDownload(source)).toBe(target);
+		await manager.waitForCompletion();
+
+		expect(fetchMock.mock.calls[0][0]).toBe(source);
+		const file = path.join(staticDir, 'files/2026/11/Mittlere_Bru\u0308cke vor 1903.webp');
+		expect((await sharp(file).metadata()).format).toBe('webp');
+		expect(fs.existsSync(path.join(staticDir, target))).toBe(false);
+	});
+
 	it('does not download a second file with the same public path', async () => {
 		const manager = new DownloadManager(staticDir);
 		expect(manager.enqueueDownload('https://sgb.hypotheses.org/files/2023/08/a.jpg')).toBe(
