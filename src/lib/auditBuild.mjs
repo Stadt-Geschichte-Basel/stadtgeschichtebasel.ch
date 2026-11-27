@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 import fs from 'fs';
 import path from 'path';
+import { assetFilePath } from './cmsAssets.mjs';
 
 /**
  * Audits the published build: reports its size and checks its local references.
@@ -89,6 +90,13 @@ function canonicalImage(file) {
  * @returns {boolean}
  */
 function exists(url) {
+	if (url.startsWith('/files/')) {
+		const filePath = assetFilePath(url);
+		return (
+			filePath !== null &&
+			fs.statSync(path.join(buildDir, filePath), { throwIfNoEntry: false })?.isFile() === true
+		);
+	}
 	const candidates = [url, decodeURI(url)].flatMap((p) => {
 		const file = path.join(buildDir, p);
 		return [file, `${file}.html`, path.join(file, 'index.html')];

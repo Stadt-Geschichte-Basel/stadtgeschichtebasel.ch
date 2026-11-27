@@ -3,6 +3,7 @@ import fetch from 'node-fetch';
 import path from 'path';
 import sharp from 'sharp';
 import {
+	assetFilePath,
 	canonicalUrl,
 	imageMaxWidth,
 	imageQuality,
@@ -50,7 +51,7 @@ class DownloadManager {
 		this.waitingDownloads = [];
 		/** @type {Map<string, Promise<void>>} Downloads by canonical CMS URL. */
 		this.downloads = new Map();
-		/** @type {Map<string, string>} Canonical CMS URLs by public path. */
+		/** @type {Map<string, string>} Canonical CMS URLs by decoded file path. */
 		this.publicPaths = new Map();
 		/** @type {Set<string>} Canonical CMS URLs that are not downloaded, because their public path is taken. */
 		this.rejectedSources = new Set();
@@ -97,7 +98,12 @@ class DownloadManager {
 		}
 		const source = canonicalUrl(url);
 		const target = publicPath(source);
-		const otherSource = this.publicPaths.get(target);
+		const filePath = assetFilePath(target);
+		if (filePath === null) {
+			console.error(`Invalid file path for ${url}`);
+			return null;
+		}
+		const otherSource = this.publicPaths.get(filePath);
 		if (otherSource && otherSource !== source) {
 			if (!this.rejectedSources.has(source)) {
 				this.rejectedSources.add(source);
@@ -109,10 +115,10 @@ class DownloadManager {
 			return null;
 		}
 		if (!this.downloads.has(source)) {
-			this.publicPaths.set(target, source);
+			this.publicPaths.set(filePath, source);
 			this.downloads.set(
 				source,
-				this.limitConcurrency(() => this.download(source, url, target))
+				this.limitConcurrency(() => this.download(source, url, target, filePath))
 			);
 		}
 		return target;
@@ -148,8 +154,9 @@ class DownloadManager {
 	 * @param {string} source - The canonical CMS URL.
 	 * @param {string} referenced - The CMS URL as referenced in the content.
 	 * @param {string} target - The public path.
+	 * @param {string} filePath - The decoded path on disk.
 	 */
-	async download(source, referenced, target) {
+	async download(source, referenced, target, filePath) {
 		try {
 			let response = await this.fetchWithRetries(source);
 			if (response.status === 404 && referenced !== source) {
@@ -159,7 +166,7 @@ class DownloadManager {
 			if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
 
 			const data = Buffer.from(await response.arrayBuffer());
-			const outputFile = path.join(this.staticDir, target);
+			const outputFile = path.join(this.staticDir, filePath);
 			await fs.promises.mkdir(path.dirname(outputFile), { recursive: true });
 			if (isConverted(source)) {
 				await sharp(data)
